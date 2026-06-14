@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Company-Wise Questions</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="theme.css">
+<style>
+.cw-wrap{max-width:1180px;margin:0 auto;}
+.overview{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px;}
+.ov-card{border:1px solid var(--border);background:var(--panel);backdrop-filter:blur(10px);border-radius:14px;padding:13px 15px;}
+.ov-card h3{font-family:var(--font-display);font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--text-faint);margin-bottom:11px;}
+.barrow{display:flex;align-items:center;gap:9px;margin-bottom:7px;font-size:11px;cursor:default;}
+.barrow .nm{width:120px;flex-shrink:0;color:var(--text);font-weight:500;text-decoration:none;}
+.barrow a.nm:hover{color:var(--cyan);text-decoration:underline;}
+.bartrack{flex:1;height:9px;border-radius:6px;background:rgba(255,255,255,.06);overflow:hidden;}
+.barfill{height:100%;border-radius:6px;}
+.barrow .ct{width:34px;text-align:right;font-family:var(--font-mono);font-size:10px;color:var(--text-dim);}
+.qlist{display:flex;flex-direction:column;gap:5px;}
+.qlite{display:flex;align-items:center;gap:8px;font-size:11px;}
+.qlite .rank{font-family:var(--font-mono);color:var(--text-faint);width:18px;font-size:10px;}
+.qlite a{color:var(--text);text-decoration:none;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.qlite a:hover{color:var(--cyan);}
+.qlite .cc{font-family:var(--font-mono);font-size:9.5px;color:var(--amber);white-space:nowrap;}
+
+.explorer{display:grid;grid-template-columns:280px 1fr;gap:14px;}
+.panel{border:1px solid var(--border);background:var(--panel);backdrop-filter:blur(10px);border-radius:14px;overflow:hidden;}
+.search{width:100%;padding:11px 14px;border:none;border-bottom:1px solid var(--border);background:transparent;color:var(--text);font-family:var(--font-body);font-size:12px;outline:none;}
+.search::placeholder{color:var(--text-faint);}
+.complist{max-height:560px;overflow-y:auto;}
+.comp{display:flex;align-items:center;gap:8px;padding:9px 14px;cursor:pointer;border-bottom:1px solid rgba(255,255,255,.04);transition:background .12s;}
+.comp:hover{background:rgba(255,255,255,.04);}
+.comp.sel{background:linear-gradient(90deg,rgba(154,140,255,.16),transparent);border-left:2px solid var(--violet);}
+.comp .cn{font-size:12px;font-weight:500;color:var(--text);flex:1;}
+.comp .cmeta{font-family:var(--font-mono);font-size:9.5px;color:var(--text-faint);}
+
+.detail{padding:16px 18px;min-height:560px;}
+.dhead{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:6px;}
+.dhead h2{font-family:var(--font-display);font-size:22px;font-weight:600;letter-spacing:-.3px;}
+.period{font-family:var(--font-mono);font-size:10px;color:var(--mint);border:1px solid rgba(79,230,180,.3);background:rgba(79,230,180,.1);padding:3px 9px;border-radius:7px;}
+.dsub{font-size:11px;color:var(--text-dim);margin-bottom:16px;}
+.dsub b{color:var(--text);}
+.diffbar{display:flex;height:10px;border-radius:6px;overflow:hidden;margin:8px 0 18px;border:1px solid var(--border);}
+.section-t{font-family:var(--font-display);font-size:10px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--text-faint);margin:18px 0 9px;}
+.toplink{font-family:var(--font-mono);font-size:9.5px;color:var(--violet);text-decoration:none;}
+.toplink:hover{text-decoration:underline;}
+table.qtab{width:100%;border-collapse:collapse;margin-top:4px;border:1px solid var(--border);border-radius:10px;overflow:hidden;}
+table.qtab th{background:rgba(255,255,255,.04);padding:7px 10px;text-align:left;font-size:9.5px;color:var(--text-faint);text-transform:uppercase;letter-spacing:.5px;font-family:var(--font-display);}
+table.qtab td{padding:6px 10px;font-size:11px;border-bottom:1px solid rgba(255,255,255,.05);color:var(--text-dim);}
+table.qtab tr:last-child td{border-bottom:none;}
+table.qtab tr:hover td{background:rgba(255,255,255,.025);}
+table.qtab a.qt{color:var(--text);text-decoration:none;}
+table.qtab a.qt:hover{color:var(--cyan);}
+.dchip{display:inline-block;padding:2px 8px;border-radius:999px;font-size:9px;font-weight:700;font-family:var(--font-display);}
+.de{background:rgba(79,230,180,.14);color:var(--mint);}
+.dm{background:rgba(255,203,115,.14);color:var(--amber);}
+.dh{background:rgba(255,123,123,.14);color:var(--rose);}
+.tchip{display:inline-block;padding:2px 9px;border-radius:999px;font-size:9.5px;font-weight:600;font-family:var(--font-display);text-decoration:none;border:1px solid transparent;}
+.tchip.link:hover{filter:brightness(1.25);}
+.disclaimer{font-size:10px;color:var(--text-faint);margin-top:14px;line-height:1.5;}
+@media(max-width:760px){.overview,.explorer{grid-template-columns:1fr;}.complist{max-height:240px;}}
+</style>
+</head>
+<body>
+<a class="back-hub" href="index.html"><span class="arw">&#8592;</span> Hub</a>
+
+<h1>COMPANY-WISE QUESTIONS</h1>
+<div class="sub">Recently asked questions per company &middot; and the topics each one drills most</div>
+
+<div class="cw-wrap">
+
+  <div class="overview">
+    <div class="ov-card">
+      <h3>Hottest topics across all companies</h3>
+      <div id="ovTopics"></div>
+    </div>
+    <div class="ov-card">
+      <h3>Most-asked questions (by # of companies)</h3>
+      <div class="qlist" id="ovQuestions"></div>
+    </div>
+  </div>
+
+  <div class="explorer">
+    <div class="panel">
+      <input class="search" id="search" placeholder="Search company…" autocomplete="off">
+      <div class="complist" id="complist"></div>
+    </div>
+    <div class="panel detail" id="detail"></div>
+  </div>
+
+  <div class="disclaimer" id="disc"></div>
+</div>
+
+<script src="companies_data.js"></script>
+<script>
+const V='#9A8CFF',C='#5BD2FF',M='#4FE6B4',A='#FFCB73',P='#FF89C9',R='#FF7B7B',L='#B6E86A',G='#9aa0bd',F='#6b7090';
+const TOPIC={
+  tree:{n:'Trees',f:'tree_roadmap.html',c:M},
+  graph:{n:'Graphs',f:'graph_roadmap.html',c:C},
+  dp:{n:'Dynamic Programming',f:'dp_roadmap.html',c:P},
+  stack:{n:'Stack',f:'stack_roadmap.html',c:A},
+  arrays:{n:'Arrays / Two Ptr',f:'arrays_roadmap.html',c:V},
+  sliding_window:{n:'Sliding Window',f:'sliding_window_roadmap.html',c:C},
+  binary_search:{n:'Binary Search',f:'binary_search_roadmap.html',c:M},
+  linked_list:{n:'Linked List',f:'linked_list_roadmap.html',c:R},
+  hashing:{n:'Hashing',f:'hashing_roadmap.html',c:L},
+  heap:{n:'Heap / PQ',f:'heap_roadmap.html',c:A},
+  backtracking:{n:'Backtracking',f:'backtracking_roadmap.html',c:V},
+  greedy:{n:'Greedy',f:'greedy_roadmap.html',c:P},
+  trie:{n:'Trie',f:'trie_roadmap.html',c:C},
+  bits:{n:'Bit Manipulation',f:'bit_manipulation_roadmap.html',c:M},
+  string:{n:'Strings',f:null,c:G},
+  design:{n:'Design',f:null,c:G},
+  math:{n:'Math',f:null,c:G},
+  other:{n:'Other',f:null,c:F},
+};
+const tinfo=k=>TOPIC[k]||{n:k,f:null,c:F};
+const PERIOD={'6months':'last 6 months','1year':'last 1 year','2year':'last 2 years','alltime':'all time'};
+const D=window.CW;
+
+function topicChip(k,link){
+  const t=tinfo(k);
+  const style=`background:${t.c}22;color:${t.c};border-color:${t.c}55;`;
+  if(link && t.f) return `<a class="tchip link" style="${style}" href="${t.f}">${t.n}</a>`;
+  return `<span class="tchip" style="${style}">${t.n}</span>`;
+}
+function diffChip(d){const m={Easy:'de',Medium:'dm',Hard:'dh'};return `<span class="dchip ${m[d]||''}">${d||'?'}</span>`;}
+
+// ---- overview: hottest topics ----
+(function(){
+  const top=D.topTopics.slice(0,10);
+  const max=Math.max(...top.map(t=>t.count));
+  document.getElementById('ovTopics').innerHTML=top.map(t=>{
+    const ti=tinfo(t.topic); const w=Math.round(t.count/max*100);
+    const nm=ti.f?`<a class="nm" href="${ti.f}">${ti.n}</a>`:`<span class="nm">${ti.n}</span>`;
+    return `<div class="barrow">${nm}<div class="bartrack"><div class="barfill" style="width:${w}%;background:${ti.c};"></div></div><div class="ct">${t.count}</div></div>`;
+  }).join('');
+})();
+
+// ---- overview: most-asked questions ----
+(function(){
+  document.getElementById('ovQuestions').innerHTML=D.topQuestions.slice(0,12).map((q,i)=>{
+    const url=q.url||('https://leetcode.com/problems/'+q.title.toLowerCase().replace(/[^a-z0-9]+/g,'-'));
+    return `<div class="qlite"><span class="rank">${i+1}</span><a href="${url.trim()}" target="_blank" title="${q.title}">${q.title}</a><span class="cc">${q.companies} cos</span></div>`;
+  }).join('');
+})();
+
+// ---- company list + search ----
+let selected=null;
+function renderList(filter){
+  const f=(filter||'').toLowerCase();
+  const list=D.companies.filter(c=>c.name.toLowerCase().includes(f));
+  document.getElementById('complist').innerHTML=list.map(c=>{
+    const top=Object.keys(c.topics)[0];
+    return `<div class="comp${c.slug===selected?' sel':''}" data-slug="${c.slug}">
+      <span class="cn">${c.name}</span>
+      <span class="cmeta">${c.total}</span>
+      ${topicChip(top,false)}
+    </div>`;
+  }).join('') || '<div style="padding:14px;color:var(--text-faint);font-size:11px;">No company found.</div>';
+  document.querySelectorAll('.comp').forEach(el=>el.onclick=()=>select(el.dataset.slug));
+}
+
+function select(slug){
+  selected=slug;
+  const c=D.companies.find(x=>x.slug===slug);
+  document.querySelectorAll('.comp').forEach(el=>el.classList.toggle('sel',el.dataset.slug===slug));
+  const dd=c.difficulty, dtot=(dd.Easy+dd.Medium+dd.Hard)||1;
+  const topEntries=Object.entries(c.topics);
+  const tmax=Math.max(...topEntries.map(e=>e[1]));
+  const topName=tinfo(topEntries[0][0]).n;
+
+  const topicBars=topEntries.slice(0,12).map(([k,v])=>{
+    const ti=tinfo(k), w=Math.round(v/tmax*100);
+    const nm=ti.f?`<a class="nm" href="${ti.f}">${ti.n}</a>`:`<span class="nm">${ti.n}</span>`;
+    return `<div class="barrow">${nm}<div class="bartrack"><div class="barfill" style="width:${w}%;background:${ti.c};"></div></div><div class="ct">${v}</div></div>`;
+  }).join('');
+
+  const rows=c.questions.map((q,i)=>{
+    const url=(q.url||'').trim()||('https://leetcode.com/problems/'+q.title.toLowerCase().replace(/[^a-z0-9]+/g,'-'));
+    return `<tr><td style="color:var(--text-faint);font-family:var(--font-mono);">${i+1}</td>
+      <td><a class="qt" href="${url}" target="_blank">${q.title}</a></td>
+      <td>${diffChip(q.diff)}</td>
+      <td>${topicChip(q.topic,true)}</td>
+      <td style="font-family:var(--font-mono);color:var(--text-faint);">${q.freq.toFixed(1)}</td></tr>`;
+  }).join('');
+
+  document.getElementById('detail').innerHTML=`
+    <div class="dhead"><h2>${c.name}</h2><span class="period">${PERIOD[c.period]||c.period}</span></div>
+    <div class="dsub"><b>${c.total}</b> tracked questions &middot; most-drilled topic: <b>${topName}</b></div>
+    <div class="diffbar">
+      <div style="width:${dd.Easy/dtot*100}%;background:${M};" title="Easy ${dd.Easy}"></div>
+      <div style="width:${dd.Medium/dtot*100}%;background:${A};" title="Medium ${dd.Medium}"></div>
+      <div style="width:${dd.Hard/dtot*100}%;background:${R};" title="Hard ${dd.Hard}"></div>
+    </div>
+    <div style="font-size:10px;color:var(--text-faint);margin-top:-12px;margin-bottom:6px;">
+      <span style="color:${M};">&#9632;</span> Easy ${dd.Easy} &nbsp;
+      <span style="color:${A};">&#9632;</span> Medium ${dd.Medium} &nbsp;
+      <span style="color:${R};">&#9632;</span> Hard ${dd.Hard}</div>
+
+    <div class="section-t">Topic distribution &middot; click a topic to open its roadmap</div>
+    ${topicBars}
+
+    <div class="section-t">Recently asked (top ${c.questions.length}, by frequency)</div>
+    <table class="qtab">
+      <tr><th>#</th><th>Question</th><th>Diff</th><th>Topic</th><th>Freq</th></tr>
+      ${rows}
+    </table>`;
+}
+
+renderList('');
+document.getElementById('search').addEventListener('input',e=>renderList(e.target.value));
+select(D.companies[0].slug);
+document.getElementById('disc').innerHTML=`Parsed from the LeetCode company-wise dataset (${D.companyCount} companies). Each company shows its most recent available window. Topics are inferred from question titles, so the split is approximate &mdash; treat it as a study signal, not an exact tag.`;
+</script>
+</body>
+</html>

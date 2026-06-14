@@ -82,13 +82,79 @@ int jumps=0, curEnd=0, farthest=0;
     <div class="pbar"><b>Pattern:</b> Maintain the farthest reachable index. Jump only when forced (current window exhausted). Proof of correctness is the hard part — test edge cases.</div>
   </div>
 
+  <div class="phase-card">
+    <div class="ph"><div class="ph-num">3</div><div class="ph-title">Heap-Based Greedy</div>
+      <div class="cx-badge"><span class="cx cx-time">Time O(n log n)</span><span class="cx cx-space">Space O(n)</span></div></div>
+    <div class="split">
+      <div class="left-pane">
+        <div class="qs-title">Questions</div>
+        <div class="q-row"><span class="q-num">1.</span><span>Task Scheduler</span></div>
+        <div class="q-row"><span class="q-num">2.</span><span>Reorganize String</span></div>
+        <div class="q-row"><span class="q-num">3.</span><span>IPO</span></div>
+        <div class="q-row"><span class="q-num">4.</span><span>Maximum Performance of a Team</span></div>
+        <div class="q-row"><span class="q-num">5.</span><span>Minimum Cost to Hire K Workers</span></div>
+        <div class="q-row"><span class="q-num">6.</span><span>Furthest Building You Can Reach</span></div>
+        <div class="keyword-box"><b>Keyword:</b> "always pick current best", "cooldown", "limited resources". Sort first, then use a heap for the best available candidate.</div>
+      </div>
+      <div class="right-pane">
+        <div class="qs-title">Pseudocode</div>
+        <div class="code-block"><span class="cm">// Reorganize String: always use most frequent available char</span>
+PriorityQueue&lt;Pair&gt; pq = <span class="kw">new</span> PriorityQueue&lt;&gt;((a,b)-&gt;b.count-a.count);
+<span class="kw">while</span> (!pq.isEmpty()) {
+  Pair first = pq.poll();
+  <span class="kw">if</span> (ans.endsWith(first.ch)) {
+    Pair second = pq.poll();
+    append(second);
+    <span class="kw">if</span> (--second.count &gt; 0) pq.offer(second);
+    pq.offer(first);
+  } <span class="kw">else</span> {
+    append(first);
+    <span class="kw">if</span> (--first.count &gt; 0) pq.offer(first);
+  }
+}</div>
+      </div>
+    </div>
+    <div class="pbar"><b>Pattern:</b> A heap turns "choose the best currently valid option" into O(log n) per decision.</div>
+  </div>
+
+  <div class="phase-card">
+    <div class="ph"><div class="ph-num">4</div><div class="ph-title">String, Stack &amp; Monotonic Greedy</div>
+      <div class="cx-badge"><span class="cx cx-time">Time O(n)</span><span class="cx cx-space">Space O(n)</span></div></div>
+    <div class="split">
+      <div class="left-pane">
+        <div class="qs-title">Questions</div>
+        <div class="q-row"><span class="q-num">1.</span><span>Remove K Digits</span></div>
+        <div class="q-row"><span class="q-num">2.</span><span>Remove Duplicate Letters</span></div>
+        <div class="q-row"><span class="q-num">3.</span><span>Smallest Subsequence of Distinct Characters</span></div>
+        <div class="q-row"><span class="q-num">4.</span><span>Valid Parenthesis String</span></div>
+        <div class="q-row"><span class="q-num">5.</span><span>Queue Reconstruction by Height</span></div>
+        <div class="q-row"><span class="q-num">6.</span><span>Boats to Save People</span></div>
+        <div class="keyword-box"><b>Keyword:</b> "lexicographically smallest", "remove k", "keep relative order". Use a stack and pop while the future can still fix it.</div>
+      </div>
+      <div class="right-pane">
+        <div class="qs-title">Pseudocode</div>
+        <div class="code-block"><span class="cm">// Remove K Digits / smallest subsequence shape</span>
+Deque&lt;Character&gt; st = <span class="kw">new</span> ArrayDeque&lt;&gt;();
+<span class="kw">for</span> (char c : s.toCharArray()) {
+  <span class="kw">while</span> (k &gt; 0 &amp;&amp; !st.isEmpty() &amp;&amp; st.peekLast() &gt; c) {
+    st.pollLast();
+    k--;
+  }
+  st.addLast(c);
+}
+<span class="kw">while</span> (k-- &gt; 0) st.pollLast();
+<span class="cm">// trim leading zeroes if numeric</span></div>
+      </div>
+    </div>
+    <div class="pbar"><b>Pattern:</b> Maintain the best prefix. If the current char makes the answer smaller and the popped char appears later, pop it.</div>
+  </div>
+
   <table class="cx-table">
     <tr><th>Step</th><th>Time</th><th>Note</th></tr>
     <tr><td>Sort (usual first step)</td><td class="mono">O(n log n)</td><td>by start or end</td></tr>
     <tr><td>Single greedy pass</td><td class="mono">O(n)</td><td>after sort</td></tr>
     <tr><td>With heap (Meeting Rooms II)</td><td class="mono">O(n log n)</td><td>min-heap of end times</td></tr>
   </table>
-</div>
 
 <!-- ══════════════════════════════════════════ TRIE ══════════════ -->
 <div class="golden"><b>GOLDEN RULE:</b> Pattern &#8594; Keyword &#8594; Pseudocode &#8594; Complexity. State the time AND space cost out loud in interviews.</div>

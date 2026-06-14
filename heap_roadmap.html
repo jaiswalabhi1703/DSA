@@ -78,13 +78,75 @@ PriorityQueue&lt;Integer&gt; hi = <span class="kw">new</span> PriorityQueue&lt;&
     <div class="pbar"><b>Pattern:</b> Keep heaps balanced (sizes differ by ≤1). Median is the top of the larger heap, or the average of both tops. Merge K: push list heads, pop-and-push next.</div>
   </div>
 
+  <div class="phase-card">
+    <div class="ph"><div class="ph-num">3</div><div class="ph-title">K-Way Merge &amp; Sorted Streams</div>
+      <div class="cx-badge"><span class="cx cx-time">Time O(N log k)</span><span class="cx cx-space">Space O(k)</span></div></div>
+    <div class="split">
+      <div class="left-pane">
+        <div class="qs-title">Questions</div>
+        <div class="q-row"><span class="q-num">1.</span><span>Merge K Sorted Lists</span></div>
+        <div class="q-row"><span class="q-num">2.</span><span>Kth Smallest Element in a Sorted Matrix</span></div>
+        <div class="q-row"><span class="q-num">3.</span><span>Find K Pairs with Smallest Sums</span></div>
+        <div class="q-row"><span class="q-num">4.</span><span>Smallest Range Covering K Lists</span></div>
+        <div class="q-row"><span class="q-num">5.</span><span>Ugly Number II</span></div>
+        <div class="keyword-box"><b>Keyword:</b> "k sorted lists", "sorted matrix", "smallest next candidate". Heap stores the current frontier from each source.</div>
+      </div>
+      <div class="right-pane">
+        <div class="qs-title">Pseudocode</div>
+        <div class="code-block"><span class="cm">// K-way merge</span>
+PriorityQueue&lt;Node&gt; pq = <span class="kw">new</span> PriorityQueue&lt;&gt;((a,b)-&gt;a.val-b.val);
+<span class="kw">for</span> (ListNode head : lists)
+  <span class="kw">if</span> (head != <span class="kw">null</span>) pq.offer(head);
+
+<span class="kw">while</span> (!pq.isEmpty()) {
+  ListNode cur = pq.poll();
+  tail.next = cur;
+  tail = tail.next;
+  <span class="kw">if</span> (cur.next != <span class="kw">null</span>) pq.offer(cur.next);
+}</div>
+      </div>
+    </div>
+    <div class="pbar"><b>Pattern:</b> Push one item per sorted source. Pop the best item, then push the next item from the same source.</div>
+  </div>
+
+  <div class="phase-card">
+    <div class="ph"><div class="ph-num">4</div><div class="ph-title">Scheduling, Intervals &amp; Delayed Removal</div>
+      <div class="cx-badge"><span class="cx cx-time">Time O(n log n)</span><span class="cx cx-space">Space O(n)</span></div></div>
+    <div class="split">
+      <div class="left-pane">
+        <div class="qs-title">Questions</div>
+        <div class="q-row"><span class="q-num">1.</span><span>Meeting Rooms II</span></div>
+        <div class="q-row"><span class="q-num">2.</span><span>Meeting Rooms III</span></div>
+        <div class="q-row"><span class="q-num">3.</span><span>Employee Free Time</span></div>
+        <div class="q-row"><span class="q-num">4.</span><span>Process Tasks Using Servers</span></div>
+        <div class="q-row"><span class="q-num">5.</span><span>Sliding Window Median</span></div>
+        <div class="q-row"><span class="q-num">6.</span><span>Maximize Score After K Operations</span></div>
+        <div class="keyword-box"><b>Keyword:</b> "earliest ending", "available server", "median with deletes". Heaps model the next resource to free or the current best resource.</div>
+      </div>
+      <div class="right-pane">
+        <div class="qs-title">Pseudocode</div>
+        <div class="code-block"><span class="cm">// Meeting Rooms II</span>
+Arrays.sort(intervals, (a,b)-&gt;a[0]-b[0]);
+PriorityQueue&lt;Integer&gt; ends = <span class="kw">new</span> PriorityQueue&lt;&gt;();
+<span class="kw">for</span> (int[] mtg : intervals) {
+  <span class="kw">if</span> (!ends.isEmpty() &amp;&amp; ends.peek() &lt;= mtg[0])
+    ends.poll();
+  ends.offer(mtg[1]);
+}
+<span class="kw">return</span> ends.size();
+
+<span class="cm">// Sliding median: two heaps + lazy delete map</span></div>
+      </div>
+    </div>
+    <div class="pbar"><b>Pattern:</b> Min-heap of end times tells which resource frees first. For arbitrary deletes, mark invalid entries and clean heap tops lazily.</div>
+  </div>
+
   <table class="cx-table">
     <tr><th>Operation</th><th>Time</th><th>Note</th></tr>
     <tr><td>offer / poll</td><td class="mono">O(log n)</td><td>peek is O(1)</td></tr>
     <tr><td>Top-K with size-K heap</td><td class="mono">O(n log k)</td><td>beats full sort</td></tr>
     <tr><td>Build heap from array</td><td class="mono">O(n)</td><td>heapify, not n inserts</td></tr>
   </table>
-</div>
 
 <!-- ══════════════════════════════════════════ BACKTRACKING ══════════════ -->
 <div class="golden"><b>GOLDEN RULE:</b> Pattern &#8594; Keyword &#8594; Pseudocode &#8594; Complexity. State the time AND space cost out loud in interviews.</div>

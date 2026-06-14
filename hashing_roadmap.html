@@ -7,31 +7,62 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="theme.css">
-<title>Hashing</title>
+<title>Hashing Roadmap</title>
 </head>
 <body>
 <a class="back-hub" href="index.html"><span class="arw">&#8592;</span> Hub</a>
-<h1>HASHING</h1>
-<div class="sub">Frequency maps, complement lookup, sets</div>
+<h1>HASHING ROADMAP</h1>
+<div class="sub">HashMap, HashSet, prefix sums, signatures, and cache-style design</div>
 
-  <div class="topic-intro"><b>CORE IDEA:</b> Trade space for time. HashMap gives O(1) average lookup. Use it for frequency counting, seen-before checks, grouping, and complement lookups.</div>
+<div class="topic-intro"><b>CORE IDEA:</b> Trade space for time. HashMap and HashSet give O(1) average lookup. Use hashing for frequency counting, seen-before checks, complement lookup, grouping by signature, prefix-sum history, and fast state lookup.</div>
 
-  <div class="phase-card">
-    <div class="ph"><div class="ph-num">1</div><div class="ph-title">Frequency &amp; Complement Lookup</div>
-      <div class="cx-badge"><span class="cx cx-time">Time O(n)</span><span class="cx cx-space">Space O(n)</span></div></div>
-    <div class="split">
-      <div class="left-pane">
-        <div class="qs-title">Questions</div>
-        <div class="q-row"><span class="q-num">1.</span><span>Two Sum</span></div>
-        <div class="q-row"><span class="q-num">2.</span><span>Group Anagrams</span></div>
-        <div class="q-row"><span class="q-num">3.</span><span>Top K Frequent Elements</span></div>
-        <div class="q-row"><span class="q-num">4.</span><span>Valid Anagram</span></div>
-        <div class="q-row"><span class="q-num">5.</span><span>First Unique Character</span></div>
-        <div class="keyword-box"><b>Keyword:</b> "find pair", "count occurrences", "group by", "have I seen this before", "most/least frequent". Map key = signature, value = index/count/list.</div>
-      </div>
-      <div class="right-pane">
-        <div class="qs-title">Pseudocode</div>
-        <div class="code-block"><span class="cm">// Two Sum — complement lookup</span>
+<div class="top-row">
+  <div class="when-box">
+    <div class="bh">Hashing Pattern Recognition</div>
+    <ul>
+      <li>"pair with target" or "needed value" -> complement map</li>
+      <li>"count occurrences" or "most frequent" -> frequency map</li>
+      <li>"distinct", "duplicate", "visited" -> HashSet</li>
+      <li>"subarray sum equals k" -> prefix sum + map</li>
+      <li>"same structure" or "group similar" -> signature key</li>
+      <li>"range/nearest key" -> TreeMap / TreeSet</li>
+    </ul>
+  </div>
+  <div class="when-box">
+    <div class="bh">Key Design Checklist</div>
+    <ul>
+      <li>Number key: value, index, prefix sum, remainder</li>
+      <li>String key: sorted chars, char counts, normalized pattern</li>
+      <li>Composite key: row + col, pair, encoded state</li>
+      <li>Map value: count, first index, last index, list, heap, node</li>
+      <li>Collision-safe mindset: average O(1), worst O(n)</li>
+    </ul>
+  </div>
+</div>
+
+<div class="phase-card">
+  <div class="ph">
+    <div class="ph-num">1</div><div class="ph-title">Frequency &amp; Complement Lookup</div>
+    <div class="cx-badge"><span class="cx cx-time">Time O(n)</span><span class="cx cx-space">Space O(n)</span></div>
+  </div>
+  <div class="split">
+    <div class="left-pane">
+      <div class="qs-title">Questions</div>
+      <div class="q-row"><span class="q-num">1.</span><span>Two Sum</span></div>
+      <div class="q-row"><span class="q-num">2.</span><span>Two Sum II Variant with Map</span></div>
+      <div class="q-row"><span class="q-num">3.</span><span>4Sum II</span></div>
+      <div class="q-row"><span class="q-num">4.</span><span>Valid Anagram</span></div>
+      <div class="q-row"><span class="q-num">5.</span><span>Ransom Note</span></div>
+      <div class="q-row"><span class="q-num">6.</span><span>First Unique Character in a String</span></div>
+      <div class="q-row"><span class="q-num">7.</span><span>Majority Element</span></div>
+      <div class="q-row"><span class="q-num">8.</span><span>Find All Duplicates in an Array</span></div>
+      <div class="q-row"><span class="q-num">9.</span><span>Top K Frequent Elements</span></div>
+      <div class="q-row"><span class="q-num">10.</span><span>Sort Characters By Frequency</span></div>
+      <div class="keyword-box"><b>Keyword:</b> "find pair", "count occurrences", "appears once", "most frequent", "needed value". Map key = item, value = count/index/list.</div>
+    </div>
+    <div class="right-pane">
+      <div class="qs-title">Pseudocode</div>
+      <div class="code-block"><span class="cm">// Two Sum - complement lookup</span>
 Map&lt;Integer,Integer&gt; seen = <span class="kw">new</span> HashMap&lt;&gt;();
 <span class="kw">for</span> (int i=0; i&lt;n; i++) {
   int need = target - nums[i];
@@ -40,57 +71,276 @@ Map&lt;Integer,Integer&gt; seen = <span class="kw">new</span> HashMap&lt;&gt;();
   seen.put(nums[i], i);
 }
 
-<span class="cm">// Group Anagrams — sorted string as key</span>
-Map&lt;String,List&lt;String&gt;&gt; map = <span class="kw">new</span> HashMap&lt;&gt;();
-<span class="kw">for</span> (String s : strs) {
-  char[] c = s.toCharArray(); Arrays.sort(c);
-  String key = <span class="kw">new</span> String(c);
-  map.computeIfAbsent(key, k-&gt;<span class="kw">new</span> ArrayList&lt;&gt;()).add(s);
-}</div>
-      </div>
-    </div>
-    <div class="pbar"><b>Pattern:</b> Build a map in one pass. Key design is everything: sorted string for anagrams, char-count array for fingerprints, prefix sum for subarray problems.</div>
-  </div>
+<span class="cm">// Frequency count</span>
+Map&lt;Integer,Integer&gt; freq = <span class="kw">new</span> HashMap&lt;&gt;();
+<span class="kw">for</span> (int x : nums)
+  freq.put(x, freq.getOrDefault(x, 0) + 1);
 
-  <div class="phase-card">
-    <div class="ph"><div class="ph-num">2</div><div class="ph-title">HashSet for O(1) Membership</div>
-      <div class="cx-badge"><span class="cx cx-time">Time O(n)</span><span class="cx cx-space">Space O(n)</span></div></div>
-    <div class="split">
-      <div class="left-pane">
-        <div class="qs-title">Questions</div>
-        <div class="q-row"><span class="q-num">1.</span><span>Longest Consecutive Sequence</span></div>
-        <div class="q-row"><span class="q-num">2.</span><span>Contains Duplicate</span></div>
-        <div class="q-row"><span class="q-num">3.</span><span>Intersection of Two Arrays</span></div>
-        <div class="q-row"><span class="q-num">4.</span><span>Happy Number</span></div>
-        <div class="keyword-box"><b>Keyword:</b> "distinct", "consecutive", "is x present", "no duplicates". Set membership in O(1) replaces nested loops.</div>
-      </div>
-      <div class="right-pane">
-        <div class="qs-title">Pseudocode</div>
-        <div class="code-block"><span class="cm">// Longest Consecutive Sequence — O(n)</span>
-Set&lt;Integer&gt; set = <span class="kw">new</span> HashSet&lt;&gt;(Arrays.asList(...));
-int best = 0;
-<span class="kw">for</span> (int num : set) {
-  <span class="kw">if</span> (!set.contains(num-1)) {  <span class="cm">// only start of a run</span>
-    int cur = num, len = 1;
-    <span class="kw">while</span> (set.contains(cur+1)) { cur++; len++; }
-    best = Math.max(best, len);
-  }
-}
-<span class="cm">// Each number visited at most twice → O(n)</span></div>
-      </div>
+<span class="cm">// Top K: count first, then heap/bucket sort</span></div>
     </div>
-    <div class="pbar"><b>Pattern:</b> Only start counting from a sequence's beginning (when num-1 absent). This keeps total work O(n) despite the inner while.</div>
   </div>
-
-  <table class="cx-table">
-    <tr><th>Structure</th><th>Avg lookup</th><th>Worst case</th></tr>
-    <tr><td>HashMap / HashSet</td><td class="mono">O(1)</td><td class="mono">O(n) (bad hash)</td></tr>
-    <tr><td>TreeMap (sorted)</td><td class="mono">O(log n)</td><td class="mono">O(log n)</td></tr>
-    <tr><td>Frequency counting pass</td><td class="mono">O(n)</td><td class="mono">O(n) space</td></tr>
-  </table>
+  <div class="pbar"><b>Pattern:</b> Ask what information you wish you already had. Store that in the map while scanning once.</div>
 </div>
 
-<!-- ══════════════════════════════════════════ HEAP / PQ ══════════════ -->
-<div class="golden"><b>GOLDEN RULE:</b> Pattern &#8594; Keyword &#8594; Pseudocode &#8594; Complexity. State the time AND space cost out loud in interviews.</div>
+<div class="phase-card">
+  <div class="ph">
+    <div class="ph-num">2</div><div class="ph-title">HashSet for O(1) Membership</div>
+    <div class="cx-badge"><span class="cx cx-time">Time O(n)</span><span class="cx cx-space">Space O(n)</span></div>
+  </div>
+  <div class="split">
+    <div class="left-pane">
+      <div class="qs-title">Questions</div>
+      <div class="q-row"><span class="q-num">1.</span><span>Contains Duplicate</span></div>
+      <div class="q-row"><span class="q-num">2.</span><span>Contains Duplicate II</span></div>
+      <div class="q-row"><span class="q-num">3.</span><span>Contains Duplicate III</span></div>
+      <div class="q-row"><span class="q-num">4.</span><span>Longest Consecutive Sequence</span></div>
+      <div class="q-row"><span class="q-num">5.</span><span>Intersection of Two Arrays</span></div>
+      <div class="q-row"><span class="q-num">6.</span><span>Intersection of Two Arrays II</span></div>
+      <div class="q-row"><span class="q-num">7.</span><span>Happy Number</span></div>
+      <div class="q-row"><span class="q-num">8.</span><span>Jewels and Stones</span></div>
+      <div class="q-row"><span class="q-num">9.</span><span>Distribute Candies</span></div>
+      <div class="keyword-box"><b>Keyword:</b> "distinct", "duplicate", "visited", "is x present", "cycle by repeated state". Set membership replaces nested loops.</div>
+    </div>
+    <div class="right-pane">
+      <div class="qs-title">Pseudocode</div>
+      <div class="code-block"><span class="cm">// Longest Consecutive Sequence</span>
+Set&lt;Integer&gt; set = <span class="kw">new</span> HashSet&lt;&gt;();
+<span class="kw">for</span> (int x : nums) set.add(x);
+
+int best = 0;
+<span class="kw">for</span> (int x : set) {
+  <span class="kw">if</span> (!set.contains(x - 1)) {
+    int cur = x, len = 1;
+    <span class="kw">while</span> (set.contains(cur + 1)) {
+      cur++;
+      len++;
+    }
+    best = Math.max(best, len);
+  }
+}</div>
+    </div>
+  </div>
+  <div class="pbar"><b>Pattern:</b> Only start a consecutive run when x-1 is absent. Every number participates in at most one expansion.</div>
+</div>
+
+<div class="phase-card">
+  <div class="ph">
+    <div class="ph-num">3</div><div class="ph-title">Prefix Sum + HashMap</div>
+    <div class="cx-badge"><span class="cx cx-time">Time O(n)</span><span class="cx cx-space">Space O(n)</span></div>
+  </div>
+  <div class="split">
+    <div class="left-pane">
+      <div class="qs-title">Questions</div>
+      <div class="q-row"><span class="q-num">1.</span><span>Subarray Sum Equals K</span></div>
+      <div class="q-row"><span class="q-num">2.</span><span>Continuous Subarray Sum</span></div>
+      <div class="q-row"><span class="q-num">3.</span><span>Subarray Sums Divisible by K</span></div>
+      <div class="q-row"><span class="q-num">4.</span><span>Contiguous Array</span></div>
+      <div class="q-row"><span class="q-num">5.</span><span>Find Longest Subarray with Equal 0 and 1</span></div>
+      <div class="q-row"><span class="q-num">6.</span><span>Maximum Size Subarray Sum Equals K</span></div>
+      <div class="q-row"><span class="q-num">7.</span><span>Count Number of Nice Subarrays</span></div>
+      <div class="q-row"><span class="q-num">8.</span><span>Binary Subarrays With Sum</span></div>
+      <div class="q-row"><span class="q-num">9.</span><span>Number of Submatrices That Sum to Target</span></div>
+      <div class="keyword-box"><b>Keyword:</b> "subarray sum", "sum divisible", "equal 0 and 1", "count ranges". Store previous prefix sums or remainders.</div>
+    </div>
+    <div class="right-pane">
+      <div class="qs-title">Pseudocode</div>
+      <div class="code-block"><span class="cm">// Count subarrays with sum exactly k</span>
+Map&lt;Integer,Integer&gt; count = <span class="kw">new</span> HashMap&lt;&gt;();
+count.put(0, 1);
+int prefix = 0, ans = 0;
+
+<span class="kw">for</span> (int x : nums) {
+  prefix += x;
+  ans += count.getOrDefault(prefix - k, 0);
+  count.put(prefix, count.getOrDefault(prefix, 0) + 1);
+}
+
+<span class="cm">// Divisible by k: use remainder key</span>
+int rem = ((prefix % k) + k) % k;
+
+<span class="cm">// Longest length: store first index of prefix</span></div>
+    </div>
+  </div>
+  <div class="pbar"><b>Pattern:</b> Current prefix minus old prefix equals target. For counting, store frequencies. For longest length, store first index only.</div>
+</div>
+
+<div class="phase-card">
+  <div class="ph">
+    <div class="ph-num">4</div><div class="ph-title">Sliding Window + Frequency Map</div>
+    <div class="cx-badge"><span class="cx cx-time">Time O(n)</span><span class="cx cx-space">Space O(k)</span></div>
+  </div>
+  <div class="split">
+    <div class="left-pane">
+      <div class="qs-title">Questions</div>
+      <div class="q-row"><span class="q-num">1.</span><span>Longest Substring Without Repeating Characters</span></div>
+      <div class="q-row"><span class="q-num">2.</span><span>Minimum Window Substring</span></div>
+      <div class="q-row"><span class="q-num">3.</span><span>Find All Anagrams in a String</span></div>
+      <div class="q-row"><span class="q-num">4.</span><span>Permutation in String</span></div>
+      <div class="q-row"><span class="q-num">5.</span><span>Longest Repeating Character Replacement</span></div>
+      <div class="q-row"><span class="q-num">6.</span><span>Fruit Into Baskets</span></div>
+      <div class="q-row"><span class="q-num">7.</span><span>Subarrays with K Different Integers</span></div>
+      <div class="q-row"><span class="q-num">8.</span><span>Count Complete Subarrays in an Array</span></div>
+      <div class="keyword-box"><b>Keyword:</b> "substring/window", "at most k distinct", "same frequency", "contains all chars". HashMap tracks window counts.</div>
+    </div>
+    <div class="right-pane">
+      <div class="qs-title">Pseudocode</div>
+      <div class="code-block"><span class="cm">// At most k distinct</span>
+Map&lt;Character,Integer&gt; freq = <span class="kw">new</span> HashMap&lt;&gt;();
+int left = 0, best = 0;
+
+<span class="kw">for</span> (int right=0; right&lt;s.length(); right++) {
+  char c = s.charAt(right);
+  freq.put(c, freq.getOrDefault(c, 0) + 1);
+
+  <span class="kw">while</span> (freq.size() &gt; k) {
+    char out = s.charAt(left++);
+    freq.put(out, freq.get(out) - 1);
+    <span class="kw">if</span> (freq.get(out) == 0) freq.remove(out);
+  }
+
+  best = Math.max(best, right - left + 1);
+}</div>
+    </div>
+  </div>
+  <div class="pbar"><b>Pattern:</b> Expand right, update count, shrink left while invalid. For exact K, often use atMost(K) - atMost(K-1).</div>
+</div>
+
+<div class="phase-card">
+  <div class="ph">
+    <div class="ph-num">5</div><div class="ph-title">Signature Keys &amp; Grouping</div>
+    <div class="cx-badge"><span class="cx cx-time">Time O(n*k)</span><span class="cx cx-space">Space O(n)</span></div>
+  </div>
+  <div class="split">
+    <div class="left-pane">
+      <div class="qs-title">Questions</div>
+      <div class="q-row"><span class="q-num">1.</span><span>Group Anagrams</span></div>
+      <div class="q-row"><span class="q-num">2.</span><span>Group Shifted Strings</span></div>
+      <div class="q-row"><span class="q-num">3.</span><span>Find Duplicate File in System</span></div>
+      <div class="q-row"><span class="q-num">4.</span><span>Encode and Decode TinyURL</span></div>
+      <div class="q-row"><span class="q-num">5.</span><span>Isomorphic Strings</span></div>
+      <div class="q-row"><span class="q-num">6.</span><span>Word Pattern</span></div>
+      <div class="q-row"><span class="q-num">7.</span><span>Valid Sudoku</span></div>
+      <div class="q-row"><span class="q-num">8.</span><span>Longest Duplicate Substring</span></div>
+      <div class="keyword-box"><b>Keyword:</b> "group same", "same pattern", "same contents", "isomorphic". Build a stable key representing the real identity.</div>
+    </div>
+    <div class="right-pane">
+      <div class="qs-title">Pseudocode</div>
+      <div class="code-block"><span class="cm">// Group Anagrams - char-count signature</span>
+Map&lt;String,List&lt;String&gt;&gt; groups = <span class="kw">new</span> HashMap&lt;&gt;();
+
+<span class="kw">for</span> (String s : strs) {
+  int[] cnt = <span class="kw">new</span> int[26];
+  <span class="kw">for</span> (char c : s.toCharArray()) cnt[c - 'a']++;
+
+  StringBuilder key = <span class="kw">new</span> StringBuilder();
+  <span class="kw">for</span> (int x : cnt) key.append('#').append(x);
+
+  groups.computeIfAbsent(key.toString(),
+      z -&gt; <span class="kw">new</span> ArrayList&lt;&gt;()).add(s);
+}
+
+<span class="cm">// Isomorphic: keep two maps for both directions</span></div>
+    </div>
+  </div>
+  <div class="pbar"><b>Pattern:</b> The key must preserve exactly the equality you care about. Sorted string works; count-array key is often faster.</div>
+</div>
+
+<div class="phase-card">
+  <div class="ph">
+    <div class="ph-num">6</div><div class="ph-title">Ordered Hashing: TreeMap / TreeSet</div>
+    <div class="cx-badge"><span class="cx cx-time">Time O(n log n)</span><span class="cx cx-space">Space O(n)</span></div>
+  </div>
+  <div class="split">
+    <div class="left-pane">
+      <div class="qs-title">Questions</div>
+      <div class="q-row"><span class="q-num">1.</span><span>Contains Duplicate III</span></div>
+      <div class="q-row"><span class="q-num">2.</span><span>My Calendar I</span></div>
+      <div class="q-row"><span class="q-num">3.</span><span>Time Based Key-Value Store</span></div>
+      <div class="q-row"><span class="q-num">4.</span><span>Snapshot Array</span></div>
+      <div class="q-row"><span class="q-num">5.</span><span>Online Election</span></div>
+      <div class="q-row"><span class="q-num">6.</span><span>Hand of Straights</span></div>
+      <div class="q-row"><span class="q-num">7.</span><span>Find Right Interval</span></div>
+      <div class="keyword-box"><b>Keyword:</b> "nearest smaller/larger", "floor/ceiling", "timestamps", "ordered keys". Use TreeMap when order matters.</div>
+    </div>
+    <div class="right-pane">
+      <div class="qs-title">Pseudocode</div>
+      <div class="code-block"><span class="cm">// Contains Duplicate III - sliding ordered set</span>
+TreeSet&lt;Long&gt; set = <span class="kw">new</span> TreeSet&lt;&gt;();
+
+<span class="kw">for</span> (int i=0; i&lt;nums.length; i++) {
+  long x = nums[i];
+  Long near = set.ceiling(x - t);
+  <span class="kw">if</span> (near != <span class="kw">null</span> &amp;&amp; near &lt;= x + t)
+    <span class="kw">return true</span>;
+
+  set.add(x);
+  <span class="kw">if</span> (i &gt;= k) set.remove((long) nums[i-k]);
+}
+<span class="kw">return false</span>;
+
+<span class="cm">// TreeMap: floorKey(), ceilingKey(), higherKey(), lowerKey()</span></div>
+    </div>
+  </div>
+  <div class="pbar"><b>Pattern:</b> HashMap is not enough when you need nearest key or sorted iteration. Switch to TreeMap/TreeSet and accept O(log n).</div>
+</div>
+
+<div class="phase-card">
+  <div class="ph">
+    <div class="ph-num">7</div><div class="ph-title">HashMap in Design Problems</div>
+    <div class="cx-badge"><span class="cx cx-time">Ops O(1)</span><span class="cx cx-space">Space O(n)</span></div>
+  </div>
+  <div class="split">
+    <div class="left-pane">
+      <div class="qs-title">Questions</div>
+      <div class="q-row"><span class="q-num">1.</span><span>LRU Cache</span></div>
+      <div class="q-row"><span class="q-num">2.</span><span>LFU Cache</span></div>
+      <div class="q-row"><span class="q-num">3.</span><span>Insert Delete GetRandom O(1)</span></div>
+      <div class="q-row"><span class="q-num">4.</span><span>All O(1) Data Structure</span></div>
+      <div class="q-row"><span class="q-num">5.</span><span>Design HashMap</span></div>
+      <div class="q-row"><span class="q-num">6.</span><span>Design HashSet</span></div>
+      <div class="q-row"><span class="q-num">7.</span><span>Logger Rate Limiter</span></div>
+      <div class="q-row"><span class="q-num">8.</span><span>Design Underground System</span></div>
+      <div class="q-row"><span class="q-num">9.</span><span>Design Twitter</span></div>
+      <div class="keyword-box"><b>Keyword:</b> "O(1) get/put/delete", "cache", "random access", "latest state". Combine map with list, array, heap, or deque.</div>
+    </div>
+    <div class="right-pane">
+      <div class="qs-title">Pseudocode</div>
+      <div class="code-block"><span class="cm">// LRU Cache idea</span>
+Map&lt;Integer,Node&gt; map = <span class="kw">new</span> HashMap&lt;&gt;();
+DoublyLinkedList list = <span class="kw">new</span> DoublyLinkedList();
+
+int get(int key) {
+  <span class="kw">if</span> (!map.containsKey(key)) <span class="kw">return</span> -1;
+  Node node = map.get(key);
+  list.moveToFront(node);
+  <span class="kw">return</span> node.val;
+}
+
+void put(int key, int val) {
+  <span class="kw">if</span> (map.containsKey(key)) {
+    Node node = map.get(key);
+    node.val = val;
+    list.moveToFront(node);
+  } <span class="kw">else</span> {
+    Node node = <span class="kw">new</span> Node(key, val);
+    map.put(key, node);
+    list.addFront(node);
+    <span class="kw">if</span> (map.size() &gt; cap) evictTail();
+  }
+}</div>
+    </div>
+  </div>
+  <div class="pbar"><b>Pattern:</b> The map finds the object in O(1). The companion structure handles ordering, frequency, random index, or eviction.</div>
+</div>
+
+<table class="cx-table">
+  <tr><th>Structure</th><th>Best use</th><th>Cost</th></tr>
+  <tr><td>HashMap / HashSet</td><td>Lookup, counts, visited, grouping</td><td class="mono">Avg O(1)</td></tr>
+  <tr><td>Prefix map</td><td>Subarray sum/count/length</td><td class="mono">O(n)</td></tr>
+  <tr><td>TreeMap / TreeSet</td><td>Nearest key, sorted keys, timestamps</td><td class="mono">O(log n)</td></tr>
+  <tr><td>Map + linked list / array</td><td>Cache and O(1) design</td><td class="mono">O(1) ops</td></tr>
+</table>
+
+<div class="golden"><b>GOLDEN RULE:</b> Decide the key first. If the key captures the right state, the solution usually becomes one pass plus O(1) lookup.</div>
 </body>
 </html>

@@ -81,13 +81,79 @@
     <div class="pbar"><b>Pattern:</b> Modify state to mark a choice, recurse, then restore it. N-Queens prunes with column/diagonal sets for O(1) validity checks.</div>
   </div>
 
+  <div class="phase-card">
+    <div class="ph"><div class="ph-num">3</div><div class="ph-title">Partitioning &amp; String Backtracking</div>
+      <div class="cx-badge"><span class="cx cx-time">Time exp.</span><span class="cx cx-space">Space O(n)</span></div></div>
+    <div class="split">
+      <div class="left-pane">
+        <div class="qs-title">Questions</div>
+        <div class="q-row"><span class="q-num">1.</span><span>Restore IP Addresses</span></div>
+        <div class="q-row"><span class="q-num">2.</span><span>Palindrome Partitioning</span></div>
+        <div class="q-row"><span class="q-num">3.</span><span>Word Break II</span></div>
+        <div class="q-row"><span class="q-num">4.</span><span>Expression Add Operators</span></div>
+        <div class="q-row"><span class="q-num">5.</span><span>Generate Parentheses</span></div>
+        <div class="q-row"><span class="q-num">6.</span><span>Different Ways to Add Parentheses</span></div>
+        <div class="keyword-box"><b>Keyword:</b> "split string into valid pieces", "all valid expressions", "all sentences". The choice is usually the next cut position.</div>
+      </div>
+      <div class="right-pane">
+        <div class="qs-title">Pseudocode</div>
+        <div class="code-block"><span class="cm">// Partition string by choosing the next cut</span>
+void dfs(int idx, List&lt;String&gt; path) {
+  <span class="kw">if</span> (idx == s.length()) {
+    ans.add(<span class="kw">new</span> ArrayList&lt;&gt;(path));
+    <span class="kw">return</span>;
+  }
+  <span class="kw">for</span> (int end=idx; end&lt;s.length(); end++) {
+    <span class="kw">if</span> (!isValid(s, idx, end)) <span class="kw">continue</span>;
+    path.add(s.substring(idx, end+1));
+    dfs(end+1, path);
+    path.remove(path.size()-1);
+  }
+}</div>
+      </div>
+    </div>
+    <div class="pbar"><b>Pattern:</b> At index i, try every valid next segment. Precompute validity when checks are repeated, like palindrome ranges.</div>
+  </div>
+
+  <div class="phase-card">
+    <div class="ph"><div class="ph-num">4</div><div class="ph-title">Pruning, Branch &amp; Bound</div>
+      <div class="cx-badge"><span class="cx cx-time">Time exp.</span><span class="cx cx-space">Space O(n)</span></div></div>
+    <div class="split">
+      <div class="left-pane">
+        <div class="qs-title">Questions</div>
+        <div class="q-row"><span class="q-num">1.</span><span>Combination Sum III</span></div>
+        <div class="q-row"><span class="q-num">2.</span><span>Partition to K Equal Sum Subsets</span></div>
+        <div class="q-row"><span class="q-num">3.</span><span>Matchsticks to Square</span></div>
+        <div class="q-row"><span class="q-num">4.</span><span>Beautiful Arrangement</span></div>
+        <div class="q-row"><span class="q-num">5.</span><span>Optimal Account Balancing</span></div>
+        <div class="q-row"><span class="q-num">6.</span><span>Shopping Offers</span></div>
+        <div class="keyword-box"><b>Keyword:</b> "partition into k groups", "minimize choices", "constraints are tight". Sort, reject impossible states early, and memoize state when possible.</div>
+      </div>
+      <div class="right-pane">
+        <div class="qs-title">Pseudocode</div>
+        <div class="code-block"><span class="cm">// K equal subsets: fill buckets with pruning</span>
+boolean dfs(int idx) {
+  <span class="kw">if</span> (idx == nums.length) <span class="kw">return true</span>;
+  <span class="kw">for</span> (int b=0; b&lt;k; b++) {
+    <span class="kw">if</span> (bucket[b] + nums[idx] &gt; target) <span class="kw">continue</span>;
+    bucket[b] += nums[idx];
+    <span class="kw">if</span> (dfs(idx+1)) <span class="kw">return true</span>;
+    bucket[b] -= nums[idx];
+    <span class="kw">if</span> (bucket[b] == 0) <span class="kw">break</span>; <span class="cm">// avoid symmetric empty buckets</span>
+  }
+  <span class="kw">return false</span>;
+}</div>
+      </div>
+    </div>
+    <div class="pbar"><b>Pattern:</b> Sort hard choices first. Prune overflow, duplicate choices, symmetric buckets, and states that cannot beat the current best.</div>
+  </div>
+
   <table class="cx-table">
     <tr><th>Problem family</th><th>Time</th><th>Space</th></tr>
     <tr><td>Subsets</td><td class="mono">O(2ⁿ · n)</td><td class="mono">O(n)</td></tr>
     <tr><td>Permutations</td><td class="mono">O(n! · n)</td><td class="mono">O(n)</td></tr>
     <tr><td>N-Queens</td><td class="mono">O(n!)</td><td class="mono">O(n)</td></tr>
   </table>
-</div>
 
 <!-- ══════════════════════════════════════════ GREEDY ══════════════ -->
 <div class="golden"><b>GOLDEN RULE:</b> Pattern &#8594; Keyword &#8594; Pseudocode &#8594; Complexity. State the time AND space cost out loud in interviews.</div>

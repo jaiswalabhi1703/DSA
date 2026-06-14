@@ -23,6 +23,16 @@
   --font-d:"Space Grotesk",system-ui,sans-serif;
   --font-b:"Inter",system-ui,sans-serif;
   --font-m:"JetBrains Mono",monospace;
+  /* aliases for company section */
+  --panel:rgba(255,255,255,.04);
+  --panel-2:rgba(255,255,255,.06);
+  --border:rgba(255,255,255,.09);
+  --border-2:rgba(255,255,255,.14);
+  --text-dim:#9aa0bd;
+  --text-faint:#6b7090;
+  --font-display:"Space Grotesk",system-ui,sans-serif;
+  --font-body:"Inter",system-ui,sans-serif;
+  --font-mono:"JetBrains Mono",monospace;
 }
 *{box-sizing:border-box;margin:0;padding:0;}
 html,body{height:100%;}
@@ -43,7 +53,7 @@ body{
 @keyframes drift2{0%,100%{transform:translate(0,0) scale(1);}50%{transform:translate(-7%,6%) scale(1.08);}}
 @keyframes drift3{0%,100%{transform:translate(0,0) scale(1);}50%{transform:translate(4%,-7%) scale(1.15);}}
 
-/* subtle grid + noise overlay */
+/* subtle grid overlay */
 .grid-overlay{position:fixed;inset:0;z-index:1;pointer-events:none;
   background-image:linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);
   background-size:54px 54px;mask-image:radial-gradient(ellipse 80% 70% at 50% 30%,#000 40%,transparent 80%);
@@ -52,7 +62,7 @@ body{
 .wrap{position:relative;z-index:2;max-width:1180px;margin:0 auto;padding:54px 22px 70px;}
 
 /* ---- hero ---- */
-.hero{text-align:center;margin-bottom:50px;perspective:1000px;}
+.hero{text-align:center;margin-bottom:40px;perspective:1000px;}
 .eyebrow{
   display:inline-flex;align-items:center;gap:8px;font-family:var(--font-m);
   font-size:11px;letter-spacing:2.5px;text-transform:uppercase;color:var(--cyan);
@@ -70,19 +80,36 @@ body{
   animation:fadeUp .8s .08s both;
   text-shadow:0 0 60px rgba(154,140,255,.2);
 }
-.hero p{max-width:560px;margin:0 auto;font-size:15px;line-height:1.65;color:var(--dim);animation:fadeUp .8s .16s both;}
+.hero p{max-width:580px;margin:0 auto;font-size:15px;line-height:1.65;color:var(--dim);animation:fadeUp .8s .16s both;}
 .stats{display:flex;gap:30px;justify-content:center;margin-top:30px;animation:fadeUp .8s .24s both;flex-wrap:wrap;}
 .stat{text-align:center;}
 .stat .n{font-family:var(--font-d);font-size:30px;font-weight:700;background:linear-gradient(120deg,var(--cyan),var(--mint));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
 .stat .l{font-size:10.5px;letter-spacing:1px;text-transform:uppercase;color:var(--faint);margin-top:2px;}
 @keyframes fadeUp{from{opacity:0;transform:translateY(22px);}to{opacity:1;transform:translateY(0);}}
 
+/* ---- tab navigation ---- */
+.tabs{display:flex;justify-content:center;gap:10px;margin-bottom:36px;animation:fadeUp .8s .28s both;}
+.tab-btn{
+  font-family:var(--font-d);font-size:13px;font-weight:600;letter-spacing:.3px;
+  padding:10px 30px;border-radius:999px;cursor:pointer;
+  border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.05);
+  color:var(--dim);transition:all .2s ease;backdrop-filter:blur(8px);
+}
+.tab-btn:hover{color:var(--text);border-color:var(--violet);}
+.tab-btn.active{
+  background:linear-gradient(135deg,var(--violet),var(--cyan));
+  color:#0a0a14;font-weight:700;border-color:transparent;
+  box-shadow:0 6px 24px -8px var(--violet);
+}
+.tab-pane{display:none;}
+.tab-pane.active{display:block;}
+
 /* ---- section label ---- */
-.sec-label{display:flex;align-items:center;gap:14px;margin:0 0 24px;animation:fadeUp .8s .3s both;}
+.sec-label{display:flex;align-items:center;gap:14px;margin:0 0 24px;}
 .sec-label .txt{font-family:var(--font-d);font-size:13px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--faint);white-space:nowrap;}
 .sec-label .line{height:1px;flex:1;background:linear-gradient(90deg,rgba(255,255,255,.18),transparent);}
 
-/* ---- card grid ---- */
+/* ---- DSA card grid ---- */
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(245px,1fr));gap:18px;perspective:1400px;}
 
 .card{
@@ -105,7 +132,6 @@ body{
 .card:hover{border-color:transparent;box-shadow:0 30px 70px -28px rgba(0,0,0,.85),0 0 50px -18px var(--accent);}
 .card:hover::before{opacity:1;}
 
-/* glow blob inside card */
 .card .glow{position:absolute;width:160px;height:160px;border-radius:50%;
   background:radial-gradient(circle,var(--accent),transparent 65%);
   filter:blur(34px);opacity:.42;top:-50px;right:-50px;transition:opacity .3s,transform .3s;transform:translateZ(0);}
@@ -121,9 +147,13 @@ body{
 .card h3{font-family:var(--font-d);font-size:19px;font-weight:600;letter-spacing:-.4px;margin:18px 0 6px;transform:translateZ(30px);}
 .card p{font-size:11.5px;line-height:1.5;color:var(--dim);transform:translateZ(20px);}
 .card .meta{position:absolute;bottom:16px;left:20px;right:20px;display:flex;align-items:center;justify-content:space-between;transform:translateZ(30px);}
+.card .pills{display:flex;gap:5px;align-items:center;}
 .card .pill{font-family:var(--font-m);font-size:9.5px;font-weight:600;letter-spacing:.4px;color:var(--accent);
   border:1px solid color-mix(in srgb,var(--accent) 35%,transparent);background:color-mix(in srgb,var(--accent) 10%,transparent);
   padding:3px 9px;border-radius:999px;text-transform:uppercase;}
+.card .pill-q{font-family:var(--font-m);font-size:9.5px;font-weight:600;letter-spacing:.3px;color:var(--dim);
+  border:1px solid rgba(255,255,255,.13);background:rgba(255,255,255,.05);
+  padding:3px 9px;border-radius:999px;}
 .card .go{font-family:var(--font-d);font-size:12px;font-weight:600;color:var(--text);display:flex;align-items:center;gap:5px;opacity:.55;transition:opacity .25s,gap .25s;}
 .card:hover .go{opacity:1;gap:9px;}
 
@@ -143,12 +173,63 @@ body{
 .c-trie{--accent:var(--cyan);}
 .c-bits{--accent:var(--mint);}
 
+/* ---- company section ---- */
+.overview{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px;}
+.ov-card{border:1px solid var(--border);background:var(--panel);backdrop-filter:blur(10px);border-radius:14px;padding:13px 15px;}
+.ov-card h3{font-family:var(--font-display);font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--text-faint);margin-bottom:11px;}
+.barrow{display:flex;align-items:center;gap:9px;margin-bottom:7px;font-size:11px;cursor:default;}
+.barrow .nm{width:120px;flex-shrink:0;color:var(--text);font-weight:500;text-decoration:none;}
+.barrow a.nm:hover{color:var(--cyan);text-decoration:underline;}
+.bartrack{flex:1;height:9px;border-radius:6px;background:rgba(255,255,255,.06);overflow:hidden;}
+.barfill{height:100%;border-radius:6px;}
+.barrow .ct{width:34px;text-align:right;font-family:var(--font-mono);font-size:10px;color:var(--text-dim);}
+.qlist{display:flex;flex-direction:column;gap:5px;}
+.qlite{display:flex;align-items:center;gap:8px;font-size:11px;}
+.qlite .rank{font-family:var(--font-mono);color:var(--text-faint);width:18px;font-size:10px;}
+.qlite a{color:var(--text);text-decoration:none;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.qlite a:hover{color:var(--cyan);}
+.qlite .cc{font-family:var(--font-mono);font-size:9.5px;color:var(--amber);white-space:nowrap;}
+
+.explorer{display:grid;grid-template-columns:280px 1fr;gap:14px;}
+.co-panel{border:1px solid var(--border);background:var(--panel);backdrop-filter:blur(10px);border-radius:14px;overflow:hidden;}
+.search{width:100%;padding:11px 14px;border:none;border-bottom:1px solid var(--border);background:transparent;color:var(--text);font-family:var(--font-body);font-size:12px;outline:none;}
+.search::placeholder{color:var(--text-faint);}
+.complist{max-height:560px;overflow-y:auto;}
+.comp{display:flex;align-items:center;gap:8px;padding:9px 14px;cursor:pointer;border-bottom:1px solid rgba(255,255,255,.04);transition:background .12s;}
+.comp:hover{background:rgba(255,255,255,.04);}
+.comp.sel{background:linear-gradient(90deg,rgba(154,140,255,.16),transparent);border-left:2px solid var(--violet);}
+.comp .cn{font-size:12px;font-weight:500;color:var(--text);flex:1;}
+.comp .cmeta{font-family:var(--font-mono);font-size:9.5px;color:var(--text-faint);}
+
+.detail{padding:16px 18px;min-height:560px;}
+.dhead{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:6px;}
+.dhead h2{font-family:var(--font-display);font-size:22px;font-weight:600;letter-spacing:-.3px;}
+.period{font-family:var(--font-mono);font-size:10px;color:var(--mint);border:1px solid rgba(79,230,180,.3);background:rgba(79,230,180,.1);padding:3px 9px;border-radius:7px;}
+.dsub{font-size:11px;color:var(--text-dim);margin-bottom:16px;}
+.dsub b{color:var(--text);}
+.diffbar{display:flex;height:10px;border-radius:6px;overflow:hidden;margin:8px 0 18px;border:1px solid var(--border);}
+.section-t{font-family:var(--font-display);font-size:10px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--text-faint);margin:18px 0 9px;}
+table.qtab{width:100%;border-collapse:collapse;margin-top:4px;border:1px solid var(--border);border-radius:10px;overflow:hidden;}
+table.qtab th{background:rgba(255,255,255,.04);padding:7px 10px;text-align:left;font-size:9.5px;color:var(--text-faint);text-transform:uppercase;letter-spacing:.5px;font-family:var(--font-display);}
+table.qtab td{padding:6px 10px;font-size:11px;border-bottom:1px solid rgba(255,255,255,.05);color:var(--text-dim);}
+table.qtab tr:last-child td{border-bottom:none;}
+table.qtab tr:hover td{background:rgba(255,255,255,.025);}
+table.qtab a.qt{color:var(--text);text-decoration:none;}
+table.qtab a.qt:hover{color:var(--cyan);}
+.dchip{display:inline-block;padding:2px 8px;border-radius:999px;font-size:9px;font-weight:700;font-family:var(--font-display);}
+.de{background:rgba(79,230,180,.14);color:var(--mint);}
+.dm{background:rgba(255,203,115,.14);color:var(--amber);}
+.dh{background:rgba(255,123,123,.14);color:var(--rose);}
+.tchip{display:inline-block;padding:2px 9px;border-radius:999px;font-size:9.5px;font-weight:600;font-family:var(--font-display);text-decoration:none;border:1px solid transparent;}
+.tchip.link:hover{filter:brightness(1.25);}
+.disclaimer{font-size:10px;color:var(--faint);margin-top:14px;line-height:1.5;}
+
 .footer{text-align:center;margin-top:54px;font-size:11px;color:var(--faint);font-family:var(--font-m);letter-spacing:.5px;animation:fadeUp .8s .4s both;}
 .footer b{color:var(--dim);}
 
-@media(prefers-reduced-motion:reduce){
-  .aurora span{animation:none;}.card{animation:none;opacity:1;}
-  .hero h1,.hero p,.eyebrow,.stats,.sec-label{animation:none;}
+@media(max-width:760px){
+  .overview,.explorer{grid-template-columns:1fr;}
+  .complist{max-height:240px;}
 }
 @media(max-width:560px){
   .hero h1{font-size:clamp(34px,12vw,56px);}
@@ -156,6 +237,11 @@ body{
   .card{min-height:158px;padding:16px 16px 48px;}
   .card .icon{width:42px;height:42px;font-size:21px;}
   .card h3{font-size:16px;}
+  .tabs{flex-direction:column;align-items:center;}
+}
+@media(prefers-reduced-motion:reduce){
+  .aurora span{animation:none;}.card{animation:none;opacity:1;}
+  .hero h1,.hero p,.eyebrow,.stats,.sec-label,.tabs{animation:none;}
 }
 </style>
 </head>
@@ -172,154 +258,323 @@ body{
   <header class="hero">
     <span class="eyebrow"><span class="dot"></span>Interview-ready pattern library</span>
     <h1>DSA Command<br>Center</h1>
-    <p>Fourteen topics, every pattern mapped to its keyword, pseudocode, and complexity. Pick a topic and dive into the phase-by-phase roadmap.</p>
+    <p>Fourteen DSA topics mapped pattern-by-pattern, plus 200 companies' recently-asked questions. Pick a section and drill what matters.</p>
     <div class="stats">
       <div class="stat"><div class="n">14</div><div class="l">Topics</div></div>
-      <div class="stat"><div class="n">70+</div><div class="l">Patterns</div></div>
+      <div class="stat"><div class="n">446</div><div class="l">Questions</div></div>
+      <div class="stat"><div class="n">200</div><div class="l">Companies</div></div>
       <div class="stat"><div class="n">Java</div><div class="l">Pseudocode</div></div>
     </div>
   </header>
 
-  <!-- CORE TOPICS -->
-  <div class="sec-label"><span class="txt">Core Structures</span><span class="line"></span></div>
-  <div class="grid" id="coreGrid">
-
-    <a class="card c-tree" href="tree_roadmap.html" style="--d:0">
-      <span class="glow"></span>
-      <div class="top"><div class="icon">🌳</div><div class="idx">01</div></div>
-      <h3>Trees</h3><p>DFS traversal orders, bottom-up & top-down recursion, BST, LCA.</p>
-      <div class="meta"><span class="pill">8 phases</span><span class="go">Open →</span></div>
-    </a>
-
-    <a class="card c-graph" href="graph_roadmap.html" style="--d:1">
-      <span class="glow"></span>
-      <div class="top"><div class="icon">🕸️</div><div class="idx">02</div></div>
-      <h3>Graphs</h3><p>BFS/DFS, Dijkstra, topological sort, union-find, Tarjan, MST.</p>
-      <div class="meta"><span class="pill">7 phases</span><span class="go">Open →</span></div>
-    </a>
-
-    <a class="card c-dp" href="dp_roadmap.html" style="--d:2">
-      <span class="glow"></span>
-      <div class="top"><div class="icon">🧩</div><div class="idx">03</div></div>
-      <h3>Dynamic Programming</h3><p>1D, knapsack, grid, string, interval, tree, bitmask, state machine.</p>
-      <div class="meta"><span class="pill">8 phases</span><span class="go">Open →</span></div>
-    </a>
-
-    <a class="card c-stack" href="stack_roadmap.html" style="--d:3">
-      <span class="glow"></span>
-      <div class="top"><div class="icon">📚</div><div class="idx">04</div></div>
-      <h3>Stack</h3><p>Monotonic stacks, matching, calculators, histograms, deque, design.</p>
-      <div class="meta"><span class="pill">8 phases</span><span class="go">Open →</span></div>
-    </a>
-
+  <!-- TAB NAV -->
+  <div class="tabs">
+    <button class="tab-btn active" data-tab="dsa">DSA Roadmap</button>
+    <button class="tab-btn" data-tab="companies">Company-Wise</button>
   </div>
 
-  <!-- TECHNIQUE TOPICS -->
-  <div class="sec-label" style="margin-top:42px;"><span class="txt">Techniques & Patterns</span><span class="line"></span></div>
-  <div class="grid" id="techGrid">
+  <!-- ===== DSA SECTION ===== -->
+  <div id="tab-dsa" class="tab-pane active">
 
-    <a class="card c-arrays" href="arrays_roadmap.html" style="--d:0">
-      <span class="glow"></span>
-      <div class="top"><div class="icon">↔️</div><div class="idx">05</div></div>
-      <h3>Arrays & Two Pointers</h3><p>Opposite-ends, fast/slow, Dutch flag, prefix sums.</p>
-      <div class="meta"><span class="pill">3 phases</span><span class="go">Open →</span></div>
-    </a>
+    <div class="sec-label"><span class="txt">DSA Topics</span><span class="line"></span></div>
+    <div class="grid" id="dsaGrid">
 
-    <a class="card c-window" href="sliding_window_roadmap.html" style="--d:1">
-      <span class="glow"></span>
-      <div class="top"><div class="icon">🪟</div><div class="idx">06</div></div>
-      <h3>Sliding Window</h3><p>Fixed and variable-size windows, longest/shortest substrings.</p>
-      <div class="meta"><span class="pill">2 phases</span><span class="go">Open →</span></div>
-    </a>
+      <a class="card c-tree" href="tree_roadmap.html" style="--d:0">
+        <span class="glow"></span>
+        <div class="top"><div class="icon">🌳</div><div class="idx">01</div></div>
+        <h3>Trees</h3><p>DFS traversal orders, bottom-up & top-down recursion, BST, LCA.</p>
+        <div class="meta"><div class="pills"><span class="pill">8 phases</span><span class="pill-q">35 Qs</span></div><span class="go">Open →</span></div>
+      </a>
 
-    <a class="card c-bsearch" href="binary_search_roadmap.html" style="--d:2">
-      <span class="glow"></span>
-      <div class="top"><div class="icon">🎯</div><div class="idx">07</div></div>
-      <h3>Binary Search</h3><p>Boundary search, rotated arrays, binary search on the answer.</p>
-      <div class="meta"><span class="pill">3 phases</span><span class="go">Open →</span></div>
-    </a>
+      <a class="card c-graph" href="graph_roadmap.html" style="--d:1">
+        <span class="glow"></span>
+        <div class="top"><div class="icon">🕸️</div><div class="idx">02</div></div>
+        <h3>Graphs</h3><p>BFS/DFS, Dijkstra, topological sort, union-find, Tarjan, MST.</p>
+        <div class="meta"><div class="pills"><span class="pill">7 phases</span><span class="pill-q">35 Qs</span></div><span class="go">Open →</span></div>
+      </a>
 
-    <a class="card c-linkedlist" href="linked_list_roadmap.html" style="--d:3">
-      <span class="glow"></span>
-      <div class="top"><div class="icon">🔗</div><div class="idx">08</div></div>
-      <h3>Linked List</h3><p>Reversal patterns, fast/slow pointers, dummy-head technique.</p>
-      <div class="meta"><span class="pill">2 phases</span><span class="go">Open →</span></div>
-    </a>
+      <a class="card c-dp" href="dp_roadmap.html" style="--d:2">
+        <span class="glow"></span>
+        <div class="top"><div class="icon">🧩</div><div class="idx">03</div></div>
+        <h3>Dynamic Programming</h3><p>1D, knapsack, grid, string, interval, tree, bitmask, state machine.</p>
+        <div class="meta"><div class="pills"><span class="pill">8 phases</span><span class="pill-q">50 Qs</span></div><span class="go">Open →</span></div>
+      </a>
 
-    <a class="card c-hashing" href="hashing_roadmap.html" style="--d:4">
-      <span class="glow"></span>
-      <div class="top"><div class="icon">🗂️</div><div class="idx">09</div></div>
-      <h3>Hashing</h3><p>Frequency maps, complement lookup, O(1) set membership.</p>
-      <div class="meta"><span class="pill">2 phases</span><span class="go">Open →</span></div>
-    </a>
+      <a class="card c-stack" href="stack_roadmap.html" style="--d:3">
+        <span class="glow"></span>
+        <div class="top"><div class="icon">📚</div><div class="idx">04</div></div>
+        <h3>Stack</h3><p>Monotonic stacks, matching, calculators, histograms, deque, design.</p>
+        <div class="meta"><div class="pills"><span class="pill">8 phases</span><span class="pill-q">55 Qs</span></div><span class="go">Open →</span></div>
+      </a>
 
-    <a class="card c-heap" href="heap_roadmap.html" style="--d:5">
-      <span class="glow"></span>
-      <div class="top"><div class="icon">⛰️</div><div class="idx">10</div></div>
-      <h3>Heap / Priority Queue</h3><p>Top-K, Kth element, two-heap median, merge K sorted.</p>
-      <div class="meta"><span class="pill">2 phases</span><span class="go">Open →</span></div>
-    </a>
+      <a class="card c-arrays" href="arrays_roadmap.html" style="--d:4">
+        <span class="glow"></span>
+        <div class="top"><div class="icon">↔️</div><div class="idx">05</div></div>
+        <h3>Arrays & Two Pointers</h3><p>Opposite-ends, fast/slow, Dutch flag, prefix sums.</p>
+        <div class="meta"><div class="pills"><span class="pill">5 phases</span><span class="pill-q">28 Qs</span></div><span class="go">Open →</span></div>
+      </a>
 
-    <a class="card c-backtrack" href="backtracking_roadmap.html" style="--d:6">
-      <span class="glow"></span>
-      <div class="top"><div class="icon">🌀</div><div class="idx">11</div></div>
-      <h3>Backtracking</h3><p>Subsets, combinations, permutations, grid & constraint solving.</p>
-      <div class="meta"><span class="pill">2 phases</span><span class="go">Open →</span></div>
-    </a>
+      <a class="card c-window" href="sliding_window_roadmap.html" style="--d:5">
+        <span class="glow"></span>
+        <div class="top"><div class="icon">🪟</div><div class="idx">06</div></div>
+        <h3>Sliding Window</h3><p>Fixed and variable-size windows, longest/shortest substrings.</p>
+        <div class="meta"><div class="pills"><span class="pill">4 phases</span><span class="pill-q">20 Qs</span></div><span class="go">Open →</span></div>
+      </a>
 
-    <a class="card c-greedy" href="greedy_roadmap.html" style="--d:7">
-      <span class="glow"></span>
-      <div class="top"><div class="icon">⚡</div><div class="idx">12</div></div>
-      <h3>Greedy</h3><p>Interval scheduling, jump games, allocation, partition labels.</p>
-      <div class="meta"><span class="pill">2 phases</span><span class="go">Open →</span></div>
-    </a>
+      <a class="card c-bsearch" href="binary_search_roadmap.html" style="--d:6">
+        <span class="glow"></span>
+        <div class="top"><div class="icon">🎯</div><div class="idx">07</div></div>
+        <h3>Binary Search</h3><p>Boundary search, rotated arrays, binary search on the answer.</p>
+        <div class="meta"><div class="pills"><span class="pill">5 phases</span><span class="pill-q">24 Qs</span></div><span class="go">Open →</span></div>
+      </a>
 
-    <a class="card c-trie" href="trie_roadmap.html" style="--d:8">
-      <span class="glow"></span>
-      <div class="top"><div class="icon">🌲</div><div class="idx">13</div></div>
-      <h3>Trie</h3><p>Prefix trees, autocomplete, wildcard search, bit-tries.</p>
-      <div class="meta"><span class="pill">1 phase</span><span class="go">Open →</span></div>
-    </a>
+      <a class="card c-linkedlist" href="linked_list_roadmap.html" style="--d:7">
+        <span class="glow"></span>
+        <div class="top"><div class="icon">🔗</div><div class="idx">08</div></div>
+        <h3>Linked List</h3><p>Reversal patterns, fast/slow pointers, dummy-head technique.</p>
+        <div class="meta"><div class="pills"><span class="pill">4 phases</span><span class="pill-q">22 Qs</span></div><span class="go">Open →</span></div>
+      </a>
 
-    <a class="card c-bits" href="bit_manipulation_roadmap.html" style="--d:9">
-      <span class="glow"></span>
-      <div class="top"><div class="icon">⚙️</div><div class="idx">14</div></div>
-      <h3>Bit Manipulation</h3><p>XOR tricks, masking, set-bit counting, subset enumeration.</p>
-      <div class="meta"><span class="pill">2 phases</span><span class="go">Open →</span></div>
-    </a>
+      <a class="card c-hashing" href="hashing_roadmap.html" style="--d:8">
+        <span class="glow"></span>
+        <div class="top"><div class="icon">🗂️</div><div class="idx">09</div></div>
+        <h3>Hashing</h3><p>Frequency maps, complement lookup, O(1) set membership.</p>
+        <div class="meta"><div class="pills"><span class="pill">7 phases</span><span class="pill-q">60 Qs</span></div><span class="go">Open →</span></div>
+      </a>
 
-  </div>
+      <a class="card c-heap" href="heap_roadmap.html" style="--d:9">
+        <span class="glow"></span>
+        <div class="top"><div class="icon">⛰️</div><div class="idx">10</div></div>
+        <h3>Heap / Priority Queue</h3><p>Top-K, Kth element, two-heap median, merge K sorted.</p>
+        <div class="meta"><div class="pills"><span class="pill">4 phases</span><span class="pill-q">19 Qs</span></div><span class="go">Open →</span></div>
+      </a>
+
+      <a class="card c-backtrack" href="backtracking_roadmap.html" style="--d:10">
+        <span class="glow"></span>
+        <div class="top"><div class="icon">🌀</div><div class="idx">11</div></div>
+        <h3>Backtracking</h3><p>Subsets, combinations, permutations, grid & constraint solving.</p>
+        <div class="meta"><div class="pills"><span class="pill">4 phases</span><span class="pill-q">21 Qs</span></div><span class="go">Open →</span></div>
+      </a>
+
+      <a class="card c-greedy" href="greedy_roadmap.html" style="--d:11">
+        <span class="glow"></span>
+        <div class="top"><div class="icon">⚡</div><div class="idx">12</div></div>
+        <h3>Greedy</h3><p>Interval scheduling, jump games, allocation, partition labels.</p>
+        <div class="meta"><div class="pills"><span class="pill">4 phases</span><span class="pill-q">21 Qs</span></div><span class="go">Open →</span></div>
+      </a>
+
+      <a class="card c-trie" href="trie_roadmap.html" style="--d:12">
+        <span class="glow"></span>
+        <div class="top"><div class="icon">🌲</div><div class="idx">13</div></div>
+        <h3>Trie</h3><p>Prefix trees, autocomplete, wildcard search, bit-tries.</p>
+        <div class="meta"><div class="pills"><span class="pill">3 phases</span><span class="pill-q">16 Qs</span></div><span class="go">Open →</span></div>
+      </a>
+
+      <a class="card c-bits" href="bit_manipulation_roadmap.html" style="--d:13">
+        <span class="glow"></span>
+        <div class="top"><div class="icon">⚙️</div><div class="idx">14</div></div>
+        <h3>Bit Manipulation</h3><p>XOR tricks, masking, set-bit counting, subset enumeration.</p>
+        <div class="meta"><div class="pills"><span class="pill">4 phases</span><span class="pill-q">20 Qs</span></div><span class="go">Open →</span></div>
+      </a>
+
+    </div>
+  </div><!-- /tab-dsa -->
+
+  <!-- ===== COMPANY-WISE SECTION ===== -->
+  <div id="tab-companies" class="tab-pane">
+
+    <div class="sec-label" style="margin-bottom:20px;"><span class="txt">Company-Wise Questions</span><span class="line"></span></div>
+
+    <div class="overview">
+      <div class="ov-card">
+        <h3>Hottest topics across all companies</h3>
+        <div id="ovTopics"></div>
+      </div>
+      <div class="ov-card">
+        <h3>Most-asked questions (by # of companies)</h3>
+        <div class="qlist" id="ovQuestions"></div>
+      </div>
+    </div>
+
+    <div class="explorer">
+      <div class="co-panel">
+        <input class="search" id="search" placeholder="Search company…" autocomplete="off">
+        <div class="complist" id="complist"></div>
+      </div>
+      <div class="co-panel detail" id="detail"></div>
+    </div>
+
+    <div class="disclaimer" id="disc"></div>
+  </div><!-- /tab-companies -->
 
   <div class="footer">Built for the grind · <b>Pattern → Keyword → Pseudocode → Complexity</b></div>
 
-</div>
+</div><!-- /wrap -->
 
+<script src="companies_data.js"></script>
 <script>
-// staggered entrance
-document.querySelectorAll('.card').forEach((c,i)=>{
-  const d = parseFloat(c.style.getPropertyValue('--d'))||0;
-  c.style.animationDelay = (0.35 + d*0.06) + 's';
+// ---- tab switching ----
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
+    if (btn.dataset.tab === 'companies' && !window._cwInit) {
+      window._cwInit = true;
+      initCompanySection();
+    }
+  });
 });
 
-// 3D mouse tilt — skip if reduced motion
+// ---- DSA cards: staggered entrance + 3D tilt ----
+document.querySelectorAll('.card').forEach((c, i) => {
+  const d = parseFloat(c.style.getPropertyValue('--d')) || 0;
+  c.style.animationDelay = (0.35 + d * 0.06) + 's';
+});
+
 const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-if(!reduce){
-  document.querySelectorAll('.card').forEach(card=>{
-    card.addEventListener('mousemove', e=>{
+if (!reduce) {
+  document.querySelectorAll('.card').forEach(card => {
+    card.addEventListener('mousemove', e => {
       const r = card.getBoundingClientRect();
-      const px = (e.clientX - r.left)/r.width  - 0.5;
-      const py = (e.clientY - r.top )/r.height - 0.5;
+      const px = (e.clientX - r.left) / r.width - 0.5;
+      const py = (e.clientY - r.top) / r.height - 0.5;
       card.style.transform =
-        `perspective(900px) rotateY(${px*12}deg) rotateX(${-py*12}deg) translateY(-6px) scale(1.02)`;
-      // move glow toward cursor
+        `perspective(900px) rotateY(${px * 12}deg) rotateX(${-py * 12}deg) translateY(-6px) scale(1.02)`;
       const g = card.querySelector('.glow');
-      if(g){ g.style.top=(py*40-50)+'px'; g.style.right=(-px*40-50)+'px'; }
+      if (g) { g.style.top = (py * 40 - 50) + 'px'; g.style.right = (-px * 40 - 50) + 'px'; }
     });
-    card.addEventListener('mouseleave', ()=>{
-      card.style.transform='';
-      const g=card.querySelector('.glow'); if(g){g.style.top='';g.style.right='';}
+    card.addEventListener('mouseleave', () => {
+      card.style.transform = '';
+      const g = card.querySelector('.glow'); if (g) { g.style.top = ''; g.style.right = ''; }
     });
   });
+}
+
+// ---- company section ----
+function initCompanySection() {
+  const V='#9A8CFF',C='#5BD2FF',M='#4FE6B4',A='#FFCB73',P='#FF89C9',R='#FF7B7B',L='#B6E86A',G='#9aa0bd',F='#6b7090';
+  const TOPIC={
+    tree:{n:'Trees',f:'tree_roadmap.html',c:M},
+    graph:{n:'Graphs',f:'graph_roadmap.html',c:C},
+    dp:{n:'Dynamic Programming',f:'dp_roadmap.html',c:P},
+    stack:{n:'Stack',f:'stack_roadmap.html',c:A},
+    arrays:{n:'Arrays / Two Ptr',f:'arrays_roadmap.html',c:V},
+    sliding_window:{n:'Sliding Window',f:'sliding_window_roadmap.html',c:C},
+    binary_search:{n:'Binary Search',f:'binary_search_roadmap.html',c:M},
+    linked_list:{n:'Linked List',f:'linked_list_roadmap.html',c:R},
+    hashing:{n:'Hashing',f:'hashing_roadmap.html',c:L},
+    heap:{n:'Heap / PQ',f:'heap_roadmap.html',c:A},
+    backtracking:{n:'Backtracking',f:'backtracking_roadmap.html',c:V},
+    greedy:{n:'Greedy',f:'greedy_roadmap.html',c:P},
+    trie:{n:'Trie',f:'trie_roadmap.html',c:C},
+    bits:{n:'Bit Manipulation',f:'bit_manipulation_roadmap.html',c:M},
+    string:{n:'Strings',f:null,c:G},
+    design:{n:'Design',f:null,c:G},
+    math:{n:'Math',f:null,c:G},
+    other:{n:'Other',f:null,c:F},
+  };
+  const tinfo = k => TOPIC[k] || {n:k, f:null, c:F};
+  const PERIOD = {'6months':'last 6 months','1year':'last 1 year','2year':'last 2 years','alltime':'all time'};
+  const D = window.CW;
+
+  function topicChip(k, link) {
+    const t = tinfo(k);
+    const style = `background:${t.c}22;color:${t.c};border-color:${t.c}55;`;
+    if (link && t.f) return `<a class="tchip link" style="${style}" href="${t.f}">${t.n}</a>`;
+    return `<span class="tchip" style="${style}">${t.n}</span>`;
+  }
+  function diffChip(d) {
+    const m = {Easy:'de', Medium:'dm', Hard:'dh'};
+    return `<span class="dchip ${m[d]||''}">${d||'?'}</span>`;
+  }
+
+  // overview: hottest topics
+  (function() {
+    const top = D.topTopics.slice(0, 10);
+    const max = Math.max(...top.map(t => t.count));
+    document.getElementById('ovTopics').innerHTML = top.map(t => {
+      const ti = tinfo(t.topic); const w = Math.round(t.count / max * 100);
+      const nm = ti.f ? `<a class="nm" href="${ti.f}">${ti.n}</a>` : `<span class="nm">${ti.n}</span>`;
+      return `<div class="barrow">${nm}<div class="bartrack"><div class="barfill" style="width:${w}%;background:${ti.c};"></div></div><div class="ct">${t.count}</div></div>`;
+    }).join('');
+  })();
+
+  // overview: most-asked questions
+  (function() {
+    document.getElementById('ovQuestions').innerHTML = D.topQuestions.slice(0, 12).map((q, i) => {
+      const url = q.url || ('https://leetcode.com/problems/' + q.title.toLowerCase().replace(/[^a-z0-9]+/g, '-'));
+      return `<div class="qlite"><span class="rank">${i+1}</span><a href="${url.trim()}" target="_blank" title="${q.title}">${q.title}</a><span class="cc">${q.companies} cos</span></div>`;
+    }).join('');
+  })();
+
+  // company list + search
+  let selected = null;
+
+  function renderList(filter) {
+    const f = (filter || '').toLowerCase();
+    const list = D.companies.filter(c => c.name.toLowerCase().includes(f));
+    document.getElementById('complist').innerHTML = list.map(c => {
+      const top = Object.keys(c.topics)[0];
+      return `<div class="comp${c.slug === selected ? ' sel' : ''}" data-slug="${c.slug}">
+        <span class="cn">${c.name}</span>
+        <span class="cmeta">${c.total}</span>
+        ${topicChip(top, false)}
+      </div>`;
+    }).join('') || '<div style="padding:14px;color:var(--text-faint);font-size:11px;">No company found.</div>';
+    document.querySelectorAll('.comp').forEach(el => el.onclick = () => select(el.dataset.slug));
+  }
+
+  function select(slug) {
+    selected = slug;
+    const c = D.companies.find(x => x.slug === slug);
+    document.querySelectorAll('.comp').forEach(el => el.classList.toggle('sel', el.dataset.slug === slug));
+    const dd = c.difficulty, dtot = (dd.Easy + dd.Medium + dd.Hard) || 1;
+    const topEntries = Object.entries(c.topics);
+    const tmax = Math.max(...topEntries.map(e => e[1]));
+    const topName = tinfo(topEntries[0][0]).n;
+
+    const topicBars = topEntries.slice(0, 12).map(([k, v]) => {
+      const ti = tinfo(k), w = Math.round(v / tmax * 100);
+      const nm = ti.f ? `<a class="nm" href="${ti.f}">${ti.n}</a>` : `<span class="nm">${ti.n}</span>`;
+      return `<div class="barrow">${nm}<div class="bartrack"><div class="barfill" style="width:${w}%;background:${ti.c};"></div></div><div class="ct">${v}</div></div>`;
+    }).join('');
+
+    const rows = c.questions.map((q, i) => {
+      const url = (q.url || '').trim() || ('https://leetcode.com/problems/' + q.title.toLowerCase().replace(/[^a-z0-9]+/g, '-'));
+      return `<tr><td style="color:var(--text-faint);font-family:var(--font-mono);">${i+1}</td>
+        <td><a class="qt" href="${url}" target="_blank">${q.title}</a></td>
+        <td>${diffChip(q.diff)}</td>
+        <td>${topicChip(q.topic, true)}</td>
+        <td style="font-family:var(--font-mono);color:var(--text-faint);">${q.freq.toFixed(1)}</td></tr>`;
+    }).join('');
+
+    document.getElementById('detail').innerHTML = `
+      <div class="dhead"><h2>${c.name}</h2><span class="period">${PERIOD[c.period]||c.period}</span></div>
+      <div class="dsub"><b>${c.total}</b> tracked questions &middot; most-drilled topic: <b>${topName}</b></div>
+      <div class="diffbar">
+        <div style="width:${dd.Easy/dtot*100}%;background:${M};" title="Easy ${dd.Easy}"></div>
+        <div style="width:${dd.Medium/dtot*100}%;background:${A};" title="Medium ${dd.Medium}"></div>
+        <div style="width:${dd.Hard/dtot*100}%;background:${R};" title="Hard ${dd.Hard}"></div>
+      </div>
+      <div style="font-size:10px;color:var(--text-faint);margin-top:-12px;margin-bottom:6px;">
+        <span style="color:${M};">&#9632;</span> Easy ${dd.Easy} &nbsp;
+        <span style="color:${A};">&#9632;</span> Medium ${dd.Medium} &nbsp;
+        <span style="color:${R};">&#9632;</span> Hard ${dd.Hard}</div>
+      <div class="section-t">Topic distribution &middot; click a topic to open its roadmap</div>
+      ${topicBars}
+      <div class="section-t">Recently asked (top ${c.questions.length}, by frequency)</div>
+      <table class="qtab">
+        <tr><th>#</th><th>Question</th><th>Diff</th><th>Topic</th><th>Freq</th></tr>
+        ${rows}
+      </table>`;
+  }
+
+  renderList('');
+  document.getElementById('search').addEventListener('input', e => renderList(e.target.value));
+  select(D.companies[0].slug);
+  document.getElementById('disc').innerHTML = `Parsed from the LeetCode company-wise dataset (${D.companyCount} companies). Each company shows its most recent available window. Topics are inferred from question titles, so the split is approximate — treat it as a study signal, not an exact tag.`;
 }
 </script>
 </body>

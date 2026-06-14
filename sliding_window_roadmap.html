@@ -77,13 +77,81 @@ Map&lt;Character,Integer&gt; count = <span class="kw">new</span> HashMap&lt;&gt;
     <div class="pbar"><b>Pattern:</b> for-loop expands right; inner while shrinks left until valid. For "longest" → record after shrink; for "shortest" → record inside shrink loop.</div>
   </div>
 
+  <div class="phase-card">
+    <div class="ph"><div class="ph-num">3</div><div class="ph-title">Exact K / Count Subarrays</div>
+      <div class="cx-badge"><span class="cx cx-time">Time O(n)</span><span class="cx cx-space">Space O(k)</span></div></div>
+    <div class="split">
+      <div class="left-pane">
+        <div class="qs-title">Questions</div>
+        <div class="q-row"><span class="q-num">1.</span><span>Subarrays with K Different Integers</span></div>
+        <div class="q-row"><span class="q-num">2.</span><span>Binary Subarrays With Sum</span></div>
+        <div class="q-row"><span class="q-num">3.</span><span>Count Number of Nice Subarrays</span></div>
+        <div class="q-row"><span class="q-num">4.</span><span>Max Consecutive Ones III</span></div>
+        <div class="q-row"><span class="q-num">5.</span><span>Count Complete Subarrays in an Array</span></div>
+        <div class="q-row"><span class="q-num">6.</span><span>Number of Substrings Containing All Three Characters</span></div>
+        <div class="keyword-box"><b>Keyword:</b> "exactly K", "count subarrays", "at most K". Convert exact counts to atMost(K) - atMost(K-1).</div>
+      </div>
+      <div class="right-pane">
+        <div class="qs-title">Pseudocode</div>
+        <div class="code-block">int exactK(int[] nums, int k) {
+  <span class="kw">return</span> atMost(nums, k) - atMost(nums, k-1);
+}
+
+int atMost(int[] nums, int k) {
+  int left=0, ans=0;
+  Map&lt;Integer,Integer&gt; freq = <span class="kw">new</span> HashMap&lt;&gt;();
+  <span class="kw">for</span> (int right=0; right&lt;nums.length; right++) {
+    <span class="kw">if</span> (freq.getOrDefault(nums[right],0)==0) k--;
+    freq.put(nums[right], freq.getOrDefault(nums[right],0)+1);
+    <span class="kw">while</span> (k &lt; 0) {
+      freq.put(nums[left], freq.get(nums[left])-1);
+      <span class="kw">if</span> (freq.get(nums[left++])==0) k++;
+    }
+    ans += right - left + 1;
+  }
+  <span class="kw">return</span> ans;
+}</div>
+      </div>
+    </div>
+    <div class="pbar"><b>Pattern:</b> Every valid window ending at right contributes right-left+1 subarrays. Exact K is usually two at-most passes.</div>
+  </div>
+
+  <div class="phase-card">
+    <div class="ph"><div class="ph-num">4</div><div class="ph-title">Monotonic Deque Windows</div>
+      <div class="cx-badge"><span class="cx cx-time">Time O(n)</span><span class="cx cx-space">Space O(k)</span></div></div>
+    <div class="split">
+      <div class="left-pane">
+        <div class="qs-title">Questions</div>
+        <div class="q-row"><span class="q-num">1.</span><span>Sliding Window Maximum</span></div>
+        <div class="q-row"><span class="q-num">2.</span><span>Shortest Subarray with Sum at Least K</span></div>
+        <div class="q-row"><span class="q-num">3.</span><span>Constrained Subsequence Sum</span></div>
+        <div class="q-row"><span class="q-num">4.</span><span>Jump Game VI</span></div>
+        <div class="q-row"><span class="q-num">5.</span><span>Longest Continuous Subarray With Absolute Diff <= Limit</span></div>
+        <div class="keyword-box"><b>Keyword:</b> "window max/min", "best previous within k", "absolute diff limit". Deque stores useful candidates in sorted order.</div>
+      </div>
+      <div class="right-pane">
+        <div class="qs-title">Pseudocode</div>
+        <div class="code-block"><span class="cm">// Sliding Window Maximum</span>
+Deque&lt;Integer&gt; dq = <span class="kw">new</span> ArrayDeque&lt;&gt;(); <span class="cm">// indices, values decreasing</span>
+<span class="kw">for</span> (int i=0; i&lt;n; i++) {
+  <span class="kw">while</span> (!dq.isEmpty() &amp;&amp; dq.peekFirst() &lt;= i-k)
+    dq.pollFirst();
+  <span class="kw">while</span> (!dq.isEmpty() &amp;&amp; nums[dq.peekLast()] &lt;= nums[i])
+    dq.pollLast();
+  dq.addLast(i);
+  <span class="kw">if</span> (i &gt;= k-1) ans.add(nums[dq.peekFirst()]);
+}</div>
+      </div>
+    </div>
+    <div class="pbar"><b>Pattern:</b> Remove expired indices from the front; remove dominated candidates from the back. Each index enters and leaves once.</div>
+  </div>
+
   <table class="cx-table">
     <tr><th>Window type</th><th>Time</th><th>Space</th></tr>
     <tr><td>Fixed-size</td><td class="mono">O(n)</td><td class="mono">O(1) or O(26)</td></tr>
     <tr><td>Variable-size + HashMap</td><td class="mono">O(n)</td><td class="mono">O(k) distinct</td></tr>
     <tr><td>Window max/min + Deque</td><td class="mono">O(n)</td><td class="mono">O(k)</td></tr>
   </table>
-</div>
 
 <!-- ══════════════════════════════════════════ BINARY SEARCH ══════════════ -->
 <div class="golden"><b>GOLDEN RULE:</b> Pattern &#8594; Keyword &#8594; Pseudocode &#8594; Complexity. State the time AND space cost out loud in interviews.</div>

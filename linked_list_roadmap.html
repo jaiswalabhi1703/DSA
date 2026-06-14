@@ -79,13 +79,82 @@ ListNode dummy = <span class="kw">new</span> ListNode(0); dummy.next = head;
     <div class="pbar"><b>Pattern:</b> Fast moves 2×, slow 1×. When fast hits the end, slow is at the middle. For Nth-from-end: advance fast N nodes first, then move both.</div>
   </div>
 
+  <div class="phase-card">
+    <div class="ph"><div class="ph-num">3</div><div class="ph-title">Merge, Sort &amp; Divide-Conquer Lists</div>
+      <div class="cx-badge"><span class="cx cx-time">Time O(n log n)</span><span class="cx cx-space">Space O(log n)</span></div></div>
+    <div class="split">
+      <div class="left-pane">
+        <div class="qs-title">Questions</div>
+        <div class="q-row"><span class="q-num">1.</span><span>Merge Two Sorted Lists</span></div>
+        <div class="q-row"><span class="q-num">2.</span><span>Merge K Sorted Lists</span></div>
+        <div class="q-row"><span class="q-num">3.</span><span>Sort List</span></div>
+        <div class="q-row"><span class="q-num">4.</span><span>Insertion Sort List</span></div>
+        <div class="q-row"><span class="q-num">5.</span><span>Partition List</span></div>
+        <div class="q-row"><span class="q-num">6.</span><span>Convert Sorted List to BST</span></div>
+        <div class="keyword-box"><b>Keyword:</b> "sorted lists", "merge k", "sort linked list in O(n log n)". Use dummy heads, split with slow/fast, merge sorted halves.</div>
+      </div>
+      <div class="right-pane">
+        <div class="qs-title">Pseudocode</div>
+        <div class="code-block"><span class="cm">// Merge sort on linked list</span>
+ListNode sortList(ListNode head) {
+  <span class="kw">if</span> (head == <span class="kw">null</span> || head.next == <span class="kw">null</span>) <span class="kw">return</span> head;
+  ListNode mid = splitMiddle(head);
+  ListNode right = mid.next;
+  mid.next = <span class="kw">null</span>;
+  ListNode a = sortList(head);
+  ListNode b = sortList(right);
+  <span class="kw">return</span> merge(a, b);
+}
+
+<span class="cm">// Merge K: priority queue or divide and conquer pairwise merge</span></div>
+      </div>
+    </div>
+    <div class="pbar"><b>Pattern:</b> Linked-list sorting is merge sort, not quicksort. Splitting and merging only rewires next pointers.</div>
+  </div>
+
+  <div class="phase-card">
+    <div class="ph"><div class="ph-num">4</div><div class="ph-title">Reorder, Copy &amp; Pointer Surgery</div>
+      <div class="cx-badge"><span class="cx cx-time">Time O(n)</span><span class="cx cx-space">Space O(1)/O(n)</span></div></div>
+    <div class="split">
+      <div class="left-pane">
+        <div class="qs-title">Questions</div>
+        <div class="q-row"><span class="q-num">1.</span><span>Reorder List</span></div>
+        <div class="q-row"><span class="q-num">2.</span><span>Rotate List</span></div>
+        <div class="q-row"><span class="q-num">3.</span><span>Odd Even Linked List</span></div>
+        <div class="q-row"><span class="q-num">4.</span><span>Copy List with Random Pointer</span></div>
+        <div class="q-row"><span class="q-num">5.</span><span>Flatten a Multilevel Doubly Linked List</span></div>
+        <div class="q-row"><span class="q-num">6.</span><span>Add Two Numbers I &amp; II</span></div>
+        <div class="keyword-box"><b>Keyword:</b> "reorder in-place", "random pointer", "rotate", "flatten". Draw nodes; save next pointers before rewiring.</div>
+      </div>
+      <div class="right-pane">
+        <div class="qs-title">Pseudocode</div>
+        <div class="code-block"><span class="cm">// Reorder List: L0, Ln, L1, Ln-1...</span>
+ListNode mid = middle(head);
+ListNode second = reverse(mid.next);
+mid.next = <span class="kw">null</span>;
+
+ListNode first = head;
+<span class="kw">while</span> (second != <span class="kw">null</span>) {
+  ListNode fNext = first.next;
+  ListNode sNext = second.next;
+  first.next = second;
+  second.next = fNext;
+  first = fNext;
+  second = sNext;
+}
+
+<span class="cm">// Copy random pointer: HashMap old->new, or weave cloned nodes</span></div>
+      </div>
+    </div>
+    <div class="pbar"><b>Pattern:</b> Many hard list problems are combinations of middle finding, reversing the second half, and merging two chains.</div>
+  </div>
+
   <table class="cx-table">
     <tr><th>Operation</th><th>Time</th><th>Space</th></tr>
     <tr><td>Reverse / traverse</td><td class="mono">O(n)</td><td class="mono">O(1)</td></tr>
     <tr><td>Cycle detect (Floyd)</td><td class="mono">O(n)</td><td class="mono">O(1)</td></tr>
     <tr><td>Merge K lists (heap)</td><td class="mono">O(N log k)</td><td class="mono">O(k)</td></tr>
   </table>
-</div>
 
 <!-- ══════════════════════════════════════════ HASHING ══════════════ -->
 <div class="golden"><b>GOLDEN RULE:</b> Pattern &#8594; Keyword &#8594; Pseudocode &#8594; Complexity. State the time AND space cost out loud in interviews.</div>

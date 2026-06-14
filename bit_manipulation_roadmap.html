@@ -84,6 +84,74 @@ int count = 0;
     <div class="pbar"><b>Pattern:</b> <code>n & (n-1)</code> removes the lowest set bit — counts bits in O(set bits). Bitmask loops <code>0..2ⁿ</code> enumerate every subset.</div>
   </div>
 
+  <div class="phase-card">
+    <div class="ph"><div class="ph-num">3</div><div class="ph-title">Bitmask Enumeration &amp; DP</div>
+      <div class="cx-badge"><span class="cx cx-time">Time O(2^n * n)</span><span class="cx cx-space">Space O(2^n)</span></div></div>
+    <div class="split">
+      <div class="left-pane">
+        <div class="qs-title">Questions</div>
+        <div class="q-row"><span class="q-num">1.</span><span>Subsets</span></div>
+        <div class="q-row"><span class="q-num">2.</span><span>Partition to K Equal Sum Subsets</span></div>
+        <div class="q-row"><span class="q-num">3.</span><span>Shortest Path Visiting All Nodes</span></div>
+        <div class="q-row"><span class="q-num">4.</span><span>Minimum XOR Sum of Two Arrays</span></div>
+        <div class="q-row"><span class="q-num">5.</span><span>Stickers to Spell Word</span></div>
+        <div class="q-row"><span class="q-num">6.</span><span>Maximum Product of Word Lengths</span></div>
+        <div class="keyword-box"><b>Keyword:</b> "n <= 20", "visited subset", "choose unused item", "word character mask". A bitmask compresses a set into one integer.</div>
+      </div>
+      <div class="right-pane">
+        <div class="qs-title">Pseudocode</div>
+        <div class="code-block"><span class="cm">// DP over subsets</span>
+int FULL = (1 &lt;&lt; n) - 1;
+int[] dp = <span class="kw">new</span> int[1 &lt;&lt; n];
+Arrays.fill(dp, INF);
+dp[0] = 0;
+
+<span class="kw">for</span> (int mask=0; mask&lt;=FULL; mask++) {
+  <span class="kw">for</span> (int i=0; i&lt;n; i++) {
+    <span class="kw">if</span> (((mask &gt;&gt; i) &amp; 1) == 1) <span class="kw">continue</span>;
+    int next = mask | (1 &lt;&lt; i);
+    dp[next] = Math.min(dp[next], dp[mask] + cost(mask, i));
+  }
+}</div>
+      </div>
+    </div>
+    <div class="pbar"><b>Pattern:</b> State is the set of chosen/visited items. Transitions add, remove, or test one bit.</div>
+  </div>
+
+  <div class="phase-card">
+    <div class="ph"><div class="ph-num">4</div><div class="ph-title">Bitwise AND/OR Ranges &amp; Binary Trie</div>
+      <div class="cx-badge"><span class="cx cx-time">Time O(n*32)</span><span class="cx cx-space">Space O(n*32)</span></div></div>
+    <div class="split">
+      <div class="left-pane">
+        <div class="qs-title">Questions</div>
+        <div class="q-row"><span class="q-num">1.</span><span>Bitwise AND of Numbers Range</span></div>
+        <div class="q-row"><span class="q-num">2.</span><span>Maximum XOR of Two Numbers in an Array</span></div>
+        <div class="q-row"><span class="q-num">3.</span><span>Maximum XOR With an Element From Array</span></div>
+        <div class="q-row"><span class="q-num">4.</span><span>Total Hamming Distance</span></div>
+        <div class="q-row"><span class="q-num">5.</span><span>Sum of Two Integers</span></div>
+        <div class="keyword-box"><b>Keyword:</b> "max XOR", "AND of range", "without + operator", "pair bit contribution". Think bit-by-bit, usually 31..0.</div>
+      </div>
+      <div class="right-pane">
+        <div class="qs-title">Pseudocode</div>
+        <div class="code-block"><span class="cm">// Range AND: remove changing suffix bits</span>
+int shift = 0;
+<span class="kw">while</span> (left &lt; right) {
+  left &gt;&gt;= 1;
+  right &gt;&gt;= 1;
+  shift++;
+}
+<span class="kw">return</span> left &lt;&lt; shift;
+
+<span class="cm">// Max XOR: for each bit, prefer opposite branch in trie</span>
+<span class="kw">for</span> (int bit=31; bit&gt;=0; bit--) {
+  int want = 1 - ((num &gt;&gt; bit) &amp; 1);
+  <span class="cm">// take want child if it exists, else same bit</span>
+}</div>
+      </div>
+    </div>
+    <div class="pbar"><b>Pattern:</b> Range AND keeps only the common binary prefix. XOR is maximized by choosing opposite bits greedily from high to low.</div>
+  </div>
+
   <table class="cx-table">
     <tr><th>Operation</th><th>Time</th><th>Note</th></tr>
     <tr><td>XOR sweep</td><td class="mono">O(n)</td><td>O(1) space</td></tr>

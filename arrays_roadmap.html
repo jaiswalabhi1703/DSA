@@ -111,13 +111,76 @@ int sum=0, count=0;
     <div class="pbar"><b>Pattern:</b> prefix[i] = sum of first i elements. Range sum = prefix[r+1] - prefix[l]. For counting, store prefix frequencies in a map.</div>
   </div>
 
+  <div class="phase-card">
+    <div class="ph"><div class="ph-num">4</div><div class="ph-title">Kadane / Running Best</div>
+      <div class="cx-badge"><span class="cx cx-time">Time O(n)</span><span class="cx cx-space">Space O(1)</span></div></div>
+    <div class="split">
+      <div class="left-pane">
+        <div class="qs-title">Questions</div>
+        <div class="q-row"><span class="q-num">1.</span><span>Maximum Subarray</span></div>
+        <div class="q-row"><span class="q-num">2.</span><span>Maximum Product Subarray</span></div>
+        <div class="q-row"><span class="q-num">3.</span><span>Best Time to Buy and Sell Stock</span></div>
+        <div class="q-row"><span class="q-num">4.</span><span>Maximum Sum Circular Subarray</span></div>
+        <div class="q-row"><span class="q-num">5.</span><span>Maximum Alternating Subsequence Sum</span></div>
+        <div class="q-row"><span class="q-num">6.</span><span>Product of Array Except Self</span></div>
+        <div class="keyword-box"><b>Keyword:</b> "maximum subarray/product/profit", "best ending here", "running min/max". Keep the best local state and global answer.</div>
+      </div>
+      <div class="right-pane">
+        <div class="qs-title">Pseudocode</div>
+        <div class="code-block"><span class="cm">// Kadane: max subarray sum</span>
+int cur = nums[0], best = nums[0];
+<span class="kw">for</span> (int i=1; i&lt;n; i++) {
+  cur = Math.max(nums[i], cur + nums[i]);
+  best = Math.max(best, cur);
+}
+
+<span class="cm">// Max product: track both max and min ending here</span>
+<span class="cm">// because negative * negative can become max</span></div>
+      </div>
+    </div>
+    <div class="pbar"><b>Pattern:</b> Decide whether the best segment ending at i should extend the previous segment or restart at i.</div>
+  </div>
+
+  <div class="phase-card">
+    <div class="ph"><div class="ph-num">5</div><div class="ph-title">Index Marking, Cyclic Sort &amp; Matrix Arrays</div>
+      <div class="cx-badge"><span class="cx cx-time">Time O(n)</span><span class="cx cx-space">Space O(1)</span></div></div>
+    <div class="split">
+      <div class="left-pane">
+        <div class="qs-title">Questions</div>
+        <div class="q-row"><span class="q-num">1.</span><span>First Missing Positive</span></div>
+        <div class="q-row"><span class="q-num">2.</span><span>Find All Numbers Disappeared in an Array</span></div>
+        <div class="q-row"><span class="q-num">3.</span><span>Find the Duplicate Number</span></div>
+        <div class="q-row"><span class="q-num">4.</span><span>Set Matrix Zeroes</span></div>
+        <div class="q-row"><span class="q-num">5.</span><span>Rotate Image</span></div>
+        <div class="q-row"><span class="q-num">6.</span><span>Spiral Matrix</span></div>
+        <div class="q-row"><span class="q-num">7.</span><span>Game of Life</span></div>
+        <div class="keyword-box"><b>Keyword:</b> "numbers are 1..n", "in-place O(1)", "matrix transform". Use indices as storage, or layer-by-layer matrix traversal.</div>
+      </div>
+      <div class="right-pane">
+        <div class="qs-title">Pseudocode</div>
+        <div class="code-block"><span class="cm">// First Missing Positive: place x at index x-1</span>
+<span class="kw">for</span> (int i=0; i&lt;n; i++) {
+  <span class="kw">while</span> (nums[i] &gt;= 1 &amp;&amp; nums[i] &lt;= n
+      &amp;&amp; nums[nums[i]-1] != nums[i]) {
+    swap(nums, i, nums[i]-1);
+  }
+}
+<span class="kw">for</span> (int i=0; i&lt;n; i++)
+  <span class="kw">if</span> (nums[i] != i+1) <span class="kw">return</span> i+1;
+<span class="kw">return</span> n+1;
+
+<span class="cm">// Matrix rotate: transpose, then reverse each row</span></div>
+      </div>
+    </div>
+    <div class="pbar"><b>Pattern:</b> When values map to indices, the array can become its own hash table. For matrices, track boundaries or transform in layers.</div>
+  </div>
+
   <table class="cx-table">
     <tr><th>Operation</th><th>Time</th><th>Note</th></tr>
     <tr><td>Two pointers scan</td><td class="mono">O(n)</td><td>after O(n log n) sort if needed</td></tr>
     <tr><td>3Sum / 4Sum</td><td class="mono">O(n²) / O(n³)</td><td>fix k-2 pointers, 2-ptr the rest</td></tr>
     <tr><td>Prefix sum build + query</td><td class="mono">O(n) / O(1)</td><td>O(n) space for prefix array</td></tr>
   </table>
-</div>
 
 <!-- ══════════════════════════════════════════ SLIDING WINDOW ══════════════ -->
 <div class="golden"><b>GOLDEN RULE:</b> Pattern &#8594; Keyword &#8594; Pseudocode &#8594; Complexity. State the time AND space cost out loud in interviews.</div>

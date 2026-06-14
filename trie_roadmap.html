@@ -61,13 +61,81 @@
     <div class="pbar"><b>Pattern:</b> Walk character by character. <code>isEnd</code> marks complete words. For wildcards, branch into all children. Combine with backtracking for Word Search II.</div>
   </div>
 
+  <div class="phase-card">
+    <div class="ph"><div class="ph-num">2</div><div class="ph-title">Trie + DFS Backtracking</div>
+      <div class="cx-badge"><span class="cx cx-time">Time O(m*n*4^L)</span><span class="cx cx-space">Space O(words)</span></div></div>
+    <div class="split">
+      <div class="left-pane">
+        <div class="qs-title">Questions</div>
+        <div class="q-row"><span class="q-num">1.</span><span>Word Search II</span></div>
+        <div class="q-row"><span class="q-num">2.</span><span>Concatenated Words</span></div>
+        <div class="q-row"><span class="q-num">3.</span><span>Word Break with Trie</span></div>
+        <div class="q-row"><span class="q-num">4.</span><span>Replace Words</span></div>
+        <div class="q-row"><span class="q-num">5.</span><span>Search Suggestions System</span></div>
+        <div class="keyword-box"><b>Keyword:</b> "many words in a grid", "dictionary pruning", "prefix search during DFS". Trie cuts dead paths early.</div>
+      </div>
+      <div class="right-pane">
+        <div class="qs-title">Pseudocode</div>
+        <div class="code-block"><span class="cm">// Word Search II shape</span>
+void dfs(int r, int c, TrieNode node) {
+  char ch = board[r][c];
+  TrieNode next = node.children[ch-'a'];
+  <span class="kw">if</span> (next == <span class="kw">null</span>) <span class="kw">return</span>;
+  <span class="kw">if</span> (next.word != <span class="kw">null</span>) ans.add(next.word);
+
+  board[r][c] = '#';
+  <span class="kw">for</span> (int[] d : dirs)
+    <span class="kw">if</span> (inside(r+d[0], c+d[1])) dfs(r+d[0], c+d[1], next);
+  board[r][c] = ch;
+}</div>
+      </div>
+    </div>
+    <div class="pbar"><b>Pattern:</b> DFS walks the board and the trie at the same time. Stop immediately when the current prefix is absent.</div>
+  </div>
+
+  <div class="phase-card">
+    <div class="ph"><div class="ph-num">3</div><div class="ph-title">Bit Trie &amp; Design Tries</div>
+      <div class="cx-badge"><span class="cx cx-time">Time O(32*n)</span><span class="cx cx-space">Space O(32*n)</span></div></div>
+    <div class="split">
+      <div class="left-pane">
+        <div class="qs-title">Questions</div>
+        <div class="q-row"><span class="q-num">1.</span><span>Maximum XOR of Two Numbers</span></div>
+        <div class="q-row"><span class="q-num">2.</span><span>Maximum Genetic Difference Query</span></div>
+        <div class="q-row"><span class="q-num">3.</span><span>Map Sum Pairs</span></div>
+        <div class="q-row"><span class="q-num">4.</span><span>Design File System</span></div>
+        <div class="q-row"><span class="q-num">5.</span><span>Design In-Memory File System</span></div>
+        <div class="q-row"><span class="q-num">6.</span><span>Implement Magic Dictionary</span></div>
+        <div class="keyword-box"><b>Keyword:</b> "max XOR", "prefix values", "file paths", "one character modified". Trie nodes can store counts, sums, words, or child maps.</div>
+      </div>
+      <div class="right-pane">
+        <div class="qs-title">Pseudocode</div>
+        <div class="code-block"><span class="cm">// Bit trie max XOR query</span>
+int bestXor(int x) {
+  TrieNode node = root;
+  int ans = 0;
+  <span class="kw">for</span> (int bit=31; bit&gt;=0; bit--) {
+    int cur = (x &gt;&gt; bit) &amp; 1;
+    int want = 1 - cur;
+    <span class="kw">if</span> (node.child[want] != <span class="kw">null</span>) {
+      ans |= (1 &lt;&lt; bit);
+      node = node.child[want];
+    } <span class="kw">else</span> {
+      node = node.child[cur];
+    }
+  }
+  <span class="kw">return</span> ans;
+}</div>
+      </div>
+    </div>
+    <div class="pbar"><b>Pattern:</b> Character trie optimizes prefixes; bit trie optimizes bit choices from high to low.</div>
+  </div>
+
   <table class="cx-table">
     <tr><th>Operation</th><th>Time</th><th>Note</th></tr>
     <tr><td>insert / search / startsWith</td><td class="mono">O(L)</td><td>L = word length</td></tr>
     <tr><td>wildcard search</td><td class="mono">O(26^d)</td><td>d = number of '.'</td></tr>
     <tr><td>space</td><td class="mono">O(26·N·L)</td><td>N words, length L</td></tr>
   </table>
-</div>
 
 <!-- ══════════════════════════════════════════ BIT MANIPULATION ══════════════ -->
 <div class="golden"><b>GOLDEN RULE:</b> Pattern &#8594; Keyword &#8594; Pseudocode &#8594; Complexity. State the time AND space cost out loud in interviews.</div>
