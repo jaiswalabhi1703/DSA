@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tree DFS Roadmap</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="theme.css">
+</head>
+<body>
+<a class="back-hub" href="index.html"><span class="arw">←</span> Hub</a>
+
+<h1>TREE DFS ROADMAP</h1>
+<div class="sub">All tree traversal patterns · 8 phases · Java pseudocode + complexity</div>
+
+<div class="core-box">
+  <div class="ct">Core Idea</div>
+  <p>DFS on a tree is all about <em>how information flows in the recursion</em>.<br>
+  Either the <em>parent gives state to children (Top-Down)</em> or <em>children return answers to the parent (Bottom-Up)</em>.<br>
+  Choose the direction first, then write the recurrence.</p>
+</div>
+
+<div class="top-row">
+  <div class="info-box">
+    <div class="bh">Traversal Orders</div>
+    <div class="row"><span class="label" style="color:var(--mint)">Inorder</span><span style="color:var(--text-dim)">Left → Root → Right (sorted for BST)</span></div>
+    <div class="row"><span class="label" style="color:var(--rose)">Preorder</span><span style="color:var(--text-dim)">Root → Left → Right (top-down)</span></div>
+    <div class="row"><span class="label" style="color:var(--violet)">Postorder</span><span style="color:var(--text-dim)">Left → Right → Root (bottom-up)</span></div>
+  </div>
+  <div class="info-box">
+    <div class="bh">When to use which?</div>
+    <ul>
+      <li><b>Preorder</b> → parent passes info to children</li>
+      <li><b>Postorder</b> → children compute, parent combines</li>
+      <li><b>Inorder</b> → sorted order / BST validation</li>
+      <li><b>Backtracking DFS</b> → explore all root-to-leaf paths</li>
+    </ul>
+  </div>
+</div>
+
+<div class="nav">
+  <button class="nav-btn active" onclick="show('all',this)">All phases</button>
+  <button class="nav-btn" onclick="show('p1',this)">P1 · Basic</button>
+  <button class="nav-btn" onclick="show('p2',this)">P2 · Bottom-Up</button>
+  <button class="nav-btn" onclick="show('p3',this)">P3 · Top-Down</button>
+  <button class="nav-btn" onclick="show('p4',this)">P4 · BST</button>
+  <button class="nav-btn" onclick="show('p5',this)">P5 · LCA</button>
+  <button class="nav-btn" onclick="show('p6',this)">P6 · Tree DP</button>
+  <button class="nav-btn" onclick="show('p7',this)">P7 · Serialize</button>
+  <button class="nav-btn" onclick="show('p8',this)">P8 · Tree as Graph</button>
+</div>
+
+<!-- P1 -->
+<div class="phase-card" id="p1">
+  <div class="ph"><div class="ph-num">1</div><div class="ph-title">Basic Traversal & Simple DFS</div>
+    <div class="cx-badge"><span class="cx cx-time">Time O(n)</span><span class="cx cx-space">Space O(h)</span></div></div>
+  <div class="split">
+    <div class="left-pane">
+      <div class="qs-title">Questions</div>
+      <div class="q-row"><span class="q-num">1.</span><span class="tag t-dfs">Inorder</span><span>Inorder / Preorder / Postorder Traversal</span></div>
+      <div class="q-row"><span class="q-num">2.</span><span class="tag t-dp">Postorder</span><span>Maximum Depth of Binary Tree</span></div>
+      <div class="q-row"><span class="q-num">3.</span><span class="tag t-dp">Preorder</span><span>Same Tree</span></div>
+      <div class="q-row"><span class="q-num">4.</span><span class="tag t-dp">Preorder</span><span>Symmetric Tree (mirror)</span></div>
+      <div class="q-row"><span class="q-num">5.</span><span class="tag t-dp">Preorder</span><span>Invert Binary Tree</span></div>
+      <div class="keyword-box"><b>Keyword:</b> "traverse the tree", "depth/height", "compare two trees", "mirror/invert". The plain recursion skeleton covers all of these.</div>
+    </div>
+    <div class="right-pane">
+      <div class="qs-title">Pseudocode</div>
+      <div class="code-block"><span class="cm">// The universal DFS shape</span>
+<span class="kw">void</span> <span class="fn">dfs</span>(TreeNode root) {
+  <span class="kw">if</span> (root == <span class="kw">null</span>) <span class="kw">return</span>;     <span class="cm">// base case</span>
+  <span class="cm">// preorder: visit root here</span>
+  <span class="fn">dfs</span>(root.left);
+  <span class="cm">// inorder: visit root here</span>
+  <span class="fn">dfs</span>(root.right);
+  <span class="cm">// postorder: visit root here</span>
+}
+
+<span class="cm">// Maximum Depth (postorder)</span>
+int <span class="fn">depth</span>(TreeNode root) {
+  <span class="kw">if</span> (root==<span class="kw">null</span>) <span class="kw">return</span> 0;
+  <span class="kw">return</span> 1 + Math.max(<span class="fn">depth</span>(root.left),
+                       <span class="fn">depth</span>(root.right));
+}</div>
+    </div>
+  </div>
+  <div class="pbar"><b>Pattern:</b> Where you place the "visit" line determines the order. Every node is visited once → O(n) time, O(h) recursion stack.</div>
+</div>
+
+<!-- P2 -->
+<div class="phase-card" id="p2">
+  <div class="ph"><div class="ph-num">2</div><div class="ph-title">Bottom-Up DFS (Subtree Aggregation)</div>
+    <div class="cx-badge"><span class="cx cx-time">Time O(n)</span><span class="cx cx-space">Space O(h)</span></div></div>
+  <div class="split">
+    <div class="left-pane">
+      <div class="qs-title">Questions</div>
+      <div class="q-row"><span class="q-num">1.</span><span class="tag t-dp">Postorder</span><span>Balanced Binary Tree</span></div>
+      <div class="q-row"><span class="q-num">2.</span><span class="tag t-dp">Postorder</span><span>Diameter of Binary Tree</span></div>
+      <div class="q-row"><span class="q-num">3.</span><span class="tag t-dp">Postorder</span><span>Binary Tree Tilt</span></div>
+      <div class="q-row"><span class="q-num">4.</span><span class="tag t-dp">Postorder</span><span>Longest Univalue Path</span></div>
+      <div class="keyword-box"><b>Keyword:</b> "diameter", "balanced", "longest path", "sum/aggregate of subtree". Children compute first, parent combines their answers.</div>
+    </div>
+    <div class="right-pane">
+      <div class="qs-title">Pseudocode</div>
+      <div class="code-block"><span class="cm">// Diameter — return height, update global diameter</span>
+int diameter = 0;
+int <span class="fn">height</span>(TreeNode root) {
+  <span class="kw">if</span> (root==<span class="kw">null</span>) <span class="kw">return</span> 0;
+  int l = <span class="fn">height</span>(root.left);
+  int r = <span class="fn">height</span>(root.right);
+  diameter = Math.max(diameter, l + r);  <span class="cm">// path thru node</span>
+  <span class="kw">return</span> 1 + Math.max(l, r);             <span class="cm">// height up</span>
+}
+<span class="cm">// Balanced: return -1 sentinel if any subtree unbalanced</span></div>
+    </div>
+  </div>
+  <div class="pbar"><b>Pattern:</b> Children compute first → parent combines. Return one value upward; track cross-subtree answers in a global variable.</div>
+</div>
+
+<!-- P3 -->
+<div class="phase-card" id="p3">
+  <div class="ph"><div class="ph-num">3</div><div class="ph-title">Top-Down DFS (State Passing)</div>
+    <div class="cx-badge"><span class="cx cx-time">Time O(n)</span><span class="cx cx-space">Space O(h)</span></div></div>
+  <div class="split">
+    <div class="left-pane">
+      <div class="qs-title">Questions</div>
+      <div class="q-row"><span class="q-num">1.</span><span class="tag t-dfs">Preorder</span><span>Path Sum I & II</span></div>
+      <div class="q-row"><span class="q-num">2.</span><span class="tag t-dfs">Preorder</span><span>Binary Tree Paths</span></div>
+      <div class="q-row"><span class="q-num">3.</span><span class="tag t-dfs">Preorder</span><span>Sum Root to Leaf Numbers</span></div>
+      <div class="q-row"><span class="q-num">4.</span><span class="tag t-dfs">Preorder</span><span>Count Good Nodes in Binary Tree</span></div>
+      <div class="q-row"><span class="q-num">5.</span><span class="tag t-dfs">Preorder</span><span>Pseudo-Palindromic Paths</span></div>
+      <div class="keyword-box"><b>Keyword:</b> "root-to-leaf", "path sum equals target", "carry value down the path", "good nodes". Parent passes accumulated state to children.</div>
+    </div>
+    <div class="right-pane">
+      <div class="qs-title">Pseudocode</div>
+      <div class="code-block"><span class="cm">// Path Sum — pass remaining target downward</span>
+<span class="kw">boolean</span> <span class="fn">hasPathSum</span>(TreeNode root, int target) {
+  <span class="kw">if</span> (root==<span class="kw">null</span>) <span class="kw">return false</span>;
+  target -= root.val;                  <span class="cm">// state down</span>
+  <span class="kw">if</span> (root.left==<span class="kw">null</span> &amp;&amp; root.right==<span class="kw">null</span>)
+    <span class="kw">return</span> target == 0;              <span class="cm">// leaf check</span>
+  <span class="kw">return</span> <span class="fn">hasPathSum</span>(root.left,  target)
+      || <span class="fn">hasPathSum</span>(root.right, target);
+}
+<span class="cm">// Good Nodes: pass max-so-far down the path</span></div>
+    </div>
+  </div>
+  <div class="pbar"><b>Pattern:</b> Parent passes state (running sum, path, max, depth, freq) down to children as a parameter. Decision often made at the leaf.</div>
+</div>
+
+<!-- P4 -->
+<div class="phase-card" id="p4">
+  <div class="ph"><div class="ph-num">4</div><div class="ph-title">BST DFS Patterns</div>
+    <div class="cx-badge"><span class="cx cx-time">Time O(h)→O(n)</span><span class="cx cx-space">Space O(h)</span></div></div>
+  <div class="split">
+    <div class="left-pane">
+      <div class="qs-title">Questions</div>
+      <div class="q-row"><span class="q-num">1.</span><span class="tag t-topo">Range</span><span>Validate BST</span></div>
+      <div class="q-row"><span class="q-num">2.</span><span class="tag t-dfs">Inorder</span><span>Kth Smallest in BST</span></div>
+      <div class="q-row"><span class="q-num">3.</span><span class="tag t-topo">BST Prop</span><span>Lowest Common Ancestor of BST</span></div>
+      <div class="q-row"><span class="q-num">4.</span><span class="tag t-topo">Divide</span><span>Convert Sorted Array to BST</span></div>
+      <div class="q-row"><span class="q-num">5.</span><span class="tag t-dfs">Inorder</span><span>Recover BST</span></div>
+      <div class="keyword-box"><b>Keyword:</b> "BST", "validate", "kth smallest", "sorted order". Use the BST property: left &lt; node &lt; right. Inorder yields sorted values.</div>
+    </div>
+    <div class="right-pane">
+      <div class="qs-title">Pseudocode</div>
+      <div class="code-block"><span class="cm">// Validate BST — pass valid (low, high) range down</span>
+<span class="kw">boolean</span> <span class="fn">valid</span>(TreeNode node, long low, long high) {
+  <span class="kw">if</span> (node==<span class="kw">null</span>) <span class="kw">return true</span>;
+  <span class="kw">if</span> (node.val&lt;=low || node.val&gt;=high) <span class="kw">return false</span>;
+  <span class="kw">return</span> <span class="fn">valid</span>(node.left,  low, node.val)
+      &amp;&amp; <span class="fn">valid</span>(node.right, node.val, high);
+}
+
+<span class="cm">// LCA of BST — use ordering to pick a direction</span>
+<span class="kw">while</span> (node!=<span class="kw">null</span>) {
+  <span class="kw">if</span> (p.val&lt;node.val &amp;&amp; q.val&lt;node.val) node=node.left;
+  <span class="kw">else if</span> (p.val&gt;node.val &amp;&amp; q.val&gt;node.val) node=node.right;
+  <span class="kw">else</span> <span class="kw">return</span> node;   <span class="cm">// split point = LCA</span>
+}</div>
+    </div>
+  </div>
+  <div class="pbar"><b>Pattern:</b> Exploit ordering. Validate with a shrinking (low, high) range. Inorder traversal of a BST is sorted — use it for Kth smallest and Recover BST.</div>
+</div>
+
+<!-- P5 -->
+<div class="phase-card" id="p5">
+  <div class="ph"><div class="ph-num">5</div><div class="ph-title">Lowest Common Ancestor (LCA)</div>
+    <div class="cx-badge"><span class="cx cx-time">Time O(n)</span><span class="cx cx-space">Space O(h)</span></div></div>
+  <div class="split">
+    <div class="left-pane">
+      <div class="qs-title">Questions</div>
+      <div class="q-row"><span class="q-num">1.</span><span class="tag t-dp">Postorder</span><span>LCA of Binary Tree</span></div>
+      <div class="q-row"><span class="q-num">2.</span><span class="tag t-topo">BST Prop</span><span>LCA of BST</span></div>
+      <div class="q-row"><span class="q-num">3.</span><span class="tag t-dp">Postorder</span><span>LCA with Parent Pointers</span></div>
+      <div class="q-row"><span class="q-num">4.</span><span class="tag t-dp">Postorder</span><span>Smallest Subtree with all Deepest Nodes</span></div>
+      <div class="keyword-box"><b>Keyword:</b> "lowest common ancestor", "deepest node covering both", "meeting point of two nodes". Return whether each target exists in the subtree.</div>
+    </div>
+    <div class="right-pane">
+      <div class="qs-title">Pseudocode</div>
+      <div class="code-block"><span class="cm">// LCA of Binary Tree — postorder, bubble up findings</span>
+TreeNode <span class="fn">lca</span>(TreeNode root, TreeNode p, TreeNode q) {
+  <span class="kw">if</span> (root==<span class="kw">null</span> || root==p || root==q) <span class="kw">return</span> root;
+  TreeNode l = <span class="fn">lca</span>(root.left,  p, q);
+  TreeNode r = <span class="fn">lca</span>(root.right, p, q);
+  <span class="kw">if</span> (l!=<span class="kw">null</span> &amp;&amp; r!=<span class="kw">null</span>) <span class="kw">return</span> root; <span class="cm">// split → LCA</span>
+  <span class="kw">return</span> l!=<span class="kw">null</span> ? l : r;             <span class="cm">// pass found up</span>
+}</div>
+    </div>
+  </div>
+  <div class="pbar"><b>Pattern:</b> Return whether a target exists in each subtree. The node where left and right both return non-null is the LCA.</div>
+</div>
+
+<!-- P6 -->
+<div class="phase-card" id="p6">
+  <div class="ph"><div class="ph-num">6</div><div class="ph-title">Tree DP (Advanced — Postorder)</div>
+    <div class="cx-badge"><span class="cx cx-time">Time O(n)</span><span class="cx cx-space">Space O(h)</span></div></div>
+  <div class="split">
+    <div class="left-pane">
+      <div class="qs-title">Questions</div>
+      <div class="q-row"><span class="q-num">1.</span><span class="tag t-dp">Tree DP</span><span>House Robber III</span></div>
+      <div class="q-row"><span class="q-num">2.</span><span class="tag t-dp">Tree DP</span><span>Binary Tree Maximum Path Sum</span></div>
+      <div class="q-row"><span class="q-num">3.</span><span class="tag t-dp">Tree DP</span><span>Binary Tree Cameras</span></div>
+      <div class="q-row"><span class="q-num">4.</span><span class="tag t-dp">Tree DP</span><span>Distribute Coins in Binary Tree</span></div>
+      <div class="keyword-box"><b>Keyword:</b> "max path sum", "rob the tree", "minimum cameras", "balance subtrees". DFS returns multiple states/values to the parent.</div>
+    </div>
+    <div class="right-pane">
+      <div class="qs-title">Pseudocode</div>
+      <div class="code-block"><span class="cm">// House Robber III — return {rob, skip}</span>
+int[] <span class="fn">dfs</span>(TreeNode node) {
+  <span class="kw">if</span> (node==<span class="kw">null</span>) <span class="kw">return new</span> int[]{0,0};
+  int[] l = <span class="fn">dfs</span>(node.left);
+  int[] r = <span class="fn">dfs</span>(node.right);
+  int rob  = node.val + l[1] + r[1];          <span class="cm">// take node</span>
+  int skip = Math.max(l[0],l[1])
+           + Math.max(r[0],r[1]);             <span class="cm">// skip node</span>
+  <span class="kw">return new</span> int[]{rob, skip};
+}
+<span class="cm">// Max Path Sum: return one-side gain, update global best</span></div>
+    </div>
+  </div>
+  <div class="pbar"><b>Pattern:</b> DFS returns multiple states (rob/skip, covered/notCovered). Parent picks the best combination. Update a global for the overall answer.</div>
+</div>
+
+<!-- P7 -->
+<div class="phase-card" id="p7">
+  <div class="ph"><div class="ph-num">7</div><div class="ph-title">Serialization & Construction</div>
+    <div class="cx-badge"><span class="cx cx-time">Time O(n)</span><span class="cx cx-space">Space O(n)</span></div></div>
+  <div class="split">
+    <div class="left-pane">
+      <div class="qs-title">Questions</div>
+      <div class="q-row"><span class="q-num">1.</span><span class="tag t-dfs">Preorder</span><span>Serialize & Deserialize Binary Tree</span></div>
+      <div class="q-row"><span class="q-num">2.</span><span class="tag t-both">Pre+In</span><span>Construct BT from Preorder & Inorder</span></div>
+      <div class="q-row"><span class="q-num">3.</span><span class="tag t-both">Post+In</span><span>Construct BT from Postorder & Inorder</span></div>
+      <div class="q-row"><span class="q-num">4.</span><span class="tag t-dfs">Preorder</span><span>Flatten Binary Tree to Linked List</span></div>
+      <div class="keyword-box"><b>Keyword:</b> "serialize/deserialize", "construct tree from traversals", "encode tree as string". Preorder + null markers, or split using inorder index.</div>
+    </div>
+    <div class="right-pane">
+      <div class="qs-title">Pseudocode</div>
+      <div class="code-block"><span class="cm">// Serialize (preorder with null markers)</span>
+<span class="kw">void</span> <span class="fn">ser</span>(TreeNode n, StringBuilder sb) {
+  <span class="kw">if</span> (n==<span class="kw">null</span>) { sb.append("#,"); <span class="kw">return</span>; }
+  sb.append(n.val).append(",");
+  <span class="fn">ser</span>(n.left, sb); <span class="fn">ser</span>(n.right, sb);
+}
+
+<span class="cm">// Construct from preorder + inorder</span>
+<span class="cm">// 1. preorder[preIdx] = root</span>
+<span class="cm">// 2. find root in inorder → splits L | R subtrees</span>
+<span class="cm">// 3. recurse left then right (use a HashMap for index)</span>
+Map&lt;Integer,Integer&gt; idx; <span class="cm">// value → inorder index, O(1) lookup</span></div>
+    </div>
+  </div>
+  <div class="pbar"><b>Pattern:</b> Reconstruct or encode. Preorder gives the root order; inorder gives the left/right split. A HashMap of inorder indices makes lookup O(1).</div>
+</div>
+
+<!-- P8 -->
+<div class="phase-card" id="p8">
+  <div class="ph"><div class="ph-num">8</div><div class="ph-title">Tree as a Graph (edges given)</div>
+    <div class="cx-badge"><span class="cx cx-time">Time O(n)</span><span class="cx cx-space">Space O(n)</span></div></div>
+  <div class="split">
+    <div class="left-pane">
+      <div class="qs-title">Questions</div>
+      <div class="q-row"><span class="q-num">1.</span><span class="tag t-dfs">DFS</span><span>Count Subtrees With Same Label</span></div>
+      <div class="q-row"><span class="q-num">2.</span><span class="tag t-dfs">DFS</span><span>Minimum Time to Collect All Apples</span></div>
+      <div class="q-row"><span class="q-num">3.</span><span class="tag t-dfs">DFS</span><span>Sum of Distances in Tree (rerooting)</span></div>
+      <div class="q-row"><span class="q-num">4.</span><span class="tag t-dfs">DFS</span><span>Tree Diameter (from edge list)</span></div>
+      <div class="keyword-box"><b>Keyword:</b> tree given as an <b>edge list</b> not a TreeNode, "n nodes and n-1 edges", "rooted at 0". Build adjacency list, DFS with a parent guard.</div>
+    </div>
+    <div class="right-pane">
+      <div class="qs-title">Pseudocode</div>
+      <div class="code-block"><span class="cm">// Tree given as edges → build adjacency list</span>
+List&lt;Integer&gt;[] adj = <span class="kw">new</span> List[n];
+<span class="kw">for</span> (int[] e : edges) {       <span class="cm">// undirected</span>
+  adj[e[0]].add(e[1]);
+  adj[e[1]].add(e[0]);
+}
+
+<span class="kw">void</span> <span class="fn">dfs</span>(int node, int parent) {
+  process(node);
+  <span class="kw">for</span> (int nei : adj[node])
+    <span class="kw">if</span> (nei != parent)        <span class="cm">// avoid going back up</span>
+      <span class="fn">dfs</span>(nei, node);
+}</div>
+    </div>
+  </div>
+  <div class="pbar"><b>Pattern:</b> When a tree is given as edges, build an adjacency list and DFS with a <code>parent</code> argument so you never walk back up. Re-rooting handles "for every node" queries in O(n).</div>
+</div>
+
+<div class="golden">
+  <b>GOLDEN RULE:</b> First decide what information each node needs.<br>
+  Then choose the direction of flow — Top-Down (preorder) or Bottom-Up (postorder).<br>
+  <b>Master DFS on trees → master 50% of DSA.</b>
+</div>
+
+<script>
+function show(id, btn){
+  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  ['p1','p2','p3','p4','p5','p6','p7','p8'].forEach(p=>{
+    document.getElementById(p).classList.toggle('hidden', id!=='all' && p!==id);
+  });
+}
+</script>
+</body>
+</html>

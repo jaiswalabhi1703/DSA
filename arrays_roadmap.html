@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="theme.css">
+<title>Arrays & Two Pointers</title>
+</head>
+<body>
+<a class="back-hub" href="index.html"><span class="arw">&#8592;</span> Hub</a>
+<h1>ARRAYS & TWO POINTERS</h1>
+<div class="sub">Opposite-ends, fast/slow, prefix sums</div>
+
+  <div class="topic-intro"><b>CORE IDEA:</b> Two Pointers reduces O(n²) brute force to O(n) by moving two indices intelligently. <b>Sorted input</b> is the biggest hint. Variants: opposite-ends, same-direction (fast/slow), and partition.</div>
+
+  <div class="phase-card">
+    <div class="ph"><div class="ph-num">1</div><div class="ph-title">Opposite-Ends Two Pointers</div>
+      <div class="cx-badge"><span class="cx cx-time">Time O(n)</span><span class="cx cx-space">Space O(1)</span></div></div>
+    <div class="split">
+      <div class="left-pane">
+        <div class="qs-title">Questions</div>
+        <div class="q-row"><span class="q-num">1.</span><span>Two Sum II (sorted)</span></div>
+        <div class="q-row"><span class="q-num">2.</span><span>3Sum / 4Sum</span></div>
+        <div class="q-row"><span class="q-num">3.</span><span>Container With Most Water</span></div>
+        <div class="q-row"><span class="q-num">4.</span><span>Valid Palindrome</span></div>
+        <div class="q-row"><span class="q-num">5.</span><span>Trapping Rain Water (2-ptr)</span></div>
+        <div class="keyword-box"><b>Keyword:</b> "sorted array", "pair that sums to target", "max area between two lines", "palindrome check". Two indices move toward each other.</div>
+      </div>
+      <div class="right-pane">
+        <div class="qs-title">Pseudocode</div>
+        <div class="code-block">int l=0, r=n-1;
+<span class="kw">while</span> (l &lt; r) {
+  int sum = nums[l] + nums[r];
+  <span class="kw">if</span> (sum == target) <span class="kw">return new</span> int[]{l, r};
+  <span class="kw">else if</span> (sum &lt; target) l++;   <span class="cm">// need bigger</span>
+  <span class="kw">else</span> r--;                      <span class="cm">// need smaller</span>
+}
+<span class="cm">// 3Sum: sort, fix i, two-pointer on (i+1, n-1)</span>
+<span class="cm">// skip duplicates: while(l&lt;r &amp;&amp; nums[l]==nums[l-1]) l++;</span></div>
+      </div>
+    </div>
+    <div class="pbar"><b>Pattern:</b> Sort first (if order doesn't matter). Shrink window from the end that can't improve the answer.</div>
+  </div>
+
+  <div class="phase-card">
+    <div class="ph"><div class="ph-num">2</div><div class="ph-title">Fast &amp; Slow Pointers</div>
+      <div class="cx-badge"><span class="cx cx-time">Time O(n)</span><span class="cx cx-space">Space O(1)</span></div></div>
+    <div class="split">
+      <div class="left-pane">
+        <div class="qs-title">Questions</div>
+        <div class="q-row"><span class="q-num">1.</span><span>Remove Duplicates from Sorted Array</span></div>
+        <div class="q-row"><span class="q-num">2.</span><span>Move Zeroes</span></div>
+        <div class="q-row"><span class="q-num">3.</span><span>Linked List Cycle (Floyd's)</span></div>
+        <div class="q-row"><span class="q-num">4.</span><span>Find the Duplicate Number</span></div>
+        <div class="q-row"><span class="q-num">5.</span><span>Sort Colors (Dutch flag, 3-ptr)</span></div>
+        <div class="keyword-box"><b>Keyword:</b> "in-place", "remove/move elements", "detect cycle", "find duplicate without extra space". One slow writer, one fast reader.</div>
+      </div>
+      <div class="right-pane">
+        <div class="qs-title">Pseudocode</div>
+        <div class="code-block"><span class="cm">// Move non-zeros / dedupe in place</span>
+int slow = 0;
+<span class="kw">for</span> (int fast=0; fast&lt;n; fast++) {
+  <span class="kw">if</span> (nums[fast] != 0) {          <span class="cm">// condition to keep</span>
+    swap(nums, slow, fast);
+    slow++;
+  }
+}
+
+<span class="cm">// Dutch National Flag (Sort Colors 0,1,2)</span>
+int lo=0, mid=0, hi=n-1;
+<span class="kw">while</span> (mid &lt;= hi) {
+  <span class="kw">if</span> (nums[mid]==0) swap(nums, lo++, mid++);
+  <span class="kw">else if</span> (nums[mid]==1) mid++;
+  <span class="kw">else</span> swap(nums, mid, hi--);
+}</div>
+      </div>
+    </div>
+    <div class="pbar"><b>Pattern:</b> Slow pointer marks the boundary of "processed/valid" region; fast pointer scans ahead.</div>
+  </div>
+
+  <div class="phase-card">
+    <div class="ph"><div class="ph-num">3</div><div class="ph-title">Prefix Sum / Difference Array</div>
+      <div class="cx-badge"><span class="cx cx-time">Time O(n)</span><span class="cx cx-space">Space O(n)</span></div></div>
+    <div class="split">
+      <div class="left-pane">
+        <div class="qs-title">Questions</div>
+        <div class="q-row"><span class="q-num">1.</span><span>Subarray Sum Equals K</span></div>
+        <div class="q-row"><span class="q-num">2.</span><span>Range Sum Query - Immutable</span></div>
+        <div class="q-row"><span class="q-num">3.</span><span>Product of Array Except Self</span></div>
+        <div class="q-row"><span class="q-num">4.</span><span>Continuous Subarray Sum</span></div>
+        <div class="q-row"><span class="q-num">5.</span><span>Car Pooling (difference array)</span></div>
+        <div class="keyword-box"><b>Keyword:</b> "sum of subarray", "range query", "count subarrays with sum K", "range update". Combine prefix sum + HashMap for counting.</div>
+      </div>
+      <div class="right-pane">
+        <div class="qs-title">Pseudocode</div>
+        <div class="code-block"><span class="cm">// Subarray Sum = K (prefix sum + hashmap)</span>
+Map&lt;Integer,Integer&gt; freq = <span class="kw">new</span> HashMap&lt;&gt;();
+freq.put(0, 1);                  <span class="cm">// empty prefix</span>
+int sum=0, count=0;
+<span class="kw">for</span> (int num : nums) {
+  sum += num;
+  count += freq.getOrDefault(sum - k, 0);
+  freq.merge(sum, 1, Integer::sum);
+}
+<span class="cm">// O(n) time, O(n) space — beats O(n²) brute force</span></div>
+      </div>
+    </div>
+    <div class="pbar"><b>Pattern:</b> prefix[i] = sum of first i elements. Range sum = prefix[r+1] - prefix[l]. For counting, store prefix frequencies in a map.</div>
+  </div>
+
+  <table class="cx-table">
+    <tr><th>Operation</th><th>Time</th><th>Note</th></tr>
+    <tr><td>Two pointers scan</td><td class="mono">O(n)</td><td>after O(n log n) sort if needed</td></tr>
+    <tr><td>3Sum / 4Sum</td><td class="mono">O(n²) / O(n³)</td><td>fix k-2 pointers, 2-ptr the rest</td></tr>
+    <tr><td>Prefix sum build + query</td><td class="mono">O(n) / O(1)</td><td>O(n) space for prefix array</td></tr>
+  </table>
+</div>
+
+<!-- ══════════════════════════════════════════ SLIDING WINDOW ══════════════ -->
+<div class="golden"><b>GOLDEN RULE:</b> Pattern &#8594; Keyword &#8594; Pseudocode &#8594; Complexity. State the time AND space cost out loud in interviews.</div>
+</body>
+</html>

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="theme.css">
+<title>Heap / Priority Queue</title>
+</head>
+<body>
+<a class="back-hub" href="index.html"><span class="arw">&#8592;</span> Hub</a>
+<h1>HEAP / PRIORITY QUEUE</h1>
+<div class="sub">Top-K, Kth element, two-heap median</div>
+
+  <div class="topic-intro"><b>CORE IDEA:</b> A heap gives O(log n) insert and O(1) peek of the min/max. Reach for it on "top K", "Kth largest", "merge K sorted", and streaming median problems.</div>
+
+  <div class="phase-card">
+    <div class="ph"><div class="ph-num">1</div><div class="ph-title">Top-K / Kth Element</div>
+      <div class="cx-badge"><span class="cx cx-time">Time O(n log k)</span><span class="cx cx-space">Space O(k)</span></div></div>
+    <div class="split">
+      <div class="left-pane">
+        <div class="qs-title">Questions</div>
+        <div class="q-row"><span class="q-num">1.</span><span>Kth Largest Element in an Array</span></div>
+        <div class="q-row"><span class="q-num">2.</span><span>Top K Frequent Elements</span></div>
+        <div class="q-row"><span class="q-num">3.</span><span>K Closest Points to Origin</span></div>
+        <div class="q-row"><span class="q-num">4.</span><span>Task Scheduler</span></div>
+        <div class="keyword-box"><b>Keyword:</b> "top K", "K largest/smallest", "K closest", "K most frequent". Keep a size-K heap of the <em>opposite</em> extreme.</div>
+      </div>
+      <div class="right-pane">
+        <div class="qs-title">Pseudocode</div>
+        <div class="code-block"><span class="cm">// Kth largest → min-heap of size k</span>
+PriorityQueue&lt;Integer&gt; pq = <span class="kw">new</span> PriorityQueue&lt;&gt;(); <span class="cm">// min-heap</span>
+<span class="kw">for</span> (int num : nums) {
+  pq.offer(num);
+  <span class="kw">if</span> (pq.size() &gt; k) pq.poll();  <span class="cm">// drop smallest</span>
+}
+<span class="kw">return</span> pq.peek();  <span class="cm">// kth largest = heap top</span>
+
+<span class="cm">// Max-heap: new PriorityQueue&lt;&gt;(Collections.reverseOrder())</span>
+<span class="cm">// Custom: (a,b)-&gt;a[0]-b[0]  (min by first field)</span></div>
+      </div>
+    </div>
+    <div class="pbar"><b>Pattern:</b> For Kth <em>largest</em>, keep a <em>min</em>-heap of size K — the root is your answer. This is O(n log k), better than sorting's O(n log n).</div>
+  </div>
+
+  <div class="phase-card">
+    <div class="ph"><div class="ph-num">2</div><div class="ph-title">Two Heaps / Merge K</div>
+      <div class="cx-badge"><span class="cx cx-time">Time O(N log k)</span><span class="cx cx-space">Space O(k)</span></div></div>
+    <div class="split">
+      <div class="left-pane">
+        <div class="qs-title">Questions</div>
+        <div class="q-row"><span class="q-num">1.</span><span>Find Median from Data Stream</span></div>
+        <div class="q-row"><span class="q-num">2.</span><span>Merge K Sorted Lists</span></div>
+        <div class="q-row"><span class="q-num">3.</span><span>Smallest Range Covering K Lists</span></div>
+        <div class="q-row"><span class="q-num">4.</span><span>Sliding Window Median</span></div>
+        <div class="keyword-box"><b>Keyword:</b> "median of stream", "merge K sorted", "balance two halves". Max-heap for lower half, min-heap for upper half.</div>
+      </div>
+      <div class="right-pane">
+        <div class="qs-title">Pseudocode</div>
+        <div class="code-block"><span class="cm">// Median: maxHeap (low half) + minHeap (high half)</span>
+PriorityQueue&lt;Integer&gt; lo = <span class="kw">new</span> PriorityQueue&lt;&gt;(Collections.reverseOrder());
+PriorityQueue&lt;Integer&gt; hi = <span class="kw">new</span> PriorityQueue&lt;&gt;();
+
+<span class="kw">void</span> <span class="fn">add</span>(int num) {
+  lo.offer(num);
+  hi.offer(lo.poll());            <span class="cm">// balance values</span>
+  <span class="kw">if</span> (hi.size() &gt; lo.size())       <span class="cm">// balance sizes</span>
+    lo.offer(hi.poll());
+}
+<span class="kw">double</span> <span class="fn">median</span>() {
+  <span class="kw">return</span> lo.size()&gt;hi.size() ? lo.peek()
+         : (lo.peek()+hi.peek())/2.0;
+}</div>
+      </div>
+    </div>
+    <div class="pbar"><b>Pattern:</b> Keep heaps balanced (sizes differ by ≤1). Median is the top of the larger heap, or the average of both tops. Merge K: push list heads, pop-and-push next.</div>
+  </div>
+
+  <table class="cx-table">
+    <tr><th>Operation</th><th>Time</th><th>Note</th></tr>
+    <tr><td>offer / poll</td><td class="mono">O(log n)</td><td>peek is O(1)</td></tr>
+    <tr><td>Top-K with size-K heap</td><td class="mono">O(n log k)</td><td>beats full sort</td></tr>
+    <tr><td>Build heap from array</td><td class="mono">O(n)</td><td>heapify, not n inserts</td></tr>
+  </table>
+</div>
+
+<!-- ══════════════════════════════════════════ BACKTRACKING ══════════════ -->
+<div class="golden"><b>GOLDEN RULE:</b> Pattern &#8594; Keyword &#8594; Pseudocode &#8594; Complexity. State the time AND space cost out loud in interviews.</div>
+</body>
+</html>

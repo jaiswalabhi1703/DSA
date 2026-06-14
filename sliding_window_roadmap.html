@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="theme.css">
+<title>Sliding Window</title>
+</head>
+<body>
+<a class="back-hub" href="index.html"><span class="arw">&#8592;</span> Hub</a>
+<h1>SLIDING WINDOW</h1>
+<div class="sub">Fixed and variable-size windows</div>
+
+  <div class="topic-intro"><b>CORE IDEA:</b> Maintain a contiguous window [left, right]. Expand right to include, shrink left to satisfy a constraint. Turns O(n²) substring/subarray problems into O(n).</div>
+
+  <div class="phase-card">
+    <div class="ph"><div class="ph-num">1</div><div class="ph-title">Fixed-Size Window</div>
+      <div class="cx-badge"><span class="cx cx-time">Time O(n)</span><span class="cx cx-space">Space O(1)</span></div></div>
+    <div class="split">
+      <div class="left-pane">
+        <div class="qs-title">Questions</div>
+        <div class="q-row"><span class="q-num">1.</span><span>Maximum Average Subarray I</span></div>
+        <div class="q-row"><span class="q-num">2.</span><span>Find All Anagrams in a String</span></div>
+        <div class="q-row"><span class="q-num">3.</span><span>Permutation in String</span></div>
+        <div class="q-row"><span class="q-num">4.</span><span>Sliding Window Maximum (deque)</span></div>
+        <div class="keyword-box"><b>Keyword:</b> "subarray/substring of size k", "fixed length", "all windows of length k". Window size never changes — slide it.</div>
+      </div>
+      <div class="right-pane">
+        <div class="qs-title">Pseudocode</div>
+        <div class="code-block">int windowSum = 0;
+<span class="kw">for</span> (int i=0; i&lt;k; i++) windowSum += nums[i]; <span class="cm">// first</span>
+int best = windowSum;
+<span class="kw">for</span> (int i=k; i&lt;n; i++) {
+  windowSum += nums[i] - nums[i-k];  <span class="cm">// add new, drop old</span>
+  best = Math.max(best, windowSum);
+}
+<span class="cm">// Anagram: keep a 26-char count array, compare each slide</span></div>
+      </div>
+    </div>
+    <div class="pbar"><b>Pattern:</b> Add incoming element, remove outgoing element (i-k). Constant-time window update.</div>
+  </div>
+
+  <div class="phase-card">
+    <div class="ph"><div class="ph-num">2</div><div class="ph-title">Variable-Size Window (longest/shortest)</div>
+      <div class="cx-badge"><span class="cx cx-time">Time O(n)</span><span class="cx cx-space">Space O(k)</span></div></div>
+    <div class="split">
+      <div class="left-pane">
+        <div class="qs-title">Questions</div>
+        <div class="q-row"><span class="q-num">1.</span><span>Longest Substring Without Repeating Chars</span></div>
+        <div class="q-row"><span class="q-num">2.</span><span>Minimum Window Substring</span></div>
+        <div class="q-row"><span class="q-num">3.</span><span>Longest Repeating Character Replacement</span></div>
+        <div class="q-row"><span class="q-num">4.</span><span>Fruit Into Baskets</span></div>
+        <div class="q-row"><span class="q-num">5.</span><span>Minimum Size Subarray Sum</span></div>
+        <div class="keyword-box"><b>Keyword:</b> "longest/shortest substring", "at most K distinct", "smallest subarray ≥ target". Window grows and shrinks dynamically.</div>
+      </div>
+      <div class="right-pane">
+        <div class="qs-title">Pseudocode</div>
+        <div class="code-block">int left = 0, best = 0;
+Map&lt;Character,Integer&gt; count = <span class="kw">new</span> HashMap&lt;&gt;();
+
+<span class="kw">for</span> (int right=0; right&lt;n; right++) {
+  count.merge(s.charAt(right), 1, Integer::sum); <span class="cm">// expand</span>
+
+  <span class="kw">while</span> (/* window invalid */ count.size() &gt; k) {
+    char lc = s.charAt(left);                    <span class="cm">// shrink</span>
+    count.merge(lc, -1, Integer::sum);
+    <span class="kw">if</span> (count.get(lc)==0) count.remove(lc);
+    left++;
+  }
+  best = Math.max(best, right - left + 1);       <span class="cm">// record</span>
+}</div>
+      </div>
+    </div>
+    <div class="pbar"><b>Pattern:</b> for-loop expands right; inner while shrinks left until valid. For "longest" → record after shrink; for "shortest" → record inside shrink loop.</div>
+  </div>
+
+  <table class="cx-table">
+    <tr><th>Window type</th><th>Time</th><th>Space</th></tr>
+    <tr><td>Fixed-size</td><td class="mono">O(n)</td><td class="mono">O(1) or O(26)</td></tr>
+    <tr><td>Variable-size + HashMap</td><td class="mono">O(n)</td><td class="mono">O(k) distinct</td></tr>
+    <tr><td>Window max/min + Deque</td><td class="mono">O(n)</td><td class="mono">O(k)</td></tr>
+  </table>
+</div>
+
+<!-- ══════════════════════════════════════════ BINARY SEARCH ══════════════ -->
+<div class="golden"><b>GOLDEN RULE:</b> Pattern &#8594; Keyword &#8594; Pseudocode &#8594; Complexity. State the time AND space cost out loud in interviews.</div>
+</body>
+</html>

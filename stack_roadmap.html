@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="theme.css">
+<title>Stack Patterns Roadmap</title>
+</head>
+<body>
+<a class="back-hub" href="index.html"><span class="arw">&#8592;</span> Hub</a>
+
+<h1>STACK PATTERNS ROADMAP (PHASE-WISE)</h1>
+<div class="sub">All stack patterns end-to-end · 8 phases · Java pseudocode</div>
+
+<div class="core-box">
+  <div class="ct">CORE IDEA</div>
+  <p>Stack = <em>Last In First Out (LIFO)</em>. Use when you need to <em>remember previous state</em> while processing forward.<br>
+  Key insight: Stack excels at problems where you need the <em>nearest greater/smaller element</em>,<br>
+  tracking <em>unmatched pairs</em>, or <em>evaluating nested/sequential expressions</em>.</p>
+</div>
+
+<div class="top-row">
+  <div class="info-box">
+    <div class="bh">Stack Pattern Recognition</div>
+    <ul>
+      <li><span style="font-weight:500">Monotonic Stack</span> → next/prev greater or smaller element</li>
+      <li><span style="font-weight:500">Matching/Balancing</span> → brackets, tags, pairs</li>
+      <li><span style="font-weight:500">Calculator</span> → evaluate expressions with precedence</li>
+      <li><span style="font-weight:500">Deque/Sliding Window</span> → max/min in window O(n)</li>
+      <li><span style="font-weight:500">Stack Design</span> → min-stack, max-stack, special ops</li>
+      <li><span style="font-weight:500">Tree/Graph DFS</span> → iterative traversal via stack</li>
+      <li><span style="font-weight:500">Histogram / Rectangle</span> → largest area problems</li>
+    </ul>
+  </div>
+  <div class="info-box">
+    <div class="bh">When to reach for a Stack?</div>
+    <ul>
+      <li>"Next greater / previous smaller element"</li>
+      <li>"Valid parentheses / balanced brackets"</li>
+      <li>"Evaluate expression / implement calculator"</li>
+      <li>"Largest rectangle / trapping rain water"</li>
+      <li>"Undo / backtrack last action"</li>
+      <li>"Iterative DFS on tree or graph"</li>
+      <li>"Sliding window min/max" → use Deque</li>
+    </ul>
+    <div style="margin-top:6px;font-size:10.5px;">
+      <b>Monotonic Increasing</b>: bottom→top ascending (prev smaller)<br>
+      <b>Monotonic Decreasing</b>: bottom→top descending (prev greater)
+    </div>
+  </div>
+</div>
+
+<div class="nav">
+  <button class="nav-btn active" onclick="show('all',this)">All phases</button>
+  <button class="nav-btn" onclick="show('p1',this)">P1 · Monotonic (NGE)</button>
+  <button class="nav-btn" onclick="show('p2',this)">P2 · Monotonic (NSE)</button>
+  <button class="nav-btn" onclick="show('p3',this)">P3 · Matching</button>
+  <button class="nav-btn" onclick="show('p4',this)">P4 · Calculator</button>
+  <button class="nav-btn" onclick="show('p5',this)">P5 · Histogram</button>
+  <button class="nav-btn" onclick="show('p6',this)">P6 · Deque / Window</button>
+  <button class="nav-btn" onclick="show('p7',this)">P7 · Stack Design</button>
+  <button class="nav-btn" onclick="show('p8',this)">P8 · Iterative DFS</button>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ Phase 1 -->
+<div class="phase-card" id="p1">
+  <div class="ph">
+    <div class="ph-num">1</div>
+    <div class="ph-title">PHASE 1 · MONOTONIC STACK — NEXT GREATER ELEMENT</div>
+    <div class="ph-tag">Decreasing stack · O(n)</div>
+  </div>
+  <div class="split">
+    <div class="left-pane">
+      <div class="qs-title">Questions</div>
+      <div class="q-row"><span class="q-num">1.</span><span class="tag t-mono">NGE</span><span>Next Greater Element I</span></div>
+      <div class="q-row"><span class="q-num">2.</span><span class="tag t-mono">NGE</span><span>Next Greater Element II (circular)</span></div>
+      <div class="q-row"><span class="q-num">3.</span><span class="tag t-mono">NGE</span><span>Daily Temperatures</span></div>
+      <div class="q-row"><span class="q-num">4.</span><span class="tag t-mono">NGE</span><span>Online Stock Span</span></div>
+      <div class="q-row"><span class="q-num">5.</span><span class="tag t-mono">NGE</span><span>Number of Visible People in Queue</span></div>
+      <div class="q-row"><span class="q-num">6.</span><span class="tag t-mono">NGE</span><span>Sum of Subarray Minimums</span></div>
+      <div class="q-row"><span class="q-num">7.</span><span class="tag t-mono">NGE</span><span>Sum of Subarray Ranges</span></div>
+      <br>
+      <div class="note-inline">
+        <b>Monotonic Decreasing Stack</b>: elements on stack go top→bottom in increasing order (largest at bottom).<br>
+        When a larger element arrives → pop everything smaller → those popped elements found their NGE.
+      </div>
+    </div>
+    <div class="right-pane">
+      <div class="qs-title">Next Greater Element template</div>
+      <div class="code-block"><span class="cm">// NGE: for each element, find next element greater than it</span>
+int[] nge = <span class="kw">new</span> int[n];
+Arrays.fill(nge, -1);
+Deque&lt;Integer&gt; stack = <span class="kw">new</span> ArrayDeque&lt;&gt;(); <span class="cm">// stores INDICES</span>
+
+<span class="kw">for</span> (int i=0; i&lt;n; i++) {
+  <span class="cm">// pop all elements smaller than current</span>
+  <span class="kw">while</span> (!stack.isEmpty() &amp;&amp; nums[stack.peek()] &lt; nums[i]) {
+    int idx = stack.pop();
+    nge[idx] = nums[i];  <span class="cm">// nums[i] is NGE for idx</span>
+  }
+  stack.push(i);
+}
+<span class="cm">// remaining in stack have no NGE → stays -1</span>
+
+<span class="cm">// Daily Temperatures variant: store index, ans = i - idx</span>
+
+<span class="cm">// CIRCULAR array (NGE II): iterate 2n, use i % n</span>
+<span class="kw">for</span> (int i=0; i&lt;2*n; i++) {
+  <span class="kw">while</span> (!stack.isEmpty() &amp;&amp; nums[stack.peek()] &lt; nums[i%n])
+    nge[stack.pop()] = nums[i%n];
+  <span class="kw">if</span> (i &lt; n) stack.push(i);
+}</div>
+    </div>
+  </div>
+  <div class="pbar"><b>Pattern:</b> Maintain a <b>monotonic decreasing</b> stack (by value). When nums[i] breaks the monotonicity → pop and record answer. Always push index, not value.</div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ Phase 2 -->
+<div class="phase-card" id="p2">
+  <div class="ph">
+    <div class="ph-num">2</div>
+    <div class="ph-title">PHASE 2 · MONOTONIC STACK — PREV/NEXT SMALLER ELEMENT</div>
+    <div class="ph-tag">Increasing stack · O(n)</div>
+  </div>
+  <div class="split">
+    <div class="left-pane">
+      <div class="qs-title">Questions</div>
+      <div class="q-row"><span class="q-num">1.</span><span class="tag t-ng">NSE</span><span>Previous Smaller Element</span></div>
+      <div class="q-row"><span class="q-num">2.</span><span class="tag t-ng">NSE</span><span>Next Smaller Element</span></div>
+      <div class="q-row"><span class="q-num">3.</span><span class="tag t-ng">NSE</span><span>Largest Rectangle in Histogram</span></div>
+      <div class="q-row"><span class="q-num">4.</span><span class="tag t-ng">NSE</span><span>Trapping Rain Water</span></div>
+      <div class="q-row"><span class="q-num">5.</span><span class="tag t-ng">NSE</span><span>Remove K Digits (smallest number)</span></div>
+      <div class="q-row"><span class="q-num">6.</span><span class="tag t-ng">NSE</span><span>132 Pattern</span></div>
+      <div class="q-row"><span class="q-num">7.</span><span class="tag t-ng">NSE</span><span>Maximum Width Ramp</span></div>
+      <br>
+      <div class="note-inline">
+        <b>Monotonic Increasing Stack</b>: top→bottom descending (smallest at top).<br>
+        When a smaller element arrives → pop all larger elements → those found their NSE.
+      </div>
+    </div>
+    <div class="right-pane">
+      <div class="qs-title">Previous Smaller + Next Smaller template</div>
+      <div class="code-block"><span class="cm">// Previous Smaller Element (PSE)</span>
+int[] pse = <span class="kw">new</span> int[n];
+Deque&lt;Integer&gt; st = <span class="kw">new</span> ArrayDeque&lt;&gt;();
+<span class="kw">for</span> (int i=0; i&lt;n; i++) {
+  <span class="kw">while</span> (!st.isEmpty() &amp;&amp; nums[st.peek()] &gt;= nums[i])
+    st.pop();
+  pse[i] = st.isEmpty() ? -1 : st.peek(); <span class="cm">// peek not pop!</span>
+  st.push(i);
+}
+
+<span class="cm">// Next Smaller Element (NSE) — process right to left</span>
+int[] nse = <span class="kw">new</span> int[n];
+st.clear();
+<span class="kw">for</span> (int i=n-1; i&gt;=0; i--) {
+  <span class="kw">while</span> (!st.isEmpty() &amp;&amp; nums[st.peek()] &gt;= nums[i])
+    st.pop();
+  nse[i] = st.isEmpty() ? n : st.peek();
+  st.push(i);
+}
+
+<span class="cm">// Remove K Digits (greedy with increasing stack):</span>
+<span class="kw">for</span> (char c : num.toCharArray()) {
+  <span class="kw">while</span> (k&gt;0 &amp;&amp; !st.isEmpty() &amp;&amp; st.peek()&gt;c) {
+    st.pop(); k--;              <span class="cm">// remove larger digit</span>
+  }
+  st.push(c);
+}</div>
+    </div>
+  </div>
+  <div class="pbar"><b>Pattern:</b> Maintain a <b>monotonic increasing</b> stack (by value). For PSE: peek top after popping. For NSE: iterate right-to-left. Boundary sentinel: use -1 or n.</div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ Phase 3 -->
+<div class="phase-card" id="p3">
+  <div class="ph">
+    <div class="ph-num">3</div>
+    <div class="ph-title">PHASE 3 · MATCHING &amp; BALANCING</div>
+    <div class="ph-tag">Push open · pop on close · O(n)</div>
+  </div>
+  <div class="split">
+    <div class="left-pane">
+      <div class="qs-title">Questions</div>
+      <div class="q-row"><span class="q-num">1.</span><span class="tag t-calc">Match</span><span>Valid Parentheses</span></div>
+      <div class="q-row"><span class="q-num">2.</span><span class="tag t-calc">Match</span><span>Minimum Remove to Make Valid</span></div>
+      <div class="q-row"><span class="q-num">3.</span><span class="tag t-calc">Match</span><span>Minimum Add to Make Valid</span></div>
+      <div class="q-row"><span class="q-num">4.</span><span class="tag t-calc">Match</span><span>Longest Valid Parentheses</span></div>
+      <div class="q-row"><span class="q-num">5.</span><span class="tag t-calc">Match</span><span>Score of Parentheses</span></div>
+      <div class="q-row"><span class="q-num">6.</span><span class="tag t-calc">Match</span><span>Remove Outermost Parentheses</span></div>
+      <div class="q-row"><span class="q-num">7.</span><span class="tag t-calc">Match</span><span>Check if Word is Valid (after substitutions)</span></div>
+      <div class="q-row"><span class="q-num">8.</span><span class="tag t-calc">Match</span><span>Decode String (k[encoded])</span></div>
+      <br>
+      <div class="note-inline">
+        Longest Valid Parentheses trick: push -1 as base sentinel index. Answer = i - stack.peek() at each ')'.
+      </div>
+    </div>
+    <div class="right-pane">
+      <div class="qs-title">Matching templates</div>
+      <div class="code-block"><span class="cm">// Valid Parentheses</span>
+Deque&lt;Character&gt; st = <span class="kw">new</span> ArrayDeque&lt;&gt;();
+<span class="kw">for</span> (char c : s.toCharArray()) {
+  <span class="kw">if</span> (c=='('||c=='['||c=='{') st.push(c);
+  <span class="kw">else</span> {
+    <span class="kw">if</span> (st.isEmpty()) <span class="kw">return false</span>;
+    char top = st.pop();
+    <span class="kw">if</span> (c==')' &amp;&amp; top!='(') <span class="kw">return false</span>;
+    <span class="kw">if</span> (c==']' &amp;&amp; top!='[') <span class="kw">return false</span>;
+    <span class="kw">if</span> (c=='}' &amp;&amp; top!='{') <span class="kw">return false</span>;
+  }
+}
+<span class="kw">return</span> st.isEmpty();
+
+<span class="cm">// Longest Valid Parentheses</span>
+Deque&lt;Integer&gt; idxSt = <span class="kw">new</span> ArrayDeque&lt;&gt;();
+idxSt.push(-1); int maxLen=0;          <span class="cm">// sentinel</span>
+<span class="kw">for</span> (int i=0; i&lt;n; i++) {
+  <span class="kw">if</span> (s.charAt(i)=='(') { idxSt.push(i); }
+  <span class="kw">else</span> {
+    idxSt.pop();
+    <span class="kw">if</span> (idxSt.isEmpty()) idxSt.push(i); <span class="cm">// new base</span>
+    <span class="kw">else</span> maxLen=Math.max(maxLen, i-idxSt.peek());
+  }
+}
+
+<span class="cm">// Decode String k[encoded_string]</span>
+Deque&lt;Integer&gt; counts = <span class="kw">new</span> ArrayDeque&lt;&gt;();
+Deque&lt;StringBuilder&gt; builders = <span class="kw">new</span> ArrayDeque&lt;&gt;();
+StringBuilder cur = <span class="kw">new</span> StringBuilder(); int k=0;
+<span class="kw">for</span> (char c : s.toCharArray()) {
+  <span class="kw">if</span> (Character.isDigit(c)) k=k*10+(c-'0');
+  <span class="kw">else if</span> (c=='[') { counts.push(k); builders.push(cur); cur=<span class="kw">new</span> StringBuilder(); k=0; }
+  <span class="kw">else if</span> (c==']') { int t=counts.pop(); StringBuilder prev=builders.pop(); <span class="kw">for</span>(int i=0;i&lt;t;i++) prev.append(cur); cur=prev; }
+  <span class="kw">else</span> cur.append(c);
+}</div>
+    </div>
+  </div>
+  <div class="pbar"><b>Pattern:</b> Push opening brackets/indices. On closing bracket → pop and validate/compute. Stack empty at end = balanced. Sentinel index -1 enables length calculation.</div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ Phase 4 -->
+<div class="phase-card" id="p4">
+  <div class="ph">
+    <div class="ph-num">4</div>
+    <div class="ph-title">PHASE 4 · CALCULATOR &amp; EXPRESSION EVALUATION</div>
+    <div class="ph-tag">Operator precedence · Two stacks or one</div>
+  </div>
+  <div class="split">
+    <div class="left-pane">
+      <div class="qs-title">Questions</div>
+      <div class="q-row"><span class="q-num">1.</span><span class="tag t-calc">Expr</span><span>Basic Calculator I (+, -, parentheses)</span></div>
+      <div class="q-row"><span class="q-num">2.</span><span class="tag t-calc">Expr</span><span>Basic Calculator II (+, -, *, /)</span></div>
+      <div class="q-row"><span class="q-num">3.</span><span class="tag t-calc">Expr</span><span>Basic Calculator III (all ops + parens)</span></div>
+      <div class="q-row"><span class="q-num">4.</span><span class="tag t-calc">Expr</span><span>Evaluate Reverse Polish Notation</span></div>
+      <div class="q-row"><span class="q-num">5.</span><span class="tag t-calc">Expr</span><span>Infix to Postfix (Shunting Yard)</span></div>
+      <div class="q-row"><span class="q-num">6.</span><span class="tag t-calc">Expr</span><span>Mini Parser (deserialize)</span></div>
+      <div class="q-row"><span class="q-num">7.</span><span class="tag t-calc">Expr</span><span>Ternary Expression Parser</span></div>
+      <br>
+      <div class="note-inline">
+        <b>Basic Calc II key insight</b>: process operator of <em>previous</em> token, not current. Push positive/negative values for +/-. Push result of */÷ replacing top of stack.
+      </div>
+    </div>
+    <div class="right-pane">
+      <div class="qs-title">Calculator II + RPN templates</div>
+      <div class="code-block"><span class="cm">// Basic Calculator II (+,-,*,/) — one stack</span>
+Deque&lt;Integer&gt; st = <span class="kw">new</span> ArrayDeque&lt;&gt;();
+int num=0; char sign='+';
+<span class="kw">for</span> (int i=0; i&lt;s.length(); i++) {
+  char c = s.charAt(i);
+  <span class="kw">if</span> (Character.isDigit(c)) num = num*10+(c-'0');
+  <span class="kw">if</span> ((!Character.isDigit(c) &amp;&amp; c!=' ') || i==s.length()-1) {
+    <span class="kw">if</span>      (sign=='+') st.push(num);
+    <span class="kw">else if</span> (sign=='-') st.push(-num);
+    <span class="kw">else if</span> (sign=='*') st.push(st.pop()*num);
+    <span class="kw">else if</span> (sign=='/') st.push(st.pop()/num);
+    sign=c; num=0;
+  }
+}
+int ans=0; <span class="kw">while</span>(!st.isEmpty()) ans+=st.pop();
+
+<span class="cm">// Evaluate Reverse Polish Notation (RPN)</span>
+Deque&lt;Integer&gt; rpn = <span class="kw">new</span> ArrayDeque&lt;&gt;();
+<span class="kw">for</span> (String t : tokens) {
+  <span class="kw">if</span> ("+-*/".contains(t)) {
+    int b=rpn.pop(), a=rpn.pop();
+    <span class="kw">if</span>      (t.equals("+")) rpn.push(a+b);
+    <span class="kw">else if</span> (t.equals("-")) rpn.push(a-b);
+    <span class="kw">else if</span> (t.equals("*")) rpn.push(a*b);
+    <span class="kw">else</span>                    rpn.push(a/b);
+  } <span class="kw">else</span> rpn.push(Integer.parseInt(t));
+}
+<span class="kw">return</span> rpn.pop();</div>
+    </div>
+  </div>
+  <div class="pbar"><b>Pattern:</b> For +/−: push signed value. For */÷: pop top, compute, push result. Process operator of <em>previous</em> sign when new operator/end is reached. RPN: two pops per operator.</div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ Phase 5 -->
+<div class="phase-card" id="p5">
+  <div class="ph">
+    <div class="ph-num">5</div>
+    <div class="ph-title">PHASE 5 · HISTOGRAM &amp; AREA PROBLEMS</div>
+    <div class="ph-tag">NSE left &amp; right · Width calculation</div>
+  </div>
+  <div class="split">
+    <div class="left-pane">
+      <div class="qs-title">Questions</div>
+      <div class="q-row"><span class="q-num">1.</span><span class="tag t-tree">Hist</span><span>Largest Rectangle in Histogram</span></div>
+      <div class="q-row"><span class="q-num">2.</span><span class="tag t-tree">Hist</span><span>Maximal Rectangle (2D matrix)</span></div>
+      <div class="q-row"><span class="q-num">3.</span><span class="tag t-tree">Hist</span><span>Trapping Rain Water</span></div>
+      <div class="q-row"><span class="q-num">4.</span><span class="tag t-tree">Hist</span><span>Container with Most Water</span></div>
+      <div class="q-row"><span class="q-num">5.</span><span class="tag t-tree">Hist</span><span>Maximum Score of a Good Subarray</span></div>
+      <br>
+      <div class="note-inline">
+        <b>Maximal Rectangle</b>: for each row build a histogram (heights[j] = 0 if cell==0 else heights[j]+1), then apply Largest Rectangle in Histogram.<br><br>
+        <b>Trapping Rain Water</b>: for each bar, water = min(maxLeft, maxRight) - height[i]. Stack approach works in one pass.
+      </div>
+    </div>
+    <div class="right-pane">
+      <div class="qs-title">Largest Rectangle + Rain Water templates</div>
+      <div class="code-block"><span class="cm">// Largest Rectangle in Histogram</span>
+<span class="cm">// Stack stores indices of increasing heights</span>
+Deque&lt;Integer&gt; st = <span class="kw">new</span> ArrayDeque&lt;&gt;();
+int[] h = Arrays.copyOf(heights, n+1); <span class="cm">// append 0 sentinel</span>
+int maxArea = 0;
+<span class="kw">for</span> (int i=0; i&lt;=n; i++) {
+  <span class="kw">while</span> (!st.isEmpty() &amp;&amp; h[i] &lt; h[st.peek()]) {
+    int height = h[st.pop()];
+    int width  = st.isEmpty() ? i : i-st.peek()-1;
+    maxArea = Math.max(maxArea, height*width);
+  }
+  st.push(i);
+}
+
+<span class="cm">// Trapping Rain Water — stack approach (one pass)</span>
+Deque&lt;Integer&gt; tw = <span class="kw">new</span> ArrayDeque&lt;&gt;();
+int water = 0;
+<span class="kw">for</span> (int i=0; i&lt;n; i++) {
+  <span class="kw">while</span> (!tw.isEmpty() &amp;&amp; height[i] &gt; height[tw.peek()]) {
+    int bottom = tw.pop();
+    <span class="kw">if</span> (tw.isEmpty()) <span class="kw">break</span>;
+    int bounded = Math.min(height[tw.peek()], height[i])
+                  - height[bottom];
+    water += bounded * (i - tw.peek() - 1);
+  }
+  tw.push(i);
+}</div>
+    </div>
+  </div>
+  <div class="pbar"><b>Pattern:</b> Histogram = NSE on both sides. Width = nse[i] - pse[i] - 1. Append 0-height sentinel to flush remaining stack at end. Rain water: track bounded height between walls.</div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ Phase 6 -->
+<div class="phase-card" id="p6">
+  <div class="ph">
+    <div class="ph-num">6</div>
+    <div class="ph-title">PHASE 6 · MONOTONIC DEQUE — SLIDING WINDOW MAX/MIN</div>
+    <div class="ph-tag">Deque keeps max at front · O(n)</div>
+  </div>
+  <div class="split">
+    <div class="left-pane">
+      <div class="qs-title">Questions</div>
+      <div class="q-row"><span class="q-num">1.</span><span class="tag t-deque">Deque</span><span>Sliding Window Maximum</span></div>
+      <div class="q-row"><span class="q-num">2.</span><span class="tag t-deque">Deque</span><span>Sliding Window Minimum</span></div>
+      <div class="q-row"><span class="q-num">3.</span><span class="tag t-deque">Deque</span><span>Shortest Subarray with Sum ≥ K</span></div>
+      <div class="q-row"><span class="q-num">4.</span><span class="tag t-deque">Deque</span><span>Jump Game VI (max score path)</span></div>
+      <div class="q-row"><span class="q-num">5.</span><span class="tag t-deque">Deque</span><span>Maximum of Min for Every Window Size</span></div>
+      <div class="q-row"><span class="q-num">6.</span><span class="tag t-deque">Deque</span><span>Constrained Subsequence Sum</span></div>
+      <br>
+      <div class="note-inline">
+        Deque stores <b>indices</b> in decreasing order of value (for max).<br>
+        Front = index of current window max.<br>
+        Evict from front when out of window. Evict from back when new element ≥ back.
+      </div>
+    </div>
+    <div class="right-pane">
+      <div class="qs-title">Sliding Window Maximum template</div>
+      <div class="code-block"><span class="cm">// Monotonic Deque — front always holds window max index</span>
+int[] result = <span class="kw">new</span> int[n-k+1];
+Deque&lt;Integer&gt; dq = <span class="kw">new</span> ArrayDeque&lt;&gt;(); <span class="cm">// stores indices</span>
+
+<span class="kw">for</span> (int i=0; i&lt;n; i++) {
+  <span class="cm">// 1. Remove indices outside window</span>
+  <span class="kw">while</span> (!dq.isEmpty() &amp;&amp; dq.peekFirst() &lt; i-k+1)
+    dq.pollFirst();
+
+  <span class="cm">// 2. Remove from back elements smaller than current</span>
+  <span class="kw">while</span> (!dq.isEmpty() &amp;&amp; nums[dq.peekLast()] &lt; nums[i])
+    dq.pollLast();
+
+  dq.offerLast(i);
+
+  <span class="cm">// 3. Window fully formed → record max</span>
+  <span class="kw">if</span> (i &gt;= k-1)
+    result[i-k+1] = nums[dq.peekFirst()];
+}
+
+<span class="cm">// Sliding Window MINIMUM: flip comparison</span>
+<span class="cm">// while (!dq.isEmpty() &amp;&amp; nums[dq.peekLast()] &gt; nums[i])</span>
+<span class="cm">//   dq.pollLast();  → front holds min</span></div>
+    </div>
+  </div>
+  <div class="pbar"><b>Pattern:</b> pollFirst() for out-of-window. pollLast() to maintain monotonicity. peekFirst() = current window max. Flip comparison sign for min variant.</div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ Phase 7 -->
+<div class="phase-card" id="p7">
+  <div class="ph">
+    <div class="ph-num">7</div>
+    <div class="ph-title">PHASE 7 · STACK DESIGN PROBLEMS</div>
+    <div class="ph-tag">Augmented stack · O(1) special ops</div>
+  </div>
+  <div class="split">
+    <div class="left-pane">
+      <div class="qs-title">Questions</div>
+      <div class="q-row"><span class="q-num">1.</span><span class="tag t-design">Design</span><span>Min Stack (O(1) getMin)</span></div>
+      <div class="q-row"><span class="q-num">2.</span><span class="tag t-design">Design</span><span>Max Stack (O(1) getMax)</span></div>
+      <div class="q-row"><span class="q-num">3.</span><span class="tag t-design">Design</span><span>Implement Queue using Stacks</span></div>
+      <div class="q-row"><span class="q-num">4.</span><span class="tag t-design">Design</span><span>Implement Stack using Queues</span></div>
+      <div class="q-row"><span class="q-num">5.</span><span class="tag t-design">Design</span><span>LRU Cache (Stack behavior)</span></div>
+      <div class="q-row"><span class="q-num">6.</span><span class="tag t-design">Design</span><span>Dinner Plate Stacks</span></div>
+      <div class="q-row"><span class="q-num">7.</span><span class="tag t-design">Design</span><span>Flatten Nested List Iterator</span></div>
+      <br>
+      <div class="note-inline">
+        Min Stack: store pair <code>(value, currentMin)</code> at each level.<br>
+        Queue via 2 stacks: push to <code>in</code>, pour to <code>out</code> lazily on pop.<br>
+        Amortized O(1) per op.
+      </div>
+    </div>
+    <div class="right-pane">
+      <div class="qs-title">Min Stack + Queue via 2 Stacks</div>
+      <div class="code-block"><span class="cm">// Min Stack — store (val, minSoFar) pairs</span>
+Deque&lt;int[]&gt; st = <span class="kw">new</span> ArrayDeque&lt;&gt;();
+
+<span class="kw">void</span> <span class="fn">push</span>(int val) {
+  int curMin = st.isEmpty() ? val : Math.min(val, st.peek()[1]);
+  st.push(<span class="kw">new</span> int[]{val, curMin});
+}
+<span class="kw">void</span>  <span class="fn">pop</span>()    { st.pop(); }
+int   <span class="fn">top</span>()    { <span class="kw">return</span> st.peek()[0]; }
+int   <span class="fn">getMin</span>(){ <span class="kw">return</span> st.peek()[1]; } <span class="cm">// O(1)!</span>
+
+<span class="cm">// Queue using Two Stacks (amortized O(1))</span>
+Deque&lt;Integer&gt; inSt  = <span class="kw">new</span> ArrayDeque&lt;&gt;();
+Deque&lt;Integer&gt; outSt = <span class="kw">new</span> ArrayDeque&lt;&gt;();
+
+<span class="kw">void</span> <span class="fn">enqueue</span>(int x) { inSt.push(x); }
+
+int <span class="fn">dequeue</span>() {
+  <span class="kw">if</span> (outSt.isEmpty())                <span class="cm">// lazy pour</span>
+    <span class="kw">while</span> (!inSt.isEmpty())
+      outSt.push(inSt.pop());
+  <span class="kw">return</span> outSt.pop();
+}
+
+<span class="cm">// Flatten Nested List Iterator — use stack of iterators</span>
+Deque&lt;Iterator&lt;NestedInteger&gt;&gt; stk = <span class="kw">new</span> ArrayDeque&lt;&gt;();
+stk.push(nestedList.iterator());
+<span class="cm">// hasNext: peek until integer found, flatten lists lazily</span></div>
+    </div>
+  </div>
+  <div class="pbar"><b>Pattern:</b> Augment each stack entry with auxiliary info (min, max). Two-stack queue: push to IN, pop from OUT (pour lazily). Never pour when OUT is non-empty.</div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ Phase 8 -->
+<div class="phase-card" id="p8">
+  <div class="ph">
+    <div class="ph-num">8</div>
+    <div class="ph-title">PHASE 8 · ITERATIVE DFS &amp; TREE TRAVERSAL VIA STACK</div>
+    <div class="ph-tag">Explicit stack replaces call stack</div>
+  </div>
+  <div class="split">
+    <div class="left-pane">
+      <div class="qs-title">Questions</div>
+      <div class="q-row"><span class="q-num">1.</span><span class="tag t-tree">DFS</span><span>Binary Tree Inorder (iterative)</span></div>
+      <div class="q-row"><span class="q-num">2.</span><span class="tag t-tree">DFS</span><span>Binary Tree Preorder (iterative)</span></div>
+      <div class="q-row"><span class="q-num">3.</span><span class="tag t-tree">DFS</span><span>Binary Tree Postorder (iterative)</span></div>
+      <div class="q-row"><span class="q-num">4.</span><span class="tag t-tree">DFS</span><span>Binary Search Tree Iterator</span></div>
+      <div class="q-row"><span class="q-num">5.</span><span class="tag t-tree">DFS</span><span>Path Sum II (root to leaf paths)</span></div>
+      <div class="q-row"><span class="q-num">6.</span><span class="tag t-misc">Graph</span><span>Graph DFS (iterative)</span></div>
+      <div class="q-row"><span class="q-num">7.</span><span class="tag t-misc">Graph</span><span>Number of Islands (iterative DFS)</span></div>
+      <div class="q-row"><span class="q-num">8.</span><span class="tag t-tree">DFS</span><span>Recover BST (iterative inorder)</span></div>
+      <br>
+      <div class="note-inline">
+        Postorder iterative trick: do reverse-preorder (Root→Right→Left) then reverse the result. Or use two stacks.
+      </div>
+    </div>
+    <div class="right-pane">
+      <div class="qs-title">Inorder + Preorder + Postorder iterative</div>
+      <div class="code-block"><span class="cm">// INORDER iterative (Left → Root → Right)</span>
+Deque&lt;TreeNode&gt; st = <span class="kw">new</span> ArrayDeque&lt;&gt;();
+TreeNode cur = root;
+<span class="kw">while</span> (cur!=<span class="kw">null</span> || !st.isEmpty()) {
+  <span class="kw">while</span> (cur!=<span class="kw">null</span>) { st.push(cur); cur=cur.left; }
+  cur = st.pop();
+  result.add(cur.val);   <span class="cm">// VISIT</span>
+  cur = cur.right;
+}
+
+<span class="cm">// PREORDER iterative (Root → Left → Right)</span>
+st.push(root);
+<span class="kw">while</span> (!st.isEmpty()) {
+  TreeNode n = st.pop();
+  result.add(n.val);     <span class="cm">// VISIT</span>
+  <span class="kw">if</span> (n.right!=<span class="kw">null</span>) st.push(n.right); <span class="cm">// right first!</span>
+  <span class="kw">if</span> (n.left !=<span class="kw">null</span>) st.push(n.left);
+}
+
+<span class="cm">// POSTORDER iterative (Left → Right → Root)</span>
+<span class="cm">// = reverse of (Root → Right → Left)</span>
+st.push(root);
+LinkedList&lt;Integer&gt; post = <span class="kw">new</span> LinkedList&lt;&gt;();
+<span class="kw">while</span> (!st.isEmpty()) {
+  TreeNode n = st.pop();
+  post.addFirst(n.val);  <span class="cm">// add to FRONT</span>
+  <span class="kw">if</span> (n.left !=<span class="kw">null</span>) st.push(n.left);
+  <span class="kw">if</span> (n.right!=<span class="kw">null</span>) st.push(n.right);
+}</div>
+    </div>
+  </div>
+  <div class="pbar"><b>Pattern:</b> Inorder = go left until null, pop &amp; visit, go right. Preorder = push right then left. Postorder = reverse preorder (push left then right, addFirst to result).</div>
+</div>
+
+<!-- Summary table -->
+<div style="border:1px solid #ddd;border-radius:8px;overflow:hidden;margin-top:6px;">
+  <div style="padding:6px 12px;font-size:10px;font-weight:500;text-transform:uppercase;letter-spacing:.4px;border-bottom:1px solid #ddd;">SUMMARY TABLE</div>
+  <table style="width:100%;border-collapse:collapse;">
+    <tr>
+      <th style="padding:5px 10px;text-align:left;font-size:10.5px;border-bottom:1px solid #eee;">Pattern</th>
+      <th style="padding:5px 10px;text-align:left;font-size:10.5px;border-bottom:1px solid #eee;">Stack type</th>
+      <th style="padding:5px 10px;text-align:left;font-size:10.5px;border-bottom:1px solid #eee;">Trigger phrase</th>
+      <th style="padding:5px 10px;text-align:left;font-size:10.5px;border-bottom:1px solid #eee;">Examples</th>
+    </tr>
+    <tr><td style="padding:4px 10px;font-size:10.5px;border-bottom:1px solid #f0f0f0;"><span class="tag t-mono">NGE</span></td><td style="padding:4px 10px;font-size:10.5px;border-bottom:1px solid #f0f0f0;">Monotonic Decreasing</td><td style="padding:4px 10px;font-size:10.5px;border-bottom:1px solid #f0f0f0;">next greater, warmer day, stock span</td><td style="padding:4px 10px;font-size:10.5px;border-bottom:1px solid #f0f0f0;">Daily Temperatures, NGE I/II</td></tr>
+    <tr><td style="padding:4px 10px;font-size:10.5px;border-bottom:1px solid #f0f0f0;"><span class="tag t-ng">NSE</span></td><td style="padding:4px 10px;font-size:10.5px;border-bottom:1px solid #f0f0f0;">Monotonic Increasing</td><td style="padding:4px 10px;font-size:10.5px;border-bottom:1px solid #f0f0f0;">next smaller, remove digit, histogram</td><td style="padding:4px 10px;font-size:10.5px;border-bottom:1px solid #f0f0f0;">Remove K Digits, 132 Pattern</td></tr>
+    <tr><td style="padding:4px 10px;font-size:10.5px;border-bottom:1px solid #f0f0f0;"><span class="tag t-calc">Match</span></td><td style="padding:4px 10px;font-size:10.5px;border-bottom:1px solid #f0f0f0;">LIFO matching</td><td style="padding:4px 10px;font-size:10.5px;border-bottom:1px solid #f0f0f0;">valid brackets, balanced, decode</td><td style="padding:4px 10px;font-size:10.5px;border-bottom:1px solid #f0f0f0;">Valid Parens, Decode String</td></tr>
+    <tr><td style="padding:4px 10px;font-size:10.5px;border-bottom:1px solid #f0f0f0;"><span class="tag t-calc">Expr</span></td><td style="padding:4px 10px;font-size:10.5px;border-bottom:1px solid #f0f0f0;">Operator stack</td><td style="padding:4px 10px;font-size:10.5px;border-bottom:1px solid #f0f0f0;">evaluate expression, calculator</td><td style="padding:4px 10px;font-size:10.5px;border-bottom:1px solid #f0f0f0;">Basic Calc I/II/III, RPN</td></tr>
+    <tr><td style="padding:4px 10px;font-size:10.5px;border-bottom:1px solid #f0f0f0;"><span class="tag t-tree">Hist</span></td><td style="padding:4px 10px;font-size:10.5px;border-bottom:1px solid #f0f0f0;">Increasing (NSE both sides)</td><td style="padding:4px 10px;font-size:10.5px;border-bottom:1px solid #f0f0f0;">largest area, trap water, rectangle</td><td style="padding:4px 10px;font-size:10.5px;border-bottom:1px solid #f0f0f0;">Histogram, Maximal Rectangle</td></tr>
+    <tr><td style="padding:4px 10px;font-size:10.5px;border-bottom:1px solid #f0f0f0;"><span class="tag t-deque">Deque</span></td><td style="padding:4px 10px;font-size:10.5px;border-bottom:1px solid #f0f0f0;">Monotonic Deque</td><td style="padding:4px 10px;font-size:10.5px;border-bottom:1px solid #f0f0f0;">sliding window max/min</td><td style="padding:4px 10px;font-size:10.5px;border-bottom:1px solid #f0f0f0;">SW Maximum, Jump Game VI</td></tr>
+    <tr><td style="padding:4px 10px;font-size:10.5px;border-bottom:1px solid #f0f0f0;"><span class="tag t-design">Design</span></td><td style="padding:4px 10px;font-size:10.5px;border-bottom:1px solid #f0f0f0;">Augmented / Two stacks</td><td style="padding:4px 10px;font-size:10.5px;border-bottom:1px solid #f0f0f0;">O(1) min/max, queue from stacks</td><td style="padding:4px 10px;font-size:10.5px;border-bottom:1px solid #f0f0f0;">Min Stack, Queue via 2 Stacks</td></tr>
+    <tr><td style="padding:4px 10px;font-size:10.5px;"><span class="tag t-misc">DFS</span></td><td style="padding:4px 10px;font-size:10.5px;">Explicit call stack</td><td style="padding:4px 10px;font-size:10.5px;">iterative tree traversal, DFS</td><td style="padding:4px 10px;font-size:10.5px;">Inorder, Preorder, Postorder</td></tr>
+  </table>
+</div>
+
+<div class="golden" style="margin-top:8px;">
+  <b>GOLDEN RULE:</b> See "next/prev greater/smaller" → Monotonic Stack.<br>
+  See "bracket/pair matching" → LIFO push-pop. See "expression" → operator stack.<br>
+  See "sliding window max/min" → Monotonic Deque.<br>
+  <b>ALWAYS store INDICES in the stack, not values — you need position for width/distance calculations!</b>
+</div>
+
+<script>
+function show(id, btn) {
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  ['p1','p2','p3','p4','p5','p6','p7','p8'].forEach(p => {
+    document.getElementById(p).classList.toggle('hidden', id !== 'all' && p !== id);
+  });
+}
+</script>
+</body>
+</html>

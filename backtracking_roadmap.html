@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="theme.css">
+<title>Backtracking</title>
+</head>
+<body>
+<a class="back-hub" href="index.html"><span class="arw">&#8592;</span> Hub</a>
+<h1>BACKTRACKING</h1>
+<div class="sub">Subsets, permutations, grid solving</div>
+
+  <div class="topic-intro"><b>CORE IDEA:</b> Build candidates incrementally; abandon ("backtrack") a path the moment it can't lead to a solution. Choose → explore → un-choose. Exponential, but pruning makes it tractable.</div>
+
+  <div class="phase-card">
+    <div class="ph"><div class="ph-num">1</div><div class="ph-title">Subsets / Combinations / Permutations</div>
+      <div class="cx-badge"><span class="cx cx-time">Time O(2ⁿ)/O(n!)</span><span class="cx cx-space">Space O(n)</span></div></div>
+    <div class="split">
+      <div class="left-pane">
+        <div class="qs-title">Questions</div>
+        <div class="q-row"><span class="q-num">1.</span><span>Subsets I &amp; II</span></div>
+        <div class="q-row"><span class="q-num">2.</span><span>Combination Sum I &amp; II</span></div>
+        <div class="q-row"><span class="q-num">3.</span><span>Permutations I &amp; II</span></div>
+        <div class="q-row"><span class="q-num">4.</span><span>Letter Combinations of a Phone Number</span></div>
+        <div class="q-row"><span class="q-num">5.</span><span>Palindrome Partitioning</span></div>
+        <div class="keyword-box"><b>Keyword:</b> "all combinations", "all subsets", "all permutations", "generate every...". The branching factor and the "start index" distinguish the three families.</div>
+      </div>
+      <div class="right-pane">
+        <div class="qs-title">Pseudocode</div>
+        <div class="code-block"><span class="cm">// Generic backtracking skeleton</span>
+<span class="kw">void</span> <span class="fn">backtrack</span>(List&lt;Integer&gt; path, int start) {
+  result.add(<span class="kw">new</span> ArrayList&lt;&gt;(path));   <span class="cm">// record (subsets)</span>
+  <span class="kw">for</span> (int i=start; i&lt;n; i++) {
+    <span class="cm">// prune: skip duplicates / invalid choices</span>
+    <span class="kw">if</span> (i&gt;start &amp;&amp; nums[i]==nums[i-1]) <span class="kw">continue</span>;
+    path.add(nums[i]);                <span class="cm">// CHOOSE</span>
+    <span class="fn">backtrack</span>(path, i+1);            <span class="cm">// EXPLORE</span>
+    path.remove(path.size()-1);       <span class="cm">// UN-CHOOSE</span>
+  }
+}
+<span class="cm">// Permutations: use boolean[] used instead of start index</span>
+<span class="cm">// Combination Sum (reuse): recurse with i, not i+1</span></div>
+      </div>
+    </div>
+    <div class="pbar"><b>Pattern:</b> Subsets/combinations use a <code>start</code> index (forward-only). Permutations use a <code>used[]</code> flag (any unused element). Sort + skip <code>nums[i]==nums[i-1]</code> dedupes.</div>
+  </div>
+
+  <div class="phase-card">
+    <div class="ph"><div class="ph-num">2</div><div class="ph-title">Grid &amp; Constraint Backtracking</div>
+      <div class="cx-badge"><span class="cx cx-time">Time exp.</span><span class="cx cx-space">Space O(n²)</span></div></div>
+    <div class="split">
+      <div class="left-pane">
+        <div class="qs-title">Questions</div>
+        <div class="q-row"><span class="q-num">1.</span><span>N-Queens</span></div>
+        <div class="q-row"><span class="q-num">2.</span><span>Sudoku Solver</span></div>
+        <div class="q-row"><span class="q-num">3.</span><span>Word Search</span></div>
+        <div class="q-row"><span class="q-num">4.</span><span>Word Search II (with Trie)</span></div>
+        <div class="keyword-box"><b>Keyword:</b> "place N items with constraints", "solve the board", "find word in grid". Mark visited, recurse, unmark.</div>
+      </div>
+      <div class="right-pane">
+        <div class="qs-title">Pseudocode</div>
+        <div class="code-block"><span class="cm">// Word Search — DFS with visited marking</span>
+<span class="kw">boolean</span> <span class="fn">dfs</span>(int r, int c, int idx) {
+  <span class="kw">if</span> (idx==word.length()) <span class="kw">return true</span>;
+  <span class="kw">if</span> (outOfBounds || board[r][c]!=word.charAt(idx))
+    <span class="kw">return false</span>;
+  char tmp = board[r][c];
+  board[r][c] = '#';              <span class="cm">// mark visited</span>
+  <span class="kw">boolean</span> found =
+       <span class="fn">dfs</span>(r+1,c,idx+1) || <span class="fn">dfs</span>(r-1,c,idx+1)
+    || <span class="fn">dfs</span>(r,c+1,idx+1) || <span class="fn">dfs</span>(r,c-1,idx+1);
+  board[r][c] = tmp;              <span class="cm">// restore (backtrack)</span>
+  <span class="kw">return</span> found;
+}</div>
+      </div>
+    </div>
+    <div class="pbar"><b>Pattern:</b> Modify state to mark a choice, recurse, then restore it. N-Queens prunes with column/diagonal sets for O(1) validity checks.</div>
+  </div>
+
+  <table class="cx-table">
+    <tr><th>Problem family</th><th>Time</th><th>Space</th></tr>
+    <tr><td>Subsets</td><td class="mono">O(2ⁿ · n)</td><td class="mono">O(n)</td></tr>
+    <tr><td>Permutations</td><td class="mono">O(n! · n)</td><td class="mono">O(n)</td></tr>
+    <tr><td>N-Queens</td><td class="mono">O(n!)</td><td class="mono">O(n)</td></tr>
+  </table>
+</div>
+
+<!-- ══════════════════════════════════════════ GREEDY ══════════════ -->
+<div class="golden"><b>GOLDEN RULE:</b> Pattern &#8594; Keyword &#8594; Pseudocode &#8594; Complexity. State the time AND space cost out loud in interviews.</div>
+</body>
+</html>

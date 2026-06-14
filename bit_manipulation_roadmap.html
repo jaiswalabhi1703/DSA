@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="theme.css">
+<title>Bit Manipulation</title>
+</head>
+<body>
+<a class="back-hub" href="index.html"><span class="arw">&#8592;</span> Hub</a>
+<h1>BIT MANIPULATION</h1>
+<div class="sub">XOR tricks, masking, set-bit counting</div>
+
+  <div class="topic-intro"><b>CORE IDEA:</b> Operate directly on binary representation. XOR cancels pairs, AND masks bits, shifts multiply/divide by powers of 2. Often turns O(n) space into O(1).</div>
+
+  <div class="phase-card">
+    <div class="ph"><div class="ph-num">1</div><div class="ph-title">XOR Tricks</div>
+      <div class="cx-badge"><span class="cx cx-time">Time O(n)</span><span class="cx cx-space">Space O(1)</span></div></div>
+    <div class="split">
+      <div class="left-pane">
+        <div class="qs-title">Questions</div>
+        <div class="q-row"><span class="q-num">1.</span><span>Single Number</span></div>
+        <div class="q-row"><span class="q-num">2.</span><span>Single Number II &amp; III</span></div>
+        <div class="q-row"><span class="q-num">3.</span><span>Missing Number</span></div>
+        <div class="q-row"><span class="q-num">4.</span><span>Find the Difference</span></div>
+        <div class="keyword-box"><b>Keyword:</b> "every element appears twice except one", "find missing/duplicate", "without extra space". XOR of a number with itself = 0.</div>
+      </div>
+      <div class="right-pane">
+        <div class="qs-title">Pseudocode</div>
+        <div class="code-block"><span class="cm">// Single Number — XOR cancels pairs</span>
+int x = 0;
+<span class="kw">for</span> (int num : nums) x ^= num;
+<span class="kw">return</span> x;  <span class="cm">// duplicates cancel, lone number remains</span>
+
+<span class="cm">// Missing Number in [0..n]</span>
+int missing = n;
+<span class="kw">for</span> (int i=0; i&lt;n; i++)
+  missing ^= i ^ nums[i];
+<span class="kw">return</span> missing;
+
+<span class="cm">// Key identities:</span>
+<span class="cm">// a^a = 0, a^0 = a, XOR is commutative</span></div>
+      </div>
+    </div>
+    <div class="pbar"><b>Pattern:</b> XOR all elements — anything appearing an even number of times cancels to 0, leaving the odd one out.</div>
+  </div>
+
+  <div class="phase-card">
+    <div class="ph"><div class="ph-num">2</div><div class="ph-title">Bit Masking &amp; Counting</div>
+      <div class="cx-badge"><span class="cx cx-time">Time O(n·32)</span><span class="cx cx-space">Space O(1)</span></div></div>
+    <div class="split">
+      <div class="left-pane">
+        <div class="qs-title">Questions</div>
+        <div class="q-row"><span class="q-num">1.</span><span>Number of 1 Bits (Hamming weight)</span></div>
+        <div class="q-row"><span class="q-num">2.</span><span>Counting Bits</span></div>
+        <div class="q-row"><span class="q-num">3.</span><span>Reverse Bits</span></div>
+        <div class="q-row"><span class="q-num">4.</span><span>Power of Two</span></div>
+        <div class="q-row"><span class="q-num">5.</span><span>Subsets (via bitmask enumeration)</span></div>
+        <div class="keyword-box"><b>Keyword:</b> "count set bits", "is power of 2", "generate all subsets", "toggle/check bit". n &amp; (n-1) clears the lowest set bit.</div>
+      </div>
+      <div class="right-pane">
+        <div class="qs-title">Pseudocode</div>
+        <div class="code-block"><span class="cm">// Count set bits — Brian Kernighan</span>
+int count = 0;
+<span class="kw">while</span> (n != 0) {
+  n &amp;= (n - 1);   <span class="cm">// clears lowest set bit</span>
+  count++;
+}
+
+<span class="cm">// Essential bit operations:</span>
+<span class="cm">// check bit i:  (n &gt;&gt; i) &amp; 1</span>
+<span class="cm">// set bit i:    n | (1 &lt;&lt; i)</span>
+<span class="cm">// clear bit i:  n &amp; ~(1 &lt;&lt; i)</span>
+<span class="cm">// toggle bit i: n ^ (1 &lt;&lt; i)</span>
+<span class="cm">// is power of 2: n &gt; 0 &amp;&amp; (n &amp; (n-1)) == 0</span>
+
+<span class="cm">// Enumerate all subsets of n elements:</span>
+<span class="kw">for</span> (int mask=0; mask&lt;(1&lt;&lt;n); mask++) { <span class="cm">/* ... */</span> }</div>
+      </div>
+    </div>
+    <div class="pbar"><b>Pattern:</b> <code>n & (n-1)</code> removes the lowest set bit — counts bits in O(set bits). Bitmask loops <code>0..2ⁿ</code> enumerate every subset.</div>
+  </div>
+
+  <table class="cx-table">
+    <tr><th>Operation</th><th>Time</th><th>Note</th></tr>
+    <tr><td>XOR sweep</td><td class="mono">O(n)</td><td>O(1) space</td></tr>
+    <tr><td>Kernighan bit count</td><td class="mono">O(set bits)</td><td>≤ 32 per number</td></tr>
+    <tr><td>Subset enumeration</td><td class="mono">O(2ⁿ)</td><td>n ≤ ~20</td></tr>
+  </table>
+<div class="golden"><b>GOLDEN RULE:</b> Pattern &#8594; Keyword &#8594; Pseudocode &#8594; Complexity. State the time AND space cost out loud in interviews.</div>
+</body>
+</html>

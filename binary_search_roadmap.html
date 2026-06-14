@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="theme.css">
+<title>Binary Search</title>
+</head>
+<body>
+<a class="back-hub" href="index.html"><span class="arw">&#8592;</span> Hub</a>
+<h1>BINARY SEARCH</h1>
+<div class="sub">Boundary, rotated arrays, search-on-answer</div>
+
+  <div class="topic-intro"><b>CORE IDEA:</b> Halve the search space each step. Works on sorted arrays AND on "answer space" (binary search the answer). The hard part is defining the predicate that's monotonic (false…false, true…true).</div>
+
+  <div class="phase-card">
+    <div class="ph"><div class="ph-num">1</div><div class="ph-title">Classic + Boundary Search</div>
+      <div class="cx-badge"><span class="cx cx-time">Time O(log n)</span><span class="cx cx-space">Space O(1)</span></div></div>
+    <div class="split">
+      <div class="left-pane">
+        <div class="qs-title">Questions</div>
+        <div class="q-row"><span class="q-num">1.</span><span>Binary Search (basic)</span></div>
+        <div class="q-row"><span class="q-num">2.</span><span>First &amp; Last Position (lower/upper bound)</span></div>
+        <div class="q-row"><span class="q-num">3.</span><span>Search Insert Position</span></div>
+        <div class="q-row"><span class="q-num">4.</span><span>Find Peak Element</span></div>
+        <div class="keyword-box"><b>Keyword:</b> "sorted array", "find target", "first/last occurrence", "O(log n) required". lower_bound = first index ≥ target.</div>
+      </div>
+      <div class="right-pane">
+        <div class="qs-title">Pseudocode</div>
+        <div class="code-block"><span class="cm">// Lower bound: first index where nums[i] &gt;= target</span>
+int lo=0, hi=n;        <span class="cm">// note hi=n (exclusive)</span>
+<span class="kw">while</span> (lo &lt; hi) {
+  int mid = lo + (hi-lo)/2;    <span class="cm">// avoid overflow</span>
+  <span class="kw">if</span> (nums[mid] &lt; target) lo = mid+1;
+  <span class="kw">else</span> hi = mid;
+}
+<span class="kw">return</span> lo;  <span class="cm">// insertion point / first ≥ target</span>
+
+<span class="cm">// Upper bound: change condition to nums[mid] &lt;= target</span></div>
+      </div>
+    </div>
+    <div class="pbar"><b>Pattern:</b> Use half-open [lo, hi). <code>lo + (hi-lo)/2</code> prevents overflow. Lower/upper bound = the building blocks for counting occurrences.</div>
+  </div>
+
+  <div class="phase-card">
+    <div class="ph"><div class="ph-num">2</div><div class="ph-title">Rotated / Modified Array</div>
+      <div class="cx-badge"><span class="cx cx-time">Time O(log n)</span><span class="cx cx-space">Space O(1)</span></div></div>
+    <div class="split">
+      <div class="left-pane">
+        <div class="qs-title">Questions</div>
+        <div class="q-row"><span class="q-num">1.</span><span>Search in Rotated Sorted Array</span></div>
+        <div class="q-row"><span class="q-num">2.</span><span>Find Minimum in Rotated Sorted Array</span></div>
+        <div class="q-row"><span class="q-num">3.</span><span>Search in Rotated Array II (dupes)</span></div>
+        <div class="q-row"><span class="q-num">4.</span><span>Single Element in Sorted Array</span></div>
+        <div class="keyword-box"><b>Keyword:</b> "rotated sorted array", "mountain array", "find min/pivot". One half is always sorted — decide which.</div>
+      </div>
+      <div class="right-pane">
+        <div class="qs-title">Pseudocode</div>
+        <div class="code-block">int lo=0, hi=n-1;
+<span class="kw">while</span> (lo &lt;= hi) {
+  int mid = lo + (hi-lo)/2;
+  <span class="kw">if</span> (nums[mid]==target) <span class="kw">return</span> mid;
+  <span class="kw">if</span> (nums[lo] &lt;= nums[mid]) {       <span class="cm">// left half sorted</span>
+    <span class="kw">if</span> (nums[lo]&lt;=target &amp;&amp; target&lt;nums[mid]) hi=mid-1;
+    <span class="kw">else</span> lo=mid+1;
+  } <span class="kw">else</span> {                          <span class="cm">// right half sorted</span>
+    <span class="kw">if</span> (nums[mid]&lt;target &amp;&amp; target&lt;=nums[hi]) lo=mid+1;
+    <span class="kw">else</span> hi=mid-1;
+  }
+}</div>
+      </div>
+    </div>
+    <div class="pbar"><b>Pattern:</b> Compare nums[lo] vs nums[mid] to find the sorted half, then check if target lies in that half's range.</div>
+  </div>
+
+  <div class="phase-card">
+    <div class="ph"><div class="ph-num">3</div><div class="ph-title">Binary Search on Answer</div>
+      <div class="cx-badge"><span class="cx cx-time">Time O(n log M)</span><span class="cx cx-space">Space O(1)</span></div></div>
+    <div class="split">
+      <div class="left-pane">
+        <div class="qs-title">Questions</div>
+        <div class="q-row"><span class="q-num">1.</span><span>Koko Eating Bananas</span></div>
+        <div class="q-row"><span class="q-num">2.</span><span>Capacity to Ship Packages in D Days</span></div>
+        <div class="q-row"><span class="q-num">3.</span><span>Split Array Largest Sum</span></div>
+        <div class="q-row"><span class="q-num">4.</span><span>Median of Two Sorted Arrays</span></div>
+        <div class="q-row"><span class="q-num">5.</span><span>Minimize Max Distance to Gas Station</span></div>
+        <div class="keyword-box"><b>Keyword:</b> "minimum/maximum X such that...", "minimize the largest", "can we do it in K?". Binary search the answer value, not an index. M = value range.</div>
+      </div>
+      <div class="right-pane">
+        <div class="qs-title">Pseudocode</div>
+        <div class="code-block"><span class="cm">// Find smallest feasible answer in [lo, hi]</span>
+int lo = minPossible, hi = maxPossible;
+<span class="kw">while</span> (lo &lt; hi) {
+  int mid = lo + (hi-lo)/2;
+  <span class="kw">if</span> (<span class="fn">canDo</span>(mid))     <span class="cm">// monotonic predicate</span>
+    hi = mid;            <span class="cm">// mid works → try smaller</span>
+  <span class="kw">else</span>
+    lo = mid + 1;        <span class="cm">// mid fails → need larger</span>
+}
+<span class="kw">return</span> lo;
+
+<span class="cm">// canDo(speed): simulate, return true if feasible</span>
+<span class="kw">boolean</span> <span class="fn">canDo</span>(int x) { <span class="cm">/* O(n) check */</span> }</div>
+      </div>
+    </div>
+    <div class="pbar"><b>Pattern:</b> Define a monotonic <code>canDo(x)</code> predicate. Binary search the minimum x where it flips false→true. Each check is O(n) → total O(n log M).</div>
+  </div>
+
+  <table class="cx-table">
+    <tr><th>Variant</th><th>Time</th><th>Note</th></tr>
+    <tr><td>Classic / boundary</td><td class="mono">O(log n)</td><td>sorted array</td></tr>
+    <tr><td>Rotated array</td><td class="mono">O(log n)</td><td>O(n) worst case with duplicates</td></tr>
+    <tr><td>Binary search on answer</td><td class="mono">O(n log M)</td><td>M = answer value range</td></tr>
+  </table>
+</div>
+
+<!-- ══════════════════════════════════════════ LINKED LIST ══════════════ -->
+<div class="golden"><b>GOLDEN RULE:</b> Pattern &#8594; Keyword &#8594; Pseudocode &#8594; Complexity. State the time AND space cost out loud in interviews.</div>
+</body>
+</html>

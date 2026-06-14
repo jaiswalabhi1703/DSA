@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="theme.css">
+<title>Linked List</title>
+</head>
+<body>
+<a class="back-hub" href="index.html"><span class="arw">&#8592;</span> Hub</a>
+<h1>LINKED LIST</h1>
+<div class="sub">Reversal, fast/slow, dummy head</div>
+
+  <div class="topic-intro"><b>CORE IDEA:</b> Master pointer manipulation. Use a <b>dummy head</b> to simplify edge cases, fast/slow for the middle &amp; cycles, and careful next-pointer rewiring for reversal.</div>
+
+  <div class="phase-card">
+    <div class="ph"><div class="ph-num">1</div><div class="ph-title">Reversal Patterns</div>
+      <div class="cx-badge"><span class="cx cx-time">Time O(n)</span><span class="cx cx-space">Space O(1)</span></div></div>
+    <div class="split">
+      <div class="left-pane">
+        <div class="qs-title">Questions</div>
+        <div class="q-row"><span class="q-num">1.</span><span>Reverse Linked List</span></div>
+        <div class="q-row"><span class="q-num">2.</span><span>Reverse Linked List II (range)</span></div>
+        <div class="q-row"><span class="q-num">3.</span><span>Reverse Nodes in k-Group</span></div>
+        <div class="q-row"><span class="q-num">4.</span><span>Swap Nodes in Pairs</span></div>
+        <div class="q-row"><span class="q-num">5.</span><span>Palindrome Linked List</span></div>
+        <div class="keyword-box"><b>Keyword:</b> "reverse the list", "reverse in groups of k", "swap pairs". Three-pointer dance: prev, cur, next.</div>
+      </div>
+      <div class="right-pane">
+        <div class="qs-title">Pseudocode</div>
+        <div class="code-block"><span class="cm">// Iterative reversal — prev/cur/next</span>
+ListNode prev = <span class="kw">null</span>, cur = head;
+<span class="kw">while</span> (cur != <span class="kw">null</span>) {
+  ListNode next = cur.next;  <span class="cm">// save</span>
+  cur.next = prev;           <span class="cm">// reverse pointer</span>
+  prev = cur;                <span class="cm">// advance prev</span>
+  cur = next;                <span class="cm">// advance cur</span>
+}
+<span class="kw">return</span> prev;  <span class="cm">// new head</span>
+
+<span class="cm">// k-Group: count k nodes ahead, reverse, recurse on rest</span></div>
+      </div>
+    </div>
+    <div class="pbar"><b>Pattern:</b> Always save <code>cur.next</code> before rewiring. prev becomes the new head after the loop.</div>
+  </div>
+
+  <div class="phase-card">
+    <div class="ph"><div class="ph-num">2</div><div class="ph-title">Fast &amp; Slow + Dummy Head</div>
+      <div class="cx-badge"><span class="cx cx-time">Time O(n)</span><span class="cx cx-space">Space O(1)</span></div></div>
+    <div class="split">
+      <div class="left-pane">
+        <div class="qs-title">Questions</div>
+        <div class="q-row"><span class="q-num">1.</span><span>Middle of the Linked List</span></div>
+        <div class="q-row"><span class="q-num">2.</span><span>Linked List Cycle I &amp; II</span></div>
+        <div class="q-row"><span class="q-num">3.</span><span>Remove Nth Node From End</span></div>
+        <div class="q-row"><span class="q-num">4.</span><span>Merge Two Sorted Lists</span></div>
+        <div class="q-row"><span class="q-num">5.</span><span>Remove Duplicates from Sorted List</span></div>
+        <div class="keyword-box"><b>Keyword:</b> "find the middle", "detect cycle", "nth from end", "merge lists", "remove node". Use dummy head when the head itself may change.</div>
+      </div>
+      <div class="right-pane">
+        <div class="qs-title">Pseudocode</div>
+        <div class="code-block"><span class="cm">// Floyd's cycle detection</span>
+ListNode slow=head, fast=head;
+<span class="kw">while</span> (fast!=<span class="kw">null</span> &amp;&amp; fast.next!=<span class="kw">null</span>) {
+  slow = slow.next;          <span class="cm">// 1 step</span>
+  fast = fast.next.next;     <span class="cm">// 2 steps</span>
+  <span class="kw">if</span> (slow==fast) <span class="kw">break</span>;       <span class="cm">// cycle found</span>
+}
+<span class="cm">// cycle start: reset one ptr to head, move both 1 step</span>
+
+<span class="cm">// Dummy head removes head edge cases</span>
+ListNode dummy = <span class="kw">new</span> ListNode(0); dummy.next = head;
+<span class="cm">// ... operate, return dummy.next</span></div>
+      </div>
+    </div>
+    <div class="pbar"><b>Pattern:</b> Fast moves 2×, slow 1×. When fast hits the end, slow is at the middle. For Nth-from-end: advance fast N nodes first, then move both.</div>
+  </div>
+
+  <table class="cx-table">
+    <tr><th>Operation</th><th>Time</th><th>Space</th></tr>
+    <tr><td>Reverse / traverse</td><td class="mono">O(n)</td><td class="mono">O(1)</td></tr>
+    <tr><td>Cycle detect (Floyd)</td><td class="mono">O(n)</td><td class="mono">O(1)</td></tr>
+    <tr><td>Merge K lists (heap)</td><td class="mono">O(N log k)</td><td class="mono">O(k)</td></tr>
+  </table>
+</div>
+
+<!-- ══════════════════════════════════════════ HASHING ══════════════ -->
+<div class="golden"><b>GOLDEN RULE:</b> Pattern &#8594; Keyword &#8594; Pseudocode &#8594; Complexity. State the time AND space cost out loud in interviews.</div>
+</body>
+</html>

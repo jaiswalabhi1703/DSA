@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="theme.css">
+<title>Dynamic Programming Roadmap</title>
+</head>
+<body>
+<a class="back-hub" href="index.html"><span class="arw">&#8592;</span> Hub</a>
+<h1>DYNAMIC PROGRAMMING ROADMAP (PHASE-WISE)</h1>
+<div class="sub">Click a phase to focus · 8 phases with Java-style pseudocode</div>
+
+<div class="core-box">
+  <div class="ct">CORE IDEA</div>
+  <p>DP = <em>break problem into overlapping subproblems</em> + <em>cache results</em>.<br>
+  Either <em>Top-Down (Memoization)</em> → recursion + HashMap/array cache<br>
+  or <em>Bottom-Up (Tabulation)</em> → fill dp[] table iteratively.<br>
+  <em>Golden question: "What is dp[i] / dp[i][j] representing?"</em></p>
+</div>
+
+<div class="top-row">
+  <div class="when-box">
+    <div class="bh">DP Pattern Recognition</div>
+    <ul>
+      <li><span style="font-weight:500">1D DP</span> → single array, index = state</li>
+      <li><span style="font-weight:500">2D DP</span> → two sequences / grid → dp[i][j]</li>
+      <li><span style="font-weight:500">Interval DP</span> → dp[l][r] on subarray ranges</li>
+      <li><span style="font-weight:500">String DP</span> → edit distance, LCS, palindrome</li>
+      <li><span style="font-weight:500">Tree DP</span> → postorder, aggregate from children</li>
+      <li><span style="font-weight:500">Bitmask DP</span> → subset states, dp[mask]</li>
+      <li><span style="font-weight:500">Greedy+DP</span> → sort then DP (LIS, activity)</li>
+    </ul>
+  </div>
+  <div class="when-box">
+    <div class="bh">When to use DP?</div>
+    <ul>
+      <li>Overlapping subproblems exist</li>
+      <li>Optimal substructure holds</li>
+      <li>"Count ways" or "min/max" asked</li>
+      <li>Choices at each step affect future</li>
+      <li>Brute force is exponential O(2ⁿ)</li>
+    </ul>
+    <div style="margin-top:6px;font-size:10.5px;">
+      <b>Top-Down</b>: easier to write, natural recursion<br>
+      <b>Bottom-Up</b>: faster, no stack overflow
+    </div>
+  </div>
+</div>
+
+<div class="nav">
+  <button class="nav-btn active" onclick="show('all',this)">All phases</button>
+  <button class="nav-btn" onclick="show('p1',this)">P1 · 1D DP</button>
+  <button class="nav-btn" onclick="show('p2',this)">P2 · Knapsack</button>
+  <button class="nav-btn" onclick="show('p3',this)">P3 · 2D / Grid</button>
+  <button class="nav-btn" onclick="show('p4',this)">P4 · String DP</button>
+  <button class="nav-btn" onclick="show('p5',this)">P5 · Interval DP</button>
+  <button class="nav-btn" onclick="show('p6',this)">P6 · Tree DP</button>
+  <button class="nav-btn" onclick="show('p7',this)">P7 · Bitmask DP</button>
+  <button class="nav-btn" onclick="show('p8',this)">P8 · Stock / State Machine</button>
+</div>
+
+<!-- Phase 1 -->
+<div class="phase-card" id="p1">
+  <div class="ph">
+    <div class="ph-num">1</div>
+    <div class="ph-title">PHASE 1 · 1D DP — FOUNDATION</div>
+    <div class="ph-tag">Linear DP · O(n)</div>
+  </div>
+  <div class="split">
+    <div class="left-pane">
+      <div class="qs-title">Questions</div>
+      <div class="q-row"><span class="q-num">1.</span><span class="tag t1d">1D</span><span>Climbing Stairs</span></div>
+      <div class="q-row"><span class="q-num">2.</span><span class="tag t1d">1D</span><span>House Robber</span></div>
+      <div class="q-row"><span class="q-num">3.</span><span class="tag t1d">1D</span><span>House Robber II (circular)</span></div>
+      <div class="q-row"><span class="q-num">4.</span><span class="tag t1d">1D</span><span>Min Cost Climbing Stairs</span></div>
+      <div class="q-row"><span class="q-num">5.</span><span class="tag t1d">1D</span><span>Fibonacci Number</span></div>
+      <div class="q-row"><span class="q-num">6.</span><span class="tag tgreedy">Greedy+DP</span><span>Jump Game I &amp; II</span></div>
+      <div class="q-row"><span class="q-num">7.</span><span class="tag t1d">1D</span><span>Decode Ways</span></div>
+      <br>
+      <div class="note-inline">
+        <b>dp[i]</b> = answer for first i elements.<br>
+        Transition looks back 1-2 steps.<br>
+        Often space-optimizable to O(1) using two variables.
+      </div>
+    </div>
+    <div class="right-pane">
+      <div class="qs-title">House Robber template</div>
+      <div class="code-block"><span class="cm">// dp[i] = max money robbing houses 0..i</span>
+<span class="cm">// dp[i] = max(dp[i-1], dp[i-2] + nums[i])</span>
+
+int <span class="fn">rob</span>(int[] nums) {
+  int n = nums.length;
+  <span class="kw">if</span> (n==1) <span class="kw">return</span> nums[0];
+  int prev2=nums[0], prev1=Math.max(nums[0],nums[1]);
+  <span class="kw">for</span> (int i=2; i&lt;n; i++) {
+    int cur = Math.max(prev1, prev2+nums[i]);
+    prev2 = prev1; prev1 = cur;
+  }
+  <span class="kw">return</span> prev1;
+}
+<span class="cm">// Space: O(1) — rolling variables instead of dp[]</span>
+
+<span class="cm">// Climbing Stairs (same pattern):</span>
+<span class="cm">// dp[i] = dp[i-1] + dp[i-2]</span>
+<span class="cm">// Decode Ways:</span>
+<span class="cm">// dp[i] += dp[i-1] if valid 1-digit</span>
+<span class="cm">// dp[i] += dp[i-2] if valid 2-digit</span></div>
+    </div>
+  </div>
+  <div class="pbar"><b>Pattern:</b> Define dp[i], write recurrence, handle base cases, optimize space with rolling vars.</div>
+</div>
+
+<!-- Phase 2 -->
+<div class="phase-card" id="p2">
+  <div class="ph">
+    <div class="ph-num">2</div>
+    <div class="ph-title">PHASE 2 · KNAPSACK PATTERNS</div>
+    <div class="ph-tag">0/1 · Unbounded · Subset Sum</div>
+  </div>
+  <div class="split">
+    <div class="left-pane">
+      <div class="qs-title">Questions</div>
+      <div class="q-row"><span class="q-num">1.</span><span class="tag t2d">0/1 KS</span><span>Partition Equal Subset Sum</span></div>
+      <div class="q-row"><span class="q-num">2.</span><span class="tag t2d">0/1 KS</span><span>Target Sum (assign +/-)</span></div>
+      <div class="q-row"><span class="q-num">3.</span><span class="tag t2d">0/1 KS</span><span>Last Stone Weight II</span></div>
+      <div class="q-row"><span class="q-num">4.</span><span class="tag t1d">Unbounded</span><span>Coin Change (min coins)</span></div>
+      <div class="q-row"><span class="q-num">5.</span><span class="tag t1d">Unbounded</span><span>Coin Change II (count ways)</span></div>
+      <div class="q-row"><span class="q-num">6.</span><span class="tag t1d">Unbounded</span><span>Integer Break</span></div>
+      <div class="q-row"><span class="q-num">7.</span><span class="tag t2d">0/1 KS</span><span>Ones and Zeroes (2D knapsack)</span></div>
+      <br>
+      <div class="note-inline">
+        <b>0/1</b>: each item used once → iterate j <b>backwards</b>.<br>
+        <b>Unbounded</b>: items reusable → iterate j <b>forwards</b>.<br>
+        This single direction flip is the only difference.
+      </div>
+    </div>
+    <div class="right-pane">
+      <div class="qs-title">0/1 KS + Unbounded templates</div>
+      <div class="code-block"><span class="cm">// 0/1 Knapsack — each item used once</span>
+<span class="cm">// dp[j] = can we reach sum j?</span>
+<span class="kw">boolean</span>[] dp = <span class="kw">new</span> <span class="kw">boolean</span>[target+1];
+dp[0] = <span class="kw">true</span>;
+<span class="kw">for</span> (int num : nums)
+  <span class="kw">for</span> (int j=target; j&gt;=num; j--) <span class="cm">// ← BACKWARDS</span>
+    dp[j] |= dp[j-num];
+
+<span class="cm">// Unbounded Knapsack — item reusable</span>
+<span class="cm">// Coin Change: dp[j] = min coins to make j</span>
+int[] dp2 = <span class="kw">new</span> int[amount+1];
+Arrays.fill(dp2, amount+1);
+dp2[0] = 0;
+<span class="kw">for</span> (int coin : coins)
+  <span class="kw">for</span> (int j=coin; j&lt;=amount; j++) <span class="cm">// → FORWARDS</span>
+    dp2[j] = Math.min(dp2[j], dp2[j-coin]+1);
+
+<span class="cm">// Coin Change II (count ways):</span>
+<span class="cm">// dp[j] += dp[j-coin]  (forwards)</span></div>
+    </div>
+  </div>
+  <div class="pbar"><b>Key:</b> 0/1 KS = backwards loop. Unbounded = forwards loop. The loop direction IS the distinction.</div>
+</div>
+
+<!-- Phase 3 -->
+<div class="phase-card" id="p3">
+  <div class="ph">
+    <div class="ph-num">3</div>
+    <div class="ph-title">PHASE 3 · 2D DP — GRID &amp; SEQUENCES</div>
+    <div class="ph-tag">dp[i][j] · Grid paths · LCS · LIS</div>
+  </div>
+  <div class="split">
+    <div class="left-pane">
+      <div class="qs-title">Questions</div>
+      <div class="q-row"><span class="q-num">1.</span><span class="tag t2d">Grid</span><span>Unique Paths I &amp; II</span></div>
+      <div class="q-row"><span class="q-num">2.</span><span class="tag t2d">Grid</span><span>Minimum Path Sum</span></div>
+      <div class="q-row"><span class="q-num">3.</span><span class="tag t2d">Grid</span><span>Maximal Square</span></div>
+      <div class="q-row"><span class="q-num">4.</span><span class="tag t2d">Seq</span><span>Longest Common Subsequence</span></div>
+      <div class="q-row"><span class="q-num">5.</span><span class="tag tgreedy">Greedy+DP</span><span>Longest Increasing Subsequence</span></div>
+      <div class="q-row"><span class="q-num">6.</span><span class="tag t2d">Seq</span><span>Edit Distance</span></div>
+      <div class="q-row"><span class="q-num">7.</span><span class="tag t2d">Seq</span><span>Distinct Subsequences</span></div>
+      <br>
+      <div class="note-inline">
+        LIS in O(n log n): patience sorting with binary search.<br>
+        LCS diagonal rule: if match → dp[i-1][j-1]+1 else max(left, up).
+      </div>
+    </div>
+    <div class="right-pane">
+      <div class="qs-title">LCS + LIS templates</div>
+      <div class="code-block"><span class="cm">// LCS — dp[i][j] = LCS of s1[0..i-1], s2[0..j-1]</span>
+int[][] dp = <span class="kw">new</span> int[m+1][n+1];
+<span class="kw">for</span> (int i=1; i&lt;=m; i++)
+  <span class="kw">for</span> (int j=1; j&lt;=n; j++)
+    <span class="kw">if</span> (s1.charAt(i-1)==s2.charAt(j-1))
+      dp[i][j] = dp[i-1][j-1]+1;        <span class="cm">// match</span>
+    <span class="kw">else</span>
+      dp[i][j] = Math.max(dp[i-1][j], dp[i][j-1]);
+
+<span class="cm">// LIS — O(n log n) patience sort</span>
+List&lt;Integer&gt; tails = <span class="kw">new</span> ArrayList&lt;&gt;();
+<span class="kw">for</span> (int num : nums) {
+  int pos = Collections.binarySearch(tails, num);
+  <span class="kw">if</span> (pos &lt; 0) pos = -(pos+1);
+  <span class="kw">if</span> (pos==tails.size()) tails.add(num);
+  <span class="kw">else</span> tails.set(pos, num);
+}
+<span class="cm">// return tails.size() = LIS length</span></div>
+    </div>
+  </div>
+  <div class="pbar"><b>Pattern:</b> 2D dp[i][j] where i,j index into two sequences or two dimensions. Fill row by row. LIS: binary search on maintained tails array.</div>
+</div>
+
+<!-- Phase 4 -->
+<div class="phase-card" id="p4">
+  <div class="ph">
+    <div class="ph-num">4</div>
+    <div class="ph-title">PHASE 4 · STRING DP</div>
+    <div class="ph-tag">Palindromes · Edit Distance · Regex</div>
+  </div>
+  <div class="split">
+    <div class="left-pane">
+      <div class="qs-title">Questions</div>
+      <div class="q-row"><span class="q-num">1.</span><span class="tag tstr">String</span><span>Longest Palindromic Substring</span></div>
+      <div class="q-row"><span class="q-num">2.</span><span class="tag tstr">String</span><span>Palindromic Substrings (count)</span></div>
+      <div class="q-row"><span class="q-num">3.</span><span class="tag tstr">String</span><span>Longest Palindromic Subsequence</span></div>
+      <div class="q-row"><span class="q-num">4.</span><span class="tag tstr">String</span><span>Edit Distance</span></div>
+      <div class="q-row"><span class="q-num">5.</span><span class="tag tstr">String</span><span>Word Break I &amp; II</span></div>
+      <div class="q-row"><span class="q-num">6.</span><span class="tag tstr">String</span><span>Regular Expression Matching</span></div>
+      <div class="q-row"><span class="q-num">7.</span><span class="tag tstr">String</span><span>Wildcard Matching</span></div>
+      <br>
+      <div class="note-inline">
+        Palindrome center-expand = O(n²) time O(1) space.<br>
+        Manacher's = O(n). For interview: expand-around-center is fine.
+      </div>
+    </div>
+    <div class="right-pane">
+      <div class="qs-title">Edit Distance + Word Break</div>
+      <div class="code-block"><span class="cm">// Edit Distance — dp[i][j] = min ops to convert</span>
+<span class="cm">// word1[0..i-1] → word2[0..j-1]</span>
+<span class="kw">for</span> (int i=0; i&lt;=m; i++) dp[i][0]=i;
+<span class="kw">for</span> (int j=0; j&lt;=n; j++) dp[0][j]=j;
+<span class="kw">for</span> (int i=1; i&lt;=m; i++)
+  <span class="kw">for</span> (int j=1; j&lt;=n; j++)
+    <span class="kw">if</span> (w1.charAt(i-1)==w2.charAt(j-1))
+      dp[i][j] = dp[i-1][j-1];           <span class="cm">// no op</span>
+    <span class="kw">else</span>
+      dp[i][j] = 1+Math.min(dp[i-1][j-1], <span class="cm">// replace</span>
+                   Math.min(dp[i-1][j],    <span class="cm">// delete</span>
+                            dp[i][j-1]));  <span class="cm">// insert</span>
+
+<span class="cm">// Word Break — dp[i] = can s[0..i-1] be segmented?</span>
+<span class="kw">boolean</span>[] dp2 = <span class="kw">new</span> <span class="kw">boolean</span>[n+1]; dp2[0]=<span class="kw">true</span>;
+<span class="kw">for</span> (int i=1; i&lt;=n; i++)
+  <span class="kw">for</span> (String w : dict)
+    <span class="kw">if</span> (i&gt;=w.length() &amp;&amp; dp2[i-w.length()]
+        &amp;&amp; s.substring(i-w.length(),i).equals(w))
+      dp2[i] = <span class="kw">true</span>;</div>
+    </div>
+  </div>
+  <div class="pbar"><b>Pattern:</b> dp[i][j] = property of substring s[i..j] or two-string relation. Fill diagonally for palindrome DP.</div>
+</div>
+
+<!-- Phase 5 -->
+<div class="phase-card" id="p5">
+  <div class="ph">
+    <div class="ph-num">5</div>
+    <div class="ph-title">PHASE 5 · INTERVAL DP</div>
+    <div class="ph-tag">dp[l][r] · Fill by length</div>
+  </div>
+  <div class="split">
+    <div class="left-pane">
+      <div class="qs-title">Questions</div>
+      <div class="q-row"><span class="q-num">1.</span><span class="tag tint">Interval</span><span>Burst Balloons</span></div>
+      <div class="q-row"><span class="q-num">2.</span><span class="tag tint">Interval</span><span>Matrix Chain Multiplication</span></div>
+      <div class="q-row"><span class="q-num">3.</span><span class="tag tint">Interval</span><span>Minimum Cost to Cut a Stick</span></div>
+      <div class="q-row"><span class="q-num">4.</span><span class="tag tint">Interval</span><span>Strange Printer</span></div>
+      <div class="q-row"><span class="q-num">5.</span><span class="tag tint">Interval</span><span>Longest Palindromic Subsequence</span></div>
+      <br>
+      <div class="note-inline">
+        <b>Burst Balloons trick</b>: think of k as the <em>last</em> balloon to burst in range [l,r], not the first. This avoids dependency issues.
+      </div>
+    </div>
+    <div class="right-pane">
+      <div class="qs-title">Interval DP template (Burst Balloons)</div>
+      <div class="code-block"><span class="cm">// dp[l][r] = max coins bursting all in (l,r)</span>
+<span class="cm">// k = last balloon to burst in range</span>
+
+int[] nums = <span class="cm">// pad with 1 at both ends</span>
+int[][] dp = <span class="kw">new</span> int[n][n];
+
+<span class="kw">for</span> (int len=1; len&lt;=n-2; len++) {     <span class="cm">// fill by length</span>
+  <span class="kw">for</span> (int l=1; l&lt;=n-2-len+1; l++) {
+    int r = l+len-1;
+    <span class="kw">for</span> (int k=l; k&lt;=r; k++) {          <span class="cm">// try each last</span>
+      dp[l][r] = Math.max(dp[l][r],
+        dp[l][k-1]                       <span class="cm">// left part</span>
+        + nums[l-1]*nums[k]*nums[r+1]    <span class="cm">// burst k last</span>
+        + dp[k+1][r]);                   <span class="cm">// right part</span>
+    }
+  }
+}
+<span class="cm">// Key: outer loop is LENGTH, not l or r!</span></div>
+    </div>
+  </div>
+  <div class="pbar"><b>Pattern:</b> Outer loop = subarray length (1 → n). Inner loops: l from left, r = l+len-1, k iterates split points inside [l,r].</div>
+</div>
+
+<!-- Phase 6 -->
+<div class="phase-card" id="p6">
+  <div class="ph">
+    <div class="ph-num">6</div>
+    <div class="ph-title">PHASE 6 · TREE DP</div>
+    <div class="ph-tag">Postorder · aggregate from children</div>
+  </div>
+  <div class="split">
+    <div class="left-pane">
+      <div class="qs-title">Questions</div>
+      <div class="q-row"><span class="q-num">1.</span><span class="tag ttree">Tree</span><span>House Robber III</span></div>
+      <div class="q-row"><span class="q-num">2.</span><span class="tag ttree">Tree</span><span>Diameter of Binary Tree</span></div>
+      <div class="q-row"><span class="q-num">3.</span><span class="tag ttree">Tree</span><span>Binary Tree Max Path Sum</span></div>
+      <div class="q-row"><span class="q-num">4.</span><span class="tag ttree">Tree</span><span>Binary Tree Cameras</span></div>
+      <div class="q-row"><span class="q-num">5.</span><span class="tag ttree">Tree</span><span>Distribute Coins in Binary Tree</span></div>
+      <div class="q-row"><span class="q-num">6.</span><span class="tag ttree">Tree</span><span>Longest Univalue Path</span></div>
+      <br>
+      <div class="note-inline">
+        DFS returns value(s) for current subtree.<br>
+        Parent combines children's answers.<br>
+        Global answer updated inside DFS (not returned).
+      </div>
+    </div>
+    <div class="right-pane">
+      <div class="qs-title">House Robber III + Max Path Sum</div>
+      <div class="code-block"><span class="cm">// House Robber III: dp returns int[]{rob, skip}</span>
+int[] <span class="fn">dfs</span>(TreeNode node) {
+  <span class="kw">if</span> (node==<span class="kw">null</span>) <span class="kw">return new</span> int[]{0,0};
+  int[] l = <span class="fn">dfs</span>(node.left);
+  int[] r = <span class="fn">dfs</span>(node.right);
+  int rob  = node.val + l[1] + r[1]; <span class="cm">// take node</span>
+  int skip = Math.max(l[0],l[1])     <span class="cm">// skip node</span>
+           + Math.max(r[0],r[1]);
+  <span class="kw">return new</span> int[]{rob, skip};
+}
+
+<span class="cm">// Max Path Sum: return single-path gain upward</span>
+int maxSum = Integer.MIN_VALUE;
+int <span class="fn">dfs2</span>(TreeNode node) {
+  <span class="kw">if</span> (node==<span class="kw">null</span>) <span class="kw">return</span> 0;
+  int l = Math.max(0, <span class="fn">dfs2</span>(node.left));  <span class="cm">// ignore negatives</span>
+  int r = Math.max(0, <span class="fn">dfs2</span>(node.right));
+  maxSum = Math.max(maxSum, node.val+l+r); <span class="cm">// update global</span>
+  <span class="kw">return</span> node.val + Math.max(l, r);        <span class="cm">// return one side</span>
+}</div>
+    </div>
+  </div>
+  <div class="pbar"><b>Pattern:</b> DFS returns info for parent's use. Update a global variable for cross-subtree answers. Return only one path upward.</div>
+</div>
+
+<!-- Phase 7 -->
+<div class="phase-card" id="p7">
+  <div class="ph">
+    <div class="ph-num">7</div>
+    <div class="ph-title">PHASE 7 · BITMASK DP</div>
+    <div class="ph-tag">dp[mask] · Subset enumeration · n ≤ 20</div>
+  </div>
+  <div class="split">
+    <div class="left-pane">
+      <div class="qs-title">Questions</div>
+      <div class="q-row"><span class="q-num">1.</span><span class="tag tbitmask">Bitmask</span><span>Travelling Salesman Problem</span></div>
+      <div class="q-row"><span class="q-num">2.</span><span class="tag tbitmask">Bitmask</span><span>Shortest Path Visiting All Nodes</span></div>
+      <div class="q-row"><span class="q-num">3.</span><span class="tag tbitmask">Bitmask</span><span>Partition to K Equal Sum Subsets</span></div>
+      <div class="q-row"><span class="q-num">4.</span><span class="tag tbitmask">Bitmask</span><span>Minimum XOR Sum of Two Arrays</span></div>
+      <div class="q-row"><span class="q-num">5.</span><span class="tag tbitmask">Bitmask</span><span>Stickers to Spell Word</span></div>
+      <br>
+      <div class="note-inline">
+        <b>Mask tricks:</b><br>
+        Check bit i: <code>(mask &gt;&gt; i) &amp; 1</code><br>
+        Set bit i: <code>mask | (1 &lt;&lt; i)</code><br>
+        Unset bit i: <code>mask &amp; ~(1 &lt;&lt; i)</code><br>
+        Iterate subsets: <code>for(sub=mask; sub&gt;0; sub=(sub-1)&amp;mask)</code>
+      </div>
+    </div>
+    <div class="right-pane">
+      <div class="qs-title">TSP / Bitmask DP template</div>
+      <div class="code-block"><span class="cm">// dp[mask][i] = min cost to visit nodes in mask</span>
+<span class="cm">//              ending at node i</span>
+int FULL = (1&lt;&lt;n)-1;
+int[][] dp = <span class="kw">new</span> int[1&lt;&lt;n][n];
+<span class="kw">for</span> (int[] row : dp) Arrays.fill(row, INF);
+dp[1][0] = 0;  <span class="cm">// start at node 0, mask=0001</span>
+
+<span class="kw">for</span> (int mask=1; mask&lt;=FULL; mask++) {
+  <span class="kw">for</span> (int u=0; u&lt;n; u++) {
+    <span class="kw">if</span> (dp[mask][u]==INF) <span class="kw">continue</span>;
+    <span class="kw">if</span> (((mask&gt;&gt;u)&amp;1)==0) <span class="kw">continue</span>;  <span class="cm">// u not in mask</span>
+    <span class="kw">for</span> (int v=0; v&lt;n; v++) {
+      <span class="kw">if</span> ((mask&gt;&gt;v&amp;1)==1) <span class="kw">continue</span>;  <span class="cm">// v already visited</span>
+      int nmask = mask|(1&lt;&lt;v);
+      dp[nmask][v] = Math.min(dp[nmask][v],
+                              dp[mask][u]+dist[u][v]);
+    }
+  }
+}
+<span class="cm">// answer: min(dp[FULL][i] + dist[i][0]) for all i</span></div>
+    </div>
+  </div>
+  <div class="pbar"><b>Pattern:</b> State = (visited set as bitmask, current position). Transitions add one new node. Works when n ≤ 20. Time: O(2ⁿ · n²).</div>
+</div>
+
+<!-- Phase 8 -->
+<div class="phase-card" id="p8">
+  <div class="ph">
+    <div class="ph-num">8</div>
+    <div class="ph-title">PHASE 8 · STOCK / STATE MACHINE DP</div>
+    <div class="ph-tag">Finite states · transitions</div>
+  </div>
+  <div class="split">
+    <div class="left-pane">
+      <div class="qs-title">Questions</div>
+      <div class="q-row"><span class="q-num">1.</span><span class="tag tgreedy">State</span><span>Best Time to Buy/Sell Stock I</span></div>
+      <div class="q-row"><span class="q-num">2.</span><span class="tag tgreedy">State</span><span>Stock II (unlimited transactions)</span></div>
+      <div class="q-row"><span class="q-num">3.</span><span class="tag tgreedy">State</span><span>Stock III (at most 2 transactions)</span></div>
+      <div class="q-row"><span class="q-num">4.</span><span class="tag tgreedy">State</span><span>Stock IV (at most k transactions)</span></div>
+      <div class="q-row"><span class="q-num">5.</span><span class="tag tgreedy">State</span><span>Stock with Cooldown</span></div>
+      <div class="q-row"><span class="q-num">6.</span><span class="tag tgreedy">State</span><span>Stock with Transaction Fee</span></div>
+      <br>
+      <div class="note-inline">
+        States: <b>hold</b> (own stock) / <b>free</b> (no stock, can buy).<br>
+        Cooldown adds a 3rd state: <b>cool</b> (sold yesterday).<br>
+        k-transactions: add k as a DP dimension.
+      </div>
+    </div>
+    <div class="right-pane">
+      <div class="qs-title">State machine template (with cooldown)</div>
+      <div class="code-block"><span class="cm">// 3 states: hold, free, cool</span>
+<span class="cm">// hold  = currently holding stock</span>
+<span class="cm">// free  = not holding, can buy</span>
+<span class="cm">// cool  = just sold, must wait 1 day</span>
+
+int hold=Integer.MIN_VALUE, free=0, cool=0;
+
+<span class="kw">for</span> (int price : prices) {
+  int prevHold=hold, prevFree=free, prevCool=cool;
+  hold = Math.max(prevHold,      <span class="cm">// keep holding</span>
+                  prevFree-price);<span class="cm">// buy today</span>
+  free = Math.max(prevFree,      <span class="cm">// stay free</span>
+                  prevCool);     <span class="cm">// cooldown expired</span>
+  cool = prevHold + price;       <span class="cm">// sell today</span>
+}
+<span class="kw">return</span> Math.max(free, cool);
+
+<span class="cm">// k-transactions: dp[k][0/1] where 0=not holding, 1=holding</span>
+<span class="cm">// dp[j][1] = max(dp[j][1], dp[j-1][0] - price)  // buy</span>
+<span class="cm">// dp[j][0] = max(dp[j][0], dp[j][1] + price)     // sell</span></div>
+    </div>
+  </div>
+  <div class="pbar"><b>Pattern:</b> Model each DP state as a node, transitions as edges. Update all states simultaneously using previous day's values (don't use today's updated values mid-loop).</div>
+</div>
+
+<div class="golden">
+  <b>GOLDEN RULE:</b> First define what dp[i] or dp[i][j] represents in plain English.<br>
+  Then write the recurrence. Then handle base cases. Then optimize space.<br>
+  <b>MASTER DP DEFINITION → MASTER 50% OF DSA!</b>
+</div>
+
+<script>
+function show(id, btn) {
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  ['p1','p2','p3','p4','p5','p6','p7','p8'].forEach(p => {
+    document.getElementById(p).classList.toggle('hidden', id !== 'all' && p !== id);
+  });
+}
+</script>
+</body>
+</html>

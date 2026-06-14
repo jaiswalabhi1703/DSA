@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="theme.css">
+<title>Trie</title>
+</head>
+<body>
+<a class="back-hub" href="index.html"><span class="arw">&#8592;</span> Hub</a>
+<h1>TRIE</h1>
+<div class="sub">Prefix trees, autocomplete, wildcard</div>
+
+  <div class="topic-intro"><b>CORE IDEA:</b> A prefix tree where each node has up to 26 children. Gives O(L) insert/search by word length L, independent of how many words are stored. Ideal for prefix queries and autocomplete.</div>
+
+  <div class="phase-card">
+    <div class="ph"><div class="ph-num">1</div><div class="ph-title">Trie Construction &amp; Search</div>
+      <div class="cx-badge"><span class="cx cx-time">Time O(L)</span><span class="cx cx-space">Space O(26·N·L)</span></div></div>
+    <div class="split">
+      <div class="left-pane">
+        <div class="qs-title">Questions</div>
+        <div class="q-row"><span class="q-num">1.</span><span>Implement Trie (Prefix Tree)</span></div>
+        <div class="q-row"><span class="q-num">2.</span><span>Design Add &amp; Search Words (wildcard)</span></div>
+        <div class="q-row"><span class="q-num">3.</span><span>Word Search II</span></div>
+        <div class="q-row"><span class="q-num">4.</span><span>Replace Words</span></div>
+        <div class="q-row"><span class="q-num">5.</span><span>Maximum XOR of Two Numbers (bit-trie)</span></div>
+        <div class="keyword-box"><b>Keyword:</b> "prefix", "starts with", "dictionary of words", "autocomplete", "search with wildcard". L = word length.</div>
+      </div>
+      <div class="right-pane">
+        <div class="qs-title">Pseudocode</div>
+        <div class="code-block"><span class="kw">class</span> TrieNode {
+  TrieNode[] children = <span class="kw">new</span> TrieNode[26];
+  <span class="kw">boolean</span> isEnd;
+}
+
+<span class="kw">void</span> <span class="fn">insert</span>(String word) {
+  TrieNode node = root;
+  <span class="kw">for</span> (char c : word.toCharArray()) {
+    int i = c - 'a';
+    <span class="kw">if</span> (node.children[i]==<span class="kw">null</span>)
+      node.children[i] = <span class="kw">new</span> TrieNode();
+    node = node.children[i];
+  }
+  node.isEnd = <span class="kw">true</span>;
+}
+
+<span class="kw">boolean</span> <span class="fn">search</span>(String word) {
+  TrieNode node = root;
+  <span class="kw">for</span> (char c : word.toCharArray()) {
+    node = node.children[c-'a'];
+    <span class="kw">if</span> (node==<span class="kw">null</span>) <span class="kw">return false</span>;
+  }
+  <span class="kw">return</span> node.isEnd;
+}
+<span class="cm">// Wildcard '.': recurse over all 26 children</span></div>
+      </div>
+    </div>
+    <div class="pbar"><b>Pattern:</b> Walk character by character. <code>isEnd</code> marks complete words. For wildcards, branch into all children. Combine with backtracking for Word Search II.</div>
+  </div>
+
+  <table class="cx-table">
+    <tr><th>Operation</th><th>Time</th><th>Note</th></tr>
+    <tr><td>insert / search / startsWith</td><td class="mono">O(L)</td><td>L = word length</td></tr>
+    <tr><td>wildcard search</td><td class="mono">O(26^d)</td><td>d = number of '.'</td></tr>
+    <tr><td>space</td><td class="mono">O(26·N·L)</td><td>N words, length L</td></tr>
+  </table>
+</div>
+
+<!-- ══════════════════════════════════════════ BIT MANIPULATION ══════════════ -->
+<div class="golden"><b>GOLDEN RULE:</b> Pattern &#8594; Keyword &#8594; Pseudocode &#8594; Complexity. State the time AND space cost out loud in interviews.</div>
+</body>
+</html>

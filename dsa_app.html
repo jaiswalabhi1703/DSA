@@ -1,0 +1,3078 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DSA Command Center</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   DSA COMMAND CENTER — shared dark-glass theme
+   Used by: tree, graph, dp, stack, and the master roadmap
+   ============================================================ */
+
+:root{
+  --bg:#07080F;
+  --bg2:#0B0D1A;
+  --panel:rgba(255,255,255,.035);
+  --panel-2:rgba(255,255,255,.055);
+  --border:rgba(255,255,255,.09);
+  --border-2:rgba(255,255,255,.14);
+  --text:#E9EBF5;
+  --text-dim:#9aa0bd;
+  --text-faint:#6b7090;
+  --code-bg:#0A0C18;
+  --violet:#9A8CFF;
+  --cyan:#5BD2FF;
+  --mint:#4FE6B4;
+  --amber:#FFCB73;
+  --pink:#FF89C9;
+  --rose:#FF7B7B;
+  --lime:#B6E86A;
+  --font-display:"Space Grotesk",system-ui,sans-serif;
+  --font-body:"Inter",system-ui,sans-serif;
+  --font-mono:"JetBrains Mono",ui-monospace,monospace;
+}
+
+*{box-sizing:border-box;margin:0;padding:0;}
+
+body{
+  font-family:var(--font-body);
+  color:var(--text);
+  font-size:12px;
+  padding:64px 16px 40px;
+  background:
+    radial-gradient(900px 600px at 12% -8%, rgba(154,140,255,.16), transparent 60%),
+    radial-gradient(800px 600px at 100% 0%, rgba(91,210,255,.12), transparent 55%),
+    radial-gradient(900px 700px at 50% 120%, rgba(255,137,201,.10), transparent 55%),
+    var(--bg);
+  background-attachment:fixed;
+  min-height:100vh;
+  -webkit-font-smoothing:antialiased;
+}
+
+h1{
+  font-family:var(--font-display);
+  text-align:center;font-size:24px;font-weight:700;
+  letter-spacing:-.5px;margin-bottom:4px;
+  background:linear-gradient(100deg,#fff 10%,var(--violet) 45%,var(--cyan) 75%,#fff);
+  -webkit-background-clip:text;background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+.sub{text-align:center;font-size:12px;color:var(--text-dim);margin-bottom:18px;letter-spacing:.2px;}
+
+/* ---- intro / core boxes ---- */
+.core-box,.topic-intro{
+  border:1px solid var(--border);
+  background:var(--panel);
+  backdrop-filter:blur(10px);
+  border-radius:14px;padding:12px 18px;margin:0 auto 16px;max-width:680px;text-align:center;
+  box-shadow:0 8px 40px -16px rgba(0,0,0,.6),inset 0 1px 0 rgba(255,255,255,.05);
+}
+.core-box .ct,.core-box .ctitle{font-family:var(--font-display);font-weight:600;font-size:12px;letter-spacing:1.5px;text-transform:uppercase;color:var(--cyan);margin-bottom:5px;}
+.core-box p,.topic-intro{font-size:11.5px;color:var(--text-dim);line-height:1.65;}
+.core-box em,.topic-intro b,.core-box b{font-style:normal;font-weight:600;color:var(--text);}
+
+/* ---- top row info panels ---- */
+.top-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px;}
+.when-box,.info-box{
+  border:1px solid var(--border);background:var(--panel);backdrop-filter:blur(8px);
+  border-radius:12px;padding:11px 13px;
+}
+.bh{font-family:var(--font-display);font-size:10px;font-weight:600;color:var(--text-faint);text-transform:uppercase;letter-spacing:1px;margin-bottom:7px;}
+.when-box li,.info-box li{font-size:10.5px;list-style:none;padding:2px 0;color:var(--text-dim);}
+.when-box li::before,.info-box li::before{content:"› ";color:var(--violet);font-weight:700;}
+.when-box .row{display:flex;gap:6px;margin-bottom:3px;font-size:10.5px;align-items:baseline;}
+.when-box .row .label{min-width:62px;font-weight:600;}
+
+/* ---- phase / nav tabs ---- */
+.nav,.topic-nav{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:16px;justify-content:center;}
+.nav-btn,.topic-btn{
+  font-family:var(--font-display);
+  padding:6px 14px;border-radius:999px;border:1px solid var(--border-2);
+  background:var(--panel);color:var(--text-dim);font-size:11px;font-weight:500;
+  cursor:pointer;transition:all .18s cubic-bezier(.2,.7,.3,1);backdrop-filter:blur(6px);
+}
+.nav-btn:hover,.topic-btn:hover{color:var(--text);border-color:var(--violet);transform:translateY(-1px);}
+.nav-btn.active,.topic-btn.active{
+  background:linear-gradient(135deg,var(--violet),var(--cyan));
+  color:#0a0a14;font-weight:700;border-color:transparent;
+  box-shadow:0 6px 22px -8px var(--violet);
+}
+
+/* ---- phase cards ---- */
+.phase-card{
+  border:1px solid var(--border);border-radius:16px;margin-bottom:14px;overflow:hidden;
+  background:var(--panel);backdrop-filter:blur(12px);
+  box-shadow:0 16px 50px -24px rgba(0,0,0,.7),inset 0 1px 0 rgba(255,255,255,.045);
+  transition:transform .25s ease,box-shadow .25s ease,border-color .25s ease;
+}
+.phase-card:hover{transform:translateY(-3px);border-color:var(--border-2);box-shadow:0 26px 60px -26px rgba(0,0,0,.8),0 0 0 1px rgba(154,140,255,.12);}
+.ph{display:flex;align-items:center;gap:10px;padding:11px 16px;border-bottom:1px solid var(--border);flex-wrap:wrap;background:linear-gradient(180deg,rgba(255,255,255,.04),transparent);}
+.ph-num{
+  width:26px;height:26px;border-radius:9px;display:flex;align-items:center;justify-content:center;
+  font-family:var(--font-display);font-size:11px;font-weight:700;flex-shrink:0;
+  background:linear-gradient(135deg,var(--violet),var(--cyan));color:#0a0a14;
+  box-shadow:0 4px 14px -4px var(--violet);
+}
+.ph-title{font-family:var(--font-display);font-weight:600;font-size:13px;letter-spacing:-.2px;color:var(--text);}
+.ph-tag,.ph-sub{margin-left:auto;font-size:10px;color:var(--text-faint);white-space:nowrap;}
+
+/* ---- complexity badges (master) ---- */
+.cx-badge{margin-left:auto;display:flex;gap:6px;align-items:center;flex-shrink:0;}
+.cx{font-family:var(--font-mono);font-size:9.5px;font-weight:700;padding:3px 8px;border-radius:7px;white-space:nowrap;border:1px solid var(--border);}
+.cx-time{background:rgba(79,230,180,.12);color:var(--mint);border-color:rgba(79,230,180,.25);}
+.cx-space{background:rgba(91,210,255,.12);color:var(--cyan);border-color:rgba(91,210,255,.25);}
+
+/* ---- split panes ---- */
+.split{display:grid;grid-template-columns:1fr 1fr;}
+.left-pane{padding:13px 15px;border-right:1px solid var(--border);}
+.right-pane{padding:13px 15px;}
+.qs-title{font-family:var(--font-display);font-size:9.5px;font-weight:600;color:var(--text-faint);margin-bottom:8px;text-transform:uppercase;letter-spacing:1px;}
+.q-row{display:flex;gap:7px;align-items:baseline;margin-bottom:5px;font-size:11px;color:var(--text);}
+.q-num{color:var(--text-faint);min-width:15px;font-size:10px;font-family:var(--font-mono);}
+.star{color:var(--amber);font-weight:700;}
+
+/* ---- keyword callout ---- */
+.keyword-box{
+  background:linear-gradient(135deg,rgba(255,203,115,.08),rgba(255,137,201,.05));
+  border:1px solid rgba(255,203,115,.22);border-radius:10px;padding:8px 11px;margin-top:9px;
+  font-size:10.5px;color:var(--text-dim);line-height:1.6;
+}
+.keyword-box b{color:var(--amber);font-weight:600;}
+
+/* ---- tags / chips (all families unified, hue-coded) ---- */
+.tag{display:inline-block;padding:2px 8px;border-radius:999px;font-size:9.5px;font-weight:600;white-space:nowrap;flex-shrink:0;border:1px solid transparent;font-family:var(--font-display);letter-spacing:.2px;}
+/* blue / cyan family */
+.t-bfs,.t1d,.t-mono,.t-mono2{background:rgba(91,210,255,.12);color:var(--cyan);border-color:rgba(91,210,255,.28);}
+/* green / mint family */
+.t-dfs,.t2d,.t-ng,.t-ng2{background:rgba(79,230,180,.12);color:var(--mint);border-color:rgba(79,230,180,.28);}
+/* violet family */
+.t-topo,.tint,.t-deque{background:rgba(154,140,255,.14);color:var(--violet);border-color:rgba(154,140,255,.3);}
+/* amber family */
+.t-both,.tstr,.t-calc{background:rgba(255,203,115,.13);color:var(--amber);border-color:rgba(255,203,115,.28);}
+/* pink / rose family */
+.t-uf,.tbitmask,.t-design{background:rgba(255,137,201,.13);color:var(--pink);border-color:rgba(255,137,201,.3);}
+/* rose */
+.t-dp,.ttree,.t-tree{background:rgba(255,123,123,.13);color:var(--rose);border-color:rgba(255,123,123,.3);}
+/* lime */
+.tgreedy,.t-misc{background:rgba(182,232,106,.12);color:var(--lime);border-color:rgba(182,232,106,.28);}
+
+/* ---- code ---- */
+.code-block{
+  background:var(--code-bg);border:1px solid var(--border);border-radius:10px;
+  padding:10px 12px;font-family:var(--font-mono);font-size:10.5px;line-height:1.7;
+  color:#cdd3ea;white-space:pre;overflow-x:auto;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.03);
+}
+.code-block::-webkit-scrollbar{height:7px;}
+.code-block::-webkit-scrollbar-thumb{background:rgba(255,255,255,.12);border-radius:6px;}
+.kw{color:#8DB7FF;font-weight:600;}
+.cm{color:#5a6080;font-style:italic;}
+.fn{color:var(--mint);}
+.hi{color:var(--amber);font-weight:600;}
+code{font-family:var(--font-mono);font-size:10px;background:rgba(255,255,255,.07);color:var(--cyan);padding:1px 5px;border-radius:5px;}
+
+/* ---- pattern bar ---- */
+.pbar{font-size:10.5px;padding:8px 16px;color:var(--text-dim);border-top:1px solid var(--border);background:rgba(0,0,0,.18);line-height:1.55;}
+.pbar b{color:var(--text);font-weight:600;}
+.note-inline{font-size:11px;color:var(--text-dim);line-height:1.6;margin-top:7px;}
+
+/* ---- complexity table ---- */
+.cx-table,table{width:100%;border-collapse:collapse;margin-top:8px;border:1px solid var(--border);border-radius:10px;overflow:hidden;}
+.cx-table th,table th{background:rgba(255,255,255,.04);padding:6px 11px;text-align:left;font-size:10px;border-bottom:1px solid var(--border);color:var(--text-faint);font-weight:600;font-family:var(--font-display);text-transform:uppercase;letter-spacing:.5px;}
+.cx-table td,table td{padding:5px 11px;font-size:10.5px;border-bottom:1px solid rgba(255,255,255,.05);color:var(--text-dim);}
+.cx-table tr:last-child td,table tr:last-child td{border-bottom:none;}
+.cx-table .mono{font-family:var(--font-mono);font-weight:700;color:var(--mint);}
+
+/* summary boxes (graph/dp) */
+.summary-box{border:1px solid var(--border);border-radius:12px;overflow:hidden;background:var(--panel);}
+.summary-box .bh{padding:7px 11px;border-bottom:1px solid var(--border);background:rgba(255,255,255,.03);margin-bottom:0;}
+.bottom-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-top:10px;}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px;}
+
+/* ---- golden rule ---- */
+.golden{
+  border:1px solid rgba(255,203,115,.28);border-radius:14px;padding:12px 18px;text-align:center;
+  font-size:11.5px;color:var(--text-dim);margin-top:10px;line-height:1.7;
+  background:linear-gradient(135deg,rgba(255,203,115,.07),rgba(154,140,255,.05));
+}
+.golden b{color:var(--amber);font-weight:600;}
+
+/* ---- topic sections (master) ---- */
+.topic-section{display:none;}
+.topic-section.active{display:block;}
+
+.hidden{display:none;}
+
+/* ---- floating back-to-hub button ---- */
+.back-hub{
+  position:fixed;top:16px;left:16px;z-index:100;
+  display:inline-flex;align-items:center;gap:7px;
+  font-family:var(--font-display);font-size:12px;font-weight:600;
+  padding:9px 15px;border-radius:999px;text-decoration:none;
+  color:var(--text);background:var(--panel-2);border:1px solid var(--border-2);
+  backdrop-filter:blur(12px);transition:all .18s ease;
+  box-shadow:0 6px 24px -10px rgba(0,0,0,.7);
+}
+.back-hub:hover{transform:translateX(-2px);border-color:var(--violet);box-shadow:0 8px 26px -10px var(--violet);}
+.back-hub .arw{font-size:14px;transition:transform .18s ease;}
+.back-hub:hover .arw{transform:translateX(-3px);}
+
+@media(max-width:720px){
+  .split{grid-template-columns:1fr;}
+  .left-pane{border-right:none;border-bottom:1px solid var(--border);}
+  .top-row,.two-col,.bottom-row{grid-template-columns:1fr;}
+  body{padding-top:60px;}
+}
+@media(prefers-reduced-motion:reduce){
+  *{transition:none!important;animation:none!important;}
+}
+
+/* hub styles */
+
+:root{
+  --bg:#06070E;
+  --text:#ECEEF8;
+  --dim:#9aa0bd;
+  --faint:#6b7090;
+  --violet:#9A8CFF;
+  --cyan:#5BD2FF;
+  --mint:#4FE6B4;
+  --amber:#FFCB73;
+  --pink:#FF89C9;
+  --rose:#FF7B7B;
+  --lime:#B6E86A;
+  --font-d:"Space Grotesk",system-ui,sans-serif;
+  --font-b:"Inter",system-ui,sans-serif;
+  --font-m:"JetBrains Mono",monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html,body{height:100%;}
+body{
+  font-family:var(--font-b);background:var(--bg);color:var(--text);
+  overflow-x:hidden;min-height:100vh;position:relative;
+  -webkit-font-smoothing:antialiased;
+}
+
+/* ---- animated aurora background ---- */
+.aurora{position:fixed;inset:0;z-index:0;overflow:hidden;pointer-events:none;}
+.aurora span{position:absolute;border-radius:50%;filter:blur(90px);opacity:.55;mix-blend-mode:screen;}
+.a1{width:50vw;height:50vw;background:radial-gradient(circle,#6E5BFF,transparent 60%);top:-12%;left:-8%;animation:drift1 22s ease-in-out infinite;}
+.a2{width:42vw;height:42vw;background:radial-gradient(circle,#2BB7FF,transparent 60%);top:-5%;right:-10%;animation:drift2 26s ease-in-out infinite;}
+.a3{width:46vw;height:46vw;background:radial-gradient(circle,#FF5FBF,transparent 60%);bottom:-18%;left:25%;animation:drift3 30s ease-in-out infinite;}
+.a4{width:34vw;height:34vw;background:radial-gradient(circle,#2BE6A8,transparent 60%);bottom:-8%;right:8%;animation:drift1 28s ease-in-out infinite reverse;}
+@keyframes drift1{0%,100%{transform:translate(0,0) scale(1);}50%{transform:translate(6%,8%) scale(1.12);}}
+@keyframes drift2{0%,100%{transform:translate(0,0) scale(1);}50%{transform:translate(-7%,6%) scale(1.08);}}
+@keyframes drift3{0%,100%{transform:translate(0,0) scale(1);}50%{transform:translate(4%,-7%) scale(1.15);}}
+
+/* subtle grid + noise overlay */
+.grid-overlay{position:fixed;inset:0;z-index:1;pointer-events:none;
+  background-image:linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);
+  background-size:54px 54px;mask-image:radial-gradient(ellipse 80% 70% at 50% 30%,#000 40%,transparent 80%);
+  -webkit-mask-image:radial-gradient(ellipse 80% 70% at 50% 30%,#000 40%,transparent 80%);}
+
+.wrap{position:relative;z-index:2;max-width:1180px;margin:0 auto;padding:54px 22px 70px;}
+
+/* ---- hero ---- */
+.hero{text-align:center;margin-bottom:50px;perspective:1000px;}
+.eyebrow{
+  display:inline-flex;align-items:center;gap:8px;font-family:var(--font-m);
+  font-size:11px;letter-spacing:2.5px;text-transform:uppercase;color:var(--cyan);
+  border:1px solid rgba(91,210,255,.3);background:rgba(91,210,255,.06);
+  padding:6px 16px;border-radius:999px;margin-bottom:24px;backdrop-filter:blur(8px);
+  animation:fadeUp .8s both;
+}
+.eyebrow .dot{width:7px;height:7px;border-radius:50%;background:var(--mint);box-shadow:0 0 12px var(--mint);animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:.35;}}
+.hero h1{
+  font-family:var(--font-d);font-weight:700;font-size:clamp(40px,8vw,86px);
+  line-height:.96;letter-spacing:-2.5px;margin-bottom:20px;
+  background:linear-gradient(105deg,#fff 0%,var(--violet) 38%,var(--cyan) 62%,var(--pink) 90%);
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+  animation:fadeUp .8s .08s both;
+  text-shadow:0 0 60px rgba(154,140,255,.2);
+}
+.hero p{max-width:560px;margin:0 auto;font-size:15px;line-height:1.65;color:var(--dim);animation:fadeUp .8s .16s both;}
+.stats{display:flex;gap:30px;justify-content:center;margin-top:30px;animation:fadeUp .8s .24s both;flex-wrap:wrap;}
+.stat{text-align:center;}
+.stat .n{font-family:var(--font-d);font-size:30px;font-weight:700;background:linear-gradient(120deg,var(--cyan),var(--mint));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
+.stat .l{font-size:10.5px;letter-spacing:1px;text-transform:uppercase;color:var(--faint);margin-top:2px;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(22px);}to{opacity:1;transform:translateY(0);}}
+
+/* ---- section label ---- */
+.sec-label{display:flex;align-items:center;gap:14px;margin:0 0 24px;animation:fadeUp .8s .3s both;}
+.sec-label .txt{font-family:var(--font-d);font-size:13px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--faint);white-space:nowrap;}
+.sec-label .line{height:1px;flex:1;background:linear-gradient(90deg,rgba(255,255,255,.18),transparent);}
+
+/* ---- card grid ---- */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(245px,1fr));gap:18px;perspective:1400px;}
+
+.card{
+  position:relative;display:block;text-decoration:none;color:inherit;
+  border-radius:18px;padding:22px 20px 20px;min-height:178px;
+  background:linear-gradient(165deg,rgba(255,255,255,.07),rgba(255,255,255,.02));
+  border:1px solid rgba(255,255,255,.1);
+  backdrop-filter:blur(14px);
+  transform-style:preserve-3d;transition:transform .12s ease-out,box-shadow .3s ease,border-color .3s ease;
+  overflow:hidden;will-change:transform;
+  opacity:0;animation:cardIn .7s forwards;
+}
+@keyframes cardIn{from{opacity:0;transform:translateY(28px) scale(.96);}to{opacity:1;transform:translateY(0) scale(1);}}
+.card::before{
+  content:"";position:absolute;inset:0;border-radius:18px;padding:1px;
+  background:linear-gradient(135deg,var(--accent),transparent 55%);
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
+  -webkit-mask-composite:xor;mask-composite:exclude;opacity:0;transition:opacity .3s;
+}
+.card:hover{border-color:transparent;box-shadow:0 30px 70px -28px rgba(0,0,0,.85),0 0 50px -18px var(--accent);}
+.card:hover::before{opacity:1;}
+
+/* glow blob inside card */
+.card .glow{position:absolute;width:160px;height:160px;border-radius:50%;
+  background:radial-gradient(circle,var(--accent),transparent 65%);
+  filter:blur(34px);opacity:.42;top:-50px;right:-50px;transition:opacity .3s,transform .3s;transform:translateZ(0);}
+.card:hover .glow{opacity:.7;transform:scale(1.18);}
+
+.card .top{display:flex;align-items:flex-start;justify-content:space-between;transform:translateZ(40px);}
+.card .icon{
+  width:50px;height:50px;border-radius:14px;display:flex;align-items:center;justify-content:center;
+  font-size:26px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);
+  box-shadow:0 8px 24px -10px var(--accent);
+}
+.card .idx{font-family:var(--font-m);font-size:12px;color:var(--faint);font-weight:600;}
+.card h3{font-family:var(--font-d);font-size:19px;font-weight:600;letter-spacing:-.4px;margin:18px 0 6px;transform:translateZ(30px);}
+.card p{font-size:11.5px;line-height:1.5;color:var(--dim);transform:translateZ(20px);}
+.card .meta{position:absolute;bottom:16px;left:20px;right:20px;display:flex;align-items:center;justify-content:space-between;transform:translateZ(30px);}
+.card .pill{font-family:var(--font-m);font-size:9.5px;font-weight:600;letter-spacing:.4px;color:var(--accent);
+  border:1px solid color-mix(in srgb,var(--accent) 35%,transparent);background:color-mix(in srgb,var(--accent) 10%,transparent);
+  padding:3px 9px;border-radius:999px;text-transform:uppercase;}
+.card .go{font-family:var(--font-d);font-size:12px;font-weight:600;color:var(--text);display:flex;align-items:center;gap:5px;opacity:.55;transition:opacity .25s,gap .25s;}
+.card:hover .go{opacity:1;gap:9px;}
+
+/* accent assignments */
+.c-tree{--accent:var(--mint);}
+.c-graph{--accent:var(--cyan);}
+.c-dp{--accent:var(--pink);}
+.c-stack{--accent:var(--amber);}
+.c-arrays{--accent:var(--violet);}
+.c-window{--accent:var(--cyan);}
+.c-bsearch{--accent:var(--mint);}
+.c-linkedlist{--accent:var(--rose);}
+.c-hashing{--accent:var(--lime);}
+.c-heap{--accent:var(--amber);}
+.c-backtrack{--accent:var(--violet);}
+.c-greedy{--accent:var(--pink);}
+.c-trie{--accent:var(--cyan);}
+.c-bits{--accent:var(--mint);}
+
+.footer{text-align:center;margin-top:54px;font-size:11px;color:var(--faint);font-family:var(--font-m);letter-spacing:.5px;animation:fadeUp .8s .4s both;}
+.footer b{color:var(--dim);}
+
+@media(prefers-reduced-motion:reduce){
+  .aurora span{animation:none;}.card{animation:none;opacity:1;}
+  .hero h1,.hero p,.eyebrow,.stats,.sec-label{animation:none;}
+}
+@media(max-width:560px){
+  .hero h1{font-size:clamp(34px,12vw,56px);}
+  .grid{grid-template-columns:1fr 1fr;gap:12px;}
+  .card{min-height:158px;padding:16px;}
+  .card .icon{width:42px;height:42px;font-size:21px;}
+  .card h3{font-size:16px;}
+}
+
+.view{width:100%;}
+</style>
+</head>
+<body>
+<section id="view-hub" class="view" style="display:block">
+
+<div class="aurora">
+  <span class="a1"></span><span class="a2"></span><span class="a3"></span><span class="a4"></span>
+</div>
+<div class="grid-overlay"></div>
+
+<div class="wrap">
+
+  <!-- HERO -->
+  <header class="hero">
+    <span class="eyebrow"><span class="dot"></span>Interview-ready pattern library</span>
+    <h1>DSA Command<br>Center</h1>
+    <p>Fourteen topics, every pattern mapped to its keyword, pseudocode, and complexity. Pick a topic and dive into the phase-by-phase roadmap.</p>
+    <div class="stats">
+      <div class="stat"><div class="n">14</div><div class="l">Topics</div></div>
+      <div class="stat"><div class="n">70+</div><div class="l">Patterns</div></div>
+      <div class="stat"><div class="n">Java</div><div class="l">Pseudocode</div></div>
+    </div>
+  </header>
+
+  <!-- CORE TOPICS -->
+  <div class="sec-label"><span class="txt">Core Structures</span><span class="line"></span></div>
+  <div class="grid" id="coreGrid">
+
+    <a class="card c-tree" href="#" onclick="go('tree');return false;" style="--d:0">
+      <span class="glow"></span>
+      <div class="top"><div class="icon">🌳</div><div class="idx">01</div></div>
+      <h3>Trees</h3><p>DFS traversal orders, bottom-up & top-down recursion, BST, LCA.</p>
+      <div class="meta"><span class="pill">8 phases</span><span class="go">Open →</span></div>
+    </a>
+
+    <a class="card c-graph" href="#" onclick="go('graph');return false;" style="--d:1">
+      <span class="glow"></span>
+      <div class="top"><div class="icon">🕸️</div><div class="idx">02</div></div>
+      <h3>Graphs</h3><p>BFS/DFS, Dijkstra, topological sort, union-find, Tarjan, MST.</p>
+      <div class="meta"><span class="pill">7 phases</span><span class="go">Open →</span></div>
+    </a>
+
+    <a class="card c-dp" href="#" onclick="go('dp');return false;" style="--d:2">
+      <span class="glow"></span>
+      <div class="top"><div class="icon">🧩</div><div class="idx">03</div></div>
+      <h3>Dynamic Programming</h3><p>1D, knapsack, grid, string, interval, tree, bitmask, state machine.</p>
+      <div class="meta"><span class="pill">8 phases</span><span class="go">Open →</span></div>
+    </a>
+
+    <a class="card c-stack" href="#" onclick="go('stack');return false;" style="--d:3">
+      <span class="glow"></span>
+      <div class="top"><div class="icon">📚</div><div class="idx">04</div></div>
+      <h3>Stack</h3><p>Monotonic stacks, matching, calculators, histograms, deque, design.</p>
+      <div class="meta"><span class="pill">8 phases</span><span class="go">Open →</span></div>
+    </a>
+
+  </div>
+
+  <!-- TECHNIQUE TOPICS -->
+  <div class="sec-label" style="margin-top:42px;"><span class="txt">Techniques & Patterns</span><span class="line"></span></div>
+  <div class="grid" id="techGrid">
+
+    <a class="card c-arrays" href="#" onclick="go('arrays');return false;" style="--d:0">
+      <span class="glow"></span>
+      <div class="top"><div class="icon">↔️</div><div class="idx">05</div></div>
+      <h3>Arrays & Two Pointers</h3><p>Opposite-ends, fast/slow, Dutch flag, prefix sums.</p>
+      <div class="meta"><span class="pill">3 phases</span><span class="go">Open →</span></div>
+    </a>
+
+    <a class="card c-window" href="#" onclick="go('sliding_window');return false;" style="--d:1">
+      <span class="glow"></span>
+      <div class="top"><div class="icon">🪟</div><div class="idx">06</div></div>
+      <h3>Sliding Window</h3><p>Fixed and variable-size windows, longest/shortest substrings.</p>
+      <div class="meta"><span class="pill">2 phases</span><span class="go">Open →</span></div>
+    </a>
+
+    <a class="card c-bsearch" href="#" onclick="go('binary_search');return false;" style="--d:2">
+      <span class="glow"></span>
+      <div class="top"><div class="icon">🎯</div><div class="idx">07</div></div>
+      <h3>Binary Search</h3><p>Boundary search, rotated arrays, binary search on the answer.</p>
+      <div class="meta"><span class="pill">3 phases</span><span class="go">Open →</span></div>
+    </a>
+
+    <a class="card c-linkedlist" href="#" onclick="go('linked_list');return false;" style="--d:3">
+      <span class="glow"></span>
+      <div class="top"><div class="icon">🔗</div><div class="idx">08</div></div>
+      <h3>Linked List</h3><p>Reversal patterns, fast/slow pointers, dummy-head technique.</p>
+      <div class="meta"><span class="pill">2 phases</span><span class="go">Open →</span></div>
+    </a>
+
+    <a class="card c-hashing" href="#" onclick="go('hashing');return false;" style="--d:4">
+      <span class="glow"></span>
+      <div class="top"><div class="icon">🗂️</div><div class="idx">09</div></div>
+      <h3>Hashing</h3><p>Frequency maps, complement lookup, O(1) set membership.</p>
+      <div class="meta"><span class="pill">2 phases</span><span class="go">Open →</span></div>
+    </a>
+
+    <a class="card c-heap" href="#" onclick="go('heap');return false;" style="--d:5">
+      <span class="glow"></span>
+      <div class="top"><div class="icon">⛰️</div><div class="idx">10</div></div>
+      <h3>Heap / Priority Queue</h3><p>Top-K, Kth element, two-heap median, merge K sorted.</p>
+      <div class="meta"><span class="pill">2 phases</span><span class="go">Open →</span></div>
+    </a>
+
+    <a class="card c-backtrack" href="#" onclick="go('backtracking');return false;" style="--d:6">
+      <span class="glow"></span>
+      <div class="top"><div class="icon">🌀</div><div class="idx">11</div></div>
+      <h3>Backtracking</h3><p>Subsets, combinations, permutations, grid & constraint solving.</p>
+      <div class="meta"><span class="pill">2 phases</span><span class="go">Open →</span></div>
+    </a>
+
+    <a class="card c-greedy" href="#" onclick="go('greedy');return false;" style="--d:7">
+      <span class="glow"></span>
+      <div class="top"><div class="icon">⚡</div><div class="idx">12</div></div>
+      <h3>Greedy</h3><p>Interval scheduling, jump games, allocation, partition labels.</p>
+      <div class="meta"><span class="pill">2 phases</span><span class="go">Open →</span></div>
+    </a>
+
+    <a class="card c-trie" href="#" onclick="go('trie');return false;" style="--d:8">
+      <span class="glow"></span>
+      <div class="top"><div class="icon">🌲</div><div class="idx">13</div></div>
+      <h3>Trie</h3><p>Prefix trees, autocomplete, wildcard search, bit-tries.</p>
+      <div class="meta"><span class="pill">1 phase</span><span class="go">Open →</span></div>
+    </a>
+
+    <a class="card c-bits" href="#" onclick="go('bit_manipulation');return false;" style="--d:9">
+      <span class="glow"></span>
+      <div class="top"><div class="icon">⚙️</div><div class="idx">14</div></div>
+      <h3>Bit Manipulation</h3><p>XOR tricks, masking, set-bit counting, subset enumeration.</p>
+      <div class="meta"><span class="pill">2 phases</span><span class="go">Open →</span></div>
+    </a>
+
+  </div>
+
+  <div class="footer">Built for the grind · <b>Pattern → Keyword → Pseudocode → Complexity</b></div>
+
+</div>
+
+
+</section>
+<section id="view-tree" class="view" style="display:none">
+<a class="back-hub" href="#" onclick="go('hub');return false;"><span class="arw">←</span> Hub</a>
+
+<h1>TREE DFS ROADMAP</h1>
+<div class="sub">All tree traversal patterns · 8 phases · Java pseudocode + complexity</div>
+
+<div class="core-box">
+  <div class="ct">Core Idea</div>
+  <p>DFS on a tree is all about <em>how information flows in the recursion</em>.<br>
+  Either the <em>parent gives state to children (Top-Down)</em> or <em>children return answers to the parent (Bottom-Up)</em>.<br>
+  Choose the direction first, then write the recurrence.</p>
+</div>
+
+<div class="top-row">
+  <div class="info-box">
+    <div class="bh">Traversal Orders</div>
+    <div class="row"><span class="label" style="color:var(--mint)">Inorder</span><span style="color:var(--text-dim)">Left → Root → Right (sorted for BST)</span></div>
+    <div class="row"><span class="label" style="color:var(--rose)">Preorder</span><span style="color:var(--text-dim)">Root → Left → Right (top-down)</span></div>
+    <div class="row"><span class="label" style="color:var(--violet)">Postorder</span><span style="color:var(--text-dim)">Left → Right → Root (bottom-up)</span></div>
+  </div>
+  <div class="info-box">
+    <div class="bh">When to use which?</div>
+    <ul>
+      <li><b>Preorder</b> → parent passes info to children</li>
+      <li><b>Postorder</b> → children compute, parent combines</li>
+      <li><b>Inorder</b> → sorted order / BST validation</li>
+      <li><b>Backtracking DFS</b> → explore all root-to-leaf paths</li>
+    </ul>
+  </div>
+</div>
+
+<div class="nav">
+  <button class="nav-btn active" onclick="show('all',this)">All phases</button>
+  <button class="nav-btn" onclick="show('p1',this)">P1 · Basic</button>
+  <button class="nav-btn" onclick="show('p2',this)">P2 · Bottom-Up</button>
+  <button class="nav-btn" onclick="show('p3',this)">P3 · Top-Down</button>
+  <button class="nav-btn" onclick="show('p4',this)">P4 · BST</button>
+  <button class="nav-btn" onclick="show('p5',this)">P5 · LCA</button>
+  <button class="nav-btn" onclick="show('p6',this)">P6 · Tree DP</button>
+  <button class="nav-btn" onclick="show('p7',this)">P7 · Serialize</button>
+  <button class="nav-btn" onclick="show('p8',this)">P8 · Tree as Graph</button>
+</div>
+
+<!-- P1 -->
+<div class="phase-card" id="p1">
+  <div class="ph"><div class="ph-num">1</div><div class="ph-title">Basic Traversal & Simple DFS</div>
+    <div class="cx-badge"><span class="cx cx-time">Time O(n)</span><span class="cx cx-space">Space O(h)</span></div></div>
+  <div class="split">
+    <div class="left-pane">
+      <div class="qs-title">Questions</div>
+      <div class="q-row"><span class="q-num">1.</span><span class="tag t-dfs">Inorder</span><span>Inorder / Preorder / Postorder Traversal</span></div>
+      <div class="q-row"><span class="q-num">2.</span><span class="tag t-dp">Postorder</span><span>Maximum Depth of Binary Tree</span></div>
+      <div class="q-row"><span class="q-num">3.</span><span class="tag t-dp">Preorder</span><span>Same Tree</span></div>
+      <div class="q-row"><span class="q-num">4.</span><span class="tag t-dp">Preorder</span><span>Symmetric Tree (mirror)</span></div>
+      <div class="q-row"><span class="q-num">5.</span><span class="tag t-dp">Preorder</span><span>Invert Binary Tree</span></div>
+      <div class="keyword-box"><b>Keyword:</b> "traverse the tree", "depth/height", "compare two trees", "mirror/invert". The plain recursion skeleton covers all of these.</div>
+    </div>
+    <div class="right-pane">
+      <div class="qs-title">Pseudocode</div>
+      <div class="code-block"><span class="cm">// The universal DFS shape</span>
+<span class="kw">void</span> <span class="fn">dfs</span>(TreeNode root) {
+  <span class="kw">if</span> (root == <span class="kw">null</span>) <span class="kw">return</span>;     <span class="cm">// base case</span>
+  <span class="cm">// preorder: visit root here</span>
+  <span class="fn">dfs</span>(root.left);
+  <span class="cm">// inorder: visit root here</span>
+  <span class="fn">dfs</span>(root.right);
+  <span class="cm">// postorder: visit root here</span>
+}
+
+<span class="cm">// Maximum Depth (postorder)</span>
+int <span class="fn">depth</span>(TreeNode root) {
+  <span class="kw">if</span> (root==<span class="kw">null</span>) <span class="kw">return</span> 0;
+  <span class="kw">return</span> 1 + Math.max(<span class="fn">depth</span>(root.left),
+                       <span class="fn">depth</span>(root.right));
+}</div>
+    </div>
+  </div>
+  <div class="pbar"><b>Pattern:</b> Where you place the "visit" line determines the order. Every node is visited once → O(n) time, O(h) recursion stack.</div>
+</div>
+
+<!-- P2 -->
+<div class="phase-card" id="p2">
+  <div class="ph"><div class="ph-num">2</div><div class="ph-title">Bottom-Up DFS (Subtree Aggregation)</div>
+    <div class="cx-badge"><span class="cx cx-time">Time O(n)</span><span class="cx cx-space">Space O(h)</span></div></div>
+  <div class="split">
+    <div class="left-pane">
+      <div class="qs-title">Questions</div>
+      <div class="q-row"><span class="q-num">1.</span><span class="tag t-dp">Postorder</span><span>Balanced Binary Tree</span></div>
+      <div class="q-row"><span class="q-num">2.</span><span class="tag t-dp">Postorder</span><span>Diameter of Binary Tree</span></div>
+      <div class="q-row"><span class="q-num">3.</span><span class="tag t-dp">Postorder</span><span>Binary Tree Tilt</span></div>
+      <div class="q-row"><span class="q-num">4.</span><span class="tag t-dp">Postorder</span><span>Longest Univalue Path</span></div>
+      <div class="keyword-box"><b>Keyword:</b> "diameter", "balanced", "longest path", "sum/aggregate of subtree". Children compute first, parent combines their answers.</div>
+    </div>
+    <div class="right-pane">
+      <div class="qs-title">Pseudocode</div>
+      <div class="code-block"><span class="cm">// Diameter — return height, update global diameter</span>
+int diameter = 0;
+int <span class="fn">height</span>(TreeNode root) {
+  <span class="kw">if</span> (root==<span class="kw">null</span>) <span class="kw">return</span> 0;
+  int l = <span class="fn">height</span>(root.left);
+  int r = <span class="fn">height</span>(root.right);
+  diameter = Math.max(diameter, l + r);  <span class="cm">// path thru node</span>
+  <span class="kw">return</span> 1 + Math.max(l, r);             <span class="cm">// height up</span>
+}
+<span class="cm">// Balanced: return -1 sentinel if any subtree unbalanced</span></div>
+    </div>
+  </div>
+  <div class="pbar"><b>Pattern:</b> Children compute first → parent combines. Return one value upward; track cross-subtree answers in a global variable.</div>
+</div>
+
+<!-- P3 -->
+<div class="phase-card" id="p3">
+  <div class="ph"><div class="ph-num">3</div><div class="ph-title">Top-Down DFS (State Passing)</div>
+    <div class="cx-badge"><span class="cx cx-time">Time O(n)</span><span class="cx cx-space">Space O(h)</span></div></div>
+  <div class="split">
+    <div class="left-pane">
+      <div class="qs-title">Questions</div>
+      <div class="q-row"><span class="q-num">1.</span><span class="tag t-dfs">Preorder</span><span>Path Sum I & II</span></div>
+      <div class="q-row"><span class="q-num">2.</span><span class="tag t-dfs">Preorder</span><span>Binary Tree Paths</span></div>
+      <div class="q-row"><span class="q-num">3.</span><span class="tag t-dfs">Preorder</span><span>Sum Root to Leaf Numbers</span></div>
+      <div class="q-row"><span class="q-num">4.</span><span class="tag t-dfs">Preorder</span><span>Count Good Nodes in Binary Tree</span></div>
+      <div class="q-row"><span class="q-num">5.</span><span class="tag t-dfs">Preorder</span><span>Pseudo-Palindromic Paths</span></div>
+      <div class="keyword-box"><b>Keyword:</b> "root-to-leaf", "path sum equals target", "carry value down the path", "good nodes". Parent passes accumulated state to children.</div>
+    </div>
+    <div class="right-pane">
+      <div class="qs-title">Pseudocode</div>
+      <div class="code-block"><span class="cm">// Path Sum — pass remaining target downward</span>
+<span class="kw">boolean</span> <span class="fn">hasPathSum</span>(TreeNode root, int target) {
+  <span class="kw">if</span> (root==<span class="kw">null</span>) <span class="kw">return false</span>;
+  target -= root.val;                  <span class="cm">// state down</span>
+  <span class="kw">if</span> (root.left==<span class="kw">null</span> &amp;&amp; root.right==<span class="kw">null</span>)
+    <span class="kw">return</span> target == 0;              <span class="cm">// leaf check</span>
+  <span class="kw">return</span> <span class="fn">hasPathSum</span>(root.left,  target)
+      || <span class="fn">hasPathSum</span>(root.right, target);
+}
+<span class="cm">// Good Nodes: pass max-so-far down the path</span></div>
+    </div>
+  </div>
+  <div class="pbar"><b>Pattern:</b> Parent passes state (running sum, path, max, depth, freq) down to children as a parameter. Decision often made at the leaf.</div>
+</div>
+
+<!-- P4 -->
+<div class="phase-card" id="p4">
+  <div class="ph"><div class="ph-num">4</div><div class="ph-title">BST DFS Patterns</div>
+    <div class="cx-badge"><span class="cx cx-time">Time O(h)→O(n)</span><span class="cx cx-space">Space O(h)</span></div></div>
+  <div class="split">
+    <div class="left-pane">
+      <div class="qs-title">Questions</div>
+      <div class="q-row"><span class="q-num">1.</span><span class="tag t-topo">Range</span><span>Validate BST</span></div>
+      <div class="q-row"><span class="q-num">2.</span><span class="tag t-dfs">Inorder</span><span>Kth Smallest in BST</span></div>
+      <div class="q-row"><span class="q-num">3.</span><span class="tag t-topo">BST Prop</span><span>Lowest Common Ancestor of BST</span></div>
+      <div class="q-row"><span class="q-num">4.</span><span class="tag t-topo">Divide</span><span>Convert Sorted Array to BST</span></div>
+      <div class="q-row"><span class="q-num">5.</span><span class="tag t-dfs">Inorder</span><span>Recover BST</span></div>
+      <div class="keyword-box"><b>Keyword:</b> "BST", "validate", "kth smallest", "sorted order". Use the BST property: left &lt; node &lt; right. Inorder yields sorted values.</div>
+    </div>
+    <div class="right-pane">
+      <div class="qs-title">Pseudocode</div>
+      <div class="code-block"><span class="cm">// Validate BST — pass valid (low, high) range down</span>
+<span class="kw">boolean</span> <span class="fn">valid</span>(TreeNode node, long low, long high) {
+  <span class="kw">if</span> (node==<span class="kw">null</span>) <span class="kw">return true</span>;
+  <span class="kw">if</span> (node.val&lt;=low || node.val&gt;=high) <span class="kw">return false</span>;
+  <span class="kw">return</span> <span class="fn">valid</span>(node.left,  low, node.val)
+      &amp;&amp; <span class="fn">valid</span>(node.right, node.val, high);
+}
+
+<span class="cm">// LCA of BST — use ordering to pick a direction</span>
+<span class="kw">while</span> (node!=<span class="kw">null</span>) {
+  <span class="kw">if</span> (p.val&lt;node.val &amp;&amp; q.val&lt;node.val) node=node.left;
+  <span class="kw">else if</span> (p.val&gt;node.val &amp;&amp; q.val&gt;node.val) node=node.right;
+  <span class="kw">else</span> <span class="kw">return</span> node;   <span class="cm">// split point = LCA</span>
+}</div>
+    </div>
+  </div>
+  <div class="pbar"><b>Pattern:</b> Exploit ordering. Validate with a shrinking (low, high) range. Inorder traversal of a BST is sorted — use it for Kth smallest and Recover BST.</div>
+</div>
+
+<!-- P5 -->
+<div class="phase-card" id="p5">
+  <div class="ph"><div class="ph-num">5</div><div class="ph-title">Lowest Common Ancestor (LCA)</div>
+    <div class="cx-badge"><span class="cx cx-time">Time O(n)</span><span class="cx cx-space">Space O(h)</span></div></div>
+  <div class="split">
+    <div class="left-pane">
+      <div class="qs-title">Questions</div>
+      <div class="q-row"><span class="q-num">1.</span><span class="tag t-dp">Postorder</span><span>LCA of Binary Tree</span></div>
+      <div class="q-row"><span class="q-num">2.</span><span class="tag t-topo">BST Prop</span><span>LCA of BST</span></div>
+      <div class="q-row"><span class="q-num">3.</span><span class="tag t-dp">Postorder</span><span>LCA with Parent Pointers</span></div>
+      <div class="q-row"><span class="q-num">4.</span><span class="tag t-dp">Postorder</span><span>Smallest Subtree with all Deepest Nodes</span></div>
+      <div class="keyword-box"><b>Keyword:</b> "lowest common ancestor", "deepest node covering both", "meeting point of two nodes". Return whether each target exists in the subtree.</div>
+    </div>
+    <div class="right-pane">
+      <div class="qs-title">Pseudocode</div>
+      <div class="code-block"><span class="cm">// LCA of Binary Tree — postorder, bubble up findings</span>
+TreeNode <span class="fn">lca</span>(TreeNode root, TreeNode p, TreeNode q) {
+  <span class="kw">if</span> (root==<span class="kw">null</span> || root==p || root==q) <span class="kw">return</span> root;
+  TreeNode l = <span class="fn">lca</span>(root.left,  p, q);
+  TreeNode r = <span class="fn">lca</span>(root.right, p, q);
+  <span class="kw">if</span> (l!=<span class="kw">null</span> &amp;&amp; r!=<span class="kw">null</span>) <span class="kw">return</span> root; <span class="cm">// split → LCA</span>
+  <span class="kw">return</span> l!=<span class="kw">null</span> ? l : r;             <span class="cm">// pass found up</span>
+}</div>
+    </div>
+  </div>
+  <div class="pbar"><b>Pattern:</b> Return whether a target exists in each subtree. The node where left and right both return non-null is the LCA.</div>
+</div>
+
+<!-- P6 -->
+<div class="phase-card" id="p6">
+  <div class="ph"><div class="ph-num">6</div><div class="ph-title">Tree DP (Advanced — Postorder)</div>
+    <div class="cx-badge"><span class="cx cx-time">Time O(n)</span><span class="cx cx-space">Space O(h)</span></div></div>
+  <div class="split">
+    <div class="left-pane">
+      <div class="qs-title">Questions</div>
+      <div class="q-row"><span class="q-num">1.</span><span class="tag t-dp">Tree DP</span><span>House Robber III</span></div>
+      <div class="q-row"><span class="q-num">2.</span><span class="tag t-dp">Tree DP</span><span>Binary Tree Maximum Path Sum</span></div>
+      <div class="q-row"><span class="q-num">3.</span><span class="tag t-dp">Tree DP</span><span>Binary Tree Cameras</span></div>
+      <div class="q-row"><span class="q-num">4.</span><span class="tag t-dp">Tree DP</span><span>Distribute Coins in Binary Tree</span></div>
+      <div class="keyword-box"><b>Keyword:</b> "max path sum", "rob the tree", "minimum cameras", "balance subtrees". DFS returns multiple states/values to the parent.</div>
+    </div>
+    <div class="right-pane">
+      <div class="qs-title">Pseudocode</div>
+      <div class="code-block"><span class="cm">// House Robber III — return {rob, skip}</span>
+int[] <span class="fn">dfs</span>(TreeNode node) {
+  <span class="kw">if</span> (node==<span class="kw">null</span>) <span class="kw">return new</span> int[]{0,0};
+  int[] l = <span class="fn">dfs</span>(node.left);
+  int[] r = <span class="fn">dfs</span>(node.right);
+  int rob  = node.val + l[1] + r[1];          <span class="cm">// take node</span>
+  int skip = Math.max(l[0],l[1])
+           + Math.max(r[0],r[1]);             <span class="cm">// skip node</span>
+  <span class="kw">return new</span> int[]{rob, skip};
+}
+<span class="cm">// Max Path Sum: return one-side gain, update global best</span></div>
+    </div>
+  </div>
+  <div class="pbar"><b>Pattern:</b> DFS returns multiple states (rob/skip, covered/notCovered). Parent picks the best combination. Update a global for the overall answer.</div>
+</div>
+
+<!-- P7 -->
+<div class="phase-card" id="p7">
+  <div class="ph"><div class="ph-num">7</div><div class="ph-title">Serialization & Construction</div>
+    <div class="cx-badge"><span class="cx cx-time">Time O(n)</span><span class="cx cx-space">Space O(n)</span></div></div>
+  <div class="split">
+    <div class="left-pane">
+      <div class="qs-title">Questions</div>
+      <div class="q-row"><span class="q-num">1.</span><span class="tag t-dfs">Preorder</span><span>Serialize & Deserialize Binary Tree</span></div>
+      <div class="q-row"><span class="q-num">2.</span><span class="tag t-both">Pre+In</span><span>Construct BT from Preorder & Inorder</span></div>
+      <div class="q-row"><span class="q-num">3.</span><span class="tag t-both">Post+In</span><span>Construct BT from Postorder & Inorder</span></div>
+      <div class="q-row"><span class="q-num">4.</span><span class="tag t-dfs">Preorder</span><span>Flatten Binary Tree to Linked List</span></div>
+      <div class="keyword-box"><b>Keyword:</b> "serialize/deserialize", "construct tree from traversals", "encode tree as string". Preorder + null markers, or split using inorder index.</div>
+    </div>
+    <div class="right-pane">
+      <div class="qs-title">Pseudocode</div>
+      <div class="code-block"><span class="cm">// Serialize (preorder with null markers)</span>
+<span class="kw">void</span> <span class="fn">ser</span>(TreeNode n, StringBuilder sb) {
+  <span class="kw">if</span> (n==<span class="kw">null</span>) { sb.append("#,"); <span class="kw">return</span>; }
+  sb.append(n.val).append(",");
+  <span class="fn">ser</span>(n.left, sb); <span class="fn">ser</span>(n.right, sb);
+}
+
+<span class="cm">// Construct from preorder + inorder</span>
+<span class="cm">// 1. preorder[preIdx] = root</span>
+<span class="cm">// 2. find root in inorder → splits L | R subtrees</span>
+<span class="cm">// 3. recurse left then right (use a HashMap for index)</span>
+Map&lt;Integer,Integer&gt; idx; <span class="cm">// value → inorder index, O(1) lookup</span></div>
+    </div>
+  </div>
+  <div class="pbar"><b>Pattern:</b> Reconstruct or encode. Preorder gives the root order; inorder gives the left/right split. A HashMap of inorder indices makes lookup O(1).</div>
+</div>
+
+<!-- P8 -->
+<div class="phase-card" id="p8">
+  <div class="ph"><div class="ph-num">8</div><div class="ph-title">Tree as a Graph (edges given)</div>
+    <div class="cx-badge"><span class="cx cx-time">Time O(n)</span><span class="cx cx-space">Space O(n)</span></div></div>
+  <div class="split">
+    <div class="left-pane">
+      <div class="qs-title">Questions</div>
+      <div class="q-row"><span class="q-num">1.</span><span class="tag t-dfs">DFS</span><span>Count Subtrees With Same Label</span></div>
+      <div class="q-row"><span class="q-num">2.</span><span class="tag t-dfs">DFS</span><span>Minimum Time to Collect All Apples</span></div>
+      <div class="q-row"><span class="q-num">3.</span><span class="tag t-dfs">DFS</span><span>Sum of Distances in Tree (rerooting)</span></div>
+      <div class="q-row"><span class="q-num">4.</span><span class="tag t-dfs">DFS</span><span>Tree Diameter (from edge list)</span></div>
+      <div class="keyword-box"><b>Keyword:</b> tree given as an <b>edge list</b> not a TreeNode, "n nodes and n-1 edges", "rooted at 0". Build adjacency list, DFS with a parent guard.</div>
+    </div>
+    <div class="right-pane">
+      <div class="qs-title">Pseudocode</div>
+      <div class="code-block"><span class="cm">// Tree given as edges → build adjacency list</span>
+List&lt;Integer&gt;[] adj = <span class="kw">new</span> List[n];
+<span class="kw">for</span> (int[] e : edges) {       <span class="cm">// undirected</span>
+  adj[e[0]].add(e[1]);
+  adj[e[1]].add(e[0]);
+}
+
+<span class="kw">void</span> <span class="fn">dfs</span>(int node, int parent) {
+  process(node);
+  <span class="kw">for</span> (int nei : adj[node])
+    <span class="kw">if</span> (nei != parent)        <span class="cm">// avoid going back up</span>
+      <span class="fn">dfs</span>(nei, node);
+}</div>
+    </div>
+  </div>
+  <div class="pbar"><b>Pattern:</b> When a tree is given as edges, build an adjacency list and DFS with a <code>parent</code> argument so you never walk back up. Re-rooting handles "for every node" queries in O(n).</div>
+</div>
+
+<div class="golden">
+  <b>GOLDEN RULE:</b> First decide what information each node needs.<br>
+  Then choose the direction of flow — Top-Down (preorder) or Bottom-Up (postorder).<br>
+  <b>Master DFS on trees → master 50% of DSA.</b>
+</div>
+
+
+</section>
+<section id="view-graph" class="view" style="display:none">
+<a class="back-hub" href="#" onclick="go('hub');return false;"><span class="arw">&#8592;</span> Hub</a>
+<h1>GRAPH DFS/BFS ROADMAP — WITH PSEUDOCODE</h1>
+<div class="sub">Click a phase to focus · All 7 phases with Java-style pseudocode</div>
+
+<div class="nav">
+  <button class="nav-btn active" onclick="show('all',this)">All phases</button>
+  <button class="nav-btn" onclick="show('p1',this)">P1 · Foundations</button>
+  <button class="nav-btn" onclick="show('p2',this)">P2 · Shortest Path</button>
+  <button class="nav-btn" onclick="show('p3',this)">P3 · Topo / Cycle</button>
+  <button class="nav-btn" onclick="show('p4',this)">P4 · Union-Find</button>
+  <button class="nav-btn" onclick="show('p5',this)">P5 · SCC / Bridges</button>
+  <button class="nav-btn" onclick="show('p6',this)">P6 · Graph DP</button>
+  <button class="nav-btn" onclick="show('p7',this)">P7 · MST</button>
+</div>
+
+<!-- Phase 1 -->
+<div class="phase-card" id="p1">
+  <div class="ph">
+    <div class="ph-num">1</div>
+    <div class="ph-title">PHASE 1 · GRAPH TRAVERSAL FOUNDATIONS</div>
+    <div class="ph-tag">BFS &amp; DFS basics · O(V+E)</div>
+  </div>
+  <div class="split">
+    <div class="left-pane">
+      <div class="qs-title">Questions</div>
+      <div class="q-row"><span class="q-num">1.</span><span class="tag t-dfs">DFS</span><span>Number of Islands</span></div>
+      <div class="q-row"><span class="q-num">2.</span><span class="tag t-dfs">DFS</span><span>Connected Components</span></div>
+      <div class="q-row"><span class="q-num">3.</span><span class="tag t-dfs">DFS</span><span>Flood Fill</span></div>
+      <div class="q-row"><span class="q-num">4.</span><span class="tag t-dfs">DFS</span><span>Clone Graph</span></div>
+      <div class="q-row"><span class="q-num">5.</span><span class="tag t-bfs">BFS</span><span>01 Matrix (multi-source)</span></div>
+      <div class="q-row"><span class="q-num">6.</span><span class="tag t-dfs">DFS</span><span>Surrounded Regions</span></div>
+    </div>
+    <div class="right-pane">
+      <div class="qs-title">DFS + BFS template</div>
+      <div class="code-block"><span class="kw">void</span> <span class="fn">dfs</span>(int[][] grid, <span class="kw">boolean</span>[][] vis, int r, int c) {
+  <span class="kw">if</span> (r&lt;0||r&gt;=R||c&lt;0||c&gt;=C||vis[r][c]||grid[r][c]==0) <span class="kw">return</span>;
+  vis[r][c] = <span class="kw">true</span>;
+  <span class="kw">for</span> (int[] d : dirs)    <span class="cm">// {{0,1},{0,-1},{1,0},{-1,0}}</span>
+    <span class="fn">dfs</span>(grid, vis, r+d[0], c+d[1]);
+}
+<span class="cm">// caller: for each unvisited land → dfs() → count++</span>
+
+<span class="cm">// BFS multi-source (01 Matrix)</span>
+Queue&lt;int[]&gt; q = <span class="kw">new</span> LinkedList&lt;&gt;();
+<span class="kw">for</span> (all 0-cells) { q.offer(cell); dist[r][c]=0; }
+<span class="kw">while</span> (!q.isEmpty()) {
+  int[] cur = q.poll();
+  <span class="kw">for</span> (int[] d : dirs) {
+    <span class="kw">if</span> (inBounds &amp;&amp; dist[nr][nc] &gt; dist[r][c]+1) {
+      dist[nr][nc] = dist[r][c]+1;
+      q.offer(<span class="kw">new</span> int[]{nr,nc});
+    }
+  }
+}</div>
+    </div>
+  </div>
+  <div class="pbar"><b>Pattern:</b> Mark visited BEFORE recursing (DFS) or BEFORE enqueue (BFS). Multi-source BFS = seed all sources at dist=0 simultaneously.</div>
+</div>
+
+<!-- Phase 2 -->
+<div class="phase-card" id="p2">
+  <div class="ph">
+    <div class="ph-num">2</div>
+    <div class="ph-title">PHASE 2 · SHORTEST PATH (BFS / DIJKSTRA)</div>
+    <div class="ph-tag">Unweighted → BFS · Weighted → Dijkstra</div>
+  </div>
+  <div class="split">
+    <div class="left-pane">
+      <div class="qs-title">Questions</div>
+      <div class="q-row"><span class="q-num">1.</span><span class="tag t-bfs">BFS</span><span>Word Ladder</span></div>
+      <div class="q-row"><span class="q-num">2.</span><span class="tag t-bfs">BFS</span><span>Rotting Oranges</span></div>
+      <div class="q-row"><span class="q-num">3.</span><span class="tag t-bfs">BFS</span><span>Cheapest Flights (K stops)</span></div>
+      <div class="q-row"><span class="q-num">4.</span><span class="tag t-both">Dijkstra</span><span>Network Delay Time</span></div>
+      <div class="q-row"><span class="q-num">5.</span><span class="tag t-both">Dijkstra</span><span>Path Min Effort</span></div>
+      <div class="q-row"><span class="q-num">6.</span><span class="tag t-both">Dijkstra</span><span>Swim in Rising Water</span></div>
+    </div>
+    <div class="right-pane">
+      <div class="qs-title">Dijkstra template</div>
+      <div class="code-block">int[] dist = <span class="kw">new</span> int[V]; Arrays.fill(dist, INF);
+dist[src] = 0;
+PriorityQueue&lt;int[]&gt; pq =
+  <span class="kw">new</span> PriorityQueue&lt;&gt;((a,b)-&gt;a[0]-b[0]); <span class="cm">// {dist,node}</span>
+pq.offer(<span class="kw">new</span> int[]{0, src});
+
+<span class="kw">while</span> (!pq.isEmpty()) {
+  int[] cur = pq.poll();
+  int d=cur[0], u=cur[1];
+  <span class="kw">if</span> (d &gt; dist[u]) <span class="kw">continue</span>; <span class="cm">// stale — skip</span>
+  <span class="kw">for</span> (int[] e : adj.get(u)) { <span class="cm">// e={v,weight}</span>
+    <span class="kw">if</span> (dist[u]+e[1] &lt; dist[e[0]]) {
+      dist[e[0]] = dist[u]+e[1];
+      pq.offer(<span class="kw">new</span> int[]{dist[e[0]], e[0]});
+    }
+  }
+}
+<span class="cm">// Network Delay: return max(dist[])</span>
+<span class="cm">// K-stops: use dist[k][node] 2D, BFS level-capped</span></div>
+    </div>
+  </div>
+  <div class="pbar"><b>Key:</b> Never skip the stale-entry check <code>if (d &gt; dist[u]) continue</code> — causes TLE without it.</div>
+</div>
+
+<!-- Phase 3 -->
+<div class="phase-card" id="p3">
+  <div class="ph">
+    <div class="ph-num">3</div>
+    <div class="ph-title">PHASE 3 · CYCLE DETECTION &amp; TOPOLOGICAL SORT</div>
+    <div class="ph-tag">Directed Graphs · Kahn's BFS · DFS postorder</div>
+  </div>
+  <div class="split">
+    <div class="left-pane">
+      <div class="qs-title">Questions</div>
+      <div class="q-row"><span class="q-num">1.</span><span class="tag t-dfs">DFS</span><span>Cycle in Directed Graph</span></div>
+      <div class="q-row"><span class="q-num">2.</span><span class="tag t-dfs">DFS</span><span>Cycle in Undirected Graph</span></div>
+      <div class="q-row"><span class="q-num">3.</span><span class="tag t-topo">Topo BFS</span><span>Course Schedule I</span></div>
+      <div class="q-row"><span class="q-num">4.</span><span class="tag t-topo">Topo BFS</span><span>Course Schedule II</span></div>
+      <div class="q-row"><span class="q-num">5.</span><span class="tag t-topo">Topo BFS</span><span>Alien Dictionary</span></div>
+      <div class="q-row"><span class="q-num">6.</span><span class="tag t-topo">Topo BFS</span><span>Find Eventual Safe States</span></div>
+    </div>
+    <div class="right-pane">
+      <div class="qs-title">Kahn's topo sort + cycle check</div>
+      <div class="code-block">int[] indegree = <span class="kw">new</span> int[V];
+<span class="kw">for</span> (int u=0; u&lt;V; u++)
+  <span class="kw">for</span> (int v : adj.get(u)) indegree[v]++;
+
+Queue&lt;Integer&gt; q = <span class="kw">new</span> LinkedList&lt;&gt;();
+<span class="kw">for</span> (int i=0; i&lt;V; i++) <span class="kw">if</span> (indegree[i]==0) q.offer(i);
+
+List&lt;Integer&gt; order = <span class="kw">new</span> ArrayList&lt;&gt;();
+<span class="kw">while</span> (!q.isEmpty()) {
+  int u = q.poll(); order.add(u);
+  <span class="kw">for</span> (int v : adj.get(u))
+    <span class="kw">if</span> (--indegree[v]==0) q.offer(v);
+}
+<span class="cm">// cycle exists if order.size() &lt; V</span>
+
+<span class="cm">// DFS cycle (directed): 3-color</span>
+<span class="cm">// 0=unvisited 1=in-stack 2=done</span>
+<span class="kw">if</span> (color[v]==1) <span class="kw">return true</span>; <span class="cm">// back edge = cycle</span>
+<span class="cm">// Undirected: vis[nei] &amp;&amp; nei!=parent → cycle</span></div>
+    </div>
+  </div>
+  <div class="pbar"><b>Pattern:</b> Kahn's = indegree[] + BFS. If <code>order.size() &lt; V</code> → cycle. DFS topo = postorder reversed.</div>
+</div>
+
+<!-- Phase 4 -->
+<div class="phase-card" id="p4">
+  <div class="ph">
+    <div class="ph-num">4</div>
+    <div class="ph-title">PHASE 4 · UNION-FIND (DISJOINT SET UNION)</div>
+    <div class="ph-tag">Dynamic connectivity · O(α(n)) per op</div>
+  </div>
+  <div class="split">
+    <div class="left-pane">
+      <div class="qs-title">Questions</div>
+      <div class="q-row"><span class="q-num">1.</span><span class="tag t-uf">UF</span><span>Number of Provinces</span></div>
+      <div class="q-row"><span class="q-num">2.</span><span class="tag t-uf">UF</span><span>Redundant Connection</span></div>
+      <div class="q-row"><span class="q-num">3.</span><span class="tag t-uf">UF</span><span>Accounts Merge</span></div>
+      <div class="q-row"><span class="q-num">4.</span><span class="tag t-uf">UF</span><span>Making Large Island</span></div>
+      <div class="q-row"><span class="q-num">5.</span><span class="tag t-uf">UF</span><span>Satisfiability of Eq. Equations</span></div>
+      <br>
+      <div style="font-size:11px;line-height:1.6;margin-top:4px;">
+        Redundant connection = first edge where <code>find(u)==find(v)</code> before union.<br>
+        Provinces = count nodes where <code>find(i)==i</code>.
+      </div>
+    </div>
+    <div class="right-pane">
+      <div class="qs-title">Union-Find with path compression + rank</div>
+      <div class="code-block">int[] parent, rank;
+
+<span class="kw">void</span> <span class="fn">init</span>(int n) {
+  parent = <span class="kw">new</span> int[n]; rank = <span class="kw">new</span> int[n];
+  <span class="kw">for</span> (int i=0; i&lt;n; i++) parent[i]=i;
+}
+
+int <span class="fn">find</span>(int x) {           <span class="cm">// path compression</span>
+  <span class="kw">if</span> (parent[x] != x)
+    parent[x] = <span class="fn">find</span>(parent[x]);
+  <span class="kw">return</span> parent[x];
+}
+
+<span class="kw">boolean</span> <span class="fn">union</span>(int x, int y) {
+  int px=<span class="fn">find</span>(x), py=<span class="fn">find</span>(y);
+  <span class="kw">if</span> (px==py) <span class="kw">return false</span>; <span class="cm">// already connected</span>
+  <span class="kw">if</span> (rank[px]&lt;rank[py]) { int t=px; px=py; py=t; }
+  parent[py]=px;
+  <span class="kw">if</span> (rank[px]==rank[py]) rank[px]++;
+  <span class="kw">return true</span>;
+}</div>
+    </div>
+  </div>
+  <div class="pbar"><b>Pattern:</b> Path compression + union by rank → near O(1). Use <code>HashMap&lt;String,String&gt;</code> parent for string-keyed problems like Accounts Merge.</div>
+</div>
+
+<!-- Phase 5 -->
+<div class="phase-card" id="p5">
+  <div class="ph">
+    <div class="ph-num">5</div>
+    <div class="ph-title">PHASE 5 · SCC, BRIDGES &amp; ARTICULATION POINTS</div>
+    <div class="ph-tag">Tarjan's · disc[] + low[]</div>
+  </div>
+  <div class="split">
+    <div class="left-pane">
+      <div class="qs-title">Questions</div>
+      <div class="q-row"><span class="q-num">1.</span><span class="tag t-dfs">DFS</span><span>Critical Connections (Bridges)</span></div>
+      <div class="q-row"><span class="q-num">2.</span><span class="tag t-dfs">DFS</span><span>Articulation Points</span></div>
+      <div class="q-row"><span class="q-num">3.</span><span class="tag t-dfs">DFS</span><span>Strongly Connected Components</span></div>
+      <div class="q-row"><span class="q-num">4.</span><span class="tag t-dfs">DFS</span><span>Number of SCCs (Kosaraju)</span></div>
+      <br>
+      <div style="font-size:11px;line-height:1.6;margin-top:4px;">
+        Bridge: <code>low[v] &gt; disc[u]</code><br>
+        AP: <code>low[v] &gt;= disc[u]</code> + root child check<br>
+        Kosaraju: DFS order → reverse edges → DFS again
+      </div>
+    </div>
+    <div class="right-pane">
+      <div class="qs-title">Tarjan's bridge-finding</div>
+      <div class="code-block">int timer = 0;
+int[] disc, low; <span class="kw">boolean</span>[] vis;
+
+<span class="kw">void</span> <span class="fn">dfs</span>(int u, int par) {
+  vis[u] = <span class="kw">true</span>;
+  disc[u] = low[u] = timer++;
+
+  <span class="kw">for</span> (int v : adj.get(u)) {
+    <span class="kw">if</span> (!vis[v]) {
+      <span class="fn">dfs</span>(v, u);
+      low[u] = Math.min(low[u], low[v]);
+      <span class="hi">if</span> (low[v] &gt; disc[u])       <span class="cm">// bridge!</span>
+        bridges.add(List.of(u, v));
+    } <span class="kw">else if</span> (v != par)
+      low[u] = Math.min(low[u], disc[v]);
+  }
+}
+<span class="cm">// Kosaraju SCC:</span>
+<span class="cm">// 1) DFS on G → push to stack on finish</span>
+<span class="cm">// 2) Build reverse graph G^T</span>
+<span class="cm">// 3) DFS on G^T in stack pop order → each DFS = 1 SCC</span></div>
+    </div>
+  </div>
+  <div class="pbar"><b>Pattern:</b> disc[] = discovery time, low[] = lowest reachable. Bridge: low[v]&gt;disc[u]. AP: low[v]&gt;=disc[u] (non-root node).</div>
+</div>
+
+<!-- Phase 6 -->
+<div class="phase-card" id="p6">
+  <div class="ph">
+    <div class="ph-num">6</div>
+    <div class="ph-title">PHASE 6 · GRAPH DP (ADVANCED)</div>
+    <div class="ph-tag">Memoized DFS · Bitmask DP · DP on DAG</div>
+  </div>
+  <div class="split">
+    <div class="left-pane">
+      <div class="qs-title">Questions</div>
+      <div class="q-row"><span class="q-num">1.</span><span class="tag t-dp">DFS+Memo</span><span>Longest Increasing Path in Matrix</span></div>
+      <div class="q-row"><span class="q-num">2.</span><span class="tag t-dp">DP DAG</span><span>Unique Paths (grid)</span></div>
+      <div class="q-row"><span class="q-num">3.</span><span class="tag t-both">Dijkstra+DP</span><span>Number of Ways to Dest.</span></div>
+      <div class="q-row"><span class="q-num">4.</span><span class="tag t-bfs">BFS+Mask</span><span>Shortest Path Visiting All Nodes</span></div>
+      <div class="q-row"><span class="q-num">5.</span><span class="tag t-dp">DP levels</span><span>Min Cost K Edges</span></div>
+    </div>
+    <div class="right-pane">
+      <div class="qs-title">Memoized DFS + Bitmask BFS</div>
+      <div class="code-block">int[][] memo; <span class="cm">// LIP: memo[i][j] = best from (i,j)</span>
+
+int <span class="fn">dfs</span>(int[][] g, int r, int c) {
+  <span class="kw">if</span> (memo[r][c] != 0) <span class="kw">return</span> memo[r][c];
+  int best = 1;
+  <span class="kw">for</span> (int[] d : dirs) {
+    int nr=r+d[0], nc=c+d[1];
+    <span class="kw">if</span> (inBounds(nr,nc) &amp;&amp; g[nr][nc]&gt;g[r][c])
+      best = Math.max(best, 1+<span class="fn">dfs</span>(g,nr,nc));
+  }
+  <span class="kw">return</span> memo[r][c] = best;
+}
+
+<span class="cm">// Bitmask BFS — visit all nodes</span>
+<span class="cm">// state = {node, visitedMask, dist}</span>
+int FULL = (1&lt;&lt;n)-1;
+Queue&lt;int[]&gt; q = <span class="kw">new</span> LinkedList&lt;&gt;();
+<span class="kw">for</span> (int i=0; i&lt;n; i++) q.offer(<span class="kw">new</span> int[]{i,1&lt;&lt;i,0});
+<span class="kw">while</span> (!q.isEmpty()) {
+  int[] cur = q.poll();
+  <span class="kw">if</span> (cur[1]==FULL) <span class="kw">return</span> cur[2];
+  <span class="kw">for</span> (int nei : adj.get(cur[0]))
+    q.offer(<span class="kw">new</span> int[]{nei, cur[1]|(1&lt;&lt;nei), cur[2]+1});
+}</div>
+    </div>
+  </div>
+  <div class="pbar"><b>Pattern:</b> Grid = DAG → memoize DFS. Bitmask BFS: state=(node,mask). Use visited set on (node,mask) pairs. Works when nodes ≤ 20.</div>
+</div>
+
+<!-- Phase 7 -->
+<div class="phase-card" id="p7">
+  <div class="ph">
+    <div class="ph-num">7</div>
+    <div class="ph-title">PHASE 7 · MINIMUM SPANNING TREE</div>
+    <div class="ph-tag">Kruskal (sort+UF) · Prim (greedy heap)</div>
+  </div>
+  <div class="split">
+    <div class="left-pane">
+      <div class="qs-title">Questions</div>
+      <div class="q-row"><span class="q-num">1.</span><span class="tag t-uf">Kruskal</span><span>Min Cost Connect All Points</span></div>
+      <div class="q-row"><span class="q-num">2.</span><span class="tag t-dp">Prim</span><span>Classic MST</span></div>
+      <div class="q-row"><span class="q-num">3.</span><span class="tag t-uf">Kruskal</span><span>Optimize Water Distribution</span></div>
+      <br>
+      <div style="font-size:11px;line-height:1.7;margin-top:4px;">
+        <b>Kruskal</b>: sort edges + UF. Better sparse graphs.<br>
+        <b>Prim</b>: Dijkstra-like heap. Better dense graphs.<br>
+        Both yield same MST total weight.
+      </div>
+    </div>
+    <div class="right-pane">
+      <div class="qs-title">Kruskal + Prim</div>
+      <div class="code-block"><span class="cm">// Kruskal</span>
+Collections.sort(edges, (a,b)-&gt;a[2]-b[2]);
+<span class="fn">init</span>(V);
+int mstCost=0, used=0;
+<span class="kw">for</span> (int[] e : edges) {     <span class="cm">// {u, v, weight}</span>
+  <span class="kw">if</span> (<span class="fn">union</span>(e[0],e[1])) {
+    mstCost += e[2];
+    <span class="kw">if</span> (++used==V-1) <span class="kw">break</span>;
+  }
+}
+
+<span class="cm">// Prim</span>
+<span class="kw">boolean</span>[] inMST = <span class="kw">new</span> boolean[V];
+PriorityQueue&lt;int[]&gt; pq =
+  <span class="kw">new</span> PriorityQueue&lt;&gt;((a,b)-&gt;a[0]-b[0]); <span class="cm">// {cost,node}</span>
+pq.offer(<span class="kw">new</span> int[]{0,0});
+<span class="kw">while</span> (!pq.isEmpty()) {
+  int[] cur=pq.poll(); int u=cur[1];
+  <span class="kw">if</span> (inMST[u]) <span class="kw">continue</span>;
+  inMST[u]=<span class="kw">true</span>; mstCost+=cur[0];
+  <span class="kw">for</span> (int[] e : adj.get(u))
+    <span class="kw">if</span> (!inMST[e[0]]) pq.offer(<span class="kw">new</span> int[]{e[1],e[0]});
+}</div>
+    </div>
+  </div>
+  <div class="pbar"><b>Pattern:</b> Kruskal = sort + union(). Stop at V-1 edges. Water Distribution trick: add virtual node 0 with well-cost edges.</div>
+</div>
+
+<div class="golden">
+  <b>GOLDEN RULE:</b> Directed or undirected? Weighted or unweighted? Need order, path, or connectivity?<br>
+  Then pick: BFS / DFS / Dijkstra / Topo / UF / Tarjan / MST.
+</div>
+
+
+</section>
+<section id="view-dp" class="view" style="display:none">
+<a class="back-hub" href="#" onclick="go('hub');return false;"><span class="arw">&#8592;</span> Hub</a>
+<h1>DYNAMIC PROGRAMMING ROADMAP (PHASE-WISE)</h1>
+<div class="sub">Click a phase to focus · 8 phases with Java-style pseudocode</div>
+
+<div class="core-box">
+  <div class="ct">CORE IDEA</div>
+  <p>DP = <em>break problem into overlapping subproblems</em> + <em>cache results</em>.<br>
+  Either <em>Top-Down (Memoization)</em> → recursion + HashMap/array cache<br>
+  or <em>Bottom-Up (Tabulation)</em> → fill dp[] table iteratively.<br>
+  <em>Golden question: "What is dp[i] / dp[i][j] representing?"</em></p>
+</div>
+
+<div class="top-row">
+  <div class="when-box">
+    <div class="bh">DP Pattern Recognition</div>
+    <ul>
+      <li><span style="font-weight:500">1D DP</span> → single array, index = state</li>
+      <li><span style="font-weight:500">2D DP</span> → two sequences / grid → dp[i][j]</li>
+      <li><span style="font-weight:500">Interval DP</span> → dp[l][r] on subarray ranges</li>
+      <li><span style="font-weight:500">String DP</span> → edit distance, LCS, palindrome</li>
+      <li><span style="font-weight:500">Tree DP</span> → postorder, aggregate from children</li>
+      <li><span style="font-weight:500">Bitmask DP</span> → subset states, dp[mask]</li>
+      <li><span style="font-weight:500">Greedy+DP</span> → sort then DP (LIS, activity)</li>
+    </ul>
+  </div>
+  <div class="when-box">
+    <div class="bh">When to use DP?</div>
+    <ul>
+      <li>Overlapping subproblems exist</li>
+      <li>Optimal substructure holds</li>
+      <li>"Count ways" or "min/max" asked</li>
+      <li>Choices at each step affect future</li>
+      <li>Brute force is exponential O(2ⁿ)</li>
+    </ul>
+    <div style="margin-top:6px;font-size:10.5px;">
+      <b>Top-Down</b>: easier to write, natural recursion<br>
+      <b>Bottom-Up</b>: faster, no stack overflow
+    </div>
+  </div>
+</div>
+
+<div class="nav">
+  <button class="nav-btn active" onclick="show('all',this)">All phases</button>
+  <button class="nav-btn" onclick="show('p1',this)">P1 · 1D DP</button>
+  <button class="nav-btn" onclick="show('p2',this)">P2 · Knapsack</button>
+  <button class="nav-btn" onclick="show('p3',this)">P3 · 2D / Grid</button>
+  <button class="nav-btn" onclick="show('p4',this)">P4 · String DP</button>
+  <button class="nav-btn" onclick="show('p5',this)">P5 · Interval DP</button>
+  <button class="nav-btn" onclick="show('p6',this)">P6 · Tree DP</button>
+  <button class="nav-btn" onclick="show('p7',this)">P7 · Bitmask DP</button>
+  <button class="nav-btn" onclick="show('p8',this)">P8 · Stock / State Machine</button>
+</div>
+
+<!-- Phase 1 -->
+<div class="phase-card" id="p1">
+  <div class="ph">
+    <div class="ph-num">1</div>
+    <div class="ph-title">PHASE 1 · 1D DP — FOUNDATION</div>
+    <div class="ph-tag">Linear DP · O(n)</div>
+  </div>
+  <div class="split">
+    <div class="left-pane">
+      <div class="qs-title">Questions</div>
+      <div class="q-row"><span class="q-num">1.</span><span class="tag t1d">1D</span><span>Climbing Stairs</span></div>
+      <div class="q-row"><span class="q-num">2.</span><span class="tag t1d">1D</span><span>House Robber</span></div>
+      <div class="q-row"><span class="q-num">3.</span><span class="tag t1d">1D</span><span>House Robber II (circular)</span></div>
+      <div class="q-row"><span class="q-num">4.</span><span class="tag t1d">1D</span><span>Min Cost Climbing Stairs</span></div>
+      <div class="q-row"><span class="q-num">5.</span><span class="tag t1d">1D</span><span>Fibonacci Number</span></div>
+      <div class="q-row"><span class="q-num">6.</span><span class="tag tgreedy">Greedy+DP</span><span>Jump Game I &amp; II</span></div>
+      <div class="q-row"><span class="q-num">7.</span><span class="tag t1d">1D</span><span>Decode Ways</span></div>
+      <br>
+      <div class="note-inline">
+        <b>dp[i]</b> = answer for first i elements.<br>
+        Transition looks back 1-2 steps.<br>
+        Often space-optimizable to O(1) using two variables.
+      </div>
+    </div>
+    <div class="right-pane">
+      <div class="qs-title">House Robber template</div>
+      <div class="code-block"><span class="cm">// dp[i] = max money robbing houses 0..i</span>
+<span class="cm">// dp[i] = max(dp[i-1], dp[i-2] + nums[i])</span>
+
+int <span class="fn">rob</span>(int[] nums) {
+  int n = nums.length;
+  <span class="kw">if</span> (n==1) <span class="kw">return</span> nums[0];
+  int prev2=nums[0], prev1=Math.max(nums[0],nums[1]);
+  <span class="kw">for</span> (int i=2; i&lt;n; i++) {
+    int cur = Math.max(prev1, prev2+nums[i]);
+    prev2 = prev1; prev1 = cur;
+  }
+  <span class="kw">return</span> prev1;
+}
+<span class="cm">// Space: O(1) — rolling variables instead of dp[]</span>
+
+<span class="cm">// Climbing Stairs (same pattern):</span>
+<span class="cm">// dp[i] = dp[i-1] + dp[i-2]</span>
+<span class="cm">// Decode Ways:</span>
+<span class="cm">// dp[i] += dp[i-1] if valid 1-digit</span>
+<span class="cm">// dp[i] += dp[i-2] if valid 2-digit</span></div>
+    </div>
+  </div>
+  <div class="pbar"><b>Pattern:</b> Define dp[i], write recurrence, handle base cases, optimize space with rolling vars.</div>
+</div>
+
+<!-- Phase 2 -->
+<div class="phase-card" id="p2">
+  <div class="ph">
+    <div class="ph-num">2</div>
+    <div class="ph-title">PHASE 2 · KNAPSACK PATTERNS</div>
+    <div class="ph-tag">0/1 · Unbounded · Subset Sum</div>
+  </div>
+  <div class="split">
+    <div class="left-pane">
+      <div class="qs-title">Questions</div>
+      <div class="q-row"><span class="q-num">1.</span><span class="tag t2d">0/1 KS</span><span>Partition Equal Subset Sum</span></div>
+      <div class="q-row"><span class="q-num">2.</span><span class="tag t2d">0/1 KS</span><span>Target Sum (assign +/-)</span></div>
+      <div class="q-row"><span class="q-num">3.</span><span class="tag t2d">0/1 KS</span><span>Last Stone Weight II</span></div>
+      <div class="q-row"><span class="q-num">4.</span><span class="tag t1d">Unbounded</span><span>Coin Change (min coins)</span></div>
+      <div class="q-row"><span class="q-num">5.</span><span class="tag t1d">Unbounded</span><span>Coin Change II (count ways)</span></div>
+      <div class="q-row"><span class="q-num">6.</span><span class="tag t1d">Unbounded</span><span>Integer Break</span></div>
+      <div class="q-row"><span class="q-num">7.</span><span class="tag t2d">0/1 KS</span><span>Ones and Zeroes (2D knapsack)</span></div>
+      <br>
+      <div class="note-inline">
+        <b>0/1</b>: each item used once → iterate j <b>backwards</b>.<br>
+        <b>Unbounded</b>: items reusable → iterate j <b>forwards</b>.<br>
+        This single direction flip is the only difference.
+      </div>
+    </div>
+    <div class="right-pane">
+      <div class="qs-title">0/1 KS + Unbounded templates</div>
+      <div class="code-block"><span class="cm">// 0/1 Knapsack — each item used once</span>
+<span class="cm">// dp[j] = can we reach sum j?</span>
+<span class="kw">boolean</span>[] dp = <span class="kw">new</span> <span class="kw">boolean</span>[target+1];
+dp[0] = <span class="kw">true</span>;
+<span class="kw">for</span> (int num : nums)
+  <span class="kw">for</span> (int j=target; j&gt;=num; j--) <span class="cm">// ← BACKWARDS</span>
+    dp[j] |= dp[j-num];
+
+<span class="cm">// Unbounded Knapsack — item reusable</span>
+<span class="cm">// Coin Change: dp[j] = min coins to make j</span>
+int[] dp2 = <span class="kw">new</span> int[amount+1];
+Arrays.fill(dp2, amount+1);
+dp2[0] = 0;
+<span class="kw">for</span> (int coin : coins)
+  <span class="kw">for</span> (int j=coin; j&lt;=amount; j++) <span class="cm">// → FORWARDS</span>
+    dp2[j] = Math.min(dp2[j], dp2[j-coin]+1);
+
+<span class="cm">// Coin Change II (count ways):</span>
+<span class="cm">// dp[j] += dp[j-coin]  (forwards)</span></div>
+    </div>
+  </div>
+  <div class="pbar"><b>Key:</b> 0/1 KS = backwards loop. Unbounded = forwards loop. The loop direction IS the distinction.</div>
+</div>
+
+<!-- Phase 3 -->
+<div class="phase-card" id="p3">
+  <div class="ph">
+    <div class="ph-num">3</div>
+    <div class="ph-title">PHASE 3 · 2D DP — GRID &amp; SEQUENCES</div>
+    <div class="ph-tag">dp[i][j] · Grid paths · LCS · LIS</div>
+  </div>
+  <div class="split">
+    <div class="left-pane">
+      <div class="qs-title">Questions</div>
+      <div class="q-row"><span class="q-num">1.</span><span class="tag t2d">Grid</span><span>Unique Paths I &amp; II</span></div>
+      <div class="q-row"><span class="q-num">2.</span><span class="tag t2d">Grid</span><span>Minimum Path Sum</span></div>
+      <div class="q-row"><span class="q-num">3.</span><span class="tag t2d">Grid</span><span>Maximal Square</span></div>
+      <div class="q-row"><span class="q-num">4.</span><span class="tag t2d">Seq</span><span>Longest Common Subsequence</span></div>
+      <div class="q-row"><span class="q-num">5.</span><span class="tag tgreedy">Greedy+DP</span><span>Longest Increasing Subsequence</span></div>
+      <div class="q-row"><span class="q-num">6.</span><span class="tag t2d">Seq</span><span>Edit Distance</span></div>
+      <div class="q-row"><span class="q-num">7.</span><span class="tag t2d">Seq</span><span>Distinct Subsequences</span></div>
+      <br>
+      <div class="note-inline">
+        LIS in O(n log n): patience sorting with binary search.<br>
+        LCS diagonal rule: if match → dp[i-1][j-1]+1 else max(left, up).
+      </div>
+    </div>
+    <div class="right-pane">
+      <div class="qs-title">LCS + LIS templates</div>
+      <div class="code-block"><span class="cm">// LCS — dp[i][j] = LCS of s1[0..i-1], s2[0..j-1]</span>
+int[][] dp = <span class="kw">new</span> int[m+1][n+1];
+<span class="kw">for</span> (int i=1; i&lt;=m; i++)
+  <span class="kw">for</span> (int j=1; j&lt;=n; j++)
+    <span class="kw">if</span> (s1.charAt(i-1)==s2.charAt(j-1))
+      dp[i][j] = dp[i-1][j-1]+1;        <span class="cm">// match</span>
+    <span class="kw">else</span>
+      dp[i][j] = Math.max(dp[i-1][j], dp[i][j-1]);
+
+<span class="cm">// LIS — O(n log n) patience sort</span>
+List&lt;Integer&gt; tails = <span class="kw">new</span> ArrayList&lt;&gt;();
+<span class="kw">for</span> (int num : nums) {
+  int pos = Collections.binarySearch(tails, num);
+  <span class="kw">if</span> (pos &lt; 0) pos = -(pos+1);
+  <span class="kw">if</span> (pos==tails.size()) tails.add(num);
+  <span class="kw">else</span> tails.set(pos, num);
+}
+<span class="cm">// return tails.size() = LIS length</span></div>
+    </div>
+  </div>
+  <div class="pbar"><b>Pattern:</b> 2D dp[i][j] where i,j index into two sequences or two dimensions. Fill row by row. LIS: binary search on maintained tails array.</div>
+</div>
+
+<!-- Phase 4 -->
+<div class="phase-card" id="p4">
+  <div class="ph">
+    <div class="ph-num">4</div>
+    <div class="ph-title">PHASE 4 · STRING DP</div>
+    <div class="ph-tag">Palindromes · Edit Distance · Regex</div>
+  </div>
+  <div class="split">
+    <div class="left-pane">
+      <div class="qs-title">Questions</div>
+      <div class="q-row"><span class="q-num">1.</span><span class="tag tstr">String</span><span>Longest Palindromic Substring</span></div>
+      <div class="q-row"><span class="q-num">2.</span><span class="tag tstr">String</span><span>Palindromic Substrings (count)</span></div>
+      <div class="q-row"><span class="q-num">3.</span><span class="tag tstr">String</span><span>Longest Palindromic Subsequence</span></div>
+      <div class="q-row"><span class="q-num">4.</span><span class="tag tstr">String</span><span>Edit Distance</span></div>
+      <div class="q-row"><span class="q-num">5.</span><span class="tag tstr">String</span><span>Word Break I &amp; II</span></div>
+      <div class="q-row"><span class="q-num">6.</span><span class="tag tstr">String</span><span>Regular Expression Matching</span></div>
+      <div class="q-row"><span class="q-num">7.</span><span class="tag tstr">String</span><span>Wildcard Matching</span></div>
+      <br>
+      <div class="note-inline">
+        Palindrome center-expand = O(n²) time O(1) space.<br>
+        Manacher's = O(n). For interview: expand-around-center is fine.
+      </div>
+    </div>
+    <div class="right-pane">
+      <div class="qs-title">Edit Distance + Word Break</div>
+      <div class="code-block"><span class="cm">// Edit Distance — dp[i][j] = min ops to convert</span>
+<span class="cm">// word1[0..i-1] → word2[0..j-1]</span>
+<span class="kw">for</span> (int i=0; i&lt;=m; i++) dp[i][0]=i;
+<span class="kw">for</span> (int j=0; j&lt;=n; j++) dp[0][j]=j;
+<span class="kw">for</span> (int i=1; i&lt;=m; i++)
+  <span class="kw">for</span> (int j=1; j&lt;=n; j++)
+    <span class="kw">if</span> (w1.charAt(i-1)==w2.charAt(j-1))
+      dp[i][j] = dp[i-1][j-1];           <span class="cm">// no op</span>
+    <span class="kw">else</span>
+      dp[i][j] = 1+Math.min(dp[i-1][j-1], <span class="cm">// replace</span>
+                   Math.min(dp[i-1][j],    <span class="cm">// delete</span>
+                            dp[i][j-1]));  <span class="cm">// insert</span>
+
+<span class="cm">// Word Break — dp[i] = can s[0..i-1] be segmented?</span>
+<span class="kw">boolean</span>[] dp2 = <span class="kw">new</span> <span class="kw">boolean</span>[n+1]; dp2[0]=<span class="kw">true</span>;
+<span class="kw">for</span> (int i=1; i&lt;=n; i++)
+  <span class="kw">for</span> (String w : dict)
+    <span class="kw">if</span> (i&gt;=w.length() &amp;&amp; dp2[i-w.length()]
+        &amp;&amp; s.substring(i-w.length(),i).equals(w))
+      dp2[i] = <span class="kw">true</span>;</div>
+    </div>
+  </div>
+  <div class="pbar"><b>Pattern:</b> dp[i][j] = property of substring s[i..j] or two-string relation. Fill diagonally for palindrome DP.</div>
+</div>
+
+<!-- Phase 5 -->
+<div class="phase-card" id="p5">
+  <div class="ph">
+    <div class="ph-num">5</div>
+    <div class="ph-title">PHASE 5 · INTERVAL DP</div>
+    <div class="ph-tag">dp[l][r] · Fill by length</div>
+  </div>
+  <div class="split">
+    <div class="left-pane">
+      <div class="qs-title">Questions</div>
+      <div class="q-row"><span class="q-num">1.</span><span class="tag tint">Interval</span><span>Burst Balloons</span></div>
+      <div class="q-row"><span class="q-num">2.</span><span class="tag tint">Interval</span><span>Matrix Chain Multiplication</span></div>
+      <div class="q-row"><span class="q-num">3.</span><span class="tag tint">Interval</span><span>Minimum Cost to Cut a Stick</span></div>
+      <div class="q-row"><span class="q-num">4.</span><span class="tag tint">Interval</span><span>Strange Printer</span></div>
+      <div class="q-row"><span class="q-num">5.</span><span class="tag tint">Interval</span><span>Longest Palindromic Subsequence</span></div>
+      <br>
+      <div class="note-inline">
+        <b>Burst Balloons trick</b>: think of k as the <em>last</em> balloon to burst in range [l,r], not the first. This avoids dependency issues.
+      </div>
+    </div>
+    <div class="right-pane">
+      <div class="qs-title">Interval DP template (Burst Balloons)</div>
+      <div class="code-block"><span class="cm">// dp[l][r] = max coins bursting all in (l,r)</span>
+<span class="cm">// k = last balloon to burst in range</span>
+
+int[] nums = <span class="cm">// pad with 1 at both ends</span>
+int[][] dp = <span class="kw">new</span> int[n][n];
+
+<span class="kw">for</span> (int len=1; len&lt;=n-2; len++) {     <span class="cm">// fill by length</span>
+  <span class="kw">for</span> (int l=1; l&lt;=n-2-len+1; l++) {
+    int r = l+len-1;
+    <span class="kw">for</span> (int k=l; k&lt;=r; k++) {          <span class="cm">// try each last</span>
+      dp[l][r] = Math.max(dp[l][r],
+        dp[l][k-1]                       <span class="cm">// left part</span>
+        + nums[l-1]*nums[k]*nums[r+1]    <span class="cm">// burst k last</span>
+        + dp[k+1][r]);                   <span class="cm">// right part</span>
+    }
+  }
+}
+<span class="cm">// Key: outer loop is LENGTH, not l or r!</span></div>
+    </div>
+  </div>
+  <div class="pbar"><b>Pattern:</b> Outer loop = subarray length (1 → n). Inner loops: l from left, r = l+len-1, k iterates split points inside [l,r].</div>
+</div>
+
+<!-- Phase 6 -->
+<div class="phase-card" id="p6">
+  <div class="ph">
+    <div class="ph-num">6</div>
+    <div class="ph-title">PHASE 6 · TREE DP</div>
+    <div class="ph-tag">Postorder · aggregate from children</div>
+  </div>
+  <div class="split">
+    <div class="left-pane">
+      <div class="qs-title">Questions</div>
+      <div class="q-row"><span class="q-num">1.</span><span class="tag ttree">Tree</span><span>House Robber III</span></div>
+      <div class="q-row"><span class="q-num">2.</span><span class="tag ttree">Tree</span><span>Diameter of Binary Tree</span></div>
+      <div class="q-row"><span class="q-num">3.</span><span class="tag ttree">Tree</span><span>Binary Tree Max Path Sum</span></div>
+      <div class="q-row"><span class="q-num">4.</span><span class="tag ttree">Tree</span><span>Binary Tree Cameras</span></div>
+      <div class="q-row"><span class="q-num">5.</span><span class="tag ttree">Tree</span><span>Distribute Coins in Binary Tree</span></div>
+      <div class="q-row"><span class="q-num">6.</span><span class="tag ttree">Tree</span><span>Longest Univalue Path</span></div>
+      <br>
+      <div class="note-inline">
+        DFS returns value(s) for current subtree.<br>
+        Parent combines children's answers.<br>
+        Global answer updated inside DFS (not returned).
+      </div>
+    </div>
+    <div class="right-pane">
+      <div class="qs-title">House Robber III + Max Path Sum</div>
+      <div class="code-block"><span class="cm">// House Robber III: dp returns int[]{rob, skip}</span>
+int[] <span class="fn">dfs</span>(TreeNode node) {
+  <span class="kw">if</span> (node==<span class="kw">null</span>) <span class="kw">return new</span> int[]{0,0};
+  int[] l = <span class="fn">dfs</span>(node.left);
+  int[] r = <span class="fn">dfs</span>(node.right);
+  int rob  = node.val + l[1] + r[1]; <span class="cm">// take node</span>
+  int skip = Math.max(l[0],l[1])     <span class="cm">// skip node</span>
+           + Math.max(r[0],r[1]);
+  <span class="kw">return new</span> int[]{rob, skip};
+}
+
+<span class="cm">// Max Path Sum: return single-path gain upward</span>
+int maxSum = Integer.MIN_VALUE;
+int <span class="fn">dfs2</span>(TreeNode node) {
+  <span class="kw">if</span> (node==<span class="kw">null</span>) <span class="kw">return</span> 0;
+  int l = Math.max(0, <span class="fn">dfs2</span>(node.left));  <span class="cm">// ignore negatives</span>
+  int r = Math.max(0, <span class="fn">dfs2</span>(node.right));
+  maxSum = Math.max(maxSum, node.val+l+r); <span class="cm">// update global</span>
+  <span class="kw">return</span> node.val + Math.max(l, r);        <span class="cm">// return one side</span>
+}</div>
+    </div>
+  </div>
+  <div class="pbar"><b>Pattern:</b> DFS returns info for parent's use. Update a global variable for cross-subtree answers. Return only one path upward.</div>
+</div>
+
+<!-- Phase 7 -->
+<div class="phase-card" id="p7">
+  <div class="ph">
+    <div class="ph-num">7</div>
+    <div class="ph-title">PHASE 7 · BITMASK DP</div>
+    <div class="ph-tag">dp[mask] · Subset enumeration · n ≤ 20</div>
+  </div>
+  <div class="split">
+    <div class="left-pane">
+      <div class="qs-title">Questions</div>
+      <div class="q-row"><span class="q-num">1.</span><span class="tag tbitmask">Bitmask</span><span>Travelling Salesman Problem</span></div>
+      <div class="q-row"><span class="q-num">2.</span><span class="tag tbitmask">Bitmask</span><span>Shortest Path Visiting All Nodes</span></div>
+      <div class="q-row"><span class="q-num">3.</span><span class="tag tbitmask">Bitmask</span><span>Partition to K Equal Sum Subsets</span></div>
+      <div class="q-row"><span class="q-num">4.</span><span class="tag tbitmask">Bitmask</span><span>Minimum XOR Sum of Two Arrays</span></div>
+      <div class="q-row"><span class="q-num">5.</span><span class="tag tbitmask">Bitmask</span><span>Stickers to Spell Word</span></div>
+      <br>
+      <div class="note-inline">
+        <b>Mask tricks:</b><br>
+        Check bit i: <code>(mask &gt;&gt; i) &amp; 1</code><br>
+        Set bit i: <code>mask | (1 &lt;&lt; i)</code><br>
+        Unset bit i: <code>mask &amp; ~(1 &lt;&lt; i)</code><br>
+        Iterate subsets: <code>for(sub=mask; sub&gt;0; sub=(sub-1)&amp;mask)</code>
+      </div>
+    </div>
+    <div class="right-pane">
+      <div class="qs-title">TSP / Bitmask DP template</div>
+      <div class="code-block"><span class="cm">// dp[mask][i] = min cost to visit nodes in mask</span>
+<span class="cm">//              ending at node i</span>
+int FULL = (1&lt;&lt;n)-1;
+int[][] dp = <span class="kw">new</span> int[1&lt;&lt;n][n];
+<span class="kw">for</span> (int[] row : dp) Arrays.fill(row, INF);
+dp[1][0] = 0;  <span class="cm">// start at node 0, mask=0001</span>
+
+<span class="kw">for</span> (int mask=1; mask&lt;=FULL; mask++) {
+  <span class="kw">for</span> (int u=0; u&lt;n; u++) {
+    <span class="kw">if</span> (dp[mask][u]==INF) <span class="kw">continue</span>;
+    <span class="kw">if</span> (((mask&gt;&gt;u)&amp;1)==0) <span class="kw">continue</span>;  <span class="cm">// u not in mask</span>
+    <span class="kw">for</span> (int v=0; v&lt;n; v++) {
+      <span class="kw">if</span> ((mask&gt;&gt;v&amp;1)==1) <span class="kw">continue</span>;  <span class="cm">// v already visited</span>
+      int nmask = mask|(1&lt;&lt;v);
+      dp[nmask][v] = Math.min(dp[nmask][v],
+                              dp[mask][u]+dist[u][v]);
+    }
+  }
+}
+<span class="cm">// answer: min(dp[FULL][i] + dist[i][0]) for all i</span></div>
+    </div>
+  </div>
+  <div class="pbar"><b>Pattern:</b> State = (visited set as bitmask, current position). Transitions add one new node. Works when n ≤ 20. Time: O(2ⁿ · n²).</div>
+</div>
+
+<!-- Phase 8 -->
+<div class="phase-card" id="p8">
+  <div class="ph">
+    <div class="ph-num">8</div>
+    <div class="ph-title">PHASE 8 · STOCK / STATE MACHINE DP</div>
+    <div class="ph-tag">Finite states · transitions</div>
+  </div>
+  <div class="split">
+    <div class="left-pane">
+      <div class="qs-title">Questions</div>
+      <div class="q-row"><span class="q-num">1.</span><span class="tag tgreedy">State</span><span>Best Time to Buy/Sell Stock I</span></div>
+      <div class="q-row"><span class="q-num">2.</span><span class="tag tgreedy">State</span><span>Stock II (unlimited transactions)</span></div>
+      <div class="q-row"><span class="q-num">3.</span><span class="tag tgreedy">State</span><span>Stock III (at most 2 transactions)</span></div>
+      <div class="q-row"><span class="q-num">4.</span><span class="tag tgreedy">State</span><span>Stock IV (at most k transactions)</span></div>
+      <div class="q-row"><span class="q-num">5.</span><span class="tag tgreedy">State</span><span>Stock with Cooldown</span></div>
+      <div class="q-row"><span class="q-num">6.</span><span class="tag tgreedy">State</span><span>Stock with Transaction Fee</span></div>
+      <br>
+      <div class="note-inline">
+        States: <b>hold</b> (own stock) / <b>free</b> (no stock, can buy).<br>
+        Cooldown adds a 3rd state: <b>cool</b> (sold yesterday).<br>
+        k-transactions: add k as a DP dimension.
+      </div>
+    </div>
+    <div class="right-pane">
+      <div class="qs-title">State machine template (with cooldown)</div>
+      <div class="code-block"><span class="cm">// 3 states: hold, free, cool</span>
+<span class="cm">// hold  = currently holding stock</span>
+<span class="cm">// free  = not holding, can buy</span>
+<span class="cm">// cool  = just sold, must wait 1 day</span>
+
+int hold=Integer.MIN_VALUE, free=0, cool=0;
+
+<span class="kw">for</span> (int price : prices) {
+  int prevHold=hold, prevFree=free, prevCool=cool;
+  hold = Math.max(prevHold,      <span class="cm">// keep holding</span>
+                  prevFree-price);<span class="cm">// buy today</span>
+  free = Math.max(prevFree,      <span class="cm">// stay free</span>
+                  prevCool);     <span class="cm">// cooldown expired</span>
+  cool = prevHold + price;       <span class="cm">// sell today</span>
+}
+<span class="kw">return</span> Math.max(free, cool);
+
+<span class="cm">// k-transactions: dp[k][0/1] where 0=not holding, 1=holding</span>
+<span class="cm">// dp[j][1] = max(dp[j][1], dp[j-1][0] - price)  // buy</span>
+<span class="cm">// dp[j][0] = max(dp[j][0], dp[j][1] + price)     // sell</span></div>
+    </div>
+  </div>
+  <div class="pbar"><b>Pattern:</b> Model each DP state as a node, transitions as edges. Update all states simultaneously using previous day's values (don't use today's updated values mid-loop).</div>
+</div>
+
+<div class="golden">
+  <b>GOLDEN RULE:</b> First define what dp[i] or dp[i][j] represents in plain English.<br>
+  Then write the recurrence. Then handle base cases. Then optimize space.<br>
+  <b>MASTER DP DEFINITION → MASTER 50% OF DSA!</b>
+</div>
+
+
+</section>
+<section id="view-stack" class="view" style="display:none">
+<a class="back-hub" href="#" onclick="go('hub');return false;"><span class="arw">&#8592;</span> Hub</a>
+
+<h1>STACK PATTERNS ROADMAP (PHASE-WISE)</h1>
+<div class="sub">All stack patterns end-to-end · 8 phases · Java pseudocode</div>
+
+<div class="core-box">
+  <div class="ct">CORE IDEA</div>
+  <p>Stack = <em>Last In First Out (LIFO)</em>. Use when you need to <em>remember previous state</em> while processing forward.<br>
+  Key insight: Stack excels at problems where you need the <em>nearest greater/smaller element</em>,<br>
+  tracking <em>unmatched pairs</em>, or <em>evaluating nested/sequential expressions</em>.</p>
+</div>
+
+<div class="top-row">
+  <div class="info-box">
+    <div class="bh">Stack Pattern Recognition</div>
+    <ul>
+      <li><span style="font-weight:500">Monotonic Stack</span> → next/prev greater or smaller element</li>
+      <li><span style="font-weight:500">Matching/Balancing</span> → brackets, tags, pairs</li>
+      <li><span style="font-weight:500">Calculator</span> → evaluate expressions with precedence</li>
+      <li><span style="font-weight:500">Deque/Sliding Window</span> → max/min in window O(n)</li>
+      <li><span style="font-weight:500">Stack Design</span> → min-stack, max-stack, special ops</li>
+      <li><span style="font-weight:500">Tree/Graph DFS</span> → iterative traversal via stack</li>
+      <li><span style="font-weight:500">Histogram / Rectangle</span> → largest area problems</li>
+    </ul>
+  </div>
+  <div class="info-box">
+    <div class="bh">When to reach for a Stack?</div>
+    <ul>
+      <li>"Next greater / previous smaller element"</li>
+      <li>"Valid parentheses / balanced brackets"</li>
+      <li>"Evaluate expression / implement calculator"</li>
+      <li>"Largest rectangle / trapping rain water"</li>
+      <li>"Undo / backtrack last action"</li>
+      <li>"Iterative DFS on tree or graph"</li>
+      <li>"Sliding window min/max" → use Deque</li>
+    </ul>
+    <div style="margin-top:6px;font-size:10.5px;">
+      <b>Monotonic Increasing</b>: bottom→top ascending (prev smaller)<br>
+      <b>Monotonic Decreasing</b>: bottom→top descending (prev greater)
+    </div>
+  </div>
+</div>
+
+<div class="nav">
+  <button class="nav-btn active" onclick="show('all',this)">All phases</button>
+  <button class="nav-btn" onclick="show('p1',this)">P1 · Monotonic (NGE)</button>
+  <button class="nav-btn" onclick="show('p2',this)">P2 · Monotonic (NSE)</button>
+  <button class="nav-btn" onclick="show('p3',this)">P3 · Matching</button>
+  <button class="nav-btn" onclick="show('p4',this)">P4 · Calculator</button>
+  <button class="nav-btn" onclick="show('p5',this)">P5 · Histogram</button>
+  <button class="nav-btn" onclick="show('p6',this)">P6 · Deque / Window</button>
+  <button class="nav-btn" onclick="show('p7',this)">P7 · Stack Design</button>
+  <button class="nav-btn" onclick="show('p8',this)">P8 · Iterative DFS</button>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ Phase 1 -->
+<div class="phase-card" id="p1">
+  <div class="ph">
+    <div class="ph-num">1</div>
+    <div class="ph-title">PHASE 1 · MONOTONIC STACK — NEXT GREATER ELEMENT</div>
+    <div class="ph-tag">Decreasing stack · O(n)</div>
+  </div>
+  <div class="split">
+    <div class="left-pane">
+      <div class="qs-title">Questions</div>
+      <div class="q-row"><span class="q-num">1.</span><span class="tag t-mono">NGE</span><span>Next Greater Element I</span></div>
+      <div class="q-row"><span class="q-num">2.</span><span class="tag t-mono">NGE</span><span>Next Greater Element II (circular)</span></div>
+      <div class="q-row"><span class="q-num">3.</span><span class="tag t-mono">NGE</span><span>Daily Temperatures</span></div>
+      <div class="q-row"><span class="q-num">4.</span><span class="tag t-mono">NGE</span><span>Online Stock Span</span></div>
+      <div class="q-row"><span class="q-num">5.</span><span class="tag t-mono">NGE</span><span>Number of Visible People in Queue</span></div>
+      <div class="q-row"><span class="q-num">6.</span><span class="tag t-mono">NGE</span><span>Sum of Subarray Minimums</span></div>
+      <div class="q-row"><span class="q-num">7.</span><span class="tag t-mono">NGE</span><span>Sum of Subarray Ranges</span></div>
+      <br>
+      <div class="note-inline">
+        <b>Monotonic Decreasing Stack</b>: elements on stack go top→bottom in increasing order (largest at bottom).<br>
+        When a larger element arrives → pop everything smaller → those popped elements found their NGE.
+      </div>
+    </div>
+    <div class="right-pane">
+      <div class="qs-title">Next Greater Element template</div>
+      <div class="code-block"><span class="cm">// NGE: for each element, find next element greater than it</span>
+int[] nge = <span class="kw">new</span> int[n];
+Arrays.fill(nge, -1);
+Deque&lt;Integer&gt; stack = <span class="kw">new</span> ArrayDeque&lt;&gt;(); <span class="cm">// stores INDICES</span>
+
+<span class="kw">for</span> (int i=0; i&lt;n; i++) {
+  <span class="cm">// pop all elements smaller than current</span>
+  <span class="kw">while</span> (!stack.isEmpty() &amp;&amp; nums[stack.peek()] &lt; nums[i]) {
+    int idx = stack.pop();
+    nge[idx] = nums[i];  <span class="cm">// nums[i] is NGE for idx</span>
+  }
+  stack.push(i);
+}
+<span class="cm">// remaining in stack have no NGE → stays -1</span>
+
+<span class="cm">// Daily Temperatures variant: store index, ans = i - idx</span>
+
+<span class="cm">// CIRCULAR array (NGE II): iterate 2n, use i % n</span>
+<span class="kw">for</span> (int i=0; i&lt;2*n; i++) {
+  <span class="kw">while</span> (!stack.isEmpty() &amp;&amp; nums[stack.peek()] &lt; nums[i%n])
+    nge[stack.pop()] = nums[i%n];
+  <span class="kw">if</span> (i &lt; n) stack.push(i);
+}</div>
+    </div>
+  </div>
+  <div class="pbar"><b>Pattern:</b> Maintain a <b>monotonic decreasing</b> stack (by value). When nums[i] breaks the monotonicity → pop and record answer. Always push index, not value.</div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ Phase 2 -->
+<div class="phase-card" id="p2">
+  <div class="ph">
+    <div class="ph-num">2</div>
+    <div class="ph-title">PHASE 2 · MONOTONIC STACK — PREV/NEXT SMALLER ELEMENT</div>
+    <div class="ph-tag">Increasing stack · O(n)</div>
+  </div>
+  <div class="split">
+    <div class="left-pane">
+      <div class="qs-title">Questions</div>
+      <div class="q-row"><span class="q-num">1.</span><span class="tag t-ng">NSE</span><span>Previous Smaller Element</span></div>
+      <div class="q-row"><span class="q-num">2.</span><span class="tag t-ng">NSE</span><span>Next Smaller Element</span></div>
+      <div class="q-row"><span class="q-num">3.</span><span class="tag t-ng">NSE</span><span>Largest Rectangle in Histogram</span></div>
+      <div class="q-row"><span class="q-num">4.</span><span class="tag t-ng">NSE</span><span>Trapping Rain Water</span></div>
+      <div class="q-row"><span class="q-num">5.</span><span class="tag t-ng">NSE</span><span>Remove K Digits (smallest number)</span></div>
+      <div class="q-row"><span class="q-num">6.</span><span class="tag t-ng">NSE</span><span>132 Pattern</span></div>
+      <div class="q-row"><span class="q-num">7.</span><span class="tag t-ng">NSE</span><span>Maximum Width Ramp</span></div>
+      <br>
+      <div class="note-inline">
+        <b>Monotonic Increasing Stack</b>: top→bottom descending (smallest at top).<br>
+        When a smaller element arrives → pop all larger elements → those found their NSE.
+      </div>
+    </div>
+    <div class="right-pane">
+      <div class="qs-title">Previous Smaller + Next Smaller template</div>
+      <div class="code-block"><span class="cm">// Previous Smaller Element (PSE)</span>
+int[] pse = <span class="kw">new</span> int[n];
+Deque&lt;Integer&gt; st = <span class="kw">new</span> ArrayDeque&lt;&gt;();
+<span class="kw">for</span> (int i=0; i&lt;n; i++) {
+  <span class="kw">while</span> (!st.isEmpty() &amp;&amp; nums[st.peek()] &gt;= nums[i])
+    st.pop();
+  pse[i] = st.isEmpty() ? -1 : st.peek(); <span class="cm">// peek not pop!</span>
+  st.push(i);
+}
+
+<span class="cm">// Next Smaller Element (NSE) — process right to left</span>
+int[] nse = <span class="kw">new</span> int[n];
+st.clear();
+<span class="kw">for</span> (int i=n-1; i&gt;=0; i--) {
+  <span class="kw">while</span> (!st.isEmpty() &amp;&amp; nums[st.peek()] &gt;= nums[i])
+    st.pop();
+  nse[i] = st.isEmpty() ? n : st.peek();
+  st.push(i);
+}
+
+<span class="cm">// Remove K Digits (greedy with increasing stack):</span>
+<span class="kw">for</span> (char c : num.toCharArray()) {
+  <span class="kw">while</span> (k&gt;0 &amp;&amp; !st.isEmpty() &amp;&amp; st.peek()&gt;c) {
+    st.pop(); k--;              <span class="cm">// remove larger digit</span>
+  }
+  st.push(c);
+}</div>
+    </div>
+  </div>
+  <div class="pbar"><b>Pattern:</b> Maintain a <b>monotonic increasing</b> stack (by value). For PSE: peek top after popping. For NSE: iterate right-to-left. Boundary sentinel: use -1 or n.</div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ Phase 3 -->
+<div class="phase-card" id="p3">
+  <div class="ph">
+    <div class="ph-num">3</div>
+    <div class="ph-title">PHASE 3 · MATCHING &amp; BALANCING</div>
+    <div class="ph-tag">Push open · pop on close · O(n)</div>
+  </div>
+  <div class="split">
+    <div class="left-pane">
+      <div class="qs-title">Questions</div>
+      <div class="q-row"><span class="q-num">1.</span><span class="tag t-calc">Match</span><span>Valid Parentheses</span></div>
+      <div class="q-row"><span class="q-num">2.</span><span class="tag t-calc">Match</span><span>Minimum Remove to Make Valid</span></div>
+      <div class="q-row"><span class="q-num">3.</span><span class="tag t-calc">Match</span><span>Minimum Add to Make Valid</span></div>
+      <div class="q-row"><span class="q-num">4.</span><span class="tag t-calc">Match</span><span>Longest Valid Parentheses</span></div>
+      <div class="q-row"><span class="q-num">5.</span><span class="tag t-calc">Match</span><span>Score of Parentheses</span></div>
+      <div class="q-row"><span class="q-num">6.</span><span class="tag t-calc">Match</span><span>Remove Outermost Parentheses</span></div>
+      <div class="q-row"><span class="q-num">7.</span><span class="tag t-calc">Match</span><span>Check if Word is Valid (after substitutions)</span></div>
+      <div class="q-row"><span class="q-num">8.</span><span class="tag t-calc">Match</span><span>Decode String (k[encoded])</span></div>
+      <br>
+      <div class="note-inline">
+        Longest Valid Parentheses trick: push -1 as base sentinel index. Answer = i - stack.peek() at each ')'.
+      </div>
+    </div>
+    <div class="right-pane">
+      <div class="qs-title">Matching templates</div>
+      <div class="code-block"><span class="cm">// Valid Parentheses</span>
+Deque&lt;Character&gt; st = <span class="kw">new</span> ArrayDeque&lt;&gt;();
+<span class="kw">for</span> (char c : s.toCharArray()) {
+  <span class="kw">if</span> (c=='('||c=='['||c=='{') st.push(c);
+  <span class="kw">else</span> {
+    <span class="kw">if</span> (st.isEmpty()) <span class="kw">return false</span>;
+    char top = st.pop();
+    <span class="kw">if</span> (c==')' &amp;&amp; top!='(') <span class="kw">return false</span>;
+    <span class="kw">if</span> (c==']' &amp;&amp; top!='[') <span class="kw">return false</span>;
+    <span class="kw">if</span> (c=='}' &amp;&amp; top!='{') <span class="kw">return false</span>;
+  }
+}
+<span class="kw">return</span> st.isEmpty();
+
+<span class="cm">// Longest Valid Parentheses</span>
+Deque&lt;Integer&gt; idxSt = <span class="kw">new</span> ArrayDeque&lt;&gt;();
+idxSt.push(-1); int maxLen=0;          <span class="cm">// sentinel</span>
+<span class="kw">for</span> (int i=0; i&lt;n; i++) {
+  <span class="kw">if</span> (s.charAt(i)=='(') { idxSt.push(i); }
+  <span class="kw">else</span> {
+    idxSt.pop();
+    <span class="kw">if</span> (idxSt.isEmpty()) idxSt.push(i); <span class="cm">// new base</span>
+    <span class="kw">else</span> maxLen=Math.max(maxLen, i-idxSt.peek());
+  }
+}
+
+<span class="cm">// Decode String k[encoded_string]</span>
+Deque&lt;Integer&gt; counts = <span class="kw">new</span> ArrayDeque&lt;&gt;();
+Deque&lt;StringBuilder&gt; builders = <span class="kw">new</span> ArrayDeque&lt;&gt;();
+StringBuilder cur = <span class="kw">new</span> StringBuilder(); int k=0;
+<span class="kw">for</span> (char c : s.toCharArray()) {
+  <span class="kw">if</span> (Character.isDigit(c)) k=k*10+(c-'0');
+  <span class="kw">else if</span> (c=='[') { counts.push(k); builders.push(cur); cur=<span class="kw">new</span> StringBuilder(); k=0; }
+  <span class="kw">else if</span> (c==']') { int t=counts.pop(); StringBuilder prev=builders.pop(); <span class="kw">for</span>(int i=0;i&lt;t;i++) prev.append(cur); cur=prev; }
+  <span class="kw">else</span> cur.append(c);
+}</div>
+    </div>
+  </div>
+  <div class="pbar"><b>Pattern:</b> Push opening brackets/indices. On closing bracket → pop and validate/compute. Stack empty at end = balanced. Sentinel index -1 enables length calculation.</div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ Phase 4 -->
+<div class="phase-card" id="p4">
+  <div class="ph">
+    <div class="ph-num">4</div>
+    <div class="ph-title">PHASE 4 · CALCULATOR &amp; EXPRESSION EVALUATION</div>
+    <div class="ph-tag">Operator precedence · Two stacks or one</div>
+  </div>
+  <div class="split">
+    <div class="left-pane">
+      <div class="qs-title">Questions</div>
+      <div class="q-row"><span class="q-num">1.</span><span class="tag t-calc">Expr</span><span>Basic Calculator I (+, -, parentheses)</span></div>
+      <div class="q-row"><span class="q-num">2.</span><span class="tag t-calc">Expr</span><span>Basic Calculator II (+, -, *, /)</span></div>
+      <div class="q-row"><span class="q-num">3.</span><span class="tag t-calc">Expr</span><span>Basic Calculator III (all ops + parens)</span></div>
+      <div class="q-row"><span class="q-num">4.</span><span class="tag t-calc">Expr</span><span>Evaluate Reverse Polish Notation</span></div>
+      <div class="q-row"><span class="q-num">5.</span><span class="tag t-calc">Expr</span><span>Infix to Postfix (Shunting Yard)</span></div>
+      <div class="q-row"><span class="q-num">6.</span><span class="tag t-calc">Expr</span><span>Mini Parser (deserialize)</span></div>
+      <div class="q-row"><span class="q-num">7.</span><span class="tag t-calc">Expr</span><span>Ternary Expression Parser</span></div>
+      <br>
+      <div class="note-inline">
+        <b>Basic Calc II key insight</b>: process operator of <em>previous</em> token, not current. Push positive/negative values for +/-. Push result of */÷ replacing top of stack.
+      </div>
+    </div>
+    <div class="right-pane">
+      <div class="qs-title">Calculator II + RPN templates</div>
+      <div class="code-block"><span class="cm">// Basic Calculator II (+,-,*,/) — one stack</span>
+Deque&lt;Integer&gt; st = <span class="kw">new</span> ArrayDeque&lt;&gt;();
+int num=0; char sign='+';
+<span class="kw">for</span> (int i=0; i&lt;s.length(); i++) {
+  char c = s.charAt(i);
+  <span class="kw">if</span> (Character.isDigit(c)) num = num*10+(c-'0');
+  <span class="kw">if</span> ((!Character.isDigit(c) &amp;&amp; c!=' ') || i==s.length()-1) {
+    <span class="kw">if</span>      (sign=='+') st.push(num);
+    <span class="kw">else if</span> (sign=='-') st.push(-num);
+    <span class="kw">else if</span> (sign=='*') st.push(st.pop()*num);
+    <span class="kw">else if</span> (sign=='/') st.push(st.pop()/num);
+    sign=c; num=0;
+  }
+}
+int ans=0; <span class="kw">while</span>(!st.isEmpty()) ans+=st.pop();
+
+<span class="cm">// Evaluate Reverse Polish Notation (RPN)</span>
+Deque&lt;Integer&gt; rpn = <span class="kw">new</span> ArrayDeque&lt;&gt;();
+<span class="kw">for</span> (String t : tokens) {
+  <span class="kw">if</span> ("+-*/".contains(t)) {
+    int b=rpn.pop(), a=rpn.pop();
+    <span class="kw">if</span>      (t.equals("+")) rpn.push(a+b);
+    <span class="kw">else if</span> (t.equals("-")) rpn.push(a-b);
+    <span class="kw">else if</span> (t.equals("*")) rpn.push(a*b);
+    <span class="kw">else</span>                    rpn.push(a/b);
+  } <span class="kw">else</span> rpn.push(Integer.parseInt(t));
+}
+<span class="kw">return</span> rpn.pop();</div>
+    </div>
+  </div>
+  <div class="pbar"><b>Pattern:</b> For +/−: push signed value. For */÷: pop top, compute, push result. Process operator of <em>previous</em> sign when new operator/end is reached. RPN: two pops per operator.</div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ Phase 5 -->
+<div class="phase-card" id="p5">
+  <div class="ph">
+    <div class="ph-num">5</div>
+    <div class="ph-title">PHASE 5 · HISTOGRAM &amp; AREA PROBLEMS</div>
+    <div class="ph-tag">NSE left &amp; right · Width calculation</div>
+  </div>
+  <div class="split">
+    <div class="left-pane">
+      <div class="qs-title">Questions</div>
+      <div class="q-row"><span class="q-num">1.</span><span class="tag t-tree">Hist</span><span>Largest Rectangle in Histogram</span></div>
+      <div class="q-row"><span class="q-num">2.</span><span class="tag t-tree">Hist</span><span>Maximal Rectangle (2D matrix)</span></div>
+      <div class="q-row"><span class="q-num">3.</span><span class="tag t-tree">Hist</span><span>Trapping Rain Water</span></div>
+      <div class="q-row"><span class="q-num">4.</span><span class="tag t-tree">Hist</span><span>Container with Most Water</span></div>
+      <div class="q-row"><span class="q-num">5.</span><span class="tag t-tree">Hist</span><span>Maximum Score of a Good Subarray</span></div>
+      <br>
+      <div class="note-inline">
+        <b>Maximal Rectangle</b>: for each row build a histogram (heights[j] = 0 if cell==0 else heights[j]+1), then apply Largest Rectangle in Histogram.<br><br>
+        <b>Trapping Rain Water</b>: for each bar, water = min(maxLeft, maxRight) - height[i]. Stack approach works in one pass.
+      </div>
+    </div>
+    <div class="right-pane">
+      <div class="qs-title">Largest Rectangle + Rain Water templates</div>
+      <div class="code-block"><span class="cm">// Largest Rectangle in Histogram</span>
+<span class="cm">// Stack stores indices of increasing heights</span>
+Deque&lt;Integer&gt; st = <span class="kw">new</span> ArrayDeque&lt;&gt;();
+int[] h = Arrays.copyOf(heights, n+1); <span class="cm">// append 0 sentinel</span>
+int maxArea = 0;
+<span class="kw">for</span> (int i=0; i&lt;=n; i++) {
+  <span class="kw">while</span> (!st.isEmpty() &amp;&amp; h[i] &lt; h[st.peek()]) {
+    int height = h[st.pop()];
+    int width  = st.isEmpty() ? i : i-st.peek()-1;
+    maxArea = Math.max(maxArea, height*width);
+  }
+  st.push(i);
+}
+
+<span class="cm">// Trapping Rain Water — stack approach (one pass)</span>
+Deque&lt;Integer&gt; tw = <span class="kw">new</span> ArrayDeque&lt;&gt;();
+int water = 0;
+<span class="kw">for</span> (int i=0; i&lt;n; i++) {
+  <span class="kw">while</span> (!tw.isEmpty() &amp;&amp; height[i] &gt; height[tw.peek()]) {
+    int bottom = tw.pop();
+    <span class="kw">if</span> (tw.isEmpty()) <span class="kw">break</span>;
+    int bounded = Math.min(height[tw.peek()], height[i])
+                  - height[bottom];
+    water += bounded * (i - tw.peek() - 1);
+  }
+  tw.push(i);
+}</div>
+    </div>
+  </div>
+  <div class="pbar"><b>Pattern:</b> Histogram = NSE on both sides. Width = nse[i] - pse[i] - 1. Append 0-height sentinel to flush remaining stack at end. Rain water: track bounded height between walls.</div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ Phase 6 -->
+<div class="phase-card" id="p6">
+  <div class="ph">
+    <div class="ph-num">6</div>
+    <div class="ph-title">PHASE 6 · MONOTONIC DEQUE — SLIDING WINDOW MAX/MIN</div>
+    <div class="ph-tag">Deque keeps max at front · O(n)</div>
+  </div>
+  <div class="split">
+    <div class="left-pane">
+      <div class="qs-title">Questions</div>
+      <div class="q-row"><span class="q-num">1.</span><span class="tag t-deque">Deque</span><span>Sliding Window Maximum</span></div>
+      <div class="q-row"><span class="q-num">2.</span><span class="tag t-deque">Deque</span><span>Sliding Window Minimum</span></div>
+      <div class="q-row"><span class="q-num">3.</span><span class="tag t-deque">Deque</span><span>Shortest Subarray with Sum ≥ K</span></div>
+      <div class="q-row"><span class="q-num">4.</span><span class="tag t-deque">Deque</span><span>Jump Game VI (max score path)</span></div>
+      <div class="q-row"><span class="q-num">5.</span><span class="tag t-deque">Deque</span><span>Maximum of Min for Every Window Size</span></div>
+      <div class="q-row"><span class="q-num">6.</span><span class="tag t-deque">Deque</span><span>Constrained Subsequence Sum</span></div>
+      <br>
+      <div class="note-inline">
+        Deque stores <b>indices</b> in decreasing order of value (for max).<br>
+        Front = index of current window max.<br>
+        Evict from front when out of window. Evict from back when new element ≥ back.
+      </div>
+    </div>
+    <div class="right-pane">
+      <div class="qs-title">Sliding Window Maximum template</div>
+      <div class="code-block"><span class="cm">// Monotonic Deque — front always holds window max index</span>
+int[] result = <span class="kw">new</span> int[n-k+1];
+Deque&lt;Integer&gt; dq = <span class="kw">new</span> ArrayDeque&lt;&gt;(); <span class="cm">// stores indices</span>
+
+<span class="kw">for</span> (int i=0; i&lt;n; i++) {
+  <span class="cm">// 1. Remove indices outside window</span>
+  <span class="kw">while</span> (!dq.isEmpty() &amp;&amp; dq.peekFirst() &lt; i-k+1)
+    dq.pollFirst();
+
+  <span class="cm">// 2. Remove from back elements smaller than current</span>
+  <span class="kw">while</span> (!dq.isEmpty() &amp;&amp; nums[dq.peekLast()] &lt; nums[i])
+    dq.pollLast();
+
+  dq.offerLast(i);
+
+  <span class="cm">// 3. Window fully formed → record max</span>
+  <span class="kw">if</span> (i &gt;= k-1)
+    result[i-k+1] = nums[dq.peekFirst()];
+}
+
+<span class="cm">// Sliding Window MINIMUM: flip comparison</span>
+<span class="cm">// while (!dq.isEmpty() &amp;&amp; nums[dq.peekLast()] &gt; nums[i])</span>
+<span class="cm">//   dq.pollLast();  → front holds min</span></div>
+    </div>
+  </div>
+  <div class="pbar"><b>Pattern:</b> pollFirst() for out-of-window. pollLast() to maintain monotonicity. peekFirst() = current window max. Flip comparison sign for min variant.</div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ Phase 7 -->
+<div class="phase-card" id="p7">
+  <div class="ph">
+    <div class="ph-num">7</div>
+    <div class="ph-title">PHASE 7 · STACK DESIGN PROBLEMS</div>
+    <div class="ph-tag">Augmented stack · O(1) special ops</div>
+  </div>
+  <div class="split">
+    <div class="left-pane">
+      <div class="qs-title">Questions</div>
+      <div class="q-row"><span class="q-num">1.</span><span class="tag t-design">Design</span><span>Min Stack (O(1) getMin)</span></div>
+      <div class="q-row"><span class="q-num">2.</span><span class="tag t-design">Design</span><span>Max Stack (O(1) getMax)</span></div>
+      <div class="q-row"><span class="q-num">3.</span><span class="tag t-design">Design</span><span>Implement Queue using Stacks</span></div>
+      <div class="q-row"><span class="q-num">4.</span><span class="tag t-design">Design</span><span>Implement Stack using Queues</span></div>
+      <div class="q-row"><span class="q-num">5.</span><span class="tag t-design">Design</span><span>LRU Cache (Stack behavior)</span></div>
+      <div class="q-row"><span class="q-num">6.</span><span class="tag t-design">Design</span><span>Dinner Plate Stacks</span></div>
+      <div class="q-row"><span class="q-num">7.</span><span class="tag t-design">Design</span><span>Flatten Nested List Iterator</span></div>
+      <br>
+      <div class="note-inline">
+        Min Stack: store pair <code>(value, currentMin)</code> at each level.<br>
+        Queue via 2 stacks: push to <code>in</code>, pour to <code>out</code> lazily on pop.<br>
+        Amortized O(1) per op.
+      </div>
+    </div>
+    <div class="right-pane">
+      <div class="qs-title">Min Stack + Queue via 2 Stacks</div>
+      <div class="code-block"><span class="cm">// Min Stack — store (val, minSoFar) pairs</span>
+Deque&lt;int[]&gt; st = <span class="kw">new</span> ArrayDeque&lt;&gt;();
+
+<span class="kw">void</span> <span class="fn">push</span>(int val) {
+  int curMin = st.isEmpty() ? val : Math.min(val, st.peek()[1]);
+  st.push(<span class="kw">new</span> int[]{val, curMin});
+}
+<span class="kw">void</span>  <span class="fn">pop</span>()    { st.pop(); }
+int   <span class="fn">top</span>()    { <span class="kw">return</span> st.peek()[0]; }
+int   <span class="fn">getMin</span>(){ <span class="kw">return</span> st.peek()[1]; } <span class="cm">// O(1)!</span>
+
+<span class="cm">// Queue using Two Stacks (amortized O(1))</span>
+Deque&lt;Integer&gt; inSt  = <span class="kw">new</span> ArrayDeque&lt;&gt;();
+Deque&lt;Integer&gt; outSt = <span class="kw">new</span> ArrayDeque&lt;&gt;();
+
+<span class="kw">void</span> <span class="fn">enqueue</span>(int x) { inSt.push(x); }
+
+int <span class="fn">dequeue</span>() {
+  <span class="kw">if</span> (outSt.isEmpty())                <span class="cm">// lazy pour</span>
+    <span class="kw">while</span> (!inSt.isEmpty())
+      outSt.push(inSt.pop());
+  <span class="kw">return</span> outSt.pop();
+}
+
+<span class="cm">// Flatten Nested List Iterator — use stack of iterators</span>
+Deque&lt;Iterator&lt;NestedInteger&gt;&gt; stk = <span class="kw">new</span> ArrayDeque&lt;&gt;();
+stk.push(nestedList.iterator());
+<span class="cm">// hasNext: peek until integer found, flatten lists lazily</span></div>
+    </div>
+  </div>
+  <div class="pbar"><b>Pattern:</b> Augment each stack entry with auxiliary info (min, max). Two-stack queue: push to IN, pop from OUT (pour lazily). Never pour when OUT is non-empty.</div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ Phase 8 -->
+<div class="phase-card" id="p8">
+  <div class="ph">
+    <div class="ph-num">8</div>
+    <div class="ph-title">PHASE 8 · ITERATIVE DFS &amp; TREE TRAVERSAL VIA STACK</div>
+    <div class="ph-tag">Explicit stack replaces call stack</div>
+  </div>
+  <div class="split">
+    <div class="left-pane">
+      <div class="qs-title">Questions</div>
+      <div class="q-row"><span class="q-num">1.</span><span class="tag t-tree">DFS</span><span>Binary Tree Inorder (iterative)</span></div>
+      <div class="q-row"><span class="q-num">2.</span><span class="tag t-tree">DFS</span><span>Binary Tree Preorder (iterative)</span></div>
+      <div class="q-row"><span class="q-num">3.</span><span class="tag t-tree">DFS</span><span>Binary Tree Postorder (iterative)</span></div>
+      <div class="q-row"><span class="q-num">4.</span><span class="tag t-tree">DFS</span><span>Binary Search Tree Iterator</span></div>
+      <div class="q-row"><span class="q-num">5.</span><span class="tag t-tree">DFS</span><span>Path Sum II (root to leaf paths)</span></div>
+      <div class="q-row"><span class="q-num">6.</span><span class="tag t-misc">Graph</span><span>Graph DFS (iterative)</span></div>
+      <div class="q-row"><span class="q-num">7.</span><span class="tag t-misc">Graph</span><span>Number of Islands (iterative DFS)</span></div>
+      <div class="q-row"><span class="q-num">8.</span><span class="tag t-tree">DFS</span><span>Recover BST (iterative inorder)</span></div>
+      <br>
+      <div class="note-inline">
+        Postorder iterative trick: do reverse-preorder (Root→Right→Left) then reverse the result. Or use two stacks.
+      </div>
+    </div>
+    <div class="right-pane">
+      <div class="qs-title">Inorder + Preorder + Postorder iterative</div>
+      <div class="code-block"><span class="cm">// INORDER iterative (Left → Root → Right)</span>
+Deque&lt;TreeNode&gt; st = <span class="kw">new</span> ArrayDeque&lt;&gt;();
+TreeNode cur = root;
+<span class="kw">while</span> (cur!=<span class="kw">null</span> || !st.isEmpty()) {
+  <span class="kw">while</span> (cur!=<span class="kw">null</span>) { st.push(cur); cur=cur.left; }
+  cur = st.pop();
+  result.add(cur.val);   <span class="cm">// VISIT</span>
+  cur = cur.right;
+}
+
+<span class="cm">// PREORDER iterative (Root → Left → Right)</span>
+st.push(root);
+<span class="kw">while</span> (!st.isEmpty()) {
+  TreeNode n = st.pop();
+  result.add(n.val);     <span class="cm">// VISIT</span>
+  <span class="kw">if</span> (n.right!=<span class="kw">null</span>) st.push(n.right); <span class="cm">// right first!</span>
+  <span class="kw">if</span> (n.left !=<span class="kw">null</span>) st.push(n.left);
+}
+
+<span class="cm">// POSTORDER iterative (Left → Right → Root)</span>
+<span class="cm">// = reverse of (Root → Right → Left)</span>
+st.push(root);
+LinkedList&lt;Integer&gt; post = <span class="kw">new</span> LinkedList&lt;&gt;();
+<span class="kw">while</span> (!st.isEmpty()) {
+  TreeNode n = st.pop();
+  post.addFirst(n.val);  <span class="cm">// add to FRONT</span>
+  <span class="kw">if</span> (n.left !=<span class="kw">null</span>) st.push(n.left);
+  <span class="kw">if</span> (n.right!=<span class="kw">null</span>) st.push(n.right);
+}</div>
+    </div>
+  </div>
+  <div class="pbar"><b>Pattern:</b> Inorder = go left until null, pop &amp; visit, go right. Preorder = push right then left. Postorder = reverse preorder (push left then right, addFirst to result).</div>
+</div>
+
+<!-- Summary table -->
+<div style="border:1px solid #ddd;border-radius:8px;overflow:hidden;margin-top:6px;">
+  <div style="padding:6px 12px;font-size:10px;font-weight:500;text-transform:uppercase;letter-spacing:.4px;border-bottom:1px solid #ddd;">SUMMARY TABLE</div>
+  <table style="width:100%;border-collapse:collapse;">
+    <tr>
+      <th style="padding:5px 10px;text-align:left;font-size:10.5px;border-bottom:1px solid #eee;">Pattern</th>
+      <th style="padding:5px 10px;text-align:left;font-size:10.5px;border-bottom:1px solid #eee;">Stack type</th>
+      <th style="padding:5px 10px;text-align:left;font-size:10.5px;border-bottom:1px solid #eee;">Trigger phrase</th>
+      <th style="padding:5px 10px;text-align:left;font-size:10.5px;border-bottom:1px solid #eee;">Examples</th>
+    </tr>
+    <tr><td style="padding:4px 10px;font-size:10.5px;border-bottom:1px solid #f0f0f0;"><span class="tag t-mono">NGE</span></td><td style="padding:4px 10px;font-size:10.5px;border-bottom:1px solid #f0f0f0;">Monotonic Decreasing</td><td style="padding:4px 10px;font-size:10.5px;border-bottom:1px solid #f0f0f0;">next greater, warmer day, stock span</td><td style="padding:4px 10px;font-size:10.5px;border-bottom:1px solid #f0f0f0;">Daily Temperatures, NGE I/II</td></tr>
+    <tr><td style="padding:4px 10px;font-size:10.5px;border-bottom:1px solid #f0f0f0;"><span class="tag t-ng">NSE</span></td><td style="padding:4px 10px;font-size:10.5px;border-bottom:1px solid #f0f0f0;">Monotonic Increasing</td><td style="padding:4px 10px;font-size:10.5px;border-bottom:1px solid #f0f0f0;">next smaller, remove digit, histogram</td><td style="padding:4px 10px;font-size:10.5px;border-bottom:1px solid #f0f0f0;">Remove K Digits, 132 Pattern</td></tr>
+    <tr><td style="padding:4px 10px;font-size:10.5px;border-bottom:1px solid #f0f0f0;"><span class="tag t-calc">Match</span></td><td style="padding:4px 10px;font-size:10.5px;border-bottom:1px solid #f0f0f0;">LIFO matching</td><td style="padding:4px 10px;font-size:10.5px;border-bottom:1px solid #f0f0f0;">valid brackets, balanced, decode</td><td style="padding:4px 10px;font-size:10.5px;border-bottom:1px solid #f0f0f0;">Valid Parens, Decode String</td></tr>
+    <tr><td style="padding:4px 10px;font-size:10.5px;border-bottom:1px solid #f0f0f0;"><span class="tag t-calc">Expr</span></td><td style="padding:4px 10px;font-size:10.5px;border-bottom:1px solid #f0f0f0;">Operator stack</td><td style="padding:4px 10px;font-size:10.5px;border-bottom:1px solid #f0f0f0;">evaluate expression, calculator</td><td style="padding:4px 10px;font-size:10.5px;border-bottom:1px solid #f0f0f0;">Basic Calc I/II/III, RPN</td></tr>
+    <tr><td style="padding:4px 10px;font-size:10.5px;border-bottom:1px solid #f0f0f0;"><span class="tag t-tree">Hist</span></td><td style="padding:4px 10px;font-size:10.5px;border-bottom:1px solid #f0f0f0;">Increasing (NSE both sides)</td><td style="padding:4px 10px;font-size:10.5px;border-bottom:1px solid #f0f0f0;">largest area, trap water, rectangle</td><td style="padding:4px 10px;font-size:10.5px;border-bottom:1px solid #f0f0f0;">Histogram, Maximal Rectangle</td></tr>
+    <tr><td style="padding:4px 10px;font-size:10.5px;border-bottom:1px solid #f0f0f0;"><span class="tag t-deque">Deque</span></td><td style="padding:4px 10px;font-size:10.5px;border-bottom:1px solid #f0f0f0;">Monotonic Deque</td><td style="padding:4px 10px;font-size:10.5px;border-bottom:1px solid #f0f0f0;">sliding window max/min</td><td style="padding:4px 10px;font-size:10.5px;border-bottom:1px solid #f0f0f0;">SW Maximum, Jump Game VI</td></tr>
+    <tr><td style="padding:4px 10px;font-size:10.5px;border-bottom:1px solid #f0f0f0;"><span class="tag t-design">Design</span></td><td style="padding:4px 10px;font-size:10.5px;border-bottom:1px solid #f0f0f0;">Augmented / Two stacks</td><td style="padding:4px 10px;font-size:10.5px;border-bottom:1px solid #f0f0f0;">O(1) min/max, queue from stacks</td><td style="padding:4px 10px;font-size:10.5px;border-bottom:1px solid #f0f0f0;">Min Stack, Queue via 2 Stacks</td></tr>
+    <tr><td style="padding:4px 10px;font-size:10.5px;"><span class="tag t-misc">DFS</span></td><td style="padding:4px 10px;font-size:10.5px;">Explicit call stack</td><td style="padding:4px 10px;font-size:10.5px;">iterative tree traversal, DFS</td><td style="padding:4px 10px;font-size:10.5px;">Inorder, Preorder, Postorder</td></tr>
+  </table>
+</div>
+
+<div class="golden" style="margin-top:8px;">
+  <b>GOLDEN RULE:</b> See "next/prev greater/smaller" → Monotonic Stack.<br>
+  See "bracket/pair matching" → LIFO push-pop. See "expression" → operator stack.<br>
+  See "sliding window max/min" → Monotonic Deque.<br>
+  <b>ALWAYS store INDICES in the stack, not values — you need position for width/distance calculations!</b>
+</div>
+
+
+</section>
+<section id="view-arrays" class="view" style="display:none">
+<a class="back-hub" href="#" onclick="go('hub');return false;"><span class="arw">&#8592;</span> Hub</a>
+<h1>ARRAYS & TWO POINTERS</h1>
+<div class="sub">Opposite-ends, fast/slow, prefix sums</div>
+
+  <div class="topic-intro"><b>CORE IDEA:</b> Two Pointers reduces O(n²) brute force to O(n) by moving two indices intelligently. <b>Sorted input</b> is the biggest hint. Variants: opposite-ends, same-direction (fast/slow), and partition.</div>
+
+  <div class="phase-card">
+    <div class="ph"><div class="ph-num">1</div><div class="ph-title">Opposite-Ends Two Pointers</div>
+      <div class="cx-badge"><span class="cx cx-time">Time O(n)</span><span class="cx cx-space">Space O(1)</span></div></div>
+    <div class="split">
+      <div class="left-pane">
+        <div class="qs-title">Questions</div>
+        <div class="q-row"><span class="q-num">1.</span><span>Two Sum II (sorted)</span></div>
+        <div class="q-row"><span class="q-num">2.</span><span>3Sum / 4Sum</span></div>
+        <div class="q-row"><span class="q-num">3.</span><span>Container With Most Water</span></div>
+        <div class="q-row"><span class="q-num">4.</span><span>Valid Palindrome</span></div>
+        <div class="q-row"><span class="q-num">5.</span><span>Trapping Rain Water (2-ptr)</span></div>
+        <div class="keyword-box"><b>Keyword:</b> "sorted array", "pair that sums to target", "max area between two lines", "palindrome check". Two indices move toward each other.</div>
+      </div>
+      <div class="right-pane">
+        <div class="qs-title">Pseudocode</div>
+        <div class="code-block">int l=0, r=n-1;
+<span class="kw">while</span> (l &lt; r) {
+  int sum = nums[l] + nums[r];
+  <span class="kw">if</span> (sum == target) <span class="kw">return new</span> int[]{l, r};
+  <span class="kw">else if</span> (sum &lt; target) l++;   <span class="cm">// need bigger</span>
+  <span class="kw">else</span> r--;                      <span class="cm">// need smaller</span>
+}
+<span class="cm">// 3Sum: sort, fix i, two-pointer on (i+1, n-1)</span>
+<span class="cm">// skip duplicates: while(l&lt;r &amp;&amp; nums[l]==nums[l-1]) l++;</span></div>
+      </div>
+    </div>
+    <div class="pbar"><b>Pattern:</b> Sort first (if order doesn't matter). Shrink window from the end that can't improve the answer.</div>
+  </div>
+
+  <div class="phase-card">
+    <div class="ph"><div class="ph-num">2</div><div class="ph-title">Fast &amp; Slow Pointers</div>
+      <div class="cx-badge"><span class="cx cx-time">Time O(n)</span><span class="cx cx-space">Space O(1)</span></div></div>
+    <div class="split">
+      <div class="left-pane">
+        <div class="qs-title">Questions</div>
+        <div class="q-row"><span class="q-num">1.</span><span>Remove Duplicates from Sorted Array</span></div>
+        <div class="q-row"><span class="q-num">2.</span><span>Move Zeroes</span></div>
+        <div class="q-row"><span class="q-num">3.</span><span>Linked List Cycle (Floyd's)</span></div>
+        <div class="q-row"><span class="q-num">4.</span><span>Find the Duplicate Number</span></div>
+        <div class="q-row"><span class="q-num">5.</span><span>Sort Colors (Dutch flag, 3-ptr)</span></div>
+        <div class="keyword-box"><b>Keyword:</b> "in-place", "remove/move elements", "detect cycle", "find duplicate without extra space". One slow writer, one fast reader.</div>
+      </div>
+      <div class="right-pane">
+        <div class="qs-title">Pseudocode</div>
+        <div class="code-block"><span class="cm">// Move non-zeros / dedupe in place</span>
+int slow = 0;
+<span class="kw">for</span> (int fast=0; fast&lt;n; fast++) {
+  <span class="kw">if</span> (nums[fast] != 0) {          <span class="cm">// condition to keep</span>
+    swap(nums, slow, fast);
+    slow++;
+  }
+}
+
+<span class="cm">// Dutch National Flag (Sort Colors 0,1,2)</span>
+int lo=0, mid=0, hi=n-1;
+<span class="kw">while</span> (mid &lt;= hi) {
+  <span class="kw">if</span> (nums[mid]==0) swap(nums, lo++, mid++);
+  <span class="kw">else if</span> (nums[mid]==1) mid++;
+  <span class="kw">else</span> swap(nums, mid, hi--);
+}</div>
+      </div>
+    </div>
+    <div class="pbar"><b>Pattern:</b> Slow pointer marks the boundary of "processed/valid" region; fast pointer scans ahead.</div>
+  </div>
+
+  <div class="phase-card">
+    <div class="ph"><div class="ph-num">3</div><div class="ph-title">Prefix Sum / Difference Array</div>
+      <div class="cx-badge"><span class="cx cx-time">Time O(n)</span><span class="cx cx-space">Space O(n)</span></div></div>
+    <div class="split">
+      <div class="left-pane">
+        <div class="qs-title">Questions</div>
+        <div class="q-row"><span class="q-num">1.</span><span>Subarray Sum Equals K</span></div>
+        <div class="q-row"><span class="q-num">2.</span><span>Range Sum Query - Immutable</span></div>
+        <div class="q-row"><span class="q-num">3.</span><span>Product of Array Except Self</span></div>
+        <div class="q-row"><span class="q-num">4.</span><span>Continuous Subarray Sum</span></div>
+        <div class="q-row"><span class="q-num">5.</span><span>Car Pooling (difference array)</span></div>
+        <div class="keyword-box"><b>Keyword:</b> "sum of subarray", "range query", "count subarrays with sum K", "range update". Combine prefix sum + HashMap for counting.</div>
+      </div>
+      <div class="right-pane">
+        <div class="qs-title">Pseudocode</div>
+        <div class="code-block"><span class="cm">// Subarray Sum = K (prefix sum + hashmap)</span>
+Map&lt;Integer,Integer&gt; freq = <span class="kw">new</span> HashMap&lt;&gt;();
+freq.put(0, 1);                  <span class="cm">// empty prefix</span>
+int sum=0, count=0;
+<span class="kw">for</span> (int num : nums) {
+  sum += num;
+  count += freq.getOrDefault(sum - k, 0);
+  freq.merge(sum, 1, Integer::sum);
+}
+<span class="cm">// O(n) time, O(n) space — beats O(n²) brute force</span></div>
+      </div>
+    </div>
+    <div class="pbar"><b>Pattern:</b> prefix[i] = sum of first i elements. Range sum = prefix[r+1] - prefix[l]. For counting, store prefix frequencies in a map.</div>
+  </div>
+
+  <table class="cx-table">
+    <tr><th>Operation</th><th>Time</th><th>Note</th></tr>
+    <tr><td>Two pointers scan</td><td class="mono">O(n)</td><td>after O(n log n) sort if needed</td></tr>
+    <tr><td>3Sum / 4Sum</td><td class="mono">O(n²) / O(n³)</td><td>fix k-2 pointers, 2-ptr the rest</td></tr>
+    <tr><td>Prefix sum build + query</td><td class="mono">O(n) / O(1)</td><td>O(n) space for prefix array</td></tr>
+  </table>
+</div>
+
+<!-- ══════════════════════════════════════════ SLIDING WINDOW ══════════════ -->
+<div class="golden"><b>GOLDEN RULE:</b> Pattern &#8594; Keyword &#8594; Pseudocode &#8594; Complexity. State the time AND space cost out loud in interviews.</div>
+</section>
+<section id="view-sliding_window" class="view" style="display:none">
+<a class="back-hub" href="#" onclick="go('hub');return false;"><span class="arw">&#8592;</span> Hub</a>
+<h1>SLIDING WINDOW</h1>
+<div class="sub">Fixed and variable-size windows</div>
+
+  <div class="topic-intro"><b>CORE IDEA:</b> Maintain a contiguous window [left, right]. Expand right to include, shrink left to satisfy a constraint. Turns O(n²) substring/subarray problems into O(n).</div>
+
+  <div class="phase-card">
+    <div class="ph"><div class="ph-num">1</div><div class="ph-title">Fixed-Size Window</div>
+      <div class="cx-badge"><span class="cx cx-time">Time O(n)</span><span class="cx cx-space">Space O(1)</span></div></div>
+    <div class="split">
+      <div class="left-pane">
+        <div class="qs-title">Questions</div>
+        <div class="q-row"><span class="q-num">1.</span><span>Maximum Average Subarray I</span></div>
+        <div class="q-row"><span class="q-num">2.</span><span>Find All Anagrams in a String</span></div>
+        <div class="q-row"><span class="q-num">3.</span><span>Permutation in String</span></div>
+        <div class="q-row"><span class="q-num">4.</span><span>Sliding Window Maximum (deque)</span></div>
+        <div class="keyword-box"><b>Keyword:</b> "subarray/substring of size k", "fixed length", "all windows of length k". Window size never changes — slide it.</div>
+      </div>
+      <div class="right-pane">
+        <div class="qs-title">Pseudocode</div>
+        <div class="code-block">int windowSum = 0;
+<span class="kw">for</span> (int i=0; i&lt;k; i++) windowSum += nums[i]; <span class="cm">// first</span>
+int best = windowSum;
+<span class="kw">for</span> (int i=k; i&lt;n; i++) {
+  windowSum += nums[i] - nums[i-k];  <span class="cm">// add new, drop old</span>
+  best = Math.max(best, windowSum);
+}
+<span class="cm">// Anagram: keep a 26-char count array, compare each slide</span></div>
+      </div>
+    </div>
+    <div class="pbar"><b>Pattern:</b> Add incoming element, remove outgoing element (i-k). Constant-time window update.</div>
+  </div>
+
+  <div class="phase-card">
+    <div class="ph"><div class="ph-num">2</div><div class="ph-title">Variable-Size Window (longest/shortest)</div>
+      <div class="cx-badge"><span class="cx cx-time">Time O(n)</span><span class="cx cx-space">Space O(k)</span></div></div>
+    <div class="split">
+      <div class="left-pane">
+        <div class="qs-title">Questions</div>
+        <div class="q-row"><span class="q-num">1.</span><span>Longest Substring Without Repeating Chars</span></div>
+        <div class="q-row"><span class="q-num">2.</span><span>Minimum Window Substring</span></div>
+        <div class="q-row"><span class="q-num">3.</span><span>Longest Repeating Character Replacement</span></div>
+        <div class="q-row"><span class="q-num">4.</span><span>Fruit Into Baskets</span></div>
+        <div class="q-row"><span class="q-num">5.</span><span>Minimum Size Subarray Sum</span></div>
+        <div class="keyword-box"><b>Keyword:</b> "longest/shortest substring", "at most K distinct", "smallest subarray ≥ target". Window grows and shrinks dynamically.</div>
+      </div>
+      <div class="right-pane">
+        <div class="qs-title">Pseudocode</div>
+        <div class="code-block">int left = 0, best = 0;
+Map&lt;Character,Integer&gt; count = <span class="kw">new</span> HashMap&lt;&gt;();
+
+<span class="kw">for</span> (int right=0; right&lt;n; right++) {
+  count.merge(s.charAt(right), 1, Integer::sum); <span class="cm">// expand</span>
+
+  <span class="kw">while</span> (/* window invalid */ count.size() &gt; k) {
+    char lc = s.charAt(left);                    <span class="cm">// shrink</span>
+    count.merge(lc, -1, Integer::sum);
+    <span class="kw">if</span> (count.get(lc)==0) count.remove(lc);
+    left++;
+  }
+  best = Math.max(best, right - left + 1);       <span class="cm">// record</span>
+}</div>
+      </div>
+    </div>
+    <div class="pbar"><b>Pattern:</b> for-loop expands right; inner while shrinks left until valid. For "longest" → record after shrink; for "shortest" → record inside shrink loop.</div>
+  </div>
+
+  <table class="cx-table">
+    <tr><th>Window type</th><th>Time</th><th>Space</th></tr>
+    <tr><td>Fixed-size</td><td class="mono">O(n)</td><td class="mono">O(1) or O(26)</td></tr>
+    <tr><td>Variable-size + HashMap</td><td class="mono">O(n)</td><td class="mono">O(k) distinct</td></tr>
+    <tr><td>Window max/min + Deque</td><td class="mono">O(n)</td><td class="mono">O(k)</td></tr>
+  </table>
+</div>
+
+<!-- ══════════════════════════════════════════ BINARY SEARCH ══════════════ -->
+<div class="golden"><b>GOLDEN RULE:</b> Pattern &#8594; Keyword &#8594; Pseudocode &#8594; Complexity. State the time AND space cost out loud in interviews.</div>
+</section>
+<section id="view-binary_search" class="view" style="display:none">
+<a class="back-hub" href="#" onclick="go('hub');return false;"><span class="arw">&#8592;</span> Hub</a>
+<h1>BINARY SEARCH</h1>
+<div class="sub">Boundary, rotated arrays, search-on-answer</div>
+
+  <div class="topic-intro"><b>CORE IDEA:</b> Halve the search space each step. Works on sorted arrays AND on "answer space" (binary search the answer). The hard part is defining the predicate that's monotonic (false…false, true…true).</div>
+
+  <div class="phase-card">
+    <div class="ph"><div class="ph-num">1</div><div class="ph-title">Classic + Boundary Search</div>
+      <div class="cx-badge"><span class="cx cx-time">Time O(log n)</span><span class="cx cx-space">Space O(1)</span></div></div>
+    <div class="split">
+      <div class="left-pane">
+        <div class="qs-title">Questions</div>
+        <div class="q-row"><span class="q-num">1.</span><span>Binary Search (basic)</span></div>
+        <div class="q-row"><span class="q-num">2.</span><span>First &amp; Last Position (lower/upper bound)</span></div>
+        <div class="q-row"><span class="q-num">3.</span><span>Search Insert Position</span></div>
+        <div class="q-row"><span class="q-num">4.</span><span>Find Peak Element</span></div>
+        <div class="keyword-box"><b>Keyword:</b> "sorted array", "find target", "first/last occurrence", "O(log n) required". lower_bound = first index ≥ target.</div>
+      </div>
+      <div class="right-pane">
+        <div class="qs-title">Pseudocode</div>
+        <div class="code-block"><span class="cm">// Lower bound: first index where nums[i] &gt;= target</span>
+int lo=0, hi=n;        <span class="cm">// note hi=n (exclusive)</span>
+<span class="kw">while</span> (lo &lt; hi) {
+  int mid = lo + (hi-lo)/2;    <span class="cm">// avoid overflow</span>
+  <span class="kw">if</span> (nums[mid] &lt; target) lo = mid+1;
+  <span class="kw">else</span> hi = mid;
+}
+<span class="kw">return</span> lo;  <span class="cm">// insertion point / first ≥ target</span>
+
+<span class="cm">// Upper bound: change condition to nums[mid] &lt;= target</span></div>
+      </div>
+    </div>
+    <div class="pbar"><b>Pattern:</b> Use half-open [lo, hi). <code>lo + (hi-lo)/2</code> prevents overflow. Lower/upper bound = the building blocks for counting occurrences.</div>
+  </div>
+
+  <div class="phase-card">
+    <div class="ph"><div class="ph-num">2</div><div class="ph-title">Rotated / Modified Array</div>
+      <div class="cx-badge"><span class="cx cx-time">Time O(log n)</span><span class="cx cx-space">Space O(1)</span></div></div>
+    <div class="split">
+      <div class="left-pane">
+        <div class="qs-title">Questions</div>
+        <div class="q-row"><span class="q-num">1.</span><span>Search in Rotated Sorted Array</span></div>
+        <div class="q-row"><span class="q-num">2.</span><span>Find Minimum in Rotated Sorted Array</span></div>
+        <div class="q-row"><span class="q-num">3.</span><span>Search in Rotated Array II (dupes)</span></div>
+        <div class="q-row"><span class="q-num">4.</span><span>Single Element in Sorted Array</span></div>
+        <div class="keyword-box"><b>Keyword:</b> "rotated sorted array", "mountain array", "find min/pivot". One half is always sorted — decide which.</div>
+      </div>
+      <div class="right-pane">
+        <div class="qs-title">Pseudocode</div>
+        <div class="code-block">int lo=0, hi=n-1;
+<span class="kw">while</span> (lo &lt;= hi) {
+  int mid = lo + (hi-lo)/2;
+  <span class="kw">if</span> (nums[mid]==target) <span class="kw">return</span> mid;
+  <span class="kw">if</span> (nums[lo] &lt;= nums[mid]) {       <span class="cm">// left half sorted</span>
+    <span class="kw">if</span> (nums[lo]&lt;=target &amp;&amp; target&lt;nums[mid]) hi=mid-1;
+    <span class="kw">else</span> lo=mid+1;
+  } <span class="kw">else</span> {                          <span class="cm">// right half sorted</span>
+    <span class="kw">if</span> (nums[mid]&lt;target &amp;&amp; target&lt;=nums[hi]) lo=mid+1;
+    <span class="kw">else</span> hi=mid-1;
+  }
+}</div>
+      </div>
+    </div>
+    <div class="pbar"><b>Pattern:</b> Compare nums[lo] vs nums[mid] to find the sorted half, then check if target lies in that half's range.</div>
+  </div>
+
+  <div class="phase-card">
+    <div class="ph"><div class="ph-num">3</div><div class="ph-title">Binary Search on Answer</div>
+      <div class="cx-badge"><span class="cx cx-time">Time O(n log M)</span><span class="cx cx-space">Space O(1)</span></div></div>
+    <div class="split">
+      <div class="left-pane">
+        <div class="qs-title">Questions</div>
+        <div class="q-row"><span class="q-num">1.</span><span>Koko Eating Bananas</span></div>
+        <div class="q-row"><span class="q-num">2.</span><span>Capacity to Ship Packages in D Days</span></div>
+        <div class="q-row"><span class="q-num">3.</span><span>Split Array Largest Sum</span></div>
+        <div class="q-row"><span class="q-num">4.</span><span>Median of Two Sorted Arrays</span></div>
+        <div class="q-row"><span class="q-num">5.</span><span>Minimize Max Distance to Gas Station</span></div>
+        <div class="keyword-box"><b>Keyword:</b> "minimum/maximum X such that...", "minimize the largest", "can we do it in K?". Binary search the answer value, not an index. M = value range.</div>
+      </div>
+      <div class="right-pane">
+        <div class="qs-title">Pseudocode</div>
+        <div class="code-block"><span class="cm">// Find smallest feasible answer in [lo, hi]</span>
+int lo = minPossible, hi = maxPossible;
+<span class="kw">while</span> (lo &lt; hi) {
+  int mid = lo + (hi-lo)/2;
+  <span class="kw">if</span> (<span class="fn">canDo</span>(mid))     <span class="cm">// monotonic predicate</span>
+    hi = mid;            <span class="cm">// mid works → try smaller</span>
+  <span class="kw">else</span>
+    lo = mid + 1;        <span class="cm">// mid fails → need larger</span>
+}
+<span class="kw">return</span> lo;
+
+<span class="cm">// canDo(speed): simulate, return true if feasible</span>
+<span class="kw">boolean</span> <span class="fn">canDo</span>(int x) { <span class="cm">/* O(n) check */</span> }</div>
+      </div>
+    </div>
+    <div class="pbar"><b>Pattern:</b> Define a monotonic <code>canDo(x)</code> predicate. Binary search the minimum x where it flips false→true. Each check is O(n) → total O(n log M).</div>
+  </div>
+
+  <table class="cx-table">
+    <tr><th>Variant</th><th>Time</th><th>Note</th></tr>
+    <tr><td>Classic / boundary</td><td class="mono">O(log n)</td><td>sorted array</td></tr>
+    <tr><td>Rotated array</td><td class="mono">O(log n)</td><td>O(n) worst case with duplicates</td></tr>
+    <tr><td>Binary search on answer</td><td class="mono">O(n log M)</td><td>M = answer value range</td></tr>
+  </table>
+</div>
+
+<!-- ══════════════════════════════════════════ LINKED LIST ══════════════ -->
+<div class="golden"><b>GOLDEN RULE:</b> Pattern &#8594; Keyword &#8594; Pseudocode &#8594; Complexity. State the time AND space cost out loud in interviews.</div>
+</section>
+<section id="view-linked_list" class="view" style="display:none">
+<a class="back-hub" href="#" onclick="go('hub');return false;"><span class="arw">&#8592;</span> Hub</a>
+<h1>LINKED LIST</h1>
+<div class="sub">Reversal, fast/slow, dummy head</div>
+
+  <div class="topic-intro"><b>CORE IDEA:</b> Master pointer manipulation. Use a <b>dummy head</b> to simplify edge cases, fast/slow for the middle &amp; cycles, and careful next-pointer rewiring for reversal.</div>
+
+  <div class="phase-card">
+    <div class="ph"><div class="ph-num">1</div><div class="ph-title">Reversal Patterns</div>
+      <div class="cx-badge"><span class="cx cx-time">Time O(n)</span><span class="cx cx-space">Space O(1)</span></div></div>
+    <div class="split">
+      <div class="left-pane">
+        <div class="qs-title">Questions</div>
+        <div class="q-row"><span class="q-num">1.</span><span>Reverse Linked List</span></div>
+        <div class="q-row"><span class="q-num">2.</span><span>Reverse Linked List II (range)</span></div>
+        <div class="q-row"><span class="q-num">3.</span><span>Reverse Nodes in k-Group</span></div>
+        <div class="q-row"><span class="q-num">4.</span><span>Swap Nodes in Pairs</span></div>
+        <div class="q-row"><span class="q-num">5.</span><span>Palindrome Linked List</span></div>
+        <div class="keyword-box"><b>Keyword:</b> "reverse the list", "reverse in groups of k", "swap pairs". Three-pointer dance: prev, cur, next.</div>
+      </div>
+      <div class="right-pane">
+        <div class="qs-title">Pseudocode</div>
+        <div class="code-block"><span class="cm">// Iterative reversal — prev/cur/next</span>
+ListNode prev = <span class="kw">null</span>, cur = head;
+<span class="kw">while</span> (cur != <span class="kw">null</span>) {
+  ListNode next = cur.next;  <span class="cm">// save</span>
+  cur.next = prev;           <span class="cm">// reverse pointer</span>
+  prev = cur;                <span class="cm">// advance prev</span>
+  cur = next;                <span class="cm">// advance cur</span>
+}
+<span class="kw">return</span> prev;  <span class="cm">// new head</span>
+
+<span class="cm">// k-Group: count k nodes ahead, reverse, recurse on rest</span></div>
+      </div>
+    </div>
+    <div class="pbar"><b>Pattern:</b> Always save <code>cur.next</code> before rewiring. prev becomes the new head after the loop.</div>
+  </div>
+
+  <div class="phase-card">
+    <div class="ph"><div class="ph-num">2</div><div class="ph-title">Fast &amp; Slow + Dummy Head</div>
+      <div class="cx-badge"><span class="cx cx-time">Time O(n)</span><span class="cx cx-space">Space O(1)</span></div></div>
+    <div class="split">
+      <div class="left-pane">
+        <div class="qs-title">Questions</div>
+        <div class="q-row"><span class="q-num">1.</span><span>Middle of the Linked List</span></div>
+        <div class="q-row"><span class="q-num">2.</span><span>Linked List Cycle I &amp; II</span></div>
+        <div class="q-row"><span class="q-num">3.</span><span>Remove Nth Node From End</span></div>
+        <div class="q-row"><span class="q-num">4.</span><span>Merge Two Sorted Lists</span></div>
+        <div class="q-row"><span class="q-num">5.</span><span>Remove Duplicates from Sorted List</span></div>
+        <div class="keyword-box"><b>Keyword:</b> "find the middle", "detect cycle", "nth from end", "merge lists", "remove node". Use dummy head when the head itself may change.</div>
+      </div>
+      <div class="right-pane">
+        <div class="qs-title">Pseudocode</div>
+        <div class="code-block"><span class="cm">// Floyd's cycle detection</span>
+ListNode slow=head, fast=head;
+<span class="kw">while</span> (fast!=<span class="kw">null</span> &amp;&amp; fast.next!=<span class="kw">null</span>) {
+  slow = slow.next;          <span class="cm">// 1 step</span>
+  fast = fast.next.next;     <span class="cm">// 2 steps</span>
+  <span class="kw">if</span> (slow==fast) <span class="kw">break</span>;       <span class="cm">// cycle found</span>
+}
+<span class="cm">// cycle start: reset one ptr to head, move both 1 step</span>
+
+<span class="cm">// Dummy head removes head edge cases</span>
+ListNode dummy = <span class="kw">new</span> ListNode(0); dummy.next = head;
+<span class="cm">// ... operate, return dummy.next</span></div>
+      </div>
+    </div>
+    <div class="pbar"><b>Pattern:</b> Fast moves 2×, slow 1×. When fast hits the end, slow is at the middle. For Nth-from-end: advance fast N nodes first, then move both.</div>
+  </div>
+
+  <table class="cx-table">
+    <tr><th>Operation</th><th>Time</th><th>Space</th></tr>
+    <tr><td>Reverse / traverse</td><td class="mono">O(n)</td><td class="mono">O(1)</td></tr>
+    <tr><td>Cycle detect (Floyd)</td><td class="mono">O(n)</td><td class="mono">O(1)</td></tr>
+    <tr><td>Merge K lists (heap)</td><td class="mono">O(N log k)</td><td class="mono">O(k)</td></tr>
+  </table>
+</div>
+
+<!-- ══════════════════════════════════════════ HASHING ══════════════ -->
+<div class="golden"><b>GOLDEN RULE:</b> Pattern &#8594; Keyword &#8594; Pseudocode &#8594; Complexity. State the time AND space cost out loud in interviews.</div>
+</section>
+<section id="view-hashing" class="view" style="display:none">
+<a class="back-hub" href="#" onclick="go('hub');return false;"><span class="arw">&#8592;</span> Hub</a>
+<h1>HASHING</h1>
+<div class="sub">Frequency maps, complement lookup, sets</div>
+
+  <div class="topic-intro"><b>CORE IDEA:</b> Trade space for time. HashMap gives O(1) average lookup. Use it for frequency counting, seen-before checks, grouping, and complement lookups.</div>
+
+  <div class="phase-card">
+    <div class="ph"><div class="ph-num">1</div><div class="ph-title">Frequency &amp; Complement Lookup</div>
+      <div class="cx-badge"><span class="cx cx-time">Time O(n)</span><span class="cx cx-space">Space O(n)</span></div></div>
+    <div class="split">
+      <div class="left-pane">
+        <div class="qs-title">Questions</div>
+        <div class="q-row"><span class="q-num">1.</span><span>Two Sum</span></div>
+        <div class="q-row"><span class="q-num">2.</span><span>Group Anagrams</span></div>
+        <div class="q-row"><span class="q-num">3.</span><span>Top K Frequent Elements</span></div>
+        <div class="q-row"><span class="q-num">4.</span><span>Valid Anagram</span></div>
+        <div class="q-row"><span class="q-num">5.</span><span>First Unique Character</span></div>
+        <div class="keyword-box"><b>Keyword:</b> "find pair", "count occurrences", "group by", "have I seen this before", "most/least frequent". Map key = signature, value = index/count/list.</div>
+      </div>
+      <div class="right-pane">
+        <div class="qs-title">Pseudocode</div>
+        <div class="code-block"><span class="cm">// Two Sum — complement lookup</span>
+Map&lt;Integer,Integer&gt; seen = <span class="kw">new</span> HashMap&lt;&gt;();
+<span class="kw">for</span> (int i=0; i&lt;n; i++) {
+  int need = target - nums[i];
+  <span class="kw">if</span> (seen.containsKey(need))
+    <span class="kw">return new</span> int[]{seen.get(need), i};
+  seen.put(nums[i], i);
+}
+
+<span class="cm">// Group Anagrams — sorted string as key</span>
+Map&lt;String,List&lt;String&gt;&gt; map = <span class="kw">new</span> HashMap&lt;&gt;();
+<span class="kw">for</span> (String s : strs) {
+  char[] c = s.toCharArray(); Arrays.sort(c);
+  String key = <span class="kw">new</span> String(c);
+  map.computeIfAbsent(key, k-&gt;<span class="kw">new</span> ArrayList&lt;&gt;()).add(s);
+}</div>
+      </div>
+    </div>
+    <div class="pbar"><b>Pattern:</b> Build a map in one pass. Key design is everything: sorted string for anagrams, char-count array for fingerprints, prefix sum for subarray problems.</div>
+  </div>
+
+  <div class="phase-card">
+    <div class="ph"><div class="ph-num">2</div><div class="ph-title">HashSet for O(1) Membership</div>
+      <div class="cx-badge"><span class="cx cx-time">Time O(n)</span><span class="cx cx-space">Space O(n)</span></div></div>
+    <div class="split">
+      <div class="left-pane">
+        <div class="qs-title">Questions</div>
+        <div class="q-row"><span class="q-num">1.</span><span>Longest Consecutive Sequence</span></div>
+        <div class="q-row"><span class="q-num">2.</span><span>Contains Duplicate</span></div>
+        <div class="q-row"><span class="q-num">3.</span><span>Intersection of Two Arrays</span></div>
+        <div class="q-row"><span class="q-num">4.</span><span>Happy Number</span></div>
+        <div class="keyword-box"><b>Keyword:</b> "distinct", "consecutive", "is x present", "no duplicates". Set membership in O(1) replaces nested loops.</div>
+      </div>
+      <div class="right-pane">
+        <div class="qs-title">Pseudocode</div>
+        <div class="code-block"><span class="cm">// Longest Consecutive Sequence — O(n)</span>
+Set&lt;Integer&gt; set = <span class="kw">new</span> HashSet&lt;&gt;(Arrays.asList(...));
+int best = 0;
+<span class="kw">for</span> (int num : set) {
+  <span class="kw">if</span> (!set.contains(num-1)) {  <span class="cm">// only start of a run</span>
+    int cur = num, len = 1;
+    <span class="kw">while</span> (set.contains(cur+1)) { cur++; len++; }
+    best = Math.max(best, len);
+  }
+}
+<span class="cm">// Each number visited at most twice → O(n)</span></div>
+      </div>
+    </div>
+    <div class="pbar"><b>Pattern:</b> Only start counting from a sequence's beginning (when num-1 absent). This keeps total work O(n) despite the inner while.</div>
+  </div>
+
+  <table class="cx-table">
+    <tr><th>Structure</th><th>Avg lookup</th><th>Worst case</th></tr>
+    <tr><td>HashMap / HashSet</td><td class="mono">O(1)</td><td class="mono">O(n) (bad hash)</td></tr>
+    <tr><td>TreeMap (sorted)</td><td class="mono">O(log n)</td><td class="mono">O(log n)</td></tr>
+    <tr><td>Frequency counting pass</td><td class="mono">O(n)</td><td class="mono">O(n) space</td></tr>
+  </table>
+</div>
+
+<!-- ══════════════════════════════════════════ HEAP / PQ ══════════════ -->
+<div class="golden"><b>GOLDEN RULE:</b> Pattern &#8594; Keyword &#8594; Pseudocode &#8594; Complexity. State the time AND space cost out loud in interviews.</div>
+</section>
+<section id="view-heap" class="view" style="display:none">
+<a class="back-hub" href="#" onclick="go('hub');return false;"><span class="arw">&#8592;</span> Hub</a>
+<h1>HEAP / PRIORITY QUEUE</h1>
+<div class="sub">Top-K, Kth element, two-heap median</div>
+
+  <div class="topic-intro"><b>CORE IDEA:</b> A heap gives O(log n) insert and O(1) peek of the min/max. Reach for it on "top K", "Kth largest", "merge K sorted", and streaming median problems.</div>
+
+  <div class="phase-card">
+    <div class="ph"><div class="ph-num">1</div><div class="ph-title">Top-K / Kth Element</div>
+      <div class="cx-badge"><span class="cx cx-time">Time O(n log k)</span><span class="cx cx-space">Space O(k)</span></div></div>
+    <div class="split">
+      <div class="left-pane">
+        <div class="qs-title">Questions</div>
+        <div class="q-row"><span class="q-num">1.</span><span>Kth Largest Element in an Array</span></div>
+        <div class="q-row"><span class="q-num">2.</span><span>Top K Frequent Elements</span></div>
+        <div class="q-row"><span class="q-num">3.</span><span>K Closest Points to Origin</span></div>
+        <div class="q-row"><span class="q-num">4.</span><span>Task Scheduler</span></div>
+        <div class="keyword-box"><b>Keyword:</b> "top K", "K largest/smallest", "K closest", "K most frequent". Keep a size-K heap of the <em>opposite</em> extreme.</div>
+      </div>
+      <div class="right-pane">
+        <div class="qs-title">Pseudocode</div>
+        <div class="code-block"><span class="cm">// Kth largest → min-heap of size k</span>
+PriorityQueue&lt;Integer&gt; pq = <span class="kw">new</span> PriorityQueue&lt;&gt;(); <span class="cm">// min-heap</span>
+<span class="kw">for</span> (int num : nums) {
+  pq.offer(num);
+  <span class="kw">if</span> (pq.size() &gt; k) pq.poll();  <span class="cm">// drop smallest</span>
+}
+<span class="kw">return</span> pq.peek();  <span class="cm">// kth largest = heap top</span>
+
+<span class="cm">// Max-heap: new PriorityQueue&lt;&gt;(Collections.reverseOrder())</span>
+<span class="cm">// Custom: (a,b)-&gt;a[0]-b[0]  (min by first field)</span></div>
+      </div>
+    </div>
+    <div class="pbar"><b>Pattern:</b> For Kth <em>largest</em>, keep a <em>min</em>-heap of size K — the root is your answer. This is O(n log k), better than sorting's O(n log n).</div>
+  </div>
+
+  <div class="phase-card">
+    <div class="ph"><div class="ph-num">2</div><div class="ph-title">Two Heaps / Merge K</div>
+      <div class="cx-badge"><span class="cx cx-time">Time O(N log k)</span><span class="cx cx-space">Space O(k)</span></div></div>
+    <div class="split">
+      <div class="left-pane">
+        <div class="qs-title">Questions</div>
+        <div class="q-row"><span class="q-num">1.</span><span>Find Median from Data Stream</span></div>
+        <div class="q-row"><span class="q-num">2.</span><span>Merge K Sorted Lists</span></div>
+        <div class="q-row"><span class="q-num">3.</span><span>Smallest Range Covering K Lists</span></div>
+        <div class="q-row"><span class="q-num">4.</span><span>Sliding Window Median</span></div>
+        <div class="keyword-box"><b>Keyword:</b> "median of stream", "merge K sorted", "balance two halves". Max-heap for lower half, min-heap for upper half.</div>
+      </div>
+      <div class="right-pane">
+        <div class="qs-title">Pseudocode</div>
+        <div class="code-block"><span class="cm">// Median: maxHeap (low half) + minHeap (high half)</span>
+PriorityQueue&lt;Integer&gt; lo = <span class="kw">new</span> PriorityQueue&lt;&gt;(Collections.reverseOrder());
+PriorityQueue&lt;Integer&gt; hi = <span class="kw">new</span> PriorityQueue&lt;&gt;();
+
+<span class="kw">void</span> <span class="fn">add</span>(int num) {
+  lo.offer(num);
+  hi.offer(lo.poll());            <span class="cm">// balance values</span>
+  <span class="kw">if</span> (hi.size() &gt; lo.size())       <span class="cm">// balance sizes</span>
+    lo.offer(hi.poll());
+}
+<span class="kw">double</span> <span class="fn">median</span>() {
+  <span class="kw">return</span> lo.size()&gt;hi.size() ? lo.peek()
+         : (lo.peek()+hi.peek())/2.0;
+}</div>
+      </div>
+    </div>
+    <div class="pbar"><b>Pattern:</b> Keep heaps balanced (sizes differ by ≤1). Median is the top of the larger heap, or the average of both tops. Merge K: push list heads, pop-and-push next.</div>
+  </div>
+
+  <table class="cx-table">
+    <tr><th>Operation</th><th>Time</th><th>Note</th></tr>
+    <tr><td>offer / poll</td><td class="mono">O(log n)</td><td>peek is O(1)</td></tr>
+    <tr><td>Top-K with size-K heap</td><td class="mono">O(n log k)</td><td>beats full sort</td></tr>
+    <tr><td>Build heap from array</td><td class="mono">O(n)</td><td>heapify, not n inserts</td></tr>
+  </table>
+</div>
+
+<!-- ══════════════════════════════════════════ BACKTRACKING ══════════════ -->
+<div class="golden"><b>GOLDEN RULE:</b> Pattern &#8594; Keyword &#8594; Pseudocode &#8594; Complexity. State the time AND space cost out loud in interviews.</div>
+</section>
+<section id="view-backtracking" class="view" style="display:none">
+<a class="back-hub" href="#" onclick="go('hub');return false;"><span class="arw">&#8592;</span> Hub</a>
+<h1>BACKTRACKING</h1>
+<div class="sub">Subsets, permutations, grid solving</div>
+
+  <div class="topic-intro"><b>CORE IDEA:</b> Build candidates incrementally; abandon ("backtrack") a path the moment it can't lead to a solution. Choose → explore → un-choose. Exponential, but pruning makes it tractable.</div>
+
+  <div class="phase-card">
+    <div class="ph"><div class="ph-num">1</div><div class="ph-title">Subsets / Combinations / Permutations</div>
+      <div class="cx-badge"><span class="cx cx-time">Time O(2ⁿ)/O(n!)</span><span class="cx cx-space">Space O(n)</span></div></div>
+    <div class="split">
+      <div class="left-pane">
+        <div class="qs-title">Questions</div>
+        <div class="q-row"><span class="q-num">1.</span><span>Subsets I &amp; II</span></div>
+        <div class="q-row"><span class="q-num">2.</span><span>Combination Sum I &amp; II</span></div>
+        <div class="q-row"><span class="q-num">3.</span><span>Permutations I &amp; II</span></div>
+        <div class="q-row"><span class="q-num">4.</span><span>Letter Combinations of a Phone Number</span></div>
+        <div class="q-row"><span class="q-num">5.</span><span>Palindrome Partitioning</span></div>
+        <div class="keyword-box"><b>Keyword:</b> "all combinations", "all subsets", "all permutations", "generate every...". The branching factor and the "start index" distinguish the three families.</div>
+      </div>
+      <div class="right-pane">
+        <div class="qs-title">Pseudocode</div>
+        <div class="code-block"><span class="cm">// Generic backtracking skeleton</span>
+<span class="kw">void</span> <span class="fn">backtrack</span>(List&lt;Integer&gt; path, int start) {
+  result.add(<span class="kw">new</span> ArrayList&lt;&gt;(path));   <span class="cm">// record (subsets)</span>
+  <span class="kw">for</span> (int i=start; i&lt;n; i++) {
+    <span class="cm">// prune: skip duplicates / invalid choices</span>
+    <span class="kw">if</span> (i&gt;start &amp;&amp; nums[i]==nums[i-1]) <span class="kw">continue</span>;
+    path.add(nums[i]);                <span class="cm">// CHOOSE</span>
+    <span class="fn">backtrack</span>(path, i+1);            <span class="cm">// EXPLORE</span>
+    path.remove(path.size()-1);       <span class="cm">// UN-CHOOSE</span>
+  }
+}
+<span class="cm">// Permutations: use boolean[] used instead of start index</span>
+<span class="cm">// Combination Sum (reuse): recurse with i, not i+1</span></div>
+      </div>
+    </div>
+    <div class="pbar"><b>Pattern:</b> Subsets/combinations use a <code>start</code> index (forward-only). Permutations use a <code>used[]</code> flag (any unused element). Sort + skip <code>nums[i]==nums[i-1]</code> dedupes.</div>
+  </div>
+
+  <div class="phase-card">
+    <div class="ph"><div class="ph-num">2</div><div class="ph-title">Grid &amp; Constraint Backtracking</div>
+      <div class="cx-badge"><span class="cx cx-time">Time exp.</span><span class="cx cx-space">Space O(n²)</span></div></div>
+    <div class="split">
+      <div class="left-pane">
+        <div class="qs-title">Questions</div>
+        <div class="q-row"><span class="q-num">1.</span><span>N-Queens</span></div>
+        <div class="q-row"><span class="q-num">2.</span><span>Sudoku Solver</span></div>
+        <div class="q-row"><span class="q-num">3.</span><span>Word Search</span></div>
+        <div class="q-row"><span class="q-num">4.</span><span>Word Search II (with Trie)</span></div>
+        <div class="keyword-box"><b>Keyword:</b> "place N items with constraints", "solve the board", "find word in grid". Mark visited, recurse, unmark.</div>
+      </div>
+      <div class="right-pane">
+        <div class="qs-title">Pseudocode</div>
+        <div class="code-block"><span class="cm">// Word Search — DFS with visited marking</span>
+<span class="kw">boolean</span> <span class="fn">dfs</span>(int r, int c, int idx) {
+  <span class="kw">if</span> (idx==word.length()) <span class="kw">return true</span>;
+  <span class="kw">if</span> (outOfBounds || board[r][c]!=word.charAt(idx))
+    <span class="kw">return false</span>;
+  char tmp = board[r][c];
+  board[r][c] = '#';              <span class="cm">// mark visited</span>
+  <span class="kw">boolean</span> found =
+       <span class="fn">dfs</span>(r+1,c,idx+1) || <span class="fn">dfs</span>(r-1,c,idx+1)
+    || <span class="fn">dfs</span>(r,c+1,idx+1) || <span class="fn">dfs</span>(r,c-1,idx+1);
+  board[r][c] = tmp;              <span class="cm">// restore (backtrack)</span>
+  <span class="kw">return</span> found;
+}</div>
+      </div>
+    </div>
+    <div class="pbar"><b>Pattern:</b> Modify state to mark a choice, recurse, then restore it. N-Queens prunes with column/diagonal sets for O(1) validity checks.</div>
+  </div>
+
+  <table class="cx-table">
+    <tr><th>Problem family</th><th>Time</th><th>Space</th></tr>
+    <tr><td>Subsets</td><td class="mono">O(2ⁿ · n)</td><td class="mono">O(n)</td></tr>
+    <tr><td>Permutations</td><td class="mono">O(n! · n)</td><td class="mono">O(n)</td></tr>
+    <tr><td>N-Queens</td><td class="mono">O(n!)</td><td class="mono">O(n)</td></tr>
+  </table>
+</div>
+
+<!-- ══════════════════════════════════════════ GREEDY ══════════════ -->
+<div class="golden"><b>GOLDEN RULE:</b> Pattern &#8594; Keyword &#8594; Pseudocode &#8594; Complexity. State the time AND space cost out loud in interviews.</div>
+</section>
+<section id="view-greedy" class="view" style="display:none">
+<a class="back-hub" href="#" onclick="go('hub');return false;"><span class="arw">&#8592;</span> Hub</a>
+<h1>GREEDY</h1>
+<div class="sub">Interval scheduling, jumps, allocation</div>
+
+  <div class="topic-intro"><b>CORE IDEA:</b> Make the locally optimal choice at each step and never reconsider. Works only when a "greedy choice property" holds — usually after sorting. Always sanity-check with a counterexample.</div>
+
+  <div class="phase-card">
+    <div class="ph"><div class="ph-num">1</div><div class="ph-title">Interval Scheduling</div>
+      <div class="cx-badge"><span class="cx cx-time">Time O(n log n)</span><span class="cx cx-space">Space O(1)</span></div></div>
+    <div class="split">
+      <div class="left-pane">
+        <div class="qs-title">Questions</div>
+        <div class="q-row"><span class="q-num">1.</span><span>Non-overlapping Intervals</span></div>
+        <div class="q-row"><span class="q-num">2.</span><span>Merge Intervals</span></div>
+        <div class="q-row"><span class="q-num">3.</span><span>Meeting Rooms II</span></div>
+        <div class="q-row"><span class="q-num">4.</span><span>Minimum Number of Arrows to Burst Balloons</span></div>
+        <div class="keyword-box"><b>Keyword:</b> "intervals", "non-overlapping", "merge", "minimum rooms/arrows". Sort by end time (for max count) or start time (for merging).</div>
+      </div>
+      <div class="right-pane">
+        <div class="qs-title">Pseudocode</div>
+        <div class="code-block"><span class="cm">// Max non-overlapping intervals → sort by END</span>
+Arrays.sort(intervals, (a,b)-&gt;a[1]-b[1]);
+int end = Integer.MIN_VALUE, count = 0;
+<span class="kw">for</span> (int[] it : intervals) {
+  <span class="kw">if</span> (it[0] &gt;= end) {     <span class="cm">// no overlap → take it</span>
+    count++; end = it[1];
+  }
+}
+<span class="cm">// removals = total - count</span>
+
+<span class="cm">// Merge → sort by START, extend or push</span>
+Arrays.sort(intervals, (a,b)-&gt;a[0]-b[0]);
+<span class="cm">// if cur.start &lt;= last.end → merge, else add new</span></div>
+      </div>
+    </div>
+    <div class="pbar"><b>Pattern:</b> Sort by end time, greedily pick the interval that finishes earliest — it leaves the most room. Sort by start time for merging.</div>
+  </div>
+
+  <div class="phase-card">
+    <div class="ph"><div class="ph-num">2</div><div class="ph-title">Greedy Choice / Jump / Allocation</div>
+      <div class="cx-badge"><span class="cx cx-time">Time O(n)/O(n log n)</span><span class="cx cx-space">Space O(1)</span></div></div>
+    <div class="split">
+      <div class="left-pane">
+        <div class="qs-title">Questions</div>
+        <div class="q-row"><span class="q-num">1.</span><span>Jump Game I &amp; II</span></div>
+        <div class="q-row"><span class="q-num">2.</span><span>Gas Station</span></div>
+        <div class="q-row"><span class="q-num">3.</span><span>Candy</span></div>
+        <div class="q-row"><span class="q-num">4.</span><span>Partition Labels</span></div>
+        <div class="q-row"><span class="q-num">5.</span><span>Assign Cookies</span></div>
+        <div class="keyword-box"><b>Keyword:</b> "minimum jumps", "can you reach", "fewest/most...", "distribute fairly". Track a running max-reach or best-so-far.</div>
+      </div>
+      <div class="right-pane">
+        <div class="qs-title">Pseudocode</div>
+        <div class="code-block"><span class="cm">// Jump Game — can you reach the end?</span>
+int maxReach = 0;
+<span class="kw">for</span> (int i=0; i&lt;n; i++) {
+  <span class="kw">if</span> (i &gt; maxReach) <span class="kw">return false</span>;   <span class="cm">// stuck</span>
+  maxReach = Math.max(maxReach, i + nums[i]);
+}
+<span class="kw">return true</span>;
+
+<span class="cm">// Jump Game II — fewest jumps (BFS-like greedy)</span>
+int jumps=0, curEnd=0, farthest=0;
+<span class="kw">for</span> (int i=0; i&lt;n-1; i++) {
+  farthest = Math.max(farthest, i+nums[i]);
+  <span class="kw">if</span> (i == curEnd) { jumps++; curEnd = farthest; }
+}</div>
+      </div>
+    </div>
+    <div class="pbar"><b>Pattern:</b> Maintain the farthest reachable index. Jump only when forced (current window exhausted). Proof of correctness is the hard part — test edge cases.</div>
+  </div>
+
+  <table class="cx-table">
+    <tr><th>Step</th><th>Time</th><th>Note</th></tr>
+    <tr><td>Sort (usual first step)</td><td class="mono">O(n log n)</td><td>by start or end</td></tr>
+    <tr><td>Single greedy pass</td><td class="mono">O(n)</td><td>after sort</td></tr>
+    <tr><td>With heap (Meeting Rooms II)</td><td class="mono">O(n log n)</td><td>min-heap of end times</td></tr>
+  </table>
+</div>
+
+<!-- ══════════════════════════════════════════ TRIE ══════════════ -->
+<div class="golden"><b>GOLDEN RULE:</b> Pattern &#8594; Keyword &#8594; Pseudocode &#8594; Complexity. State the time AND space cost out loud in interviews.</div>
+</section>
+<section id="view-trie" class="view" style="display:none">
+<a class="back-hub" href="#" onclick="go('hub');return false;"><span class="arw">&#8592;</span> Hub</a>
+<h1>TRIE</h1>
+<div class="sub">Prefix trees, autocomplete, wildcard</div>
+
+  <div class="topic-intro"><b>CORE IDEA:</b> A prefix tree where each node has up to 26 children. Gives O(L) insert/search by word length L, independent of how many words are stored. Ideal for prefix queries and autocomplete.</div>
+
+  <div class="phase-card">
+    <div class="ph"><div class="ph-num">1</div><div class="ph-title">Trie Construction &amp; Search</div>
+      <div class="cx-badge"><span class="cx cx-time">Time O(L)</span><span class="cx cx-space">Space O(26·N·L)</span></div></div>
+    <div class="split">
+      <div class="left-pane">
+        <div class="qs-title">Questions</div>
+        <div class="q-row"><span class="q-num">1.</span><span>Implement Trie (Prefix Tree)</span></div>
+        <div class="q-row"><span class="q-num">2.</span><span>Design Add &amp; Search Words (wildcard)</span></div>
+        <div class="q-row"><span class="q-num">3.</span><span>Word Search II</span></div>
+        <div class="q-row"><span class="q-num">4.</span><span>Replace Words</span></div>
+        <div class="q-row"><span class="q-num">5.</span><span>Maximum XOR of Two Numbers (bit-trie)</span></div>
+        <div class="keyword-box"><b>Keyword:</b> "prefix", "starts with", "dictionary of words", "autocomplete", "search with wildcard". L = word length.</div>
+      </div>
+      <div class="right-pane">
+        <div class="qs-title">Pseudocode</div>
+        <div class="code-block"><span class="kw">class</span> TrieNode {
+  TrieNode[] children = <span class="kw">new</span> TrieNode[26];
+  <span class="kw">boolean</span> isEnd;
+}
+
+<span class="kw">void</span> <span class="fn">insert</span>(String word) {
+  TrieNode node = root;
+  <span class="kw">for</span> (char c : word.toCharArray()) {
+    int i = c - 'a';
+    <span class="kw">if</span> (node.children[i]==<span class="kw">null</span>)
+      node.children[i] = <span class="kw">new</span> TrieNode();
+    node = node.children[i];
+  }
+  node.isEnd = <span class="kw">true</span>;
+}
+
+<span class="kw">boolean</span> <span class="fn">search</span>(String word) {
+  TrieNode node = root;
+  <span class="kw">for</span> (char c : word.toCharArray()) {
+    node = node.children[c-'a'];
+    <span class="kw">if</span> (node==<span class="kw">null</span>) <span class="kw">return false</span>;
+  }
+  <span class="kw">return</span> node.isEnd;
+}
+<span class="cm">// Wildcard '.': recurse over all 26 children</span></div>
+      </div>
+    </div>
+    <div class="pbar"><b>Pattern:</b> Walk character by character. <code>isEnd</code> marks complete words. For wildcards, branch into all children. Combine with backtracking for Word Search II.</div>
+  </div>
+
+  <table class="cx-table">
+    <tr><th>Operation</th><th>Time</th><th>Note</th></tr>
+    <tr><td>insert / search / startsWith</td><td class="mono">O(L)</td><td>L = word length</td></tr>
+    <tr><td>wildcard search</td><td class="mono">O(26^d)</td><td>d = number of '.'</td></tr>
+    <tr><td>space</td><td class="mono">O(26·N·L)</td><td>N words, length L</td></tr>
+  </table>
+</div>
+
+<!-- ══════════════════════════════════════════ BIT MANIPULATION ══════════════ -->
+<div class="golden"><b>GOLDEN RULE:</b> Pattern &#8594; Keyword &#8594; Pseudocode &#8594; Complexity. State the time AND space cost out loud in interviews.</div>
+</section>
+<section id="view-bit_manipulation" class="view" style="display:none">
+<a class="back-hub" href="#" onclick="go('hub');return false;"><span class="arw">&#8592;</span> Hub</a>
+<h1>BIT MANIPULATION</h1>
+<div class="sub">XOR tricks, masking, set-bit counting</div>
+
+  <div class="topic-intro"><b>CORE IDEA:</b> Operate directly on binary representation. XOR cancels pairs, AND masks bits, shifts multiply/divide by powers of 2. Often turns O(n) space into O(1).</div>
+
+  <div class="phase-card">
+    <div class="ph"><div class="ph-num">1</div><div class="ph-title">XOR Tricks</div>
+      <div class="cx-badge"><span class="cx cx-time">Time O(n)</span><span class="cx cx-space">Space O(1)</span></div></div>
+    <div class="split">
+      <div class="left-pane">
+        <div class="qs-title">Questions</div>
+        <div class="q-row"><span class="q-num">1.</span><span>Single Number</span></div>
+        <div class="q-row"><span class="q-num">2.</span><span>Single Number II &amp; III</span></div>
+        <div class="q-row"><span class="q-num">3.</span><span>Missing Number</span></div>
+        <div class="q-row"><span class="q-num">4.</span><span>Find the Difference</span></div>
+        <div class="keyword-box"><b>Keyword:</b> "every element appears twice except one", "find missing/duplicate", "without extra space". XOR of a number with itself = 0.</div>
+      </div>
+      <div class="right-pane">
+        <div class="qs-title">Pseudocode</div>
+        <div class="code-block"><span class="cm">// Single Number — XOR cancels pairs</span>
+int x = 0;
+<span class="kw">for</span> (int num : nums) x ^= num;
+<span class="kw">return</span> x;  <span class="cm">// duplicates cancel, lone number remains</span>
+
+<span class="cm">// Missing Number in [0..n]</span>
+int missing = n;
+<span class="kw">for</span> (int i=0; i&lt;n; i++)
+  missing ^= i ^ nums[i];
+<span class="kw">return</span> missing;
+
+<span class="cm">// Key identities:</span>
+<span class="cm">// a^a = 0, a^0 = a, XOR is commutative</span></div>
+      </div>
+    </div>
+    <div class="pbar"><b>Pattern:</b> XOR all elements — anything appearing an even number of times cancels to 0, leaving the odd one out.</div>
+  </div>
+
+  <div class="phase-card">
+    <div class="ph"><div class="ph-num">2</div><div class="ph-title">Bit Masking &amp; Counting</div>
+      <div class="cx-badge"><span class="cx cx-time">Time O(n·32)</span><span class="cx cx-space">Space O(1)</span></div></div>
+    <div class="split">
+      <div class="left-pane">
+        <div class="qs-title">Questions</div>
+        <div class="q-row"><span class="q-num">1.</span><span>Number of 1 Bits (Hamming weight)</span></div>
+        <div class="q-row"><span class="q-num">2.</span><span>Counting Bits</span></div>
+        <div class="q-row"><span class="q-num">3.</span><span>Reverse Bits</span></div>
+        <div class="q-row"><span class="q-num">4.</span><span>Power of Two</span></div>
+        <div class="q-row"><span class="q-num">5.</span><span>Subsets (via bitmask enumeration)</span></div>
+        <div class="keyword-box"><b>Keyword:</b> "count set bits", "is power of 2", "generate all subsets", "toggle/check bit". n &amp; (n-1) clears the lowest set bit.</div>
+      </div>
+      <div class="right-pane">
+        <div class="qs-title">Pseudocode</div>
+        <div class="code-block"><span class="cm">// Count set bits — Brian Kernighan</span>
+int count = 0;
+<span class="kw">while</span> (n != 0) {
+  n &amp;= (n - 1);   <span class="cm">// clears lowest set bit</span>
+  count++;
+}
+
+<span class="cm">// Essential bit operations:</span>
+<span class="cm">// check bit i:  (n &gt;&gt; i) &amp; 1</span>
+<span class="cm">// set bit i:    n | (1 &lt;&lt; i)</span>
+<span class="cm">// clear bit i:  n &amp; ~(1 &lt;&lt; i)</span>
+<span class="cm">// toggle bit i: n ^ (1 &lt;&lt; i)</span>
+<span class="cm">// is power of 2: n &gt; 0 &amp;&amp; (n &amp; (n-1)) == 0</span>
+
+<span class="cm">// Enumerate all subsets of n elements:</span>
+<span class="kw">for</span> (int mask=0; mask&lt;(1&lt;&lt;n); mask++) { <span class="cm">/* ... */</span> }</div>
+      </div>
+    </div>
+    <div class="pbar"><b>Pattern:</b> <code>n & (n-1)</code> removes the lowest set bit — counts bits in O(set bits). Bitmask loops <code>0..2ⁿ</code> enumerate every subset.</div>
+  </div>
+
+  <table class="cx-table">
+    <tr><th>Operation</th><th>Time</th><th>Note</th></tr>
+    <tr><td>XOR sweep</td><td class="mono">O(n)</td><td>O(1) space</td></tr>
+    <tr><td>Kernighan bit count</td><td class="mono">O(set bits)</td><td>≤ 32 per number</td></tr>
+    <tr><td>Subset enumeration</td><td class="mono">O(2ⁿ)</td><td>n ≤ ~20</td></tr>
+  </table>
+<div class="golden"><b>GOLDEN RULE:</b> Pattern &#8594; Keyword &#8594; Pseudocode &#8594; Complexity. State the time AND space cost out loud in interviews.</div>
+</section>
+<script>
+function go(view,target){
+  document.querySelectorAll('.view').forEach(function(v){v.style.display='none';});
+  var el=document.getElementById('view-'+view); if(el) el.style.display='block';
+  window.scrollTo(0,0);
+}
+function show(id,btn){
+  var v=btn.closest('.view');
+  v.querySelectorAll('.nav-btn').forEach(function(b){b.classList.remove('active');});
+  btn.classList.add('active');
+  v.querySelectorAll('.phase-card').forEach(function(c){
+    c.classList.toggle('hidden', id!=='all'&&c.id!==id);
+  });
+}
+document.querySelectorAll('#view-hub .card').forEach(function(c){
+  var d=parseFloat(c.style.getPropertyValue('--d'))||0;
+  c.style.animationDelay=(0.3+d*0.06)+'s';
+});
+(function(){
+  if(window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  document.querySelectorAll('#view-hub .card').forEach(function(card){
+    card.addEventListener('mousemove',function(e){
+      var r=card.getBoundingClientRect();
+      var px=(e.clientX-r.left)/r.width-0.5, py=(e.clientY-r.top)/r.height-0.5;
+      card.style.transform='perspective(900px) rotateY('+(px*12)+'deg) rotateX('+(-py*12)+'deg) translateY(-6px) scale(1.02)';
+      var g=card.querySelector('.glow'); if(g){g.style.top=(py*40-50)+'px';g.style.right=(-px*40-50)+'px';}
+    });
+    card.addEventListener('mouseleave',function(){card.style.transform='';var g=card.querySelector('.glow');if(g){g.style.top='';g.style.right='';}});
+  });
+})();
+</script>
+</body>
+</html>

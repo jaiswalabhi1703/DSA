@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="theme.css">
+<title>Greedy</title>
+</head>
+<body>
+<a class="back-hub" href="index.html"><span class="arw">&#8592;</span> Hub</a>
+<h1>GREEDY</h1>
+<div class="sub">Interval scheduling, jumps, allocation</div>
+
+  <div class="topic-intro"><b>CORE IDEA:</b> Make the locally optimal choice at each step and never reconsider. Works only when a "greedy choice property" holds — usually after sorting. Always sanity-check with a counterexample.</div>
+
+  <div class="phase-card">
+    <div class="ph"><div class="ph-num">1</div><div class="ph-title">Interval Scheduling</div>
+      <div class="cx-badge"><span class="cx cx-time">Time O(n log n)</span><span class="cx cx-space">Space O(1)</span></div></div>
+    <div class="split">
+      <div class="left-pane">
+        <div class="qs-title">Questions</div>
+        <div class="q-row"><span class="q-num">1.</span><span>Non-overlapping Intervals</span></div>
+        <div class="q-row"><span class="q-num">2.</span><span>Merge Intervals</span></div>
+        <div class="q-row"><span class="q-num">3.</span><span>Meeting Rooms II</span></div>
+        <div class="q-row"><span class="q-num">4.</span><span>Minimum Number of Arrows to Burst Balloons</span></div>
+        <div class="keyword-box"><b>Keyword:</b> "intervals", "non-overlapping", "merge", "minimum rooms/arrows". Sort by end time (for max count) or start time (for merging).</div>
+      </div>
+      <div class="right-pane">
+        <div class="qs-title">Pseudocode</div>
+        <div class="code-block"><span class="cm">// Max non-overlapping intervals → sort by END</span>
+Arrays.sort(intervals, (a,b)-&gt;a[1]-b[1]);
+int end = Integer.MIN_VALUE, count = 0;
+<span class="kw">for</span> (int[] it : intervals) {
+  <span class="kw">if</span> (it[0] &gt;= end) {     <span class="cm">// no overlap → take it</span>
+    count++; end = it[1];
+  }
+}
+<span class="cm">// removals = total - count</span>
+
+<span class="cm">// Merge → sort by START, extend or push</span>
+Arrays.sort(intervals, (a,b)-&gt;a[0]-b[0]);
+<span class="cm">// if cur.start &lt;= last.end → merge, else add new</span></div>
+      </div>
+    </div>
+    <div class="pbar"><b>Pattern:</b> Sort by end time, greedily pick the interval that finishes earliest — it leaves the most room. Sort by start time for merging.</div>
+  </div>
+
+  <div class="phase-card">
+    <div class="ph"><div class="ph-num">2</div><div class="ph-title">Greedy Choice / Jump / Allocation</div>
+      <div class="cx-badge"><span class="cx cx-time">Time O(n)/O(n log n)</span><span class="cx cx-space">Space O(1)</span></div></div>
+    <div class="split">
+      <div class="left-pane">
+        <div class="qs-title">Questions</div>
+        <div class="q-row"><span class="q-num">1.</span><span>Jump Game I &amp; II</span></div>
+        <div class="q-row"><span class="q-num">2.</span><span>Gas Station</span></div>
+        <div class="q-row"><span class="q-num">3.</span><span>Candy</span></div>
+        <div class="q-row"><span class="q-num">4.</span><span>Partition Labels</span></div>
+        <div class="q-row"><span class="q-num">5.</span><span>Assign Cookies</span></div>
+        <div class="keyword-box"><b>Keyword:</b> "minimum jumps", "can you reach", "fewest/most...", "distribute fairly". Track a running max-reach or best-so-far.</div>
+      </div>
+      <div class="right-pane">
+        <div class="qs-title">Pseudocode</div>
+        <div class="code-block"><span class="cm">// Jump Game — can you reach the end?</span>
+int maxReach = 0;
+<span class="kw">for</span> (int i=0; i&lt;n; i++) {
+  <span class="kw">if</span> (i &gt; maxReach) <span class="kw">return false</span>;   <span class="cm">// stuck</span>
+  maxReach = Math.max(maxReach, i + nums[i]);
+}
+<span class="kw">return true</span>;
+
+<span class="cm">// Jump Game II — fewest jumps (BFS-like greedy)</span>
+int jumps=0, curEnd=0, farthest=0;
+<span class="kw">for</span> (int i=0; i&lt;n-1; i++) {
+  farthest = Math.max(farthest, i+nums[i]);
+  <span class="kw">if</span> (i == curEnd) { jumps++; curEnd = farthest; }
+}</div>
+      </div>
+    </div>
+    <div class="pbar"><b>Pattern:</b> Maintain the farthest reachable index. Jump only when forced (current window exhausted). Proof of correctness is the hard part — test edge cases.</div>
+  </div>
+
+  <table class="cx-table">
+    <tr><th>Step</th><th>Time</th><th>Note</th></tr>
+    <tr><td>Sort (usual first step)</td><td class="mono">O(n log n)</td><td>by start or end</td></tr>
+    <tr><td>Single greedy pass</td><td class="mono">O(n)</td><td>after sort</td></tr>
+    <tr><td>With heap (Meeting Rooms II)</td><td class="mono">O(n log n)</td><td>min-heap of end times</td></tr>
+  </table>
+</div>
+
+<!-- ══════════════════════════════════════════ TRIE ══════════════ -->
+<div class="golden"><b>GOLDEN RULE:</b> Pattern &#8594; Keyword &#8594; Pseudocode &#8594; Complexity. State the time AND space cost out loud in interviews.</div>
+</body>
+</html>

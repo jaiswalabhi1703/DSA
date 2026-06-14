@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="theme.css">
+<title>Graph DFS/BFS Roadmap</title>
+</head>
+<body>
+<a class="back-hub" href="index.html"><span class="arw">&#8592;</span> Hub</a>
+<h1>GRAPH DFS/BFS ROADMAP — WITH PSEUDOCODE</h1>
+<div class="sub">Click a phase to focus · All 7 phases with Java-style pseudocode</div>
+
+<div class="nav">
+  <button class="nav-btn active" onclick="show('all',this)">All phases</button>
+  <button class="nav-btn" onclick="show('p1',this)">P1 · Foundations</button>
+  <button class="nav-btn" onclick="show('p2',this)">P2 · Shortest Path</button>
+  <button class="nav-btn" onclick="show('p3',this)">P3 · Topo / Cycle</button>
+  <button class="nav-btn" onclick="show('p4',this)">P4 · Union-Find</button>
+  <button class="nav-btn" onclick="show('p5',this)">P5 · SCC / Bridges</button>
+  <button class="nav-btn" onclick="show('p6',this)">P6 · Graph DP</button>
+  <button class="nav-btn" onclick="show('p7',this)">P7 · MST</button>
+</div>
+
+<!-- Phase 1 -->
+<div class="phase-card" id="p1">
+  <div class="ph">
+    <div class="ph-num">1</div>
+    <div class="ph-title">PHASE 1 · GRAPH TRAVERSAL FOUNDATIONS</div>
+    <div class="ph-tag">BFS &amp; DFS basics · O(V+E)</div>
+  </div>
+  <div class="split">
+    <div class="left-pane">
+      <div class="qs-title">Questions</div>
+      <div class="q-row"><span class="q-num">1.</span><span class="tag t-dfs">DFS</span><span>Number of Islands</span></div>
+      <div class="q-row"><span class="q-num">2.</span><span class="tag t-dfs">DFS</span><span>Connected Components</span></div>
+      <div class="q-row"><span class="q-num">3.</span><span class="tag t-dfs">DFS</span><span>Flood Fill</span></div>
+      <div class="q-row"><span class="q-num">4.</span><span class="tag t-dfs">DFS</span><span>Clone Graph</span></div>
+      <div class="q-row"><span class="q-num">5.</span><span class="tag t-bfs">BFS</span><span>01 Matrix (multi-source)</span></div>
+      <div class="q-row"><span class="q-num">6.</span><span class="tag t-dfs">DFS</span><span>Surrounded Regions</span></div>
+    </div>
+    <div class="right-pane">
+      <div class="qs-title">DFS + BFS template</div>
+      <div class="code-block"><span class="kw">void</span> <span class="fn">dfs</span>(int[][] grid, <span class="kw">boolean</span>[][] vis, int r, int c) {
+  <span class="kw">if</span> (r&lt;0||r&gt;=R||c&lt;0||c&gt;=C||vis[r][c]||grid[r][c]==0) <span class="kw">return</span>;
+  vis[r][c] = <span class="kw">true</span>;
+  <span class="kw">for</span> (int[] d : dirs)    <span class="cm">// {{0,1},{0,-1},{1,0},{-1,0}}</span>
+    <span class="fn">dfs</span>(grid, vis, r+d[0], c+d[1]);
+}
+<span class="cm">// caller: for each unvisited land → dfs() → count++</span>
+
+<span class="cm">// BFS multi-source (01 Matrix)</span>
+Queue&lt;int[]&gt; q = <span class="kw">new</span> LinkedList&lt;&gt;();
+<span class="kw">for</span> (all 0-cells) { q.offer(cell); dist[r][c]=0; }
+<span class="kw">while</span> (!q.isEmpty()) {
+  int[] cur = q.poll();
+  <span class="kw">for</span> (int[] d : dirs) {
+    <span class="kw">if</span> (inBounds &amp;&amp; dist[nr][nc] &gt; dist[r][c]+1) {
+      dist[nr][nc] = dist[r][c]+1;
+      q.offer(<span class="kw">new</span> int[]{nr,nc});
+    }
+  }
+}</div>
+    </div>
+  </div>
+  <div class="pbar"><b>Pattern:</b> Mark visited BEFORE recursing (DFS) or BEFORE enqueue (BFS). Multi-source BFS = seed all sources at dist=0 simultaneously.</div>
+</div>
+
+<!-- Phase 2 -->
+<div class="phase-card" id="p2">
+  <div class="ph">
+    <div class="ph-num">2</div>
+    <div class="ph-title">PHASE 2 · SHORTEST PATH (BFS / DIJKSTRA)</div>
+    <div class="ph-tag">Unweighted → BFS · Weighted → Dijkstra</div>
+  </div>
+  <div class="split">
+    <div class="left-pane">
+      <div class="qs-title">Questions</div>
+      <div class="q-row"><span class="q-num">1.</span><span class="tag t-bfs">BFS</span><span>Word Ladder</span></div>
+      <div class="q-row"><span class="q-num">2.</span><span class="tag t-bfs">BFS</span><span>Rotting Oranges</span></div>
+      <div class="q-row"><span class="q-num">3.</span><span class="tag t-bfs">BFS</span><span>Cheapest Flights (K stops)</span></div>
+      <div class="q-row"><span class="q-num">4.</span><span class="tag t-both">Dijkstra</span><span>Network Delay Time</span></div>
+      <div class="q-row"><span class="q-num">5.</span><span class="tag t-both">Dijkstra</span><span>Path Min Effort</span></div>
+      <div class="q-row"><span class="q-num">6.</span><span class="tag t-both">Dijkstra</span><span>Swim in Rising Water</span></div>
+    </div>
+    <div class="right-pane">
+      <div class="qs-title">Dijkstra template</div>
+      <div class="code-block">int[] dist = <span class="kw">new</span> int[V]; Arrays.fill(dist, INF);
+dist[src] = 0;
+PriorityQueue&lt;int[]&gt; pq =
+  <span class="kw">new</span> PriorityQueue&lt;&gt;((a,b)-&gt;a[0]-b[0]); <span class="cm">// {dist,node}</span>
+pq.offer(<span class="kw">new</span> int[]{0, src});
+
+<span class="kw">while</span> (!pq.isEmpty()) {
+  int[] cur = pq.poll();
+  int d=cur[0], u=cur[1];
+  <span class="kw">if</span> (d &gt; dist[u]) <span class="kw">continue</span>; <span class="cm">// stale — skip</span>
+  <span class="kw">for</span> (int[] e : adj.get(u)) { <span class="cm">// e={v,weight}</span>
+    <span class="kw">if</span> (dist[u]+e[1] &lt; dist[e[0]]) {
+      dist[e[0]] = dist[u]+e[1];
+      pq.offer(<span class="kw">new</span> int[]{dist[e[0]], e[0]});
+    }
+  }
+}
+<span class="cm">// Network Delay: return max(dist[])</span>
+<span class="cm">// K-stops: use dist[k][node] 2D, BFS level-capped</span></div>
+    </div>
+  </div>
+  <div class="pbar"><b>Key:</b> Never skip the stale-entry check <code>if (d &gt; dist[u]) continue</code> — causes TLE without it.</div>
+</div>
+
+<!-- Phase 3 -->
+<div class="phase-card" id="p3">
+  <div class="ph">
+    <div class="ph-num">3</div>
+    <div class="ph-title">PHASE 3 · CYCLE DETECTION &amp; TOPOLOGICAL SORT</div>
+    <div class="ph-tag">Directed Graphs · Kahn's BFS · DFS postorder</div>
+  </div>
+  <div class="split">
+    <div class="left-pane">
+      <div class="qs-title">Questions</div>
+      <div class="q-row"><span class="q-num">1.</span><span class="tag t-dfs">DFS</span><span>Cycle in Directed Graph</span></div>
+      <div class="q-row"><span class="q-num">2.</span><span class="tag t-dfs">DFS</span><span>Cycle in Undirected Graph</span></div>
+      <div class="q-row"><span class="q-num">3.</span><span class="tag t-topo">Topo BFS</span><span>Course Schedule I</span></div>
+      <div class="q-row"><span class="q-num">4.</span><span class="tag t-topo">Topo BFS</span><span>Course Schedule II</span></div>
+      <div class="q-row"><span class="q-num">5.</span><span class="tag t-topo">Topo BFS</span><span>Alien Dictionary</span></div>
+      <div class="q-row"><span class="q-num">6.</span><span class="tag t-topo">Topo BFS</span><span>Find Eventual Safe States</span></div>
+    </div>
+    <div class="right-pane">
+      <div class="qs-title">Kahn's topo sort + cycle check</div>
+      <div class="code-block">int[] indegree = <span class="kw">new</span> int[V];
+<span class="kw">for</span> (int u=0; u&lt;V; u++)
+  <span class="kw">for</span> (int v : adj.get(u)) indegree[v]++;
+
+Queue&lt;Integer&gt; q = <span class="kw">new</span> LinkedList&lt;&gt;();
+<span class="kw">for</span> (int i=0; i&lt;V; i++) <span class="kw">if</span> (indegree[i]==0) q.offer(i);
+
+List&lt;Integer&gt; order = <span class="kw">new</span> ArrayList&lt;&gt;();
+<span class="kw">while</span> (!q.isEmpty()) {
+  int u = q.poll(); order.add(u);
+  <span class="kw">for</span> (int v : adj.get(u))
+    <span class="kw">if</span> (--indegree[v]==0) q.offer(v);
+}
+<span class="cm">// cycle exists if order.size() &lt; V</span>
+
+<span class="cm">// DFS cycle (directed): 3-color</span>
+<span class="cm">// 0=unvisited 1=in-stack 2=done</span>
+<span class="kw">if</span> (color[v]==1) <span class="kw">return true</span>; <span class="cm">// back edge = cycle</span>
+<span class="cm">// Undirected: vis[nei] &amp;&amp; nei!=parent → cycle</span></div>
+    </div>
+  </div>
+  <div class="pbar"><b>Pattern:</b> Kahn's = indegree[] + BFS. If <code>order.size() &lt; V</code> → cycle. DFS topo = postorder reversed.</div>
+</div>
+
+<!-- Phase 4 -->
+<div class="phase-card" id="p4">
+  <div class="ph">
+    <div class="ph-num">4</div>
+    <div class="ph-title">PHASE 4 · UNION-FIND (DISJOINT SET UNION)</div>
+    <div class="ph-tag">Dynamic connectivity · O(α(n)) per op</div>
+  </div>
+  <div class="split">
+    <div class="left-pane">
+      <div class="qs-title">Questions</div>
+      <div class="q-row"><span class="q-num">1.</span><span class="tag t-uf">UF</span><span>Number of Provinces</span></div>
+      <div class="q-row"><span class="q-num">2.</span><span class="tag t-uf">UF</span><span>Redundant Connection</span></div>
+      <div class="q-row"><span class="q-num">3.</span><span class="tag t-uf">UF</span><span>Accounts Merge</span></div>
+      <div class="q-row"><span class="q-num">4.</span><span class="tag t-uf">UF</span><span>Making Large Island</span></div>
+      <div class="q-row"><span class="q-num">5.</span><span class="tag t-uf">UF</span><span>Satisfiability of Eq. Equations</span></div>
+      <br>
+      <div style="font-size:11px;line-height:1.6;margin-top:4px;">
+        Redundant connection = first edge where <code>find(u)==find(v)</code> before union.<br>
+        Provinces = count nodes where <code>find(i)==i</code>.
+      </div>
+    </div>
+    <div class="right-pane">
+      <div class="qs-title">Union-Find with path compression + rank</div>
+      <div class="code-block">int[] parent, rank;
+
+<span class="kw">void</span> <span class="fn">init</span>(int n) {
+  parent = <span class="kw">new</span> int[n]; rank = <span class="kw">new</span> int[n];
+  <span class="kw">for</span> (int i=0; i&lt;n; i++) parent[i]=i;
+}
+
+int <span class="fn">find</span>(int x) {           <span class="cm">// path compression</span>
+  <span class="kw">if</span> (parent[x] != x)
+    parent[x] = <span class="fn">find</span>(parent[x]);
+  <span class="kw">return</span> parent[x];
+}
+
+<span class="kw">boolean</span> <span class="fn">union</span>(int x, int y) {
+  int px=<span class="fn">find</span>(x), py=<span class="fn">find</span>(y);
+  <span class="kw">if</span> (px==py) <span class="kw">return false</span>; <span class="cm">// already connected</span>
+  <span class="kw">if</span> (rank[px]&lt;rank[py]) { int t=px; px=py; py=t; }
+  parent[py]=px;
+  <span class="kw">if</span> (rank[px]==rank[py]) rank[px]++;
+  <span class="kw">return true</span>;
+}</div>
+    </div>
+  </div>
+  <div class="pbar"><b>Pattern:</b> Path compression + union by rank → near O(1). Use <code>HashMap&lt;String,String&gt;</code> parent for string-keyed problems like Accounts Merge.</div>
+</div>
+
+<!-- Phase 5 -->
+<div class="phase-card" id="p5">
+  <div class="ph">
+    <div class="ph-num">5</div>
+    <div class="ph-title">PHASE 5 · SCC, BRIDGES &amp; ARTICULATION POINTS</div>
+    <div class="ph-tag">Tarjan's · disc[] + low[]</div>
+  </div>
+  <div class="split">
+    <div class="left-pane">
+      <div class="qs-title">Questions</div>
+      <div class="q-row"><span class="q-num">1.</span><span class="tag t-dfs">DFS</span><span>Critical Connections (Bridges)</span></div>
+      <div class="q-row"><span class="q-num">2.</span><span class="tag t-dfs">DFS</span><span>Articulation Points</span></div>
+      <div class="q-row"><span class="q-num">3.</span><span class="tag t-dfs">DFS</span><span>Strongly Connected Components</span></div>
+      <div class="q-row"><span class="q-num">4.</span><span class="tag t-dfs">DFS</span><span>Number of SCCs (Kosaraju)</span></div>
+      <br>
+      <div style="font-size:11px;line-height:1.6;margin-top:4px;">
+        Bridge: <code>low[v] &gt; disc[u]</code><br>
+        AP: <code>low[v] &gt;= disc[u]</code> + root child check<br>
+        Kosaraju: DFS order → reverse edges → DFS again
+      </div>
+    </div>
+    <div class="right-pane">
+      <div class="qs-title">Tarjan's bridge-finding</div>
+      <div class="code-block">int timer = 0;
+int[] disc, low; <span class="kw">boolean</span>[] vis;
+
+<span class="kw">void</span> <span class="fn">dfs</span>(int u, int par) {
+  vis[u] = <span class="kw">true</span>;
+  disc[u] = low[u] = timer++;
+
+  <span class="kw">for</span> (int v : adj.get(u)) {
+    <span class="kw">if</span> (!vis[v]) {
+      <span class="fn">dfs</span>(v, u);
+      low[u] = Math.min(low[u], low[v]);
+      <span class="hi">if</span> (low[v] &gt; disc[u])       <span class="cm">// bridge!</span>
+        bridges.add(List.of(u, v));
+    } <span class="kw">else if</span> (v != par)
+      low[u] = Math.min(low[u], disc[v]);
+  }
+}
+<span class="cm">// Kosaraju SCC:</span>
+<span class="cm">// 1) DFS on G → push to stack on finish</span>
+<span class="cm">// 2) Build reverse graph G^T</span>
+<span class="cm">// 3) DFS on G^T in stack pop order → each DFS = 1 SCC</span></div>
+    </div>
+  </div>
+  <div class="pbar"><b>Pattern:</b> disc[] = discovery time, low[] = lowest reachable. Bridge: low[v]&gt;disc[u]. AP: low[v]&gt;=disc[u] (non-root node).</div>
+</div>
+
+<!-- Phase 6 -->
+<div class="phase-card" id="p6">
+  <div class="ph">
+    <div class="ph-num">6</div>
+    <div class="ph-title">PHASE 6 · GRAPH DP (ADVANCED)</div>
+    <div class="ph-tag">Memoized DFS · Bitmask DP · DP on DAG</div>
+  </div>
+  <div class="split">
+    <div class="left-pane">
+      <div class="qs-title">Questions</div>
+      <div class="q-row"><span class="q-num">1.</span><span class="tag t-dp">DFS+Memo</span><span>Longest Increasing Path in Matrix</span></div>
+      <div class="q-row"><span class="q-num">2.</span><span class="tag t-dp">DP DAG</span><span>Unique Paths (grid)</span></div>
+      <div class="q-row"><span class="q-num">3.</span><span class="tag t-both">Dijkstra+DP</span><span>Number of Ways to Dest.</span></div>
+      <div class="q-row"><span class="q-num">4.</span><span class="tag t-bfs">BFS+Mask</span><span>Shortest Path Visiting All Nodes</span></div>
+      <div class="q-row"><span class="q-num">5.</span><span class="tag t-dp">DP levels</span><span>Min Cost K Edges</span></div>
+    </div>
+    <div class="right-pane">
+      <div class="qs-title">Memoized DFS + Bitmask BFS</div>
+      <div class="code-block">int[][] memo; <span class="cm">// LIP: memo[i][j] = best from (i,j)</span>
+
+int <span class="fn">dfs</span>(int[][] g, int r, int c) {
+  <span class="kw">if</span> (memo[r][c] != 0) <span class="kw">return</span> memo[r][c];
+  int best = 1;
+  <span class="kw">for</span> (int[] d : dirs) {
+    int nr=r+d[0], nc=c+d[1];
+    <span class="kw">if</span> (inBounds(nr,nc) &amp;&amp; g[nr][nc]&gt;g[r][c])
+      best = Math.max(best, 1+<span class="fn">dfs</span>(g,nr,nc));
+  }
+  <span class="kw">return</span> memo[r][c] = best;
+}
+
+<span class="cm">// Bitmask BFS — visit all nodes</span>
+<span class="cm">// state = {node, visitedMask, dist}</span>
+int FULL = (1&lt;&lt;n)-1;
+Queue&lt;int[]&gt; q = <span class="kw">new</span> LinkedList&lt;&gt;();
+<span class="kw">for</span> (int i=0; i&lt;n; i++) q.offer(<span class="kw">new</span> int[]{i,1&lt;&lt;i,0});
+<span class="kw">while</span> (!q.isEmpty()) {
+  int[] cur = q.poll();
+  <span class="kw">if</span> (cur[1]==FULL) <span class="kw">return</span> cur[2];
+  <span class="kw">for</span> (int nei : adj.get(cur[0]))
+    q.offer(<span class="kw">new</span> int[]{nei, cur[1]|(1&lt;&lt;nei), cur[2]+1});
+}</div>
+    </div>
+  </div>
+  <div class="pbar"><b>Pattern:</b> Grid = DAG → memoize DFS. Bitmask BFS: state=(node,mask). Use visited set on (node,mask) pairs. Works when nodes ≤ 20.</div>
+</div>
+
+<!-- Phase 7 -->
+<div class="phase-card" id="p7">
+  <div class="ph">
+    <div class="ph-num">7</div>
+    <div class="ph-title">PHASE 7 · MINIMUM SPANNING TREE</div>
+    <div class="ph-tag">Kruskal (sort+UF) · Prim (greedy heap)</div>
+  </div>
+  <div class="split">
+    <div class="left-pane">
+      <div class="qs-title">Questions</div>
+      <div class="q-row"><span class="q-num">1.</span><span class="tag t-uf">Kruskal</span><span>Min Cost Connect All Points</span></div>
+      <div class="q-row"><span class="q-num">2.</span><span class="tag t-dp">Prim</span><span>Classic MST</span></div>
+      <div class="q-row"><span class="q-num">3.</span><span class="tag t-uf">Kruskal</span><span>Optimize Water Distribution</span></div>
+      <br>
+      <div style="font-size:11px;line-height:1.7;margin-top:4px;">
+        <b>Kruskal</b>: sort edges + UF. Better sparse graphs.<br>
+        <b>Prim</b>: Dijkstra-like heap. Better dense graphs.<br>
+        Both yield same MST total weight.
+      </div>
+    </div>
+    <div class="right-pane">
+      <div class="qs-title">Kruskal + Prim</div>
+      <div class="code-block"><span class="cm">// Kruskal</span>
+Collections.sort(edges, (a,b)-&gt;a[2]-b[2]);
+<span class="fn">init</span>(V);
+int mstCost=0, used=0;
+<span class="kw">for</span> (int[] e : edges) {     <span class="cm">// {u, v, weight}</span>
+  <span class="kw">if</span> (<span class="fn">union</span>(e[0],e[1])) {
+    mstCost += e[2];
+    <span class="kw">if</span> (++used==V-1) <span class="kw">break</span>;
+  }
+}
+
+<span class="cm">// Prim</span>
+<span class="kw">boolean</span>[] inMST = <span class="kw">new</span> boolean[V];
+PriorityQueue&lt;int[]&gt; pq =
+  <span class="kw">new</span> PriorityQueue&lt;&gt;((a,b)-&gt;a[0]-b[0]); <span class="cm">// {cost,node}</span>
+pq.offer(<span class="kw">new</span> int[]{0,0});
+<span class="kw">while</span> (!pq.isEmpty()) {
+  int[] cur=pq.poll(); int u=cur[1];
+  <span class="kw">if</span> (inMST[u]) <span class="kw">continue</span>;
+  inMST[u]=<span class="kw">true</span>; mstCost+=cur[0];
+  <span class="kw">for</span> (int[] e : adj.get(u))
+    <span class="kw">if</span> (!inMST[e[0]]) pq.offer(<span class="kw">new</span> int[]{e[1],e[0]});
+}</div>
+    </div>
+  </div>
+  <div class="pbar"><b>Pattern:</b> Kruskal = sort + union(). Stop at V-1 edges. Water Distribution trick: add virtual node 0 with well-cost edges.</div>
+</div>
+
+<div class="golden">
+  <b>GOLDEN RULE:</b> Directed or undirected? Weighted or unweighted? Need order, path, or connectivity?<br>
+  Then pick: BFS / DFS / Dijkstra / Topo / UF / Tarjan / MST.
+</div>
+
+<script>
+function show(id, btn) {
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  ['p1','p2','p3','p4','p5','p6','p7'].forEach(p => {
+    document.getElementById(p).classList.toggle('hidden', id !== 'all' && p !== id);
+  });
+}
+</script>
+</body>
+</html>
