@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Computer Networks</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="theme.css">
+<style>
+.cn-wrap{max-width:920px;margin:0 auto;}
+.cn-sec{display:none;}
+.cn-sec.active{display:block;}
+details.qa{border:1px solid var(--border);background:var(--panel);backdrop-filter:blur(8px);border-radius:12px;margin-bottom:8px;overflow:hidden;transition:border-color .2s;}
+details.qa[open]{border-color:var(--border-2);}
+details.qa summary{cursor:pointer;padding:12px 15px;font-weight:600;font-size:12.5px;color:var(--text);list-style:none;display:flex;align-items:center;gap:11px;}
+details.qa summary::-webkit-details-marker{display:none;}
+.chev{width:16px;height:16px;flex-shrink:0;border-right:2px solid var(--violet);border-bottom:2px solid var(--violet);transform:rotate(-45deg);transition:transform .2s;margin-left:2px;}
+details.qa[open] .chev{transform:rotate(45deg);}
+.qnum{font-family:var(--font-mono);font-size:10px;color:var(--text-faint);min-width:22px;}
+.qa summary:hover{color:var(--cyan);}
+.qa-a{padding:2px 16px 15px 44px;font-size:11.5px;color:var(--text-dim);line-height:1.65;}
+.qa-a .lbl{display:inline-block;font-family:var(--font-display);font-size:9px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;padding:2px 7px;border-radius:6px;margin:8px 0 4px;}
+.lbl-q{background:rgba(91,210,255,.14);color:var(--cyan);}
+.lbl-f{background:rgba(154,140,255,.14);color:var(--violet);}
+.lbl-u{background:rgba(255,203,115,.14);color:var(--amber);}
+.qa-a b{color:var(--text);}
+.qa-a code{font-family:var(--font-mono);font-size:10.5px;background:rgba(255,255,255,.07);color:var(--cyan);padding:1px 5px;border-radius:5px;}
+.badge{display:inline-block;font-family:var(--font-display);font-size:9px;font-weight:700;letter-spacing:.4px;padding:2px 8px;border-radius:999px;margin-left:auto;flex-shrink:0;}
+.b-must{background:rgba(79,230,180,.14);color:var(--mint);}
+.b-good{background:rgba(255,203,115,.14);color:var(--amber);}
+.b-rare{background:rgba(255,123,123,.14);color:var(--rose);}
+.refblock{border:1px solid var(--border);background:var(--panel);border-radius:14px;padding:14px 16px;margin-bottom:14px;}
+.refblock h3{font-family:var(--font-display);font-size:13px;font-weight:600;margin-bottom:4px;display:flex;align-items:center;gap:9px;}
+.refblock .cap{font-size:10.5px;color:var(--text-faint);margin-bottom:10px;}
+.flow{display:flex;flex-wrap:wrap;gap:7px;align-items:center;margin:6px 0;}
+.flow .step{background:var(--panel-2);border:1px solid var(--border-2);border-radius:9px;padding:7px 11px;font-size:11px;font-weight:600;color:var(--text);}
+.flow .step b{color:var(--cyan);font-family:var(--font-mono);font-size:10px;margin-right:5px;}
+.flow .ar{color:var(--text-faint);}
+.cardgrid{display:grid;grid-template-columns:1fr 1fr;gap:7px;}
+.revcard{border:1px solid rgba(255,203,115,.25);background:linear-gradient(135deg,rgba(255,203,115,.06),rgba(154,140,255,.04));border-radius:12px;padding:12px 15px;margin-bottom:10px;}
+.revcard h4{font-family:var(--font-display);font-size:11px;letter-spacing:.5px;text-transform:uppercase;color:var(--amber);margin-bottom:7px;}
+.revcard ul{margin:0;padding-left:18px;}
+.revcard li{font-size:11px;color:var(--text-dim);line-height:1.7;}
+@media(max-width:680px){.cardgrid{grid-template-columns:1fr;}.qa-a{padding-left:16px;}}
+</style>
+</head>
+<body>
+<a class="back-hub" href="index.html"><span class="arw">&#8592;</span> Hub</a>
+
+<h1>COMPUTER NETWORKS</h1>
+<div class="sub">From the OSI model to the FAANG networking round &middot; click any question to reveal the answer</div>
+
+<div class="core-box">
+  <div class="ct">The one thing to narrate cold</div>
+  <p>What happens when you <em>type google.com and hit Enter</em>: DNS lookup &rarr; TCP handshake &rarr; TLS &rarr; HTTP request &rarr; response &rarr; render. Walk that path without notes and you have touched almost every CN topic at once.</p>
+</div>
+
+<div class="nav">
+  <button class="nav-btn active" onclick="sec('ref',this)">Quick Reference</button>
+  <button class="nav-btn" onclick="sec('model',this)">Model Answers (17)</button>
+  <button class="nav-btn" onclick="sec('faq',this)">FAQ Bank (50)</button>
+  <button class="nav-btn" onclick="sec('trig',this)">Triggers &amp; Traps</button>
+  <button class="nav-btn" onclick="sec('rev',this)">Revision Card</button>
+</div>
+
+<div class="cn-wrap">
+
+<!-- ===================== QUICK REFERENCE ===================== -->
+<div class="cn-sec active" id="ref">
+
+  <div class="refblock">
+    <h3>OSI model &mdash; 7 layers <span class="badge b-must">Must know</span></h3>
+    <div class="cap">Mnemonic top&rarr;bottom: <b>A</b>ll <b>P</b>eople <b>S</b>eem <b>T</b>o <b>N</b>eed <b>D</b>ata <b>P</b>rocessing</div>
+    <table>
+      <tr><th>#</th><th>Layer</th><th>Job</th><th>PDU</th><th>Examples</th></tr>
+      <tr><td>7</td><td>Application</td><td>Protocols the user's app speaks</td><td>Data</td><td>HTTP, DNS, SMTP, FTP</td></tr>
+      <tr><td>6</td><td>Presentation</td><td>Encrypt / compress / format</td><td>Data</td><td>TLS, JPEG, ASCII</td></tr>
+      <tr><td>5</td><td>Session</td><td>Open / manage / close conversations</td><td>Data</td><td>Sockets, RPC</td></tr>
+      <tr><td>4</td><td>Transport</td><td>End-to-end delivery + ports</td><td>Segment</td><td>TCP, UDP</td></tr>
+      <tr><td>3</td><td>Network</td><td>Logical addressing + routing</td><td>Packet</td><td>IP, ICMP</td></tr>
+      <tr><td>2</td><td>Data Link</td><td>Local delivery via MAC + framing</td><td>Frame</td><td>Ethernet, ARP</td></tr>
+      <tr><td>1</td><td>Physical</td><td>Raw bits on the medium</td><td>Bits</td><td>Cables, Wi-Fi, hubs</td></tr>
+    </table>
+  </div>
+
+  <div class="cardgrid">
+    <div class="refblock">
+      <h3>TCP vs UDP <span class="badge b-must">Must know</span></h3>
+      <table>
+        <tr><th>Aspect</th><th>TCP</th><th>UDP</th></tr>
+        <tr><td>Connection</td><td>Connection-oriented</td><td>Connectionless</td></tr>
+        <tr><td>Reliability</td><td>Acks + resend</td><td>Best-effort</td></tr>
+        <tr><td>Ordering</td><td>Guaranteed</td><td>None</td></tr>
+        <tr><td>Header</td><td>20 bytes min</td><td>8 bytes</td></tr>
+        <tr><td>Used by</td><td>Web, email, files</td><td>DNS, video, games</td></tr>
+      </table>
+    </div>
+    <div class="refblock">
+      <h3>Hub vs Switch vs Router <span class="badge b-must">Must know</span></h3>
+      <table>
+        <tr><th>Device</th><th>Layer</th><th>Forwards by</th></tr>
+        <tr><td>Hub</td><td>1 Physical</td><td>Broadcasts bits</td></tr>
+        <tr><td>Switch</td><td>2 Data Link</td><td>MAC (within LAN)</td></tr>
+        <tr><td>Router</td><td>3 Network</td><td>IP (between nets)</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="cardgrid">
+    <div class="refblock">
+      <h3>Subnetting / CIDR <span class="badge b-must">Must know</span></h3>
+      <div class="cap">Formula: <code>usable hosts = 2^(32 - prefix) - 2</code> (minus network + broadcast)</div>
+      <table>
+        <tr><th>CIDR</th><th>Mask</th><th>Usable hosts</th></tr>
+        <tr><td>/24</td><td>255.255.255.0</td><td>254</td></tr>
+        <tr><td>/25</td><td>255.255.255.128</td><td>126</td></tr>
+        <tr><td>/26</td><td>255.255.255.192</td><td>62</td></tr>
+        <tr><td>/27</td><td>255.255.255.224</td><td>30</td></tr>
+        <tr><td>/30</td><td>255.255.255.252</td><td>2 (p2p links)</td></tr>
+      </table>
+    </div>
+    <div class="refblock">
+      <h3>Ports to memorize <span class="badge b-must">Must know</span></h3>
+      <table>
+        <tr><th>Service</th><th>Port</th><th>Transport</th></tr>
+        <tr><td>HTTP</td><td>80</td><td>TCP</td></tr>
+        <tr><td>HTTPS</td><td>443</td><td>TCP</td></tr>
+        <tr><td>DNS</td><td>53</td><td>UDP (TCP large)</td></tr>
+        <tr><td>DHCP</td><td>67 / 68</td><td>UDP</td></tr>
+        <tr><td>SSH</td><td>22</td><td>TCP</td></tr>
+        <tr><td>SMTP</td><td>25</td><td>TCP</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="cardgrid">
+    <div class="refblock">
+      <h3>IPv4 vs IPv6</h3>
+      <table>
+        <tr><th>Aspect</th><th>IPv4</th><th>IPv6</th></tr>
+        <tr><td>Size</td><td>32 bits</td><td>128 bits</td></tr>
+        <tr><td>Notation</td><td>192.168.1.1</td><td>2001:db8::1</td></tr>
+        <tr><td>Space</td><td>~4.3 billion</td><td>~unlimited</td></tr>
+      </table>
+      <div class="cap" style="margin-top:8px;">Private (RFC 1918): <code>10.0.0.0/8</code>, <code>172.16.0.0/12</code>, <code>192.168.0.0/16</code>. Loopback <code>127.0.0.1</code>.</div>
+    </div>
+    <div class="refblock">
+      <h3>HTTP status classes</h3>
+      <table>
+        <tr><th>Class</th><th>Means</th><th>Common</th></tr>
+        <tr><td>2xx</td><td>Success</td><td>200, 201, 204</td></tr>
+        <tr><td>3xx</td><td>Redirect</td><td>301, 302, 304</td></tr>
+        <tr><td>4xx</td><td>Client error</td><td>400, 401, 403, 404</td></tr>
+        <tr><td>5xx</td><td>Server error</td><td>500, 502, 503</td></tr>
+      </table>
+      <div class="cap" style="margin-top:8px;">Methods: GET (safe), POST, PUT (idempotent), PATCH, DELETE (idempotent).</div>
+    </div>
+  </div>
+
+  <div class="refblock">
+    <h3>What happens when you type google.com <span class="badge b-must">Must know</span></h3>
+    <div class="flow">
+      <span class="step"><b>1</b>URL parse</span><span class="ar">&rarr;</span>
+      <span class="step"><b>2</b>DNS lookup</span><span class="ar">&rarr;</span>
+      <span class="step"><b>3</b>TCP handshake</span><span class="ar">&rarr;</span>
+      <span class="step"><b>4</b>TLS handshake</span><span class="ar">&rarr;</span>
+      <span class="step"><b>5</b>HTTP GET</span><span class="ar">&rarr;</span>
+      <span class="step"><b>6</b>Server responds</span><span class="ar">&rarr;</span>
+      <span class="step"><b>7</b>Browser renders</span>
+    </div>
+    <div class="cap">DNS finds the IP, TCP opens the pipe, TLS secures it, HTTP fetches the page, the browser paints it. ARP + routing move packets hop by hop underneath.</div>
+  </div>
+</div>
+
+<!-- ===================== MODEL ANSWERS ===================== -->
+<div class="cn-sec" id="model">
+  <div class="cap" style="font-size:11px;color:var(--text-faint);margin-bottom:10px;">The 17 questions a CN round actually opens with. Lead with the one-line definition, give one example, then handle the follow-up before they ask.</div>
+
+  <details class="qa"><summary><span class="chev"></span><span class="qnum">01</span>Walk me through the OSI model.<span class="badge b-must">Must know</span></summary>
+    <div class="qa-a">
+      <span class="lbl lbl-q">15-sec</span><br>7 layers, each one job: Application (HTTP, DNS), Presentation (encryption), Session (connections), Transport (TCP/UDP, ports), Network (IP, routing), Data Link (MAC, frames), Physical (bits). Mnemonic: <b>All People Seem To Need Data Processing</b>.
+      <span class="lbl lbl-f">Full</span><br>OSI is a 7-layer reference model for how data moves across a network, each layer with one job. From the top: Application holds user protocols like HTTP/DNS; Presentation handles encryption and formatting; Session manages connections; Transport gives end-to-end delivery with TCP/UDP and ports; Network handles logical addressing and routing with IP; Data Link frames data using MAC addresses; Physical is raw bits on the wire.
+      <span class="lbl lbl-u">Follow-up</span><br>Which layer does a router work at, and a switch? Router = L3 (Network, IP); switch = L2 (Data Link, MAC).
+    </div></details>
+
+  <details class="qa"><summary><span class="chev"></span><span class="qnum">02</span>OSI vs TCP/IP model?<span class="badge b-must">Must know</span></summary>
+    <div class="qa-a">
+      <span class="lbl lbl-q">15-sec</span><br>OSI is the 7-layer theory model; TCP/IP is the 4-layer model the internet actually runs on. TCP/IP merges OSI's top three into one Application layer and the bottom two into Network Access.
+      <span class="lbl lbl-f">Full</span><br>Both are layered, but OSI is the 7-layer theoretical reference while TCP/IP is the 4-layer implementation. TCP/IP collapses Application + Presentation + Session into one Application layer, and Physical + Data Link into Network Access. So TCP/IP = Application, Transport, Internet, Network Access. OSI teaches; TCP/IP runs.
+      <span class="lbl lbl-u">Follow-up</span><br>Why did TCP/IP win? It shipped with working protocols and the actual internet; OSI stayed a reference.
+    </div></details>
+
+  <details class="qa"><summary><span class="chev"></span><span class="qnum">03</span>TCP vs UDP &mdash; when do you use which?<span class="badge b-must">Must know</span></summary>
+    <div class="qa-a">
+      <span class="lbl lbl-q">15-sec</span><br>TCP is connection-oriented and reliable (handshake, ordering, retransmission) &mdash; web, email, files. UDP is connectionless and best-effort but fast &mdash; video calls, streaming, games, DNS.
+      <span class="lbl lbl-f">Full</span><br>Both are Transport-layer with opposite trade-offs. TCP sets up a connection, guarantees ordered error-checked delivery, and does flow + congestion control &mdash; slower but dependable. UDP has no handshake, ordering, or retransmission &mdash; just fast lightweight datagrams. Use TCP when every byte must arrive; UDP when speed beats completeness.
+      <span class="lbl lbl-u">Follow-up</span><br>Why is the TCP header bigger? TCP needs ≥20 bytes for sequence numbers, acks, and window size; UDP needs only 8 because it tracks none of that.
+    </div></details>
+
+  <details class="qa"><summary><span class="chev"></span><span class="qnum">04</span>Explain the TCP 3-way handshake.<span class="badge b-must">Must know</span></summary>
+    <div class="qa-a">
+      <span class="lbl lbl-q">15-sec</span><br>Client sends <code>SYN</code>, server replies <code>SYN-ACK</code>, client sends final <code>ACK</code>. Three messages so both sides agree on starting sequence numbers and the connection opens.
+      <span class="lbl lbl-f">Full</span><br>It opens a reliable connection and syncs sequence numbers. Client sends SYN with its initial sequence number. Server replies SYN-ACK: acknowledges the client's SYN and sends its own. Client sends a final ACK. Now both sides agree on starting sequence numbers and data flows.
+      <span class="lbl lbl-u">Follow-up</span><br>Why not two-way? Both sides must confirm the other can <b>send and receive</b>; two messages prove only one direction.
+    </div></details>
+
+  <details class="qa"><summary><span class="chev"></span><span class="qnum">05</span>Why does TCP teardown take 4 steps?<span class="badge b-good">Good to know</span></summary>
+    <div class="qa-a">
+      <span class="lbl lbl-q">15-sec</span><br>Closing is per-direction because TCP is full-duplex. Each side sends its own <code>FIN</code> and gets its own <code>ACK</code> &mdash; four messages. Setup can combine the server's SYN and ACK into one.
+      <span class="lbl lbl-f">Full</span><br>A TCP connection is full-duplex, so each side closes its half separately. One side sends FIN, the other ACKs it, but that side may still have data, so its own FIN comes later as a separate message, which the first side ACKs &mdash; four messages total.
+      <span class="lbl lbl-u">Follow-up</span><br>What is TIME_WAIT? After the final ACK the closer waits ~2&times; the max segment lifetime so delayed packets die out before the port is reused.
+    </div></details>
+
+  <details class="qa"><summary><span class="chev"></span><span class="qnum">06</span>What happens when you type google.com and press Enter?<span class="badge b-must">Must know</span></summary>
+    <div class="qa-a">
+      <span class="lbl lbl-q">15-sec</span><br>DNS resolves the name to an IP, TCP connects on port 443 (3-way handshake), TLS sets up encryption, the browser sends HTTP GET, the server returns HTML, the browser renders and fetches CSS/JS/images.
+      <span class="lbl lbl-f">Full</span><br>The browser resolves the name (cache &rarr; resolver &rarr; root &rarr; .com TLD &rarr; Google's authoritative server). It opens a TCP connection on port 443 with the 3-way handshake, does a TLS handshake, sends an HTTP GET, receives the HTML, then parses and fetches CSS/JS/images and renders. ARP and routing move packets hop by hop underneath.
+      <span class="lbl lbl-u">Follow-up</span><br>Where does ARP fit? At each local hop, ARP resolves the next hop's IP to its MAC so the frame can be addressed.
+    </div></details>
+
+  <details class="qa"><summary><span class="chev"></span><span class="qnum">07</span>How does DNS resolution work?<span class="badge b-must">Must know</span></summary>
+    <div class="qa-a">
+      <span class="lbl lbl-q">15-sec</span><br>Machine checks its cache, then asks a recursive resolver, which walks root &rarr; .com TLD &rarr; authoritative server to get the IP, caches it for the TTL, and returns it.
+      <span class="lbl lbl-f">Full</span><br>DNS turns a name into an IP. Your machine checks its local cache, then asks a recursive resolver (usually your ISP's). If uncached, the resolver queries the hierarchy: root points to the .com TLD server, which points to the authoritative name server, which returns the IP. The resolver caches it for its TTL.
+      <span class="lbl lbl-u">Follow-up</span><br>TCP or UDP? Mostly UDP on port 53; falls back to TCP for large responses or zone transfers.
+    </div></details>
+
+  <details class="qa"><summary><span class="chev"></span><span class="qnum">08</span>HTTP vs HTTPS, and what does TLS add?<span class="badge b-must">Must know</span></summary>
+    <div class="qa-a">
+      <span class="lbl lbl-q">15-sec</span><br>HTTP sends plaintext; HTTPS is HTTP over TLS, adding encryption, authentication (server certificate), and integrity. HTTPS = port 443, HTTP = port 80.
+      <span class="lbl lbl-f">Full</span><br>HTTP requests/receives web pages in plaintext, so anyone in between can read or tamper. HTTPS runs HTTP over TLS, adding encryption (unreadable in transit), authentication (you're talking to the real server via its certificate), and integrity (tampering detected).
+      <span class="lbl lbl-u">Follow-up</span><br>Symmetric or asymmetric? Both: the handshake uses asymmetric keys to agree on a shared secret, then the data uses fast symmetric encryption.
+    </div></details>
+
+  <details class="qa"><summary><span class="chev"></span><span class="qnum">09</span>Flow control vs congestion control?<span class="badge b-good">Good to know</span></summary>
+    <div class="qa-a">
+      <span class="lbl lbl-q">15-sec</span><br>Flow control stops a fast sender from overwhelming a slow <b>receiver</b> (advertised window). Congestion control stops senders from overwhelming the <b>network</b> (congestion window).
+      <span class="lbl lbl-f">Full</span><br>Both throttle the sender but protect different things. Flow control uses the receiver's advertised window (free buffer space). Congestion control uses a congestion window managed by slow start and AIMD (additive-increase, multiplicative-decrease).
+      <span class="lbl lbl-u">Follow-up</span><br>What does the sender actually send? The minimum of the receiver window and the congestion window.
+    </div></details>
+
+  <details class="qa"><summary><span class="chev"></span><span class="qnum">10</span>Hub vs switch vs router?<span class="badge b-must">Must know</span></summary>
+    <div class="qa-a">
+      <span class="lbl lbl-q">15-sec</span><br>Hub = L1, floods every port. Switch = L2, forwards a frame by MAC to the right port. Router = L3, forwards packets between networks by IP.
+      <span class="lbl lbl-f">Full</span><br>A hub (L1) repeats bits out every port &mdash; floods and shares bandwidth, basically obsolete. A switch (L2) learns MAC addresses and forwards a frame only to the correct port. A router (L3) connects different networks and forwards packets between them using IP and a routing table.
+      <span class="lbl lbl-u">Follow-up</span><br>Which gives separate collision domains? A switch &mdash; each port is its own; a hub puts everyone in one.
+    </div></details>
+
+  <details class="qa"><summary><span class="chev"></span><span class="qnum">11</span>IP addressing &mdash; public vs private, IPv4 vs IPv6.<span class="badge b-must">Must know</span></summary>
+    <div class="qa-a">
+      <span class="lbl lbl-q">15-sec</span><br>IPv4 = 32 bits, ~4.3 billion (ran out). Private ranges (10/8, 172.16/12, 192.168/16) are reused locally; public addresses are globally unique. IPv6 = 128 bits, ~unlimited.
+      <span class="lbl lbl-f">Full</span><br>An IP identifies a device. IPv4 is 32 bits (e.g. 192.168.1.1), ~4.3 billion addresses, which ran out. Private ranges are reused inside local networks and never routed publicly. IPv6 is 128 bits in hex, with practically unlimited space &mdash; the long-term fix.
+      <span class="lbl lbl-u">Follow-up</span><br>How do private addresses reach the internet? Through NAT at the router.
+    </div></details>
+
+  <details class="qa"><summary><span class="chev"></span><span class="qnum">12</span>What is subnetting and CIDR?<span class="badge b-must">Must know</span></summary>
+    <div class="qa-a">
+      <span class="lbl lbl-q">15-sec</span><br>Subnetting splits a network by borrowing host bits for the network part. CIDR writes the split as a slash: <code>/24</code> = 256 addresses, 254 usable after network + broadcast.
+      <span class="lbl lbl-f">Full</span><br>Subnetting splits one large network into smaller ones by borrowing bits from the host part. CIDR like <code>/24</code> means the first 24 bits are the network. A /24 gives 256 total, 254 usable (one network, one broadcast). It improves organisation, security, and routing.
+      <span class="lbl lbl-u">Follow-up</span><br>Usable hosts in a /26? <code>2^(32-26) - 2 = 62</code>.
+    </div></details>
+
+  <details class="qa"><summary><span class="chev"></span><span class="qnum">13</span>What is ARP and why is it needed?<span class="badge b-good">Good to know</span></summary>
+    <div class="qa-a">
+      <span class="lbl lbl-q">15-sec</span><br>ARP maps a Layer-3 IP to a Layer-2 MAC on the local network. A device broadcasts "who has this IP", the owner replies with its MAC, and the sender caches it.
+      <span class="lbl lbl-f">Full</span><br>Once a packet reaches the local network, frame delivery uses MAC, not IP. So a device broadcasts an ARP request for an IP, the owner replies with its MAC, and the sender caches the mapping in its ARP table.
+      <span class="lbl lbl-u">Follow-up</span><br>Difference from DNS? DNS maps name&rarr;IP; ARP maps IP&rarr;MAC. Different layers, different jobs.
+    </div></details>
+
+  <details class="qa"><summary><span class="chev"></span><span class="qnum">14</span>What does DHCP do?<span class="badge b-good">Good to know</span></summary>
+    <div class="qa-a">
+      <span class="lbl lbl-q">15-sec</span><br>Auto-assigns IP config when a device joins, via <b>DORA</b>: Discover, Offer, Request, Acknowledge. The lease includes IP, mask, gateway, and DNS, and renews over time.
+      <span class="lbl lbl-f">Full</span><br>DHCP assigns IP configuration automatically. Four steps (DORA): client broadcasts Discover, servers send an Offer, client sends a Request for one offer, server sends an Acknowledge to lease it. Ports 67 (server) / 68 (client).
+      <span class="lbl lbl-u">Follow-up</span><br>If the DHCP server is down? The device may fall back to a link-local APIPA address (<code>169.254.x.x</code>) and can't reach the wider network.
+    </div></details>
+
+  <details class="qa"><summary><span class="chev"></span><span class="qnum">15</span>What is NAT and why do we use it?<span class="badge b-good">Good to know</span></summary>
+    <div class="qa-a">
+      <span class="lbl lbl-q">15-sec</span><br>NAT lets many private devices share one public IP. The router rewrites the private source address on outgoing packets and tracks the mapping by port, so replies return to the right device. Conserves scarce IPv4.
+      <span class="lbl lbl-f">Full</span><br>NAT lets a private network share one public IP. The router rewrites the private source address to its public one and tracks the mapping (usually by port), so replies reach the right internal device. It conserves IPv4 and hides the internal network.
+      <span class="lbl lbl-u">Follow-up</span><br>How does the router know which device a reply belongs to? A translation table keyed by the public port it assigned &mdash; that's PAT.
+    </div></details>
+
+  <details class="qa"><summary><span class="chev"></span><span class="qnum">16</span>Walk me through HTTP methods and status codes.<span class="badge b-good">Good to know</span></summary>
+    <div class="qa-a">
+      <span class="lbl lbl-q">15-sec</span><br>Methods state intent: GET reads, POST creates, PUT replaces, PATCH partially updates, DELETE removes. Codes: 2xx success, 3xx redirect, 4xx client error, 5xx server error.
+      <span class="lbl lbl-f">Full</span><br>GET reads, POST creates, PUT replaces, PATCH partially updates, DELETE removes. Status ranges: 2xx success (200 OK), 3xx redirect (301), 4xx client error (404, 401), 5xx server error (500). First digit = category.
+      <span class="lbl lbl-u">Follow-up</span><br>PUT vs POST? PUT is idempotent (twice = same result); POST can create a new resource each time, so it isn't.
+    </div></details>
+
+  <details class="qa"><summary><span class="chev"></span><span class="qnum">17</span>Stop-and-Wait vs Go-Back-N vs Selective Repeat?<span class="badge b-rare">Rare / deep</span></summary>
+    <div class="qa-a">
+      <span class="lbl lbl-q">15-sec</span><br>Stop-and-Wait sends one frame and waits. Go-Back-N sends a window and resends the lost frame plus everything after it. Selective Repeat sends a window but resends only the lost frame, buffering the rest.
+      <span class="lbl lbl-f">Full</span><br>Sliding-window protocols differing in how much is in flight and how errors are handled. Stop-and-Wait: one frame at a time, simple but slow. Go-Back-N: window; on loss, retransmit that frame and all after it (receiver discards out-of-order). Selective Repeat: window; retransmit only the lost frame, buffering out-of-order ones &mdash; efficient but needs receiver memory.
+      <span class="lbl lbl-u">Follow-up</span><br>Which does TCP resemble? Selective Repeat, using selective acknowledgements.
+    </div></details>
+</div>
+
+<!-- ===================== FAQ BANK ===================== -->
+<div class="cn-sec" id="faq">
+  <div class="cap" style="font-size:11px;color:var(--text-faint);margin-bottom:10px;">Rapid recall. If you can answer all 50 fast, your CN fundamentals are ready.</div>
+  <div id="faqList"></div>
+</div>
+
+<!-- ===================== TRIGGERS & TRAPS ===================== -->
+<div class="cn-sec" id="trig">
+  <div class="refblock">
+    <h3>Interview triggers &mdash; if they ask X, say Y</h3>
+    <table>
+      <tr><th>If they ask</th><th>You say</th></tr>
+      <tr><td>TCP vs UDP</td><td>TCP = connection-oriented, reliable, ordered. UDP = connectionless, fast, no guarantees.</td></tr>
+      <tr><td>Why 3-way handshake</td><td>Both sides confirm they can send AND receive; two messages prove only one direction.</td></tr>
+      <tr><td>Why DNS uses UDP</td><td>One small request + reply; a TCP setup would cost more than the query.</td></tr>
+      <tr><td>Type a URL</td><td>DNS &rarr; TCP &rarr; TLS &rarr; HTTP request &rarr; response &rarr; render.</td></tr>
+      <tr><td>Hosts in a /26</td><td>2^(32-26) - 2 = 62.</td></tr>
+      <tr><td>Switch vs router</td><td>Switch = MAC inside a LAN. Router = IP between networks.</td></tr>
+      <tr><td>What makes HTTPS secure</td><td>TLS: asymmetric handshake agrees a symmetric key, then all data is encrypted.</td></tr>
+      <tr><td>HTTP is stateless, so logins?</td><td>Cookies or tokens carry identity since each request is independent.</td></tr>
+      <tr><td>Flow vs congestion control</td><td>Flow control protects the receiver; congestion control protects the network.</td></tr>
+      <tr><td>What is ARP for</td><td>Mapping a known IP to the MAC needed for local delivery.</td></tr>
+    </table>
+  </div>
+  <div class="refblock">
+    <h3>Common traps that cost easy points <span class="badge b-rare">Avoid</span></h3>
+    <table>
+      <tr><th>Trap</th><th>Reality</th></tr>
+      <tr><td>Calling TCP open a 4-way handshake</td><td>Opening is 3-way; closing is 4-way.</td></tr>
+      <tr><td>"UDP is reliable, it mostly arrives"</td><td>UDP gives no delivery, ordering, or duplicate guarantees.</td></tr>
+      <tr><td>Forgetting to subtract 2 in host count</td><td>A /26 has 64 addresses but only 62 usable.</td></tr>
+      <tr><td>Mixing flow and congestion control</td><td>Receiver vs network &mdash; keep them separate.</td></tr>
+      <tr><td>"DNS is always UDP"</td><td>UDP for normal queries, TCP for zone transfers / large responses.</td></tr>
+      <tr><td>"HTTPS uses only asymmetric"</td><td>Asymmetric sets up a symmetric key, which does the bulk work.</td></tr>
+      <tr><td>"IPv6 exists for speed"</td><td>It exists because IPv4 addresses ran out.</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- ===================== REVISION CARD ===================== -->
+<div class="cn-sec" id="rev">
+  <div class="revcard">
+    <h4>Memorize cold</h4>
+    <ul>
+      <li>OSI = 7 layers (All People Seem To Need Data Processing).</li>
+      <li>TCP = reliable, ordered, 3-way open / 4-way close. UDP = fast, best-effort.</li>
+      <li>Switch = L2 (MAC), Router = L3 (IP).</li>
+      <li>Usable hosts = 2^(32 - prefix) - 2.</li>
+      <li>Flow control protects the receiver; congestion control protects the network.</li>
+    </ul>
+  </div>
+  <div class="cardgrid">
+    <div class="revcard">
+      <h4>Numbers to know</h4>
+      <ul>
+        <li>TCP header 20 bytes, UDP 8 bytes.</li>
+        <li>IPv4 32 bits, IPv6 128 bits.</li>
+        <li>Ports: HTTP 80, HTTPS 443, DNS 53, DHCP 67/68, SSH 22, SMTP 25.</li>
+      </ul>
+    </div>
+    <div class="revcard">
+      <h4>One-liners to fire back</h4>
+      <ul>
+        <li>PDUs: data, segment, packet, frame, bits.</li>
+        <li>Handshake: SYN, SYN-ACK, ACK. Teardown: FIN, ACK, FIN, ACK.</li>
+        <li>Private: 10/8, 172.16/12, 192.168/16.</li>
+        <li>HTTPS = HTTP + TLS on 443.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="golden"><b>Two near-certain questions:</b> a subnetting numerical, and the full "type google.com" journey. Drill both out loud and you're ready for the vast majority of CN rounds.</div>
+</div>
+
+</div>
+
+<script>
+function sec(id, btn){
+  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.cn-sec').forEach(s=>s.classList.toggle('active', s.id===id));
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+// 50-question FAQ bank rendered as collapsible items
+const FAQ=[
+["What is a computer network?","A set of devices connected to share data and resources using agreed protocols."],
+["What is a protocol?","A set of rules governing how devices format, transmit, and receive data."],
+["Name the OSI layers top to bottom.","Application, Presentation, Session, Transport, Network, Data Link, Physical."],
+["What is the PDU at each layer?","Data (upper), Segment (Transport), Packet (Network), Frame (Data Link), Bits (Physical)."],
+["How many layers in the TCP/IP model?","Four: Application, Transport, Internet, Link / Network Access."],
+["OSI vs TCP/IP?","OSI is a 7-layer teaching reference. TCP/IP is the 4-layer model the internet actually runs on."],
+["What is encapsulation?","Each layer wraps the data from above in its own header (Data Link adds a trailer too)."],
+["Hub vs switch vs router?","Hub broadcasts bits (L1). Switch forwards by MAC within a LAN (L2). Router forwards by IP between networks (L3)."],
+["Difference between MAC and IP address?","MAC is a fixed hardware address for local delivery. IP is a logical address for routing across networks."],
+["What is ARP?","Address Resolution Protocol: maps a known IP to the MAC needed to deliver on the local link."],
+["How big is an IPv4 address?","32 bits, four octets, ~4.3 billion addresses."],
+["How big is an IPv6 address?","128 bits, eight hex groups, effectively unlimited."],
+["Why does IPv6 exist?","IPv4's ~4.3 billion addresses ran out; IPv6's 128 bits solve exhaustion."],
+["Name the private IP ranges.","10.0.0.0/8, 172.16.0.0/12, 192.168.0.0/16 (RFC 1918)."],
+["What is 127.0.0.1?","The loopback address (localhost) — your own machine."],
+["What does /24 mean in CIDR?","First 24 bits are the network part, leaving 8 host bits (mask 255.255.255.0)."],
+["How many usable hosts in a /26?","2^(32-26) - 2 = 62. Subtract network and broadcast."],
+["Why subtract 2 in the host count?","All-zero host = network address, all-one = broadcast — neither is assignable."],
+["TCP vs UDP?","TCP is connection-oriented, reliable, ordered. UDP is connectionless, fast, no guarantees."],
+["Which apps use UDP?","DNS, DHCP, video/VoIP, online games — where speed beats perfect delivery."],
+["TCP header size?","20 bytes minimum, up to 60 with options."],
+["UDP header size?","8 bytes, fixed."],
+["Describe the TCP 3-way handshake.","SYN from client, SYN-ACK from server, ACK from client. Then data flows."],
+["Why is the handshake 3-way and not 2?","Both sides must confirm they can send and receive; two messages prove only one direction."],
+["Why does closing TCP take 4 steps?","Each direction is closed independently: FIN and ACK each way."],
+["What is TIME_WAIT?","A short wait after closing so late/duplicate packets are handled before the port is reused."],
+["What is flow control?","Stopping a fast sender from overwhelming a slow receiver, using the receiver's advertised window."],
+["What is congestion control?","Stopping senders from overwhelming the network, using cwnd with slow start and AIMD."],
+["What is slow start?","TCP starting with a small congestion window and doubling it each round trip until a threshold."],
+["What is AIMD?","Additive Increase, Multiplicative Decrease: grow the window by one per RTT, cut it on loss."],
+["Stop-and-Wait vs Go-Back-N vs Selective Repeat?","One packet at a time; resend from the lost packet onward; resend only the lost packet."],
+["What is DNS?","The system that translates a domain name into an IP address."],
+["Which port does DNS use?","Port 53: UDP for normal queries, TCP for zone transfers and large responses."],
+["Walk through DNS resolution.","Check caches, then recursive resolver asks root, then TLD, then authoritative server."],
+["What is an A record?","A DNS record mapping a domain to an IPv4 address (AAAA for IPv6)."],
+["What is a CNAME record?","An alias mapping one domain name to another name."],
+["What is an MX record?","It points a domain to its mail server."],
+["What is HTTP?","A stateless request-response protocol the web uses, on port 80."],
+["What does stateless mean?","Each request is independent — the server keeps no memory of previous requests by itself."],
+["HTTP methods?","GET, POST, PUT, PATCH, DELETE, HEAD, OPTIONS."],
+["Which HTTP methods are idempotent?","GET, PUT, DELETE, HEAD. POST is not; PATCH is not guaranteed."],
+["Meaning of 200, 301, 404, 500?","200 OK, 301 Moved Permanently, 404 Not Found, 500 Internal Server Error."],
+["HTTP/1.1 vs HTTP/2?","1.1 is one request at a time per connection; 2 multiplexes many over one and compresses headers."],
+["What is HTTP/3 built on?","QUIC, which runs over UDP, to avoid TCP's head-of-line blocking."],
+["What is HTTPS?","HTTP over TLS on port 443 — encrypted and authenticated."],
+["Describe the TLS handshake.","Hellos, server certificate (public key), agree a symmetric session key, then encrypted data."],
+["Symmetric vs asymmetric encryption?","Symmetric = one shared key (fast). Asymmetric = public/private pair (slow), bootstraps the symmetric key."],
+["What is DHCP?","Auto-assigns IPs via DORA: Discover, Offer, Request, Acknowledge. Ports 67/68."],
+["What is NAT?","Network Address Translation: many private devices share one public IP by rewriting addresses and ports."],
+["What happens when you type a URL?","DNS lookup, TCP handshake, TLS handshake, HTTP request, server response, browser renders."],
+];
+document.getElementById('faqList').innerHTML = FAQ.map((q,i)=>
+  `<details class="qa"><summary><span class="chev"></span><span class="qnum">${String(i+1).padStart(2,'0')}</span>${q[0]}</summary><div class="qa-a">${q[1]}</div></details>`
+).join('');
+</script>
+</body>
+</html>
