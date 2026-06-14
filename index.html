@@ -175,55 +175,64 @@ body{
 .c-networks{--accent:var(--cyan);}
 
 /* ---- company section ---- */
-.overview{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px;}
-.ov-card{border:1px solid var(--border);background:var(--panel);backdrop-filter:blur(10px);border-radius:14px;padding:13px 15px;}
-.ov-card h3{font-family:var(--font-display);font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--text-faint);margin-bottom:11px;}
-.barrow{display:flex;align-items:center;gap:9px;margin-bottom:7px;font-size:11px;cursor:default;}
-.barrow .nm{width:120px;flex-shrink:0;color:var(--text);font-weight:500;text-decoration:none;}
+.overview{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:18px;}
+.ov-card{border:1px solid var(--border);background:linear-gradient(145deg,rgba(255,255,255,.05),rgba(255,255,255,.02));backdrop-filter:blur(12px);border-radius:16px;padding:16px 18px;}
+.ov-card h3{font-family:var(--font-display);font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-faint);margin-bottom:14px;}
+.barrow{display:flex;align-items:center;gap:9px;margin-bottom:8px;font-size:11px;cursor:default;}
+.barrow .nm{width:130px;flex-shrink:0;color:var(--text);font-weight:500;text-decoration:none;font-size:11.5px;}
 .barrow a.nm:hover{color:var(--cyan);text-decoration:underline;}
-.bartrack{flex:1;height:9px;border-radius:6px;background:rgba(255,255,255,.06);overflow:hidden;}
-.barfill{height:100%;border-radius:6px;}
+.bartrack{flex:1;height:11px;border-radius:8px;background:rgba(255,255,255,.06);overflow:hidden;}
+.barfill{height:100%;border-radius:8px;transition:width .4s ease;}
 .barrow .ct{width:34px;text-align:right;font-family:var(--font-mono);font-size:10px;color:var(--text-dim);}
-.qlist{display:flex;flex-direction:column;gap:5px;}
-.qlite{display:flex;align-items:center;gap:8px;font-size:11px;}
-.qlite .rank{font-family:var(--font-mono);color:var(--text-faint);width:18px;font-size:10px;}
-.qlite a{color:var(--text);text-decoration:none;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.qlist{display:flex;flex-direction:column;gap:6px;}
+.qlite{display:flex;align-items:center;gap:8px;font-size:11.5px;padding:3px 0;}
+.qlite .rank{font-family:var(--font-mono);color:var(--text-faint);width:20px;font-size:10px;flex-shrink:0;}
+.qlite a{color:var(--text);text-decoration:none;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:500;}
 .qlite a:hover{color:var(--cyan);}
-.qlite .cc{font-family:var(--font-mono);font-size:9.5px;color:var(--amber);white-space:nowrap;}
+.qlite .cc{font-family:var(--font-mono);font-size:9px;color:var(--amber);white-space:nowrap;border:1px solid rgba(255,203,115,.25);background:rgba(255,203,115,.08);padding:1px 6px;border-radius:5px;}
 
-.explorer{display:grid;grid-template-columns:280px 1fr;gap:14px;}
-.co-panel{border:1px solid var(--border);background:var(--panel);backdrop-filter:blur(10px);border-radius:14px;overflow:hidden;}
-.search{width:100%;padding:11px 14px;border:none;border-bottom:1px solid var(--border);background:transparent;color:var(--text);font-family:var(--font-body);font-size:12px;outline:none;}
+.explorer{display:grid;grid-template-columns:290px 1fr;gap:14px;}
+.co-panel{border:1px solid var(--border);background:rgba(255,255,255,.03);backdrop-filter:blur(12px);border-radius:16px;overflow:hidden;}
+.search{width:100%;padding:13px 16px;border:none;border-bottom:1px solid var(--border);background:rgba(255,255,255,.02);color:var(--text);font-family:var(--font-body);font-size:12.5px;outline:none;transition:background .15s;}
+.search:focus{background:rgba(255,255,255,.05);}
 .search::placeholder{color:var(--text-faint);}
-.complist{max-height:560px;overflow-y:auto;}
-.comp{display:flex;align-items:center;gap:8px;padding:9px 14px;cursor:pointer;border-bottom:1px solid rgba(255,255,255,.04);transition:background .12s;}
-.comp:hover{background:rgba(255,255,255,.04);}
-.comp.sel{background:linear-gradient(90deg,rgba(154,140,255,.16),transparent);border-left:2px solid var(--violet);}
-.comp .cn{font-size:12px;font-weight:500;color:var(--text);flex:1;}
-.comp .cmeta{font-family:var(--font-mono);font-size:9.5px;color:var(--text-faint);}
+.complist{max-height:580px;overflow-y:auto;scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.1) transparent;}
+.complist::-webkit-scrollbar{width:5px;}.complist::-webkit-scrollbar-thumb{background:rgba(255,255,255,.1);border-radius:4px;}
+.comp{display:flex;align-items:center;gap:9px;padding:10px 14px;cursor:pointer;border-bottom:1px solid rgba(255,255,255,.04);transition:background .12s;}
+.comp:hover{background:rgba(255,255,255,.05);}
+.comp.sel{background:linear-gradient(90deg,rgba(154,140,255,.2),rgba(154,140,255,.06),transparent);border-left:3px solid var(--violet);padding-left:11px;}
+.comp-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
+.comp .cn{font-size:12.5px;font-weight:500;color:var(--text);flex:1;}
+.comp .cmeta{font-family:var(--font-mono);font-size:9.5px;color:var(--text-faint);white-space:nowrap;}
 
-.detail{padding:16px 18px;min-height:560px;}
-.dhead{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:6px;}
-.dhead h2{font-family:var(--font-display);font-size:22px;font-weight:600;letter-spacing:-.3px;}
+.detail{padding:18px 20px;min-height:580px;max-height:680px;overflow-y:auto;scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.1) transparent;}
+.detail::-webkit-scrollbar{width:5px;}.detail::-webkit-scrollbar-thumb{background:rgba(255,255,255,.1);border-radius:4px;}
+.dhead{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:12px;}
+.dhead h2{font-family:var(--font-display);font-size:24px;font-weight:700;letter-spacing:-.5px;}
 .period{font-family:var(--font-mono);font-size:10px;color:var(--mint);border:1px solid rgba(79,230,180,.3);background:rgba(79,230,180,.1);padding:3px 9px;border-radius:7px;}
-.dsub{font-size:11px;color:var(--text-dim);margin-bottom:16px;}
-.dsub b{color:var(--text);}
-.diffbar{display:flex;height:10px;border-radius:6px;overflow:hidden;margin:8px 0 18px;border:1px solid var(--border);}
-.section-t{font-family:var(--font-display);font-size:10px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--text-faint);margin:18px 0 9px;}
+.dc-stats{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px;}
+.dc-chip{border:1px solid color-mix(in srgb,var(--cc) 28%,transparent);background:color-mix(in srgb,var(--cc) 9%,transparent);border-radius:12px;padding:8px 14px;text-align:center;min-width:60px;}
+.dc-n{display:block;font-family:var(--font-mono);font-size:14px;font-weight:700;color:var(--cc);}
+.dc-l{display:block;font-size:9px;color:var(--text-faint);font-family:var(--font-display);text-transform:uppercase;letter-spacing:.6px;margin-top:2px;}
+.diffbar{display:flex;height:8px;border-radius:999px;overflow:hidden;margin-bottom:16px;gap:2px;}
+.diffbar div{border-radius:999px;}
+.section-t{font-family:var(--font-display);font-size:10px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--text-faint);margin:16px 0 10px;display:flex;align-items:center;gap:8px;}
+.section-t::after{content:'';flex:1;height:1px;background:rgba(255,255,255,.07);}
 table.qtab{width:100%;border-collapse:collapse;margin-top:4px;border:1px solid var(--border);border-radius:10px;overflow:hidden;}
-table.qtab th{background:rgba(255,255,255,.04);padding:7px 10px;text-align:left;font-size:9.5px;color:var(--text-faint);text-transform:uppercase;letter-spacing:.5px;font-family:var(--font-display);}
-table.qtab td{padding:6px 10px;font-size:11px;border-bottom:1px solid rgba(255,255,255,.05);color:var(--text-dim);}
+table.qtab th{background:rgba(255,255,255,.05);padding:8px 10px;text-align:left;font-size:9.5px;color:var(--text-faint);text-transform:uppercase;letter-spacing:.5px;font-family:var(--font-display);}
+table.qtab td{padding:7px 10px;font-size:11.5px;border-bottom:1px solid rgba(255,255,255,.04);color:var(--text-dim);}
+table.qtab tr:nth-child(even) td{background:rgba(255,255,255,.015);}
 table.qtab tr:last-child td{border-bottom:none;}
-table.qtab tr:hover td{background:rgba(255,255,255,.025);}
-table.qtab a.qt{color:var(--text);text-decoration:none;}
-table.qtab a.qt:hover{color:var(--cyan);}
+table.qtab tr:hover td{background:rgba(255,255,255,.045)!important;transition:background .1s;}
+table.qtab a.qt{color:var(--text);text-decoration:none;font-weight:500;}
+table.qtab a.qt:hover{color:var(--cyan);text-decoration:underline;}
 .dchip{display:inline-block;padding:2px 8px;border-radius:999px;font-size:9px;font-weight:700;font-family:var(--font-display);}
 .de{background:rgba(79,230,180,.14);color:var(--mint);}
 .dm{background:rgba(255,203,115,.14);color:var(--amber);}
 .dh{background:rgba(255,123,123,.14);color:var(--rose);}
 .tchip{display:inline-block;padding:2px 9px;border-radius:999px;font-size:9.5px;font-weight:600;font-family:var(--font-display);text-decoration:none;border:1px solid transparent;}
 .tchip.link:hover{filter:brightness(1.25);}
-.disclaimer{font-size:10px;color:var(--faint);margin-top:14px;line-height:1.5;}
+.disclaimer{font-size:10.5px;color:var(--faint);margin-top:16px;line-height:1.6;padding:12px 16px;border:1px solid var(--border);border-radius:10px;background:rgba(255,255,255,.02);}
 
 .footer{text-align:center;margin-top:54px;font-size:11px;color:var(--faint);font-family:var(--font-m);letter-spacing:.5px;animation:fadeUp .8s .4s both;}
 .footer b{color:var(--dim);}
@@ -391,7 +400,8 @@ table.qtab a.qt:hover{color:var(--cyan);}
   <!-- ===== COMPANY-WISE SECTION ===== -->
   <div id="tab-companies" class="tab-pane">
 
-    <div class="sec-label" style="margin-bottom:20px;"><span class="txt">Company-Wise Questions</span><span class="line"></span></div>
+    <div class="sec-label" style="margin-bottom:8px;"><span class="txt">Company-Wise Questions</span><span class="line"></span></div>
+    <p style="font-size:11.5px;color:var(--text-faint);margin-bottom:20px;">200 companies · recently asked LeetCode questions · click any company to explore its breakdown</p>
 
     <div class="overview">
       <div class="ov-card">
@@ -505,7 +515,7 @@ function initCompanySection() {
     document.getElementById('ovTopics').innerHTML = top.map(t => {
       const ti = tinfo(t.topic); const w = Math.round(t.count / max * 100);
       const nm = ti.f ? `<a class="nm" href="${ti.f}">${ti.n}</a>` : `<span class="nm">${ti.n}</span>`;
-      return `<div class="barrow">${nm}<div class="bartrack"><div class="barfill" style="width:${w}%;background:${ti.c};"></div></div><div class="ct">${t.count}</div></div>`;
+      return `<div class="barrow">${nm}<div class="bartrack"><div class="barfill" style="width:${w}%;background:linear-gradient(90deg,${ti.c}88,${ti.c});"></div></div><div class="ct">${t.count}</div></div>`;
     }).join('');
   })();
 
@@ -513,7 +523,8 @@ function initCompanySection() {
   (function() {
     document.getElementById('ovQuestions').innerHTML = D.topQuestions.slice(0, 12).map((q, i) => {
       const url = q.url || ('https://leetcode.com/problems/' + q.title.toLowerCase().replace(/[^a-z0-9]+/g, '-'));
-      return `<div class="qlite"><span class="rank">${i+1}</span><a href="${url.trim()}" target="_blank" title="${q.title}">${q.title}</a><span class="cc">${q.companies} cos</span></div>`;
+      const chip = q.diff ? diffChip(q.diff) : '';
+      return `<div class="qlite"><span class="rank">${i+1}</span><a href="${url.trim()}" target="_blank" title="${q.title}">${q.title}</a>${chip}<span class="cc">${q.companies} cos</span></div>`;
     }).join('');
   })();
 
@@ -524,11 +535,12 @@ function initCompanySection() {
     const f = (filter || '').toLowerCase();
     const list = D.companies.filter(c => c.name.toLowerCase().includes(f));
     document.getElementById('complist').innerHTML = list.map(c => {
-      const top = Object.keys(c.topics)[0];
+      const topKey = Object.keys(c.topics)[0];
+      const dotColor = TOPIC[topKey]?.c || F;
       return `<div class="comp${c.slug === selected ? ' sel' : ''}" data-slug="${c.slug}">
+        <span class="comp-dot" style="background:${dotColor};box-shadow:0 0 6px ${dotColor}88;"></span>
         <span class="cn">${c.name}</span>
-        <span class="cmeta">${c.total}</span>
-        ${topicChip(top, false)}
+        <span class="cmeta">${c.total} Qs</span>
       </div>`;
     }).join('') || '<div style="padding:14px;color:var(--text-faint);font-size:11px;">No company found.</div>';
     document.querySelectorAll('.comp').forEach(el => el.onclick = () => select(el.dataset.slug));
@@ -546,33 +558,37 @@ function initCompanySection() {
     const topicBars = topEntries.slice(0, 12).map(([k, v]) => {
       const ti = tinfo(k), w = Math.round(v / tmax * 100);
       const nm = ti.f ? `<a class="nm" href="${ti.f}">${ti.n}</a>` : `<span class="nm">${ti.n}</span>`;
-      return `<div class="barrow">${nm}<div class="bartrack"><div class="barfill" style="width:${w}%;background:${ti.c};"></div></div><div class="ct">${v}</div></div>`;
+      return `<div class="barrow">${nm}<div class="bartrack"><div class="barfill" style="width:${w}%;background:linear-gradient(90deg,${ti.c}88,${ti.c});"></div></div><div class="ct">${v}</div></div>`;
     }).join('');
 
     const rows = c.questions.map((q, i) => {
       const url = (q.url || '').trim() || ('https://leetcode.com/problems/' + q.title.toLowerCase().replace(/[^a-z0-9]+/g, '-'));
-      return `<tr><td style="color:var(--text-faint);font-family:var(--font-mono);">${i+1}</td>
+      return `<tr>
+        <td style="color:var(--text-faint);font-family:var(--font-mono);font-size:10px;">${i+1}</td>
         <td><a class="qt" href="${url}" target="_blank">${q.title}</a></td>
         <td>${diffChip(q.diff)}</td>
         <td>${topicChip(q.topic, true)}</td>
-        <td style="font-family:var(--font-mono);color:var(--text-faint);">${q.freq.toFixed(1)}</td></tr>`;
+        <td style="font-family:var(--font-mono);font-size:10.5px;color:var(--text-faint);">${q.freq.toFixed(1)}x</td>
+      </tr>`;
     }).join('');
 
     document.getElementById('detail').innerHTML = `
       <div class="dhead"><h2>${c.name}</h2><span class="period">${PERIOD[c.period]||c.period}</span></div>
-      <div class="dsub"><b>${c.total}</b> tracked questions &middot; most-drilled topic: <b>${topName}</b></div>
+      <div class="dc-stats">
+        <div class="dc-chip" style="--cc:${M}"><span class="dc-n">${dd.Easy}</span><span class="dc-l">Easy</span></div>
+        <div class="dc-chip" style="--cc:${A}"><span class="dc-n">${dd.Medium}</span><span class="dc-l">Medium</span></div>
+        <div class="dc-chip" style="--cc:${R}"><span class="dc-n">${dd.Hard}</span><span class="dc-l">Hard</span></div>
+        <div class="dc-chip" style="--cc:#5BD2FF"><span class="dc-n">${c.total}</span><span class="dc-l">Total</span></div>
+        <div class="dc-chip" style="--cc:#9A8CFF"><span class="dc-n" style="font-size:10px;line-height:1.3;">${topName}</span><span class="dc-l">Top Topic</span></div>
+      </div>
       <div class="diffbar">
         <div style="width:${dd.Easy/dtot*100}%;background:${M};" title="Easy ${dd.Easy}"></div>
         <div style="width:${dd.Medium/dtot*100}%;background:${A};" title="Medium ${dd.Medium}"></div>
         <div style="width:${dd.Hard/dtot*100}%;background:${R};" title="Hard ${dd.Hard}"></div>
       </div>
-      <div style="font-size:10px;color:var(--text-faint);margin-top:-12px;margin-bottom:6px;">
-        <span style="color:${M};">&#9632;</span> Easy ${dd.Easy} &nbsp;
-        <span style="color:${A};">&#9632;</span> Medium ${dd.Medium} &nbsp;
-        <span style="color:${R};">&#9632;</span> Hard ${dd.Hard}</div>
-      <div class="section-t">Topic distribution &middot; click a topic to open its roadmap</div>
+      <div class="section-t">Topic Distribution</div>
       ${topicBars}
-      <div class="section-t">Recently asked (top ${c.questions.length}, by frequency)</div>
+      <div class="section-t">Recently Asked — top ${c.questions.length} by frequency</div>
       <table class="qtab">
         <tr><th>#</th><th>Question</th><th>Diff</th><th>Topic</th><th>Freq</th></tr>
         ${rows}
