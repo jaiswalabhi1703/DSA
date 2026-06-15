@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/codemirror.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/theme/dracula.min.css">
+<link rel="stylesheet" href="theme.css">
+<title>Mock DSA Round</title>
+</head>
+<body>
+<a class="back-hub" href="index.html"><span class="arw">&#8592;</span> Hub</a>
+
+<!-- ═══════════════════ SCREEN: SETUP ═══════════════════ -->
+<div id="s-setup" class="mock-screen active">
+  <div class="mock-center">
+    <div class="mock-logo">🎯</div>
+    <h1 class="mock-title">MOCK DSA ROUND</h1>
+    <p class="mock-sub">Real FAANG interview experience · 2 problems · 25 min each</p>
+
+    <div class="setup-card">
+      <div class="setup-row">
+        <label class="setup-label">Gemini API Key <span class="setup-hint">(stored locally, never leaves your device · <a href="https://aistudio.google.com/apikey" target="_blank" style="color:var(--cyan)">Get free key →</a>)</span></label>
+        <div class="key-wrap">
+          <input id="apiKeyInput" type="password" class="setup-input" placeholder="AIza… or AQ…" autocomplete="off">
+          <button class="key-toggle" onclick="toggleKey()" title="Show/hide">👁</button>
+          <button class="key-test" id="testKeyBtn" onclick="testApiKey()">Test Key</button>
+        </div>
+        <div id="keyStatus" class="key-status"></div>
+      </div>
+
+      <div class="setup-row">
+        <label class="setup-label">JDoodle Code Execution <span class="setup-hint">(<a href="https://www.jdoodle.com/compiler-api" target="_blank" style="color:var(--cyan)">Get free API credentials →</a> · 200 runs/day · no CC required)</span></label>
+        <div class="jdoodle-wrap">
+          <input id="jdoodleId" type="text" class="setup-input" placeholder="Client ID" autocomplete="off">
+          <input id="jdoodleSecret" type="password" class="setup-input" placeholder="Client Secret" autocomplete="off">
+          <button class="key-test" id="testExecBtn" onclick="testExecution()">Test</button>
+        </div>
+        <div id="execStatus" class="key-status"></div>
+      </div>
+
+      <div class="setup-row">
+        <label class="setup-label">Default Language</label>
+        <div class="lang-pick" id="langPick">
+          <button class="lpbtn active" data-lang="python">Python</button>
+          <button class="lpbtn" data-lang="java">Java</button>
+          <button class="lpbtn" data-lang="cpp">C++</button>
+        </div>
+      </div>
+
+      <div class="setup-info">
+        <div class="info-row"><span class="info-icon">⏱</span> 25-minute timer per problem</div>
+        <div class="info-row"><span class="info-icon">🗣</span> 3 verbal Q&A questions before coding</div>
+        <div class="info-row"><span class="info-icon">⚙️</span> Code judged by running real test cases (JDoodle API)</div>
+        <div class="info-row"><span class="info-icon">🤖</span> Verbal answers & complexity judged by Gemini AI (free)</div>
+        <div class="info-row"><span class="info-icon">📋</span> Full debrief generated after both problems</div>
+      </div>
+
+      <button class="mock-btn-primary" id="startBtn" onclick="startRound()">
+        Start Mock Interview <span class="btn-arrow">→</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════ SCREEN: READING ═══════════════════ -->
+<div id="s-reading" class="mock-screen">
+  <div class="mock-topbar">
+    <div class="tb-left">
+      <span class="tb-prob" id="readProbLabel">Problem 1 / 2</span>
+      <span class="tb-diff" id="readDiff"></span>
+    </div>
+    <div class="tb-timer" id="readTimer">25:00</div>
+  </div>
+
+  <div class="prob-wrap">
+    <div class="prob-header">
+      <h2 class="prob-title" id="probTitle"></h2>
+      <div class="prob-tags" id="probTags"></div>
+    </div>
+
+    <div class="prob-statement" id="probStatement"></div>
+
+    <div class="prob-section">
+      <div class="prob-sec-title">Examples</div>
+      <div id="probExamples"></div>
+    </div>
+
+    <div class="prob-section">
+      <div class="prob-sec-title">Constraints</div>
+      <ul class="prob-constraints" id="probConstraints"></ul>
+    </div>
+
+    <div class="ready-bar">
+      <div class="ready-hint">Read carefully — once you click Ready, the verbal questions begin.</div>
+      <button class="mock-btn-primary" onclick="markReady()">✓ I've Read It — I'm Ready</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════ SCREEN: VERBAL ═══════════════════ -->
+<div id="s-verbal" class="mock-screen">
+  <div class="mock-topbar">
+    <div class="tb-left">
+      <span class="tb-prob" id="verbalProbLabel">Problem 1 / 2</span>
+      <span class="tb-step" id="verbalStep">Question 1 / 3</span>
+    </div>
+    <div class="tb-timer" id="verbalTimer">25:00</div>
+  </div>
+
+  <div class="verbal-wrap">
+    <div class="verbal-progress">
+      <div class="vp-dot active" id="vd0"></div>
+      <div class="vp-line"></div>
+      <div class="vp-dot" id="vd1"></div>
+      <div class="vp-line"></div>
+      <div class="vp-dot" id="vd2"></div>
+    </div>
+
+    <div class="verbal-card">
+      <div class="verbal-interviewer">🧑‍💼 Interviewer</div>
+      <div class="verbal-question" id="verbalQuestion"></div>
+    </div>
+
+    <div class="verbal-answer-wrap">
+      <label class="verbal-answer-label">Your Answer</label>
+      <textarea id="verbalAnswer" class="verbal-textarea" placeholder="Type your answer here…" rows="6"></textarea>
+      <div class="verbal-word-count" id="wordCount">0 words</div>
+    </div>
+
+    <div class="verbal-actions">
+      <div class="verbal-tip" id="verbalTip"></div>
+      <button class="mock-btn-primary" id="verbalSubmitBtn" onclick="submitVerbal()">
+        Submit Answer <span class="btn-arrow">→</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════ SCREEN: CODING ═══════════════════ -->
+<div id="s-coding" class="mock-screen">
+  <div class="mock-topbar">
+    <div class="tb-left">
+      <span class="tb-prob" id="codeProbLabel">Problem 1 / 2</span>
+      <span class="tb-title" id="codeTitle"></span>
+      <div class="lang-tabs" id="langTabs">
+        <button class="ltab active" data-lang="python" onclick="switchLang('python')">Python</button>
+        <button class="ltab" data-lang="java" onclick="switchLang('java')">Java</button>
+        <button class="ltab" data-lang="cpp" onclick="switchLang('cpp')">C++</button>
+      </div>
+    </div>
+    <div class="tb-timer" id="codeTimer">25:00</div>
+  </div>
+
+  <div class="code-layout">
+    <div class="code-editor-pane">
+      <div id="codeEditor"></div>
+    </div>
+
+    <div class="code-side-pane">
+      <div class="test-section">
+        <div class="test-header">Test Cases <span class="attempt-badge" id="attemptBadge">Attempt 1 / 3</span></div>
+        <div id="testCaseList" class="test-list"></div>
+      </div>
+
+      <div class="code-actions">
+        <button class="mock-btn-secondary" id="runBtn" onclick="runTests()">▶ Run Tests</button>
+        <button class="mock-btn-primary" id="submitCodeBtn" onclick="submitCode()">Submit Solution</button>
+      </div>
+
+      <div id="testResults" class="test-results hidden"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════ SCREEN: TC/SC ═══════════════════ -->
+<div id="s-tcsc" class="mock-screen">
+  <div class="mock-topbar">
+    <div class="tb-left">
+      <span class="tb-prob" id="tcscProbLabel">Problem 1 / 2</span>
+      <span class="tb-badge-pass">✓ Code Accepted</span>
+    </div>
+    <div class="tb-timer" id="tcscTimer">25:00</div>
+  </div>
+
+  <div class="tcsc-wrap">
+    <div class="tcsc-card">
+      <div class="tcsc-icon">🤔</div>
+      <h2 class="tcsc-heading">Complexity Analysis</h2>
+      <p class="tcsc-sub">The interviewer wants to evaluate your understanding of the solution's efficiency.</p>
+
+      <div class="tcsc-row">
+        <label class="tcsc-label">Time Complexity</label>
+        <input id="tcInput" class="tcsc-input" placeholder="e.g. O(n log n)" />
+        <div class="tcsc-justify-label">Justify your answer</div>
+        <textarea id="tcJustify" class="tcsc-justify" rows="2" placeholder="Explain why…"></textarea>
+      </div>
+
+      <div class="tcsc-row">
+        <label class="tcsc-label">Space Complexity</label>
+        <input id="scInput" class="tcsc-input" placeholder="e.g. O(n)" />
+        <div class="tcsc-justify-label">Justify your answer</div>
+        <textarea id="scJustify" class="tcsc-justify" rows="2" placeholder="Explain why…"></textarea>
+      </div>
+
+      <button class="mock-btn-primary" style="margin-top:20px;" onclick="submitTCSC()">
+        Submit Analysis <span class="btn-arrow">→</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════ SCREEN: TRANSITION ═══════════════════ -->
+<div id="s-transition" class="mock-screen">
+  <div class="mock-center">
+    <div id="transIcon" class="trans-icon">⏳</div>
+    <h2 class="trans-heading" id="transHeading">Judging your responses…</h2>
+    <p class="trans-sub" id="transSub">Please wait while we evaluate your answers with Claude AI.</p>
+    <div id="transSpinner" class="spinner"></div>
+    <button id="transBtn" class="mock-btn-primary hidden" onclick="nextProblem()">
+      Move to Problem 2 <span class="btn-arrow">→</span>
+    </button>
+  </div>
+</div>
+
+<!-- ═══════════════════ SCREEN: FEEDBACK ═══════════════════ -->
+<div id="s-feedback" class="mock-screen">
+  <div class="feedback-wrap">
+    <div class="fb-header">
+      <div class="fb-icon">🎉</div>
+      <h1 class="fb-title">Round Complete</h1>
+      <p class="fb-sub" id="fbSub">Here's your full debrief.</p>
+    </div>
+
+    <div id="fbProblems"></div>
+
+    <div class="fb-overall" id="fbOverall"></div>
+
+    <div class="fb-actions">
+      <button class="mock-btn-secondary" onclick="startRound()">Try Another Round</button>
+      <a href="index.html" class="mock-btn-primary">Back to Hub</a>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/codemirror.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/python/python.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/clike/clike.min.js"></script>
+<script src="mock_questions.js"></script>
+<script src="mock_round.js"></script>
+</body>
+</html>
