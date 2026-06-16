@@ -477,22 +477,7 @@ table.qtab a.qt:hover{color:var(--cyan);text-decoration:underline;}
       <!-- Topic coverage -->
       <div class="mock-panel">
         <div class="mock-panel-title">Topic Coverage</div>
-        <div class="topic-grid">
-          <div class="topic-chip"><div class="tc-left"><span class="tc-dot" style="background:#a6e3a1;box-shadow:0 0 6px #a6e3a188;"></span><span class="tc-name">Arrays</span></div><span class="tc-badge">5 Qs</span></div>
-          <div class="topic-chip"><div class="tc-left"><span class="tc-dot" style="background:#cba6f7;box-shadow:0 0 6px #cba6f788;"></span><span class="tc-name">String</span></div><span class="tc-badge">5 Qs</span></div>
-          <div class="topic-chip"><div class="tc-left"><span class="tc-dot" style="background:#5BD2FF;box-shadow:0 0 6px #5BD2FF88;"></span><span class="tc-name">Two Pointers</span></div><span class="tc-badge">4 Qs</span></div>
-          <div class="topic-chip"><div class="tc-left"><span class="tc-dot" style="background:#5BD2FF;box-shadow:0 0 6px #5BD2FF88;"></span><span class="tc-name">Sliding Window</span></div><span class="tc-badge">4 Qs</span></div>
-          <div class="topic-chip"><div class="tc-left"><span class="tc-dot" style="background:#B6E86A;box-shadow:0 0 6px #B6E86A88;"></span><span class="tc-name">Hash Map</span></div><span class="tc-badge">4 Qs</span></div>
-          <div class="topic-chip"><div class="tc-left"><span class="tc-dot" style="background:#FFCB73;box-shadow:0 0 6px #FFCB7388;"></span><span class="tc-name">Stack</span></div><span class="tc-badge">4 Qs</span></div>
-          <div class="topic-chip"><div class="tc-left"><span class="tc-dot" style="background:#FF7B7B;box-shadow:0 0 6px #FF7B7B88;"></span><span class="tc-name">Linked List</span></div><span class="tc-badge">4 Qs</span></div>
-          <div class="topic-chip"><div class="tc-left"><span class="tc-dot" style="background:#4FE6B4;box-shadow:0 0 6px #4FE6B488;"></span><span class="tc-name">Prefix Sum</span></div><span class="tc-badge">3 Qs</span></div>
-          <div class="topic-chip"><div class="tc-left"><span class="tc-dot" style="background:#FF89C9;box-shadow:0 0 6px #FF89C988;"></span><span class="tc-name">DP</span></div><span class="tc-badge">6 Qs</span></div>
-          <div class="topic-chip"><div class="tc-left"><span class="tc-dot" style="background:#5BD2FF;box-shadow:0 0 6px #5BD2FF88;"></span><span class="tc-name">Graph</span></div><span class="tc-badge">4 Qs</span></div>
-          <div class="topic-chip"><div class="tc-left"><span class="tc-dot" style="background:#4FE6B4;box-shadow:0 0 6px #4FE6B488;"></span><span class="tc-name">Trees</span></div><span class="tc-badge">4 Qs</span></div>
-          <div class="topic-chip"><div class="tc-left"><span class="tc-dot" style="background:#FFCB73;box-shadow:0 0 6px #FFCB7388;"></span><span class="tc-name">Heap</span></div><span class="tc-badge">3 Qs</span></div>
-          <div class="topic-chip"><div class="tc-left"><span class="tc-dot" style="background:#4FE6B4;box-shadow:0 0 6px #4FE6B488;"></span><span class="tc-name">Binary Search</span></div><span class="tc-badge">4 Qs</span></div>
-          <div class="topic-chip"><div class="tc-left"><span class="tc-dot" style="background:#FF89C9;box-shadow:0 0 6px #FF89C988;"></span><span class="tc-name">Greedy</span></div><span class="tc-badge">4 Qs</span></div>
-        </div>
+        <div class="topic-grid" id="mockTopicGrid"></div>
         <div class="mock-tip">Problem 1 is always drawn from an easier topic (Arrays, String, Two Pointers, Sliding Window, HashMap, Stack, Prefix Sum, Linked List). Problem 2 is always from a harder topic (DP, Graph, Trees, Heap, Binary Search, Greedy). No two rounds repeat the same topic pair.</div>
       </div>
 
@@ -586,6 +571,7 @@ table.qtab a.qt:hover{color:var(--cyan);text-decoration:underline;}
 
 </div><!-- /wrap -->
 
+<script src="mock_questions.js"></script>
 <script src="companies_data.js"></script>
 <script>
 // ---- tab switching ----
@@ -757,6 +743,35 @@ function initCompanySection() {
   select(D.companies[0].slug);
   document.getElementById('disc').innerHTML = `Parsed from the LeetCode company-wise dataset (${D.companyCount} companies). Each company shows its most recent available window. Topics are inferred from question titles, so the split is approximate — treat it as a study signal, not an exact tag.`;
 }
+
+// ---- mock topic grid ----
+(function() {
+  const META = {
+    Arrays:         { label: 'Arrays',        color: '#a6e3a1' },
+    String:         { label: 'String',         color: '#cba6f7' },
+    TwoPointers:    { label: 'Two Pointers',   color: '#5BD2FF' },
+    SlidingWindow:  { label: 'Sliding Window', color: '#5BD2FF' },
+    PrefixSum:      { label: 'Prefix Sum',     color: '#4FE6B4' },
+    HashMap:        { label: 'Hash Map',       color: '#B6E86A' },
+    Stack:          { label: 'Stack',          color: '#FFCB73' },
+    LinkedList:     { label: 'Linked List',    color: '#FF7B7B' },
+    DP:             { label: 'DP',             color: '#FF89C9' },
+    Graph:          { label: 'Graph',          color: '#5BD2FF' },
+    Trees:          { label: 'Trees',          color: '#4FE6B4' },
+    Heap:           { label: 'Heap',           color: '#FFCB73' },
+    BinarySearch:   { label: 'Binary Search',  color: '#4FE6B4' },
+    Greedy:         { label: 'Greedy',         color: '#FF89C9' },
+    Backtracking:   { label: 'Backtracking',   color: '#9A8CFF' },
+    Trie:           { label: 'Trie',           color: '#FF7B7B' },
+    BitManipulation:{ label: 'Bit Manip',      color: '#B6E86A' },
+  };
+  const grid = document.getElementById('mockTopicGrid');
+  if (!grid || typeof MOCK_BANK === 'undefined') return;
+  grid.innerHTML = Object.entries(MOCK_BANK).map(([key, arr]) => {
+    const m = META[key] || { label: key, color: '#9aa0bd' };
+    return `<div class="topic-chip"><div class="tc-left"><span class="tc-dot" style="background:${m.color};box-shadow:0 0 6px ${m.color}88;"></span><span class="tc-name">${m.label}</span></div><span class="tc-badge">${arr.length} Qs</span></div>`;
+  }).join('');
+})();
 </script>
 </body>
 </html>
