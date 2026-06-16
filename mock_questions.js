@@ -1,945 +1,1278 @@
-/* Mock Interview Question Bank
-   6 Easy-Medium  (Problem 1 pool)
-   6 Medium-Hard  (Problem 2 pool)
-   Each problem: statement, examples, constraints, test cases, starter code
-*/
+/* ══ Mock DSA Question Bank — 300+ Problems ══ */
 
 const MOCK_BANK = {
 
-  easyMedium: [
-
-    /* ────────────────── 1. Two Sum ────────────────── */
-    {
-      id: 'two-sum',
-      title: 'Two Sum',
-      difficulty: 'Easy → Medium',
-      diffClass: 'em',
-      tags: ['Array', 'Hash Table'],
-      expectedTC: 'O(n)',
-      expectedSC: 'O(n)',
-      lcUrl: 'https://leetcode.com/problems/two-sum/',
-      statement: `<p>Given an array of integers <code>nums</code> and an integer <code>target</code>, return the <strong>indices</strong> of the two numbers such that they add up to <code>target</code>.</p>
-<p>You may assume each input has <strong>exactly one solution</strong>. You may not use the same element twice. Return the answer in any order.</p>`,
-      examples: [
-        { input: 'nums = [2,7,11,15], target = 9', output: '[0,1]', explanation: 'nums[0] + nums[1] = 2 + 7 = 9' },
-        { input: 'nums = [3,2,4], target = 6', output: '[1,2]', explanation: 'nums[1] + nums[2] = 2 + 4 = 6' },
-        { input: 'nums = [3,3], target = 6', output: '[0,1]', explanation: 'nums[0] + nums[1] = 3 + 3 = 6' }
-      ],
-      constraints: ['2 ≤ nums.length ≤ 10⁴', '-10⁹ ≤ nums[i] ≤ 10⁹', '-10⁹ ≤ target ≤ 10⁹', 'Only one valid answer exists.'],
-      testCases: [
-        { input: '4\n2 7 11 15\n9',  expected: '0 1', label: 'nums=[2,7,11,15], target=9' },
-        { input: '3\n3 2 4\n6',       expected: '1 2', label: 'nums=[3,2,4], target=6' },
-        { input: '2\n3 3\n6',         expected: '0 1', label: 'nums=[3,3], target=6' },
-        { input: '5\n1 4 8 3 5\n9',   expected: '1 3', label: 'nums=[1,4,8,3,5], target=9' }
-      ],
-      starterCode: {
-        python: `import sys
-
-def twoSum(nums: list, target: int) -> list:
-    # ✏️  Write your solution here
-    pass
-
-# ─── I/O boilerplate – do not modify ────────────────
-def main():
-    data = sys.stdin.read().split()
-    n = int(data[0])
-    nums = [int(data[i+1]) for i in range(n)]
-    target = int(data[n+1])
-    result = twoSum(nums, target)
-    print(result[0], result[1])
-
-main()`,
-        java: `import java.util.*;
-
-public class Main {
-
-    // ✏️  Write your solution here
-    public static int[] twoSum(int[] nums, int target) {
-        return new int[]{};
-    }
-
-    // ─── I/O boilerplate – do not modify ────────────────
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        int n = sc.nextInt();
-        int[] nums = new int[n];
-        for (int i = 0; i < n; i++) nums[i] = sc.nextInt();
-        int target = sc.nextInt();
-        int[] r = twoSum(nums, target);
-        System.out.println(r[0] + " " + r[1]);
-    }
-}`,
-        cpp: `#include <bits/stdc++.h>
-using namespace std;
-
-// ✏️  Write your solution here
-vector<int> twoSum(vector<int>& nums, int target) {
-    return {};
-}
-
-// ─── I/O boilerplate – do not modify ────────────────
-int main() {
-    int n; cin >> n;
-    vector<int> nums(n);
-    for (int& x : nums) cin >> x;
-    int target; cin >> target;
-    vector<int> r = twoSum(nums, target);
-    cout << r[0] << " " << r[1] << "\\n";
-    return 0;
-}`
-      }
-    },
-
-    /* ────────────────── 2. Valid Parentheses ────────────────── */
-    {
-      id: 'valid-parentheses',
-      title: 'Valid Parentheses',
-      difficulty: 'Easy → Medium',
-      diffClass: 'em',
-      tags: ['String', 'Stack'],
-      expectedTC: 'O(n)',
-      expectedSC: 'O(n)',
-      lcUrl: 'https://leetcode.com/problems/valid-parentheses/',
-      statement: `<p>Given a string <code>s</code> containing only the characters <code>'('</code>, <code>')'</code>, <code>'{'</code>, <code>'}'</code>, <code>'['</code> and <code>']'</code>, determine if the input string is <strong>valid</strong>.</p>
-<p>A string is valid if:</p>
-<ul>
-  <li>Every open bracket has a matching close bracket of the same type.</li>
-  <li>Open brackets are closed in the correct order.</li>
-  <li>Every close bracket has a corresponding open bracket.</li>
-</ul>`,
-      examples: [
-        { input: 's = "()"', output: 'true', explanation: 'Single matching pair.' },
-        { input: 's = "()[]{}"', output: 'true', explanation: 'All three types, each matched.' },
-        { input: 's = "(]"', output: 'false', explanation: 'Types do not match.' }
-      ],
-      constraints: ['1 ≤ s.length ≤ 10⁴', 's consists of parentheses only.'],
-      testCases: [
-        { input: '()',      expected: 'true',  label: 's="()"' },
-        { input: '()[]{}', expected: 'true',  label: 's="()[]{}"' },
-        { input: '(]',     expected: 'false', label: 's="(]"' },
-        { input: '([)]',   expected: 'false', label: 's="([)]"' },
-        { input: '{[]}',   expected: 'true',  label: 's="{[]}"' }
-      ],
-      starterCode: {
-        python: `import sys
-
-def isValid(s: str) -> bool:
-    # ✏️  Write your solution here
-    pass
-
-# ─── I/O boilerplate – do not modify ────────────────
-s = sys.stdin.read().strip()
-print("true" if isValid(s) else "false")`,
-        java: `import java.util.*;
-
-public class Main {
-
-    // ✏️  Write your solution here
-    public static boolean isValid(String s) {
-        return false;
-    }
-
-    // ─── I/O boilerplate – do not modify ────────────────
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        String s = sc.nextLine().trim();
-        System.out.println(isValid(s) ? "true" : "false");
-    }
-}`,
-        cpp: `#include <bits/stdc++.h>
-using namespace std;
-
-// ✏️  Write your solution here
-bool isValid(string s) {
-    return false;
-}
-
-// ─── I/O boilerplate – do not modify ────────────────
-int main() {
-    string s; cin >> s;
-    cout << (isValid(s) ? "true" : "false") << "\\n";
-    return 0;
-}`
-      }
-    },
-
-    /* ────────────────── 3. Maximum Subarray ────────────────── */
-    {
-      id: 'maximum-subarray',
-      title: 'Maximum Subarray',
-      difficulty: 'Easy → Medium',
-      diffClass: 'em',
-      tags: ['Array', 'Dynamic Programming', 'Divide and Conquer'],
-      expectedTC: 'O(n)',
-      expectedSC: 'O(1)',
-      lcUrl: 'https://leetcode.com/problems/maximum-subarray/',
-      statement: `<p>Given an integer array <code>nums</code>, find the <strong>subarray</strong> with the largest sum, and return <em>its sum</em>.</p>
-<p>A subarray is a contiguous non-empty part of the array.</p>`,
-      examples: [
-        { input: 'nums = [-2,1,-3,4,-1,2,1,-5,4]', output: '6', explanation: 'Subarray [4,-1,2,1] has the largest sum = 6.' },
-        { input: 'nums = [1]', output: '1', explanation: 'Single element.' },
-        { input: 'nums = [5,4,-1,7,8]', output: '23', explanation: 'Entire array is optimal.' }
-      ],
-      constraints: ['1 ≤ nums.length ≤ 10⁵', '-10⁴ ≤ nums[i] ≤ 10⁴'],
-      testCases: [
-        { input: '9\n-2 1 -3 4 -1 2 1 -5 4', expected: '6',  label: '[-2,1,-3,4,-1,2,1,-5,4]' },
-        { input: '1\n1',                       expected: '1',  label: '[1]' },
-        { input: '5\n5 4 -1 7 8',              expected: '23', label: '[5,4,-1,7,8]' },
-        { input: '4\n-3 -1 -2 -4',             expected: '-1', label: 'all negatives' }
-      ],
-      starterCode: {
-        python: `import sys
-
-def maxSubArray(nums: list) -> int:
-    # ✏️  Write your solution here (Kadane's Algorithm)
-    pass
-
-# ─── I/O boilerplate – do not modify ────────────────
-data = sys.stdin.read().split()
-n = int(data[0])
-nums = [int(data[i+1]) for i in range(n)]
-print(maxSubArray(nums))`,
-        java: `import java.util.*;
-
-public class Main {
-
-    // ✏️  Write your solution here (Kadane's Algorithm)
-    public static int maxSubArray(int[] nums) {
-        return 0;
-    }
-
-    // ─── I/O boilerplate – do not modify ────────────────
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        int n = sc.nextInt();
-        int[] nums = new int[n];
-        for (int i = 0; i < n; i++) nums[i] = sc.nextInt();
-        System.out.println(maxSubArray(nums));
-    }
-}`,
-        cpp: `#include <bits/stdc++.h>
-using namespace std;
-
-// ✏️  Write your solution here (Kadane's Algorithm)
-int maxSubArray(vector<int>& nums) {
-    return 0;
-}
-
-// ─── I/O boilerplate – do not modify ────────────────
-int main() {
-    int n; cin >> n;
-    vector<int> nums(n);
-    for (int& x : nums) cin >> x;
-    cout << maxSubArray(nums) << "\\n";
-    return 0;
-}`
-      }
-    },
-
-    /* ────────────────── 4. Climbing Stairs ────────────────── */
-    {
-      id: 'climbing-stairs',
-      title: 'Climbing Stairs',
-      difficulty: 'Easy → Medium',
-      diffClass: 'em',
-      tags: ['Math', 'Dynamic Programming', 'Memoization'],
-      expectedTC: 'O(n)',
-      expectedSC: 'O(1)',
-      lcUrl: 'https://leetcode.com/problems/climbing-stairs/',
-      statement: `<p>You are climbing a staircase with <code>n</code> steps to reach the top. Each time you can either climb <strong>1</strong> or <strong>2</strong> steps. In how many distinct ways can you climb to the top?</p>`,
-      examples: [
-        { input: 'n = 2', output: '2', explanation: 'Two ways: {1,1} or {2}.' },
-        { input: 'n = 3', output: '3', explanation: 'Three ways: {1,1,1}, {1,2}, {2,1}.' },
-        { input: 'n = 5', output: '8', explanation: 'Eight ways.' }
-      ],
-      constraints: ['1 ≤ n ≤ 45'],
-      testCases: [
-        { input: '2',  expected: '2',  label: 'n=2' },
-        { input: '3',  expected: '3',  label: 'n=3' },
-        { input: '5',  expected: '8',  label: 'n=5' },
-        { input: '10', expected: '89', label: 'n=10' }
-      ],
-      starterCode: {
-        python: `import sys
-
-def climbStairs(n: int) -> int:
-    # ✏️  Write your solution here
-    # Hint: It's the Fibonacci sequence!
-    pass
-
-# ─── I/O boilerplate – do not modify ────────────────
-n = int(sys.stdin.read().strip())
-print(climbStairs(n))`,
-        java: `import java.util.*;
-
-public class Main {
-
-    // ✏️  Write your solution here
-    // Hint: It's the Fibonacci sequence!
-    public static int climbStairs(int n) {
-        return 0;
-    }
-
-    // ─── I/O boilerplate – do not modify ────────────────
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        int n = sc.nextInt();
-        System.out.println(climbStairs(n));
-    }
-}`,
-        cpp: `#include <bits/stdc++.h>
-using namespace std;
-
-// ✏️  Write your solution here
-// Hint: It's the Fibonacci sequence!
-int climbStairs(int n) {
-    return 0;
-}
-
-// ─── I/O boilerplate – do not modify ────────────────
-int main() {
-    int n; cin >> n;
-    cout << climbStairs(n) << "\\n";
-    return 0;
-}`
-      }
-    },
-
-    /* ────────────────── 5. Best Time to Buy and Sell Stock ────────────────── */
-    {
-      id: 'best-time-stock',
-      title: 'Best Time to Buy and Sell Stock',
-      difficulty: 'Easy → Medium',
-      diffClass: 'em',
-      tags: ['Array', 'Dynamic Programming'],
-      expectedTC: 'O(n)',
-      expectedSC: 'O(1)',
-      lcUrl: 'https://leetcode.com/problems/best-time-to-buy-and-sell-stock/',
-      statement: `<p>You are given an array <code>prices</code> where <code>prices[i]</code> is the price of a given stock on the <code>i</code>-th day.</p>
-<p>You want to maximize your profit by choosing a <strong>single day to buy</strong> one stock and choosing a <strong>different day in the future to sell</strong> that stock. Return the <em>maximum profit</em> you can achieve. If no profit is possible, return <code>0</code>.</p>`,
-      examples: [
-        { input: 'prices = [7,1,5,3,6,4]', output: '5', explanation: 'Buy on day 2 (price=1), sell on day 5 (price=6). Profit = 6-1 = 5.' },
-        { input: 'prices = [7,6,4,3,1]',   output: '0', explanation: 'Prices only decline. No transaction is profitable.' }
-      ],
-      constraints: ['1 ≤ prices.length ≤ 10⁵', '0 ≤ prices[i] ≤ 10⁴'],
-      testCases: [
-        { input: '6\n7 1 5 3 6 4', expected: '5', label: '[7,1,5,3,6,4]' },
-        { input: '5\n7 6 4 3 1',   expected: '0', label: '[7,6,4,3,1]' },
-        { input: '1\n5',           expected: '0', label: 'single element' },
-        { input: '4\n1 2 4 1',     expected: '3', label: '[1,2,4,1]' }
-      ],
-      starterCode: {
-        python: `import sys
-
-def maxProfit(prices: list) -> int:
-    # ✏️  Write your solution here
-    # Track the minimum price seen so far
-    pass
-
-# ─── I/O boilerplate – do not modify ────────────────
-data = sys.stdin.read().split()
-n = int(data[0])
-prices = [int(data[i+1]) for i in range(n)]
-print(maxProfit(prices))`,
-        java: `import java.util.*;
-
-public class Main {
-
-    // ✏️  Write your solution here
-    // Track the minimum price seen so far
-    public static int maxProfit(int[] prices) {
-        return 0;
-    }
-
-    // ─── I/O boilerplate – do not modify ────────────────
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        int n = sc.nextInt();
-        int[] prices = new int[n];
-        for (int i = 0; i < n; i++) prices[i] = sc.nextInt();
-        System.out.println(maxProfit(prices));
-    }
-}`,
-        cpp: `#include <bits/stdc++.h>
-using namespace std;
-
-// ✏️  Write your solution here
-// Track the minimum price seen so far
-int maxProfit(vector<int>& prices) {
-    return 0;
-}
-
-// ─── I/O boilerplate – do not modify ────────────────
-int main() {
-    int n; cin >> n;
-    vector<int> prices(n);
-    for (int& x : prices) cin >> x;
-    cout << maxProfit(prices) << "\\n";
-    return 0;
-}`
-      }
-    },
-
-    /* ────────────────── 6. Merge Intervals ────────────────── */
-    {
-      id: 'merge-intervals',
-      title: 'Merge Intervals',
-      difficulty: 'Easy → Medium',
-      diffClass: 'em',
-      tags: ['Array', 'Sorting'],
-      expectedTC: 'O(n log n)',
-      expectedSC: 'O(n)',
-      lcUrl: 'https://leetcode.com/problems/merge-intervals/',
-      statement: `<p>Given an array of <code>intervals</code> where <code>intervals[i] = [start<sub>i</sub>, end<sub>i</sub>]</code>, merge all overlapping intervals, and return <em>an array of the non-overlapping intervals that cover all the intervals in the input</em>.</p>`,
-      examples: [
-        { input: 'intervals = [[1,3],[2,6],[8,10],[15,18]]', output: '[[1,6],[8,10],[15,18]]', explanation: '[1,3] and [2,6] overlap → merge to [1,6].' },
-        { input: 'intervals = [[1,4],[4,5]]', output: '[[1,5]]', explanation: 'Touching intervals are merged.' }
-      ],
-      constraints: ['1 ≤ intervals.length ≤ 10⁴', 'intervals[i].length == 2', '0 ≤ start ≤ end ≤ 10⁴'],
-      testCases: [
-        { input: '4\n1 3\n2 6\n8 10\n15 18', expected: '1 6\n8 10\n15 18', label: '[[1,3],[2,6],[8,10],[15,18]]' },
-        { input: '2\n1 4\n4 5',              expected: '1 5',               label: '[[1,4],[4,5]]' },
-        { input: '1\n1 10',                  expected: '1 10',              label: 'single interval' },
-        { input: '3\n1 4\n2 3\n3 5',         expected: '1 5',               label: '[[1,4],[2,3],[3,5]]' }
-      ],
-      starterCode: {
-        python: `import sys
-
-def merge(intervals: list) -> list:
-    # ✏️  Write your solution here
-    # Hint: Sort by start time first
-    pass
-
-# ─── I/O boilerplate – do not modify ────────────────
-def main():
-    data = sys.stdin.read().strip().split('\\n')
-    n = int(data[0])
-    intervals = [list(map(int, data[i+1].split())) for i in range(n)]
-    result = merge(intervals)
-    for a, b in result:
-        print(a, b)
-
-main()`,
-        java: `import java.util.*;
-
-public class Main {
-
-    // ✏️  Write your solution here
-    // Hint: Sort by start time first
-    public static int[][] merge(int[][] intervals) {
-        return new int[][]{};
-    }
-
-    // ─── I/O boilerplate – do not modify ────────────────
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        int n = sc.nextInt();
-        int[][] intervals = new int[n][2];
-        for (int i = 0; i < n; i++) {
-            intervals[i][0] = sc.nextInt();
-            intervals[i][1] = sc.nextInt();
-        }
-        int[][] result = merge(intervals);
-        for (int[] r : result)
-            System.out.println(r[0] + " " + r[1]);
-    }
-}`,
-        cpp: `#include <bits/stdc++.h>
-using namespace std;
-
-// ✏️  Write your solution here
-// Hint: Sort by start time first
-vector<pair<int,int>> merge(vector<pair<int,int>>& intervals) {
-    return {};
-}
-
-// ─── I/O boilerplate – do not modify ────────────────
-int main() {
-    int n; cin >> n;
-    vector<pair<int,int>> intervals(n);
-    for (auto& [a,b] : intervals) cin >> a >> b;
-    auto result = merge(intervals);
-    for (auto [a,b] : result)
-        cout << a << " " << b << "\\n";
-    return 0;
-}`
-      }
-    }
-
-  ], // end easyMedium
-
-  mediumHard: [
-
-    /* ────────────────── 1. Coin Change ────────────────── */
-    {
-      id: 'coin-change',
-      title: 'Coin Change',
-      difficulty: 'Medium → Hard',
-      diffClass: 'mh',
-      tags: ['Array', 'Dynamic Programming', 'BFS'],
-      expectedTC: 'O(amount × n)',
-      expectedSC: 'O(amount)',
-      lcUrl: 'https://leetcode.com/problems/coin-change/',
-      statement: `<p>You are given an integer array <code>coins</code> representing coins of different denominations and an integer <code>amount</code> representing a total amount of money.</p>
-<p>Return the <strong>fewest number of coins</strong> needed to make up that amount. If that amount cannot be made up by any combination of the coins, return <code>-1</code>.</p>
-<p>You may assume that you have an <strong>infinite number</strong> of each kind of coin.</p>`,
-      examples: [
-        { input: 'coins = [1,5,11], amount = 11', output: '1', explanation: 'Use the 11-coin directly.' },
-        { input: 'coins = [1,2,5], amount = 11',  output: '3', explanation: '5 + 5 + 1 = 11 (3 coins).' },
-        { input: 'coins = [2], amount = 3',        output: '-1', explanation: 'Cannot make 3 with only 2s.' }
-      ],
-      constraints: ['1 ≤ coins.length ≤ 12', '1 ≤ coins[i] ≤ 2³¹-1', '0 ≤ amount ≤ 10⁴'],
-      testCases: [
-        { input: '3\n1 5 11\n11',  expected: '1',  label: 'coins=[1,5,11], amount=11' },
-        { input: '3\n1 2 5\n11',   expected: '3',  label: 'coins=[1,2,5], amount=11' },
-        { input: '1\n2\n3',        expected: '-1', label: 'coins=[2], amount=3' },
-        { input: '1\n1\n0',        expected: '0',  label: 'amount=0' }
-      ],
-      starterCode: {
-        python: `import sys
-
-def coinChange(coins: list, amount: int) -> int:
-    # ✏️  Write your solution here (bottom-up DP)
-    # dp[i] = min coins to make amount i
-    pass
-
-# ─── I/O boilerplate – do not modify ────────────────
-def main():
-    data = sys.stdin.read().split()
-    k = int(data[0])
-    coins = [int(data[i+1]) for i in range(k)]
-    amount = int(data[k+1])
-    print(coinChange(coins, amount))
-
-main()`,
-        java: `import java.util.*;
-
-public class Main {
-
-    // ✏️  Write your solution here (bottom-up DP)
-    // dp[i] = min coins to make amount i
-    public static int coinChange(int[] coins, int amount) {
-        return -1;
-    }
-
-    // ─── I/O boilerplate – do not modify ────────────────
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        int k = sc.nextInt();
-        int[] coins = new int[k];
-        for (int i = 0; i < k; i++) coins[i] = sc.nextInt();
-        int amount = sc.nextInt();
-        System.out.println(coinChange(coins, amount));
-    }
-}`,
-        cpp: `#include <bits/stdc++.h>
-using namespace std;
-
-// ✏️  Write your solution here (bottom-up DP)
-// dp[i] = min coins to make amount i
-int coinChange(vector<int>& coins, int amount) {
-    return -1;
-}
-
-// ─── I/O boilerplate – do not modify ────────────────
-int main() {
-    int k; cin >> k;
-    vector<int> coins(k);
-    for (int& x : coins) cin >> x;
-    int amount; cin >> amount;
-    cout << coinChange(coins, amount) << "\\n";
-    return 0;
-}`
-      }
-    },
-
-    /* ────────────────── 2. Trapping Rain Water ────────────────── */
-    {
-      id: 'trapping-rain-water',
-      title: 'Trapping Rain Water',
-      difficulty: 'Medium → Hard',
-      diffClass: 'mh',
-      tags: ['Array', 'Two Pointers', 'Dynamic Programming', 'Stack'],
-      expectedTC: 'O(n)',
-      expectedSC: 'O(1)',
-      lcUrl: 'https://leetcode.com/problems/trapping-rain-water/',
-      statement: `<p>Given <code>n</code> non-negative integers representing an elevation map where the width of each bar is <code>1</code>, compute how much water it can trap after raining.</p>`,
-      examples: [
-        { input: 'height = [0,1,0,2,1,0,1,3,2,1,2,1]', output: '6', explanation: 'The elevation map traps 6 units of rain water.' },
-        { input: 'height = [4,2,0,3,2,5]',               output: '9', explanation: '9 units of water trapped.' }
-      ],
-      constraints: ['n == height.length', '1 ≤ n ≤ 2×10⁴', '0 ≤ height[i] ≤ 10⁵'],
-      testCases: [
-        { input: '12\n0 1 0 2 1 0 1 3 2 1 2 1', expected: '6', label: 'classic example' },
-        { input: '6\n4 2 0 3 2 5',              expected: '9', label: '[4,2,0,3,2,5]' },
-        { input: '3\n3 0 3',                    expected: '3', label: 'simple valley' },
-        { input: '4\n1 0 1 0',                  expected: '1', label: '[1,0,1,0]' }
-      ],
-      starterCode: {
-        python: `import sys
-
-def trap(height: list) -> int:
-    # ✏️  Write your solution here
-    # Optimal: two-pointer approach O(1) space
-    pass
-
-# ─── I/O boilerplate – do not modify ────────────────
-data = sys.stdin.read().split()
-n = int(data[0])
-height = [int(data[i+1]) for i in range(n)]
-print(trap(height))`,
-        java: `import java.util.*;
-
-public class Main {
-
-    // ✏️  Write your solution here
-    // Optimal: two-pointer approach O(1) space
-    public static int trap(int[] height) {
-        return 0;
-    }
-
-    // ─── I/O boilerplate – do not modify ────────────────
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        int n = sc.nextInt();
-        int[] height = new int[n];
-        for (int i = 0; i < n; i++) height[i] = sc.nextInt();
-        System.out.println(trap(height));
-    }
-}`,
-        cpp: `#include <bits/stdc++.h>
-using namespace std;
-
-// ✏️  Write your solution here
-// Optimal: two-pointer approach O(1) space
-int trap(vector<int>& height) {
-    return 0;
-}
-
-// ─── I/O boilerplate – do not modify ────────────────
-int main() {
-    int n; cin >> n;
-    vector<int> height(n);
-    for (int& x : height) cin >> x;
-    cout << trap(height) << "\\n";
-    return 0;
-}`
-      }
-    },
-
-    /* ────────────────── 3. Longest Increasing Subsequence ────────────────── */
-    {
-      id: 'lis',
-      title: 'Longest Increasing Subsequence',
-      difficulty: 'Medium → Hard',
-      diffClass: 'mh',
-      tags: ['Array', 'Binary Search', 'Dynamic Programming'],
-      expectedTC: 'O(n log n)',
-      expectedSC: 'O(n)',
-      lcUrl: 'https://leetcode.com/problems/longest-increasing-subsequence/',
-      statement: `<p>Given an integer array <code>nums</code>, return the length of the <strong>longest strictly increasing subsequence</strong>.</p>
-<p>A <strong>subsequence</strong> is a sequence derived from the array by deleting some elements (possibly none) without changing the order of the remaining elements.</p>`,
-      examples: [
-        { input: 'nums = [10,9,2,5,3,7,101,18]', output: '4', explanation: 'LIS is [2,3,7,101] or [2,5,7,101], length 4.' },
-        { input: 'nums = [0,1,0,3,2,3]',          output: '4', explanation: 'LIS is [0,1,2,3], length 4.' },
-        { input: 'nums = [7,7,7,7,7,7,7]',        output: '1', explanation: 'All same — longest strictly increasing is length 1.' }
-      ],
-      constraints: ['1 ≤ nums.length ≤ 2500', '-10⁴ ≤ nums[i] ≤ 10⁴'],
-      testCases: [
-        { input: '8\n10 9 2 5 3 7 101 18', expected: '4', label: '[10,9,2,5,3,7,101,18]' },
-        { input: '6\n0 1 0 3 2 3',          expected: '4', label: '[0,1,0,3,2,3]' },
-        { input: '7\n7 7 7 7 7 7 7',        expected: '1', label: 'all same' },
-        { input: '5\n1 3 6 7 9',            expected: '5', label: 'already sorted' }
-      ],
-      starterCode: {
-        python: `import sys
-
-def lengthOfLIS(nums: list) -> int:
-    # ✏️  Write your solution here
-    # O(n²) DP is acceptable; O(n log n) with patience sort is optimal
-    pass
-
-# ─── I/O boilerplate – do not modify ────────────────
-data = sys.stdin.read().split()
-n = int(data[0])
-nums = [int(data[i+1]) for i in range(n)]
-print(lengthOfLIS(nums))`,
-        java: `import java.util.*;
-
-public class Main {
-
-    // ✏️  Write your solution here
-    // O(n²) DP is acceptable; O(n log n) with patience sort is optimal
-    public static int lengthOfLIS(int[] nums) {
-        return 0;
-    }
-
-    // ─── I/O boilerplate – do not modify ────────────────
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        int n = sc.nextInt();
-        int[] nums = new int[n];
-        for (int i = 0; i < n; i++) nums[i] = sc.nextInt();
-        System.out.println(lengthOfLIS(nums));
-    }
-}`,
-        cpp: `#include <bits/stdc++.h>
-using namespace std;
-
-// ✏️  Write your solution here
-// O(n²) DP is acceptable; O(n log n) with patience sort is optimal
-int lengthOfLIS(vector<int>& nums) {
-    return 0;
-}
-
-// ─── I/O boilerplate – do not modify ────────────────
-int main() {
-    int n; cin >> n;
-    vector<int> nums(n);
-    for (int& x : nums) cin >> x;
-    cout << lengthOfLIS(nums) << "\\n";
-    return 0;
-}`
-      }
-    },
-
-    /* ────────────────── 4. Number of Islands ────────────────── */
-    {
-      id: 'number-of-islands',
-      title: 'Number of Islands',
-      difficulty: 'Medium → Hard',
-      diffClass: 'mh',
-      tags: ['Array', 'DFS', 'BFS', 'Union Find'],
-      expectedTC: 'O(m × n)',
-      expectedSC: 'O(m × n)',
-      lcUrl: 'https://leetcode.com/problems/number-of-islands/',
-      statement: `<p>Given an <code>m × n</code> 2D binary grid where <code>'1'</code> represents land and <code>'0'</code> represents water, return the <em>number of islands</em>.</p>
-<p>An <strong>island</strong> is surrounded by water and is formed by connecting adjacent lands horizontally or vertically. You may assume all four edges of the grid are surrounded by water.</p>`,
-      examples: [
-        { input: 'grid = [["1","1","1","1","0"],["1","1","0","1","0"],["1","1","0","0","0"],["0","0","0","0","0"]]', output: '1', explanation: 'All connected land forms one island.' },
-        { input: 'grid = [["1","1","0","0","0"],["1","1","0","0","0"],["0","0","1","0","0"],["0","0","0","1","1"]]', output: '3', explanation: 'Three separate islands.' }
-      ],
-      constraints: ['m == grid.length', 'n == grid[i].length', '1 ≤ m, n ≤ 300', 'grid[i][j] is "0" or "1".'],
-      testCases: [
-        { input: '4 5\n1 1 1 1 0\n1 1 0 1 0\n1 1 0 0 0\n0 0 0 0 0', expected: '1', label: 'one large island' },
-        { input: '4 5\n1 1 0 0 0\n1 1 0 0 0\n0 0 1 0 0\n0 0 0 1 1', expected: '3', label: 'three islands' },
-        { input: '1 1\n1',                                              expected: '1', label: 'single cell' },
-        { input: '2 2\n0 0\n0 0',                                       expected: '0', label: 'all water' }
-      ],
-      starterCode: {
-        python: `import sys
-
-def numIslands(grid: list) -> int:
-    # ✏️  Write your solution here (DFS or BFS)
-    # Sink visited land by marking '0'
-    pass
-
-# ─── I/O boilerplate – do not modify ────────────────
-def main():
-    data = sys.stdin.read().split('\\n')
-    r, c = map(int, data[0].split())
-    grid = []
-    for i in range(1, r+1):
-        grid.append(list(data[i].split()))
-    print(numIslands(grid))
-
-main()`,
-        java: `import java.util.*;
-
-public class Main {
-
-    // ✏️  Write your solution here (DFS or BFS)
-    // Sink visited land by marking '0'
-    public static int numIslands(char[][] grid) {
-        return 0;
-    }
-
-    // ─── I/O boilerplate – do not modify ────────────────
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        int r = sc.nextInt(), c = sc.nextInt();
-        char[][] grid = new char[r][c];
-        for (int i = 0; i < r; i++)
-            for (int j = 0; j < c; j++)
-                grid[i][j] = sc.nextInt() == 1 ? '1' : '0';
-        System.out.println(numIslands(grid));
-    }
-}`,
-        cpp: `#include <bits/stdc++.h>
-using namespace std;
-
-// ✏️  Write your solution here (DFS or BFS)
-// Sink visited land by marking '0'
-int numIslands(vector<vector<char>>& grid) {
-    return 0;
-}
-
-// ─── I/O boilerplate – do not modify ────────────────
-int main() {
-    int r, c; cin >> r >> c;
-    vector<vector<char>> grid(r, vector<char>(c));
-    for (int i = 0; i < r; i++)
-        for (int j = 0; j < c; j++) {
-            int v; cin >> v;
-            grid[i][j] = v ? '1' : '0';
-        }
-    cout << numIslands(grid) << "\\n";
-    return 0;
-}`
-      }
-    },
-
-    /* ────────────────── 5. Jump Game II ────────────────── */
-    {
-      id: 'jump-game-ii',
-      title: 'Jump Game II',
-      difficulty: 'Medium → Hard',
-      diffClass: 'mh',
-      tags: ['Array', 'Dynamic Programming', 'Greedy'],
-      expectedTC: 'O(n)',
-      expectedSC: 'O(1)',
-      lcUrl: 'https://leetcode.com/problems/jump-game-ii/',
-      statement: `<p>You are given a <strong>0-indexed</strong> array of integers <code>nums</code> of length <code>n</code>. You are initially positioned at <code>nums[0]</code>.</p>
-<p>Each element <code>nums[i]</code> represents the <strong>maximum</strong> length of a forward jump from index <code>i</code>. In other words, if you are at index <code>i</code>, you can jump to any index in the range <code>[i+1, i+nums[i]]</code>.</p>
-<p>Return the <strong>minimum number of jumps</strong> to reach <code>nums[n-1]</code>. The test cases are generated such that you can always reach <code>nums[n-1]</code>.</p>`,
-      examples: [
-        { input: 'nums = [2,3,1,1,4]', output: '2', explanation: 'Jump 1→3 (index 0→1), then 3→4 (index 1→4). 2 jumps.' },
-        { input: 'nums = [2,3,0,1,4]', output: '2', explanation: 'Index 0→1, then 1→4. 2 jumps.' }
-      ],
-      constraints: ['1 ≤ nums.length ≤ 10⁴', '0 ≤ nums[i] ≤ 1000', 'You can always reach nums[n-1].'],
-      testCases: [
-        { input: '5\n2 3 1 1 4', expected: '2', label: '[2,3,1,1,4]' },
-        { input: '5\n2 3 0 1 4', expected: '2', label: '[2,3,0,1,4]' },
-        { input: '1\n0',         expected: '0', label: 'already at end' },
-        { input: '6\n3 4 1 1 0 2', expected: '2', label: '[3,4,1,1,0,2]' }
-      ],
-      starterCode: {
-        python: `import sys
-
-def jump(nums: list) -> int:
-    # ✏️  Write your solution here (greedy BFS)
-    # Track farthest reachable index at each jump level
-    pass
-
-# ─── I/O boilerplate – do not modify ────────────────
-data = sys.stdin.read().split()
-n = int(data[0])
-nums = [int(data[i+1]) for i in range(n)]
-print(jump(nums))`,
-        java: `import java.util.*;
-
-public class Main {
-
-    // ✏️  Write your solution here (greedy BFS)
-    // Track farthest reachable index at each jump level
-    public static int jump(int[] nums) {
-        return 0;
-    }
-
-    // ─── I/O boilerplate – do not modify ────────────────
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        int n = sc.nextInt();
-        int[] nums = new int[n];
-        for (int i = 0; i < n; i++) nums[i] = sc.nextInt();
-        System.out.println(jump(nums));
-    }
-}`,
-        cpp: `#include <bits/stdc++.h>
-using namespace std;
-
-// ✏️  Write your solution here (greedy BFS)
-// Track farthest reachable index at each jump level
-int jump(vector<int>& nums) {
-    return 0;
-}
-
-// ─── I/O boilerplate – do not modify ────────────────
-int main() {
-    int n; cin >> n;
-    vector<int> nums(n);
-    for (int& x : nums) cin >> x;
-    cout << jump(nums) << "\\n";
-    return 0;
-}`
-      }
-    },
-
-    /* ────────────────── 6. Longest Common Subsequence ────────────────── */
-    {
-      id: 'lcs',
-      title: 'Longest Common Subsequence',
-      difficulty: 'Medium → Hard',
-      diffClass: 'mh',
-      tags: ['String', 'Dynamic Programming'],
-      expectedTC: 'O(m × n)',
-      expectedSC: 'O(m × n)',
-      lcUrl: 'https://leetcode.com/problems/longest-common-subsequence/',
-      statement: `<p>Given two strings <code>text1</code> and <code>text2</code>, return the length of their <strong>longest common subsequence</strong>. If there is no common subsequence, return <code>0</code>.</p>
-<p>A <strong>subsequence</strong> of a string is a sequence derived by deleting some characters (possibly none) without changing the remaining characters' order.</p>
-<p>A <strong>common subsequence</strong> is one that is a subsequence of both strings.</p>`,
-      examples: [
-        { input: 'text1 = "abcde", text2 = "ace"',  output: '3', explanation: 'LCS is "ace", length 3.' },
-        { input: 'text1 = "abc", text2 = "abc"',    output: '3', explanation: 'LCS is "abc", length 3.' },
-        { input: 'text1 = "abc", text2 = "def"',    output: '0', explanation: 'No common subsequence.' }
-      ],
-      constraints: ['1 ≤ text1.length, text2.length ≤ 1000', 'text1 and text2 consist of only lowercase English letters.'],
-      testCases: [
-        { input: 'abcde\nace',   expected: '3', label: '"abcde","ace"' },
-        { input: 'abc\nabc',     expected: '3', label: 'identical strings' },
-        { input: 'abc\ndef',     expected: '0', label: 'no common chars' },
-        { input: 'ezupkr\nubmrapg', expected: '2', label: '"ezupkr","ubmrapg"' }
-      ],
-      starterCode: {
-        python: `import sys
-
-def longestCommonSubsequence(text1: str, text2: str) -> int:
-    # ✏️  Write your solution here (2D DP)
-    # dp[i][j] = LCS of text1[:i] and text2[:j]
-    pass
-
-# ─── I/O boilerplate – do not modify ────────────────
-lines = sys.stdin.read().strip().split('\\n')
-text1, text2 = lines[0].strip(), lines[1].strip()
-print(longestCommonSubsequence(text1, text2))`,
-        java: `import java.util.*;
-
-public class Main {
-
-    // ✏️  Write your solution here (2D DP)
-    // dp[i][j] = LCS of text1[0..i-1] and text2[0..j-1]
-    public static int longestCommonSubsequence(String text1, String text2) {
-        return 0;
-    }
-
-    // ─── I/O boilerplate – do not modify ────────────────
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        String text1 = sc.nextLine().trim();
-        String text2 = sc.nextLine().trim();
-        System.out.println(longestCommonSubsequence(text1, text2));
-    }
-}`,
-        cpp: `#include <bits/stdc++.h>
-using namespace std;
-
-// ✏️  Write your solution here (2D DP)
-// dp[i][j] = LCS of text1[0..i-1] and text2[0..j-1]
-int longestCommonSubsequence(string text1, string text2) {
-    return 0;
-}
-
-// ─── I/O boilerplate – do not modify ────────────────
-int main() {
-    string text1, text2;
-    getline(cin, text1);
-    getline(cin, text2);
-    cout << longestCommonSubsequence(text1, text2) << "\\n";
-    return 0;
-}`
-      }
-    }
-
-  ] // end mediumHard
-
-}; // end MOCK_BANK
+  Arrays: [
+    {id:'arr1',title:'Two Sum',topic:'Arrays',difficulty:'Easy',diffClass:'easy',tags:['Array','Hash Map'],
+      statement:'<p>Given an array <code>nums</code> and an integer <code>target</code>, return the indices of the two numbers that add up to <code>target</code>. Exactly one solution exists.</p>',
+      examples:[{input:'nums=[2,7,11,15], target=9',output:'[0,1]',explanation:null},{input:'nums=[3,2,4], target=6',output:'[1,2]',explanation:null}],
+      constraints:['2≤nums.length≤10⁴','-10⁹≤nums[i]≤10⁹'],
+      starterCode:{python:'def twoSum(nums, target):\n    pass\n',java:'class Solution {\n    public int[] twoSum(int[] nums, int target) { return new int[]{}; }\n}\n',cpp:'class Solution {\npublic:\n    vector<int> twoSum(vector<int>& nums, int target) { return {}; }\n};\n'}},
+    {id:'arr2',title:'Best Time to Buy and Sell Stock',topic:'Arrays',difficulty:'Easy',diffClass:'easy',tags:['Array','Greedy'],
+      statement:'<p>Given <code>prices[i]</code> as the price on day <code>i</code>, return the maximum profit from one buy-then-sell transaction. Return 0 if no profit is possible.</p>',
+      examples:[{input:'prices=[7,1,5,3,6,4]',output:'5',explanation:'Buy at 1, sell at 6.'}],
+      constraints:['1≤prices.length≤10⁵','0≤prices[i]≤10⁴'],
+      starterCode:{python:'def maxProfit(prices):\n    pass\n',java:'class Solution {\n    public int maxProfit(int[] prices) { return 0; }\n}\n',cpp:'class Solution {\npublic:\n    int maxProfit(vector<int>& prices) { return 0; }\n};\n'}},
+    {id:'arr3',title:'Maximum Subarray',topic:'Arrays',difficulty:'Medium',diffClass:'medium',tags:['Array','DP','Kadane'],
+      statement:'<p>Given an integer array <code>nums</code>, find the subarray with the largest sum and return its sum.</p>',
+      examples:[{input:'nums=[-2,1,-3,4,-1,2,1,-5,4]',output:'6',explanation:'[4,-1,2,1] has sum 6.'}],
+      constraints:['1≤nums.length≤10⁵','-10⁴≤nums[i]≤10⁴'],
+      starterCode:{python:'def maxSubArray(nums):\n    pass\n',java:'class Solution {\n    public int maxSubArray(int[] nums) { return 0; }\n}\n',cpp:'class Solution {\npublic:\n    int maxSubArray(vector<int>& nums) { return 0; }\n};\n'}},
+    {id:'arr4',title:'Product of Array Except Self',topic:'Arrays',difficulty:'Medium',diffClass:'medium',tags:['Array','Prefix Product'],
+      statement:'<p>Given <code>nums</code>, return an array where each element is the product of all elements except itself. O(n) time, no division.</p>',
+      examples:[{input:'nums=[1,2,3,4]',output:'[24,12,8,6]',explanation:null}],
+      constraints:['2≤nums.length≤10⁵','-30≤nums[i]≤30'],
+      starterCode:{python:'def productExceptSelf(nums):\n    pass\n',java:'class Solution {\n    public int[] productExceptSelf(int[] nums) { return new int[]{}; }\n}\n',cpp:'class Solution {\npublic:\n    vector<int> productExceptSelf(vector<int>& nums) { return {}; }\n};\n'}},
+    {id:'arr5',title:'Maximum Product Subarray',topic:'Arrays',difficulty:'Medium',diffClass:'medium',tags:['Array','DP'],
+      statement:'<p>Given an integer array <code>nums</code>, find the contiguous subarray with the largest product and return that product.</p>',
+      examples:[{input:'nums=[2,3,-2,4]',output:'6',explanation:'[2,3] has product 6.'}],
+      constraints:['1≤nums.length≤2×10⁴','-10≤nums[i]≤10'],
+      starterCode:{python:'def maxProduct(nums):\n    pass\n',java:'class Solution {\n    public int maxProduct(int[] nums) { return 0; }\n}\n',cpp:'class Solution {\npublic:\n    int maxProduct(vector<int>& nums) { return 0; }\n};\n'}},
+    {id:'arr6',title:'Find the Duplicate Number',topic:'Arrays',difficulty:'Medium',diffClass:'medium',tags:['Array','Floyd\'s Cycle'],
+      statement:'<p>Given an array <code>nums</code> of n+1 integers where each is in [1,n], find the duplicate without modifying the array and using O(1) extra space.</p>',
+      examples:[{input:'nums=[1,3,4,2,2]',output:'2',explanation:null}],
+      constraints:['1≤n≤10⁵','nums.length==n+1','Only one repeated number.'],
+      starterCode:{python:'def findDuplicate(nums):\n    pass\n',java:'class Solution {\n    public int findDuplicate(int[] nums) { return 0; }\n}\n',cpp:'class Solution {\npublic:\n    int findDuplicate(vector<int>& nums) { return 0; }\n};\n'}},
+    {id:'arr7',title:'First Missing Positive',topic:'Arrays',difficulty:'Hard',diffClass:'hard',tags:['Array','Index Sort'],
+      statement:'<p>Given an unsorted integer array <code>nums</code>, return the smallest missing positive integer. O(n) time and O(1) extra space.</p>',
+      examples:[{input:'nums=[3,4,-1,1]',output:'2',explanation:null},{input:'nums=[1,2,0]',output:'3',explanation:null}],
+      constraints:['1≤nums.length≤10⁵','-2³¹≤nums[i]≤2³¹-1'],
+      starterCode:{python:'def firstMissingPositive(nums):\n    pass\n',java:'class Solution {\n    public int firstMissingPositive(int[] nums) { return 0; }\n}\n',cpp:'class Solution {\npublic:\n    int firstMissingPositive(vector<int>& nums) { return 0; }\n};\n'}},
+    {id:'arr8',title:'Set Matrix Zeroes',topic:'Arrays',difficulty:'Medium',diffClass:'medium',tags:['Array','Matrix'],
+      statement:'<p>Given an m×n integer matrix, if an element is 0, set its entire row and column to 0. Do it in-place.</p>',
+      examples:[{input:'matrix=[[1,1,1],[1,0,1],[1,1,1]]',output:'[[1,0,1],[0,0,0],[1,0,1]]',explanation:null}],
+      constraints:['m==matrix.length','n==matrix[0].length','1≤m,n≤200'],
+      starterCode:{python:'def setZeroes(matrix):\n    pass\n',java:'class Solution {\n    public void setZeroes(int[][] matrix) {}\n}\n',cpp:'class Solution {\npublic:\n    void setZeroes(vector<vector<int>>& matrix) {}\n};\n'}},
+    {id:'arr9',title:'Rotate Image',topic:'Arrays',difficulty:'Medium',diffClass:'medium',tags:['Array','Matrix','Math'],
+      statement:'<p>Given an n×n 2D matrix representing an image, rotate the image by 90 degrees clockwise in-place.</p>',
+      examples:[{input:'matrix=[[1,2,3],[4,5,6],[7,8,9]]',output:'[[7,4,1],[8,5,2],[9,6,3]]',explanation:null}],
+      constraints:['n==matrix.length==matrix[0].length','1≤n≤20'],
+      starterCode:{python:'def rotate(matrix):\n    pass\n',java:'class Solution {\n    public void rotate(int[][] matrix) {}\n}\n',cpp:'class Solution {\npublic:\n    void rotate(vector<vector<int>>& matrix) {}\n};\n'}},
+    {id:'arr10',title:'Spiral Matrix',topic:'Arrays',difficulty:'Medium',diffClass:'medium',tags:['Array','Matrix','Simulation'],
+      statement:'<p>Given an m×n matrix, return all elements of the matrix in spiral order.</p>',
+      examples:[{input:'matrix=[[1,2,3],[4,5,6],[7,8,9]]',output:'[1,2,3,6,9,8,7,4,5]',explanation:null}],
+      constraints:['m==matrix.length','n==matrix[0].length','1≤m,n≤10'],
+      starterCode:{python:'def spiralOrder(matrix):\n    pass\n',java:'class Solution {\n    public List<Integer> spiralOrder(int[][] matrix) { return new ArrayList<>(); }\n}\n',cpp:'class Solution {\npublic:\n    vector<int> spiralOrder(vector<vector<int>>& matrix) { return {}; }\n};\n'}},
+    {id:'arr11',title:'Game of Life',topic:'Arrays',difficulty:'Medium',diffClass:'medium',tags:['Array','Matrix','Simulation'],
+      statement:'<p>Given a board of 0s (dead) and 1s (live cells), apply Conway\'s Game of Life rules simultaneously to all cells and update the board in-place.</p>',
+      examples:[{input:'board=[[0,1,0],[0,0,1],[1,1,1],[0,0,0]]',output:'[[0,0,0],[1,0,1],[0,1,1],[0,1,0]]',explanation:null}],
+      constraints:['m==board.length','n==board[0].length','1≤m,n≤25'],
+      starterCode:{python:'def gameOfLife(board):\n    pass\n',java:'class Solution {\n    public void gameOfLife(int[][] board) {}\n}\n',cpp:'class Solution {\npublic:\n    void gameOfLife(vector<vector<int>>& board) {}\n};\n'}},
+    {id:'arr12',title:'Find All Numbers Disappeared in an Array',topic:'Arrays',difficulty:'Easy',diffClass:'easy',tags:['Array','Index Trick'],
+      statement:'<p>Given an array <code>nums</code> of n integers where nums[i] ∈ [1,n], return all integers in [1,n] that do not appear in the array. O(n) time, O(1) extra space.</p>',
+      examples:[{input:'nums=[4,3,2,7,8,2,3,1]',output:'[5,6]',explanation:null}],
+      constraints:['n==nums.length','1≤n≤10⁵','1≤nums[i]≤n'],
+      starterCode:{python:'def findDisappearedNumbers(nums):\n    pass\n',java:'class Solution {\n    public List<Integer> findDisappearedNumbers(int[] nums) { return new ArrayList<>(); }\n}\n',cpp:'class Solution {\npublic:\n    vector<int> findDisappearedNumbers(vector<int>& nums) { return {}; }\n};\n'}},
+    {id:'arr13',title:'Jump Game',topic:'Arrays',difficulty:'Medium',diffClass:'medium',tags:['Array','Greedy'],
+      statement:'<p>Given array <code>nums</code> where nums[i] is your max jump length at position i, return true if you can reach the last index starting from index 0.</p>',
+      examples:[{input:'nums=[2,3,1,1,4]',output:'true',explanation:null},{input:'nums=[3,2,1,0,4]',output:'false',explanation:null}],
+      constraints:['1≤nums.length≤10⁴','0≤nums[i]≤10⁵'],
+      starterCode:{python:'def canJump(nums):\n    pass\n',java:'class Solution {\n    public boolean canJump(int[] nums) { return false; }\n}\n',cpp:'class Solution {\npublic:\n    bool canJump(vector<int>& nums) { return false; }\n};\n'}},
+    {id:'arr14',title:'Jump Game II',topic:'Arrays',difficulty:'Medium',diffClass:'medium',tags:['Array','Greedy','BFS'],
+      statement:'<p>Given array <code>nums</code> where nums[i] is your max jump length, return the minimum number of jumps to reach the last index. You can always reach the end.</p>',
+      examples:[{input:'nums=[2,3,1,1,4]',output:'2',explanation:'Jump to index 1 then to last.'}],
+      constraints:['1≤nums.length≤10⁴','0≤nums[i]≤1000'],
+      starterCode:{python:'def jump(nums):\n    pass\n',java:'class Solution {\n    public int jump(int[] nums) { return 0; }\n}\n',cpp:'class Solution {\npublic:\n    int jump(vector<int>& nums) { return 0; }\n};\n'}},
+    {id:'arr15',title:'Move Zeroes',topic:'Arrays',difficulty:'Easy',diffClass:'easy',tags:['Array','Two Pointers'],
+      statement:'<p>Given an integer array <code>nums</code>, move all 0s to the end while maintaining the relative order of non-zero elements. Do it in-place.</p>',
+      examples:[{input:'nums=[0,1,0,3,12]',output:'[1,3,12,0,0]',explanation:null}],
+      constraints:['1≤nums.length≤10⁴','-2³¹≤nums[i]≤2³¹-1'],
+      starterCode:{python:'def moveZeroes(nums):\n    pass\n',java:'class Solution {\n    public void moveZeroes(int[] nums) {}\n}\n',cpp:'class Solution {\npublic:\n    void moveZeroes(vector<int>& nums) {}\n};\n'}},
+    {id:'arr16',title:'Remove Duplicates from Sorted Array',topic:'Arrays',difficulty:'Easy',diffClass:'easy',tags:['Array','Two Pointers'],
+      statement:'<p>Given a sorted array <code>nums</code> in non-decreasing order, remove duplicates in-place so each unique value appears once. Return the count k of unique elements.</p>',
+      examples:[{input:'nums=[0,0,1,1,1,2,2,3,3,4]',output:'5, nums=[0,1,2,3,4,...]',explanation:null}],
+      constraints:['1≤nums.length≤3×10⁴','-100≤nums[i]≤100'],
+      starterCode:{python:'def removeDuplicates(nums):\n    pass\n',java:'class Solution {\n    public int removeDuplicates(int[] nums) { return 0; }\n}\n',cpp:'class Solution {\npublic:\n    int removeDuplicates(vector<int>& nums) { return 0; }\n};\n'}},
+    {id:'arr17',title:'Decode Ways',topic:'Arrays',difficulty:'Medium',diffClass:'medium',tags:['String','DP'],
+      statement:'<p>A message A→1, B→2, …, Z→26 can be encoded as a number string. Given <code>s</code>, return the number of ways to decode it.</p>',
+      examples:[{input:'s="12"',output:'2',explanation:'"AB" or "L".'},{input:'s="06"',output:'0',explanation:'Invalid.'}],
+      constraints:['1≤s.length≤100','s contains digits only.'],
+      starterCode:{python:'def numDecodings(s):\n    pass\n',java:'class Solution {\n    public int numDecodings(String s) { return 0; }\n}\n',cpp:'class Solution {\npublic:\n    int numDecodings(string s) { return 0; }\n};\n'}},
+    {id:'arr18',title:'Maximum Sum Circular Subarray',topic:'Arrays',difficulty:'Medium',diffClass:'medium',tags:['Array','DP','Kadane'],
+      statement:'<p>Given a circular integer array <code>nums</code>, return the maximum possible sum of a non-empty subarray (wrapping around allowed).</p>',
+      examples:[{input:'nums=[1,-2,3,-2]',output:'3',explanation:null},{input:'nums=[5,-3,5]',output:'10',explanation:'Wrap around.'}],
+      constraints:['n==nums.length','1≤n≤3×10⁴','-3×10⁴≤nums[i]≤3×10⁴'],
+      starterCode:{python:'def maxSubarraySumCircular(nums):\n    pass\n',java:'class Solution {\n    public int maxSubarraySumCircular(int[] nums) { return 0; }\n}\n',cpp:'class Solution {\npublic:\n    int maxSubarraySumCircular(vector<int>& nums) { return 0; }\n};\n'}},
+    {id:'arr19',title:'Sort Colors',topic:'Arrays',difficulty:'Medium',diffClass:'medium',tags:['Array','Two Pointers','Dutch Flag'],
+      statement:'<p>Given an array with values 0, 1, 2 (red/white/blue), sort it in-place in one pass using only constant extra space. Do not use the library sort.</p>',
+      examples:[{input:'nums=[2,0,2,1,1,0]',output:'[0,0,1,1,2,2]',explanation:null}],
+      constraints:['n==nums.length','1≤n≤300','nums[i] is 0, 1, or 2.'],
+      starterCode:{python:'def sortColors(nums):\n    pass\n',java:'class Solution {\n    public void sortColors(int[] nums) {}\n}\n',cpp:'class Solution {\npublic:\n    void sortColors(vector<int>& nums) {}\n};\n'}},
+    {id:'arr20',title:'Subarray Sum Equals K',topic:'Arrays',difficulty:'Medium',diffClass:'medium',tags:['Array','Prefix Sum','Hash Map'],
+      statement:'<p>Given an array of integers <code>nums</code> and integer <code>k</code>, return the total number of subarrays whose sum equals <code>k</code>.</p>',
+      examples:[{input:'nums=[1,1,1], k=2',output:'2',explanation:null}],
+      constraints:['1≤nums.length≤2×10⁴','-1000≤nums[i]≤1000'],
+      starterCode:{python:'def subarraySum(nums, k):\n    pass\n',java:'class Solution {\n    public int subarraySum(int[] nums, int k) { return 0; }\n}\n',cpp:'class Solution {\npublic:\n    int subarraySum(vector<int>& nums, int k) { return 0; }\n};\n'}},
+  ],
+
+  String: [
+    {id:'str1',title:'Valid Anagram',topic:'String',difficulty:'Easy',diffClass:'easy',tags:['String','Hash Map'],
+      statement:'<p>Given two strings <code>s</code> and <code>t</code>, return true if <code>t</code> is an anagram of <code>s</code> (same letters, same counts).</p>',
+      examples:[{input:'s="anagram", t="nagaram"',output:'true',explanation:null},{input:'s="rat", t="car"',output:'false',explanation:null}],
+      constraints:['1≤s.length,t.length≤5×10⁴','Lowercase English letters only.'],
+      starterCode:{python:'def isAnagram(s, t):\n    pass\n',java:'class Solution {\n    public boolean isAnagram(String s, String t) { return false; }\n}\n',cpp:'class Solution {\npublic:\n    bool isAnagram(string s, string t) { return false; }\n};\n'}},
+    {id:'str2',title:'Valid Palindrome',topic:'String',difficulty:'Easy',diffClass:'easy',tags:['String','Two Pointers'],
+      statement:'<p>A phrase is a palindrome if it reads the same forwards and backwards considering only alphanumeric characters (case-insensitive). Return true if <code>s</code> is a palindrome.</p>',
+      examples:[{input:'s="A man, a plan, a canal: Panama"',output:'true',explanation:null}],
+      constraints:['1≤s.length≤2×10⁵','s consists of printable ASCII.'],
+      starterCode:{python:'def isPalindrome(s):\n    pass\n',java:'class Solution {\n    public boolean isPalindrome(String s) { return false; }\n}\n',cpp:'class Solution {\npublic:\n    bool isPalindrome(string s) { return false; }\n};\n'}},
+    {id:'str3',title:'Longest Palindromic Substring',topic:'String',difficulty:'Medium',diffClass:'medium',tags:['String','DP','Expand Around Center'],
+      statement:'<p>Given a string <code>s</code>, return the longest palindromic substring.</p>',
+      examples:[{input:'s="babad"',output:'"bab"',explanation:null},{input:'s="cbbd"',output:'"bb"',explanation:null}],
+      constraints:['1≤s.length≤1000','s consists of digits and English letters.'],
+      starterCode:{python:'def longestPalindrome(s):\n    pass\n',java:'class Solution {\n    public String longestPalindrome(String s) { return ""; }\n}\n',cpp:'class Solution {\npublic:\n    string longestPalindrome(string s) { return ""; }\n};\n'}},
+    {id:'str4',title:'Group Anagrams',topic:'String',difficulty:'Medium',diffClass:'medium',tags:['String','Hash Map','Sorting'],
+      statement:'<p>Given an array of strings <code>strs</code>, group the anagrams together. Return the answer in any order.</p>',
+      examples:[{input:'strs=["eat","tea","tan","ate","nat","bat"]',output:'[["bat"],["nat","tan"],["ate","eat","tea"]]',explanation:null}],
+      constraints:['1≤strs.length≤10⁴','0≤strs[i].length≤100'],
+      starterCode:{python:'def groupAnagrams(strs):\n    pass\n',java:'class Solution {\n    public List<List<String>> groupAnagrams(String[] strs) { return new ArrayList<>(); }\n}\n',cpp:'class Solution {\npublic:\n    vector<vector<string>> groupAnagrams(vector<string>& strs) { return {}; }\n};\n'}},
+    {id:'str5',title:'Longest Common Prefix',topic:'String',difficulty:'Easy',diffClass:'easy',tags:['String','Trie'],
+      statement:'<p>Write a function to find the longest common prefix string amongst an array of strings. Return "" if none exists.</p>',
+      examples:[{input:'strs=["flower","flow","flight"]',output:'"fl"',explanation:null}],
+      constraints:['1≤strs.length≤200','0≤strs[i].length≤200'],
+      starterCode:{python:'def longestCommonPrefix(strs):\n    pass\n',java:'class Solution {\n    public String longestCommonPrefix(String[] strs) { return ""; }\n}\n',cpp:'class Solution {\npublic:\n    string longestCommonPrefix(vector<string>& strs) { return ""; }\n};\n'}},
+    {id:'str6',title:'Reverse Words in a String',topic:'String',difficulty:'Medium',diffClass:'medium',tags:['String','Two Pointers'],
+      statement:'<p>Given a string <code>s</code>, reverse the order of the words. Words are separated by spaces; remove leading/trailing spaces and reduce multiple spaces to one.</p>',
+      examples:[{input:'s="  hello world  "',output:'"world hello"',explanation:null}],
+      constraints:['1≤s.length≤10⁴'],
+      starterCode:{python:'def reverseWords(s):\n    pass\n',java:'class Solution {\n    public String reverseWords(String s) { return ""; }\n}\n',cpp:'class Solution {\npublic:\n    string reverseWords(string s) { return ""; }\n};\n'}},
+    {id:'str7',title:'String to Integer (atoi)',topic:'String',difficulty:'Medium',diffClass:'medium',tags:['String','Math'],
+      statement:'<p>Implement the <code>myAtoi</code> function which converts a string to a 32-bit signed integer. Handle leading spaces, optional sign, digits, and clamp to [−2³¹, 2³¹−1].</p>',
+      examples:[{input:'s="42"',output:'42',explanation:null},{input:'s="   -42"',output:'-42',explanation:null}],
+      constraints:['0≤s.length≤200'],
+      starterCode:{python:'def myAtoi(s):\n    pass\n',java:'class Solution {\n    public int myAtoi(String s) { return 0; }\n}\n',cpp:'class Solution {\npublic:\n    int myAtoi(string s) { return 0; }\n};\n'}},
+    {id:'str8',title:'Decode String',topic:'String',difficulty:'Medium',diffClass:'medium',tags:['String','Stack'],
+      statement:'<p>Given an encoded string like <code>k[encoded_string]</code>, return the decoded string. For example, <code>3[a]2[bc]</code> → <code>aaabcbc</code>.</p>',
+      examples:[{input:'s="3[a]2[bc]"',output:'"aaabcbc"',explanation:null},{input:'s="2[abc]3[cd]ef"',output:'"abcabccdcdcdef"',explanation:null}],
+      constraints:['1≤s.length≤30','s is always valid.'],
+      starterCode:{python:'def decodeString(s):\n    pass\n',java:'class Solution {\n    public String decodeString(String s) { return ""; }\n}\n',cpp:'class Solution {\npublic:\n    string decodeString(string s) { return ""; }\n};\n'}},
+    {id:'str9',title:'Isomorphic Strings',topic:'String',difficulty:'Easy',diffClass:'easy',tags:['String','Hash Map'],
+      statement:'<p>Given two strings <code>s</code> and <code>t</code>, determine if they are isomorphic — each character in <code>s</code> can be mapped to exactly one character in <code>t</code> and vice versa.</p>',
+      examples:[{input:'s="egg", t="add"',output:'true',explanation:null},{input:'s="foo", t="bar"',output:'false',explanation:null}],
+      constraints:['1≤s.length≤5×10⁴','t.length==s.length'],
+      starterCode:{python:'def isIsomorphic(s, t):\n    pass\n',java:'class Solution {\n    public boolean isIsomorphic(String s, String t) { return false; }\n}\n',cpp:'class Solution {\npublic:\n    bool isIsomorphic(string s, string t) { return false; }\n};\n'}},
+    {id:'str10',title:'Word Pattern',topic:'String',difficulty:'Easy',diffClass:'easy',tags:['String','Hash Map'],
+      statement:'<p>Given a pattern and a string <code>s</code>, determine if <code>s</code> follows the same pattern where each letter in pattern maps bijectively to a word in s.</p>',
+      examples:[{input:'pattern="abba", s="dog cat cat dog"',output:'true',explanation:null}],
+      constraints:['1≤pattern.length≤300','1≤s.length≤3000'],
+      starterCode:{python:'def wordPattern(pattern, s):\n    pass\n',java:'class Solution {\n    public boolean wordPattern(String pattern, String s) { return false; }\n}\n',cpp:'class Solution {\npublic:\n    bool wordPattern(string pattern, string s) { return false; }\n};\n'}},
+    {id:'str11',title:'Valid Parentheses',topic:'String',difficulty:'Easy',diffClass:'easy',tags:['String','Stack'],
+      statement:'<p>Given a string with only <code>(</code> <code>)</code> <code>{</code> <code>}</code> <code>[</code> <code>]</code>, return true if it is valid — open brackets are closed by the same type and in correct order.</p>',
+      examples:[{input:'s="()[]{}"',output:'true',explanation:null},{input:'s="(]"',output:'false',explanation:null}],
+      constraints:['1≤s.length≤10⁴'],
+      starterCode:{python:'def isValid(s):\n    pass\n',java:'class Solution {\n    public boolean isValid(String s) { return false; }\n}\n',cpp:'class Solution {\npublic:\n    bool isValid(string s) { return false; }\n};\n'}},
+    {id:'str12',title:'Longest Valid Parentheses',topic:'String',difficulty:'Hard',diffClass:'hard',tags:['String','Stack','DP'],
+      statement:'<p>Given a string containing just <code>(</code> and <code>)</code>, return the length of the longest valid (well-formed) parentheses substring.</p>',
+      examples:[{input:'s="(()"',output:'2',explanation:null},{input:'s=")()())"',output:'4',explanation:null}],
+      constraints:['0≤s.length≤3×10⁴'],
+      starterCode:{python:'def longestValidParentheses(s):\n    pass\n',java:'class Solution {\n    public int longestValidParentheses(String s) { return 0; }\n}\n',cpp:'class Solution {\npublic:\n    int longestValidParentheses(string s) { return 0; }\n};\n'}},
+    {id:'str13',title:'Regular Expression Matching',topic:'String',difficulty:'Hard',diffClass:'hard',tags:['String','DP','Recursion'],
+      statement:'<p>Given input string <code>s</code> and pattern <code>p</code> with <code>.</code> (any char) and <code>*</code> (zero or more of preceding), implement full regex matching.</p>',
+      examples:[{input:'s="aa", p="a*"',output:'true',explanation:null},{input:'s="ab", p=".*"',output:'true',explanation:null}],
+      constraints:['1≤s.length≤20','1≤p.length≤20'],
+      starterCode:{python:'def isMatch(s, p):\n    pass\n',java:'class Solution {\n    public boolean isMatch(String s, String p) { return false; }\n}\n',cpp:'class Solution {\npublic:\n    bool isMatch(string s, string p) { return false; }\n};\n'}},
+    {id:'str14',title:'Minimum Remove to Make Valid Parentheses',topic:'String',difficulty:'Medium',diffClass:'medium',tags:['String','Stack'],
+      statement:'<p>Given a string <code>s</code> of lowercase letters and parentheses, remove the minimum number of parentheses to make the string valid. Return any valid result.</p>',
+      examples:[{input:'s="lee(t(c)o)de)"',output:'"lee(t(c)o)de"',explanation:null}],
+      constraints:['1≤s.length≤10⁵'],
+      starterCode:{python:'def minRemoveToMakeValid(s):\n    pass\n',java:'class Solution {\n    public String minRemoveToMakeValid(String s) { return ""; }\n}\n',cpp:'class Solution {\npublic:\n    string minRemoveToMakeValid(string s) { return ""; }\n};\n'}},
+    {id:'str15',title:'Palindromic Substrings',topic:'String',difficulty:'Medium',diffClass:'medium',tags:['String','DP','Expand Around Center'],
+      statement:'<p>Given a string <code>s</code>, return the number of palindromic substrings in it. A substring is a contiguous sequence of characters.</p>',
+      examples:[{input:'s="abc"',output:'3',explanation:'"a","b","c".'},{input:'s="aaa"',output:'6',explanation:'6 palindromic substrings.'}],
+      constraints:['1≤s.length≤1000'],
+      starterCode:{python:'def countSubstrings(s):\n    pass\n',java:'class Solution {\n    public int countSubstrings(String s) { return 0; }\n}\n',cpp:'class Solution {\npublic:\n    int countSubstrings(string s) { return 0; }\n};\n'}},
+  ],
+
+  TwoPointers: [
+    {id:'tp1',title:'Two Sum II - Input Array Is Sorted',topic:'TwoPointers',difficulty:'Medium',diffClass:'medium',tags:['Array','Two Pointers','Binary Search'],
+      statement:'<p>Given a 1-indexed sorted array <code>numbers</code>, find two numbers that add up to <code>target</code>. Use only constant extra space.</p>',
+      examples:[{input:'numbers=[2,7,11,15], target=9',output:'[1,2]',explanation:'numbers[1]+numbers[2]=9.'}],
+      constraints:['2≤numbers.length≤3×10⁴','-1000≤numbers[i]≤1000'],
+      starterCode:{python:'def twoSum(numbers, target):\n    pass\n',java:'class Solution {\n    public int[] twoSum(int[] numbers, int target) { return new int[]{}; }\n}\n',cpp:'class Solution {\npublic:\n    vector<int> twoSum(vector<int>& numbers, int target) { return {}; }\n};\n'}},
+    {id:'tp2',title:'3Sum',topic:'TwoPointers',difficulty:'Medium',diffClass:'medium',tags:['Array','Two Pointers','Sorting'],
+      statement:'<p>Given an array <code>nums</code>, return all triplets [nums[i],nums[j],nums[k]] such that i≠j≠k and nums[i]+nums[j]+nums[k]==0. No duplicate triplets.</p>',
+      examples:[{input:'nums=[-1,0,1,2,-1,-4]',output:'[[-1,-1,2],[-1,0,1]]',explanation:null}],
+      constraints:['3≤nums.length≤3000','-10⁵≤nums[i]≤10⁵'],
+      starterCode:{python:'def threeSum(nums):\n    pass\n',java:'class Solution {\n    public List<List<Integer>> threeSum(int[] nums) { return new ArrayList<>(); }\n}\n',cpp:'class Solution {\npublic:\n    vector<vector<int>> threeSum(vector<int>& nums) { return {}; }\n};\n'}},
+    {id:'tp3',title:'4Sum',topic:'TwoPointers',difficulty:'Medium',diffClass:'medium',tags:['Array','Two Pointers','Sorting'],
+      statement:'<p>Given array <code>nums</code> and target, return all unique quadruplets [a,b,c,d] such that a+b+c+d==target.</p>',
+      examples:[{input:'nums=[1,0,-1,0,-2,2], target=0',output:'[[-2,-1,1,2],[-2,0,0,2],[-1,0,0,1]]',explanation:null}],
+      constraints:['1≤nums.length≤200','-10⁹≤nums[i]≤10⁹'],
+      starterCode:{python:'def fourSum(nums, target):\n    pass\n',java:'class Solution {\n    public List<List<Integer>> fourSum(int[] nums, int target) { return new ArrayList<>(); }\n}\n',cpp:'class Solution {\npublic:\n    vector<vector<int>> fourSum(vector<int>& nums, int target) { return {}; }\n};\n'}},
+    {id:'tp4',title:'Container With Most Water',topic:'TwoPointers',difficulty:'Medium',diffClass:'medium',tags:['Array','Two Pointers','Greedy'],
+      statement:'<p>Given <code>height</code> array of n vertical lines, find two lines that together with the x-axis form a container holding the most water.</p>',
+      examples:[{input:'height=[1,8,6,2,5,4,8,3,7]',output:'49',explanation:'Lines at index 1 and 8.'}],
+      constraints:['n==height.length','2≤n≤10⁵','0≤height[i]≤10⁴'],
+      starterCode:{python:'def maxArea(height):\n    pass\n',java:'class Solution {\n    public int maxArea(int[] height) { return 0; }\n}\n',cpp:'class Solution {\npublic:\n    int maxArea(vector<int>& height) { return 0; }\n};\n'}},
+    {id:'tp5',title:'Trapping Rain Water',topic:'TwoPointers',difficulty:'Hard',diffClass:'hard',tags:['Array','Two Pointers','Stack'],
+      statement:'<p>Given <code>n</code> non-negative integers representing an elevation map with width 1, compute how much water can be trapped after raining.</p>',
+      examples:[{input:'height=[0,1,0,2,1,0,1,3,2,1,2,1]',output:'6',explanation:null}],
+      constraints:['n==height.length','1≤n≤2×10⁴','0≤height[i]≤10⁵'],
+      starterCode:{python:'def trap(height):\n    pass\n',java:'class Solution {\n    public int trap(int[] height) { return 0; }\n}\n',cpp:'class Solution {\npublic:\n    int trap(vector<int>& height) { return 0; }\n};\n'}},
+    {id:'tp6',title:'Palindrome Linked List',topic:'TwoPointers',difficulty:'Easy',diffClass:'easy',tags:['Linked List','Two Pointers','Recursion'],
+      statement:'<p>Given the <code>head</code> of a singly linked list, return true if it is a palindrome. O(n) time, O(1) space.</p>',
+      examples:[{input:'head=[1,2,2,1]',output:'true',explanation:null},{input:'head=[1,2]',output:'false',explanation:null}],
+      constraints:['1≤n≤10⁵','0≤Node.val≤9'],
+      starterCode:{python:'def isPalindrome(head):\n    pass\n',java:'class Solution {\n    public boolean isPalindrome(ListNode head) { return false; }\n}\n',cpp:'class Solution {\npublic:\n    bool isPalindrome(ListNode* head) { return false; }\n};\n'}},
+    {id:'tp7',title:'Merge Sorted Array',topic:'TwoPointers',difficulty:'Easy',diffClass:'easy',tags:['Array','Two Pointers','Sorting'],
+      statement:'<p>Given two sorted arrays <code>nums1</code> (with space at end) and <code>nums2</code>, merge <code>nums2</code> into <code>nums1</code> in-place in sorted order.</p>',
+      examples:[{input:'nums1=[1,2,3,0,0,0] m=3, nums2=[2,5,6] n=3',output:'[1,2,2,3,5,6]',explanation:null}],
+      constraints:['nums1.length==m+n','0≤m,n≤200'],
+      starterCode:{python:'def merge(nums1, m, nums2, n):\n    pass\n',java:'class Solution {\n    public void merge(int[] nums1, int m, int[] nums2, int n) {}\n}\n',cpp:'class Solution {\npublic:\n    void merge(vector<int>& nums1, int m, vector<int>& nums2, int n) {}\n};\n'}},
+    {id:'tp8',title:'Linked List Cycle',topic:'TwoPointers',difficulty:'Easy',diffClass:'easy',tags:['Linked List','Two Pointers','Floyd\'s'],
+      statement:'<p>Given <code>head</code> of a linked list, determine if it has a cycle in it (some node can be reached again by following next pointers).</p>',
+      examples:[{input:'head=[3,2,0,-4], pos=1',output:'true',explanation:'Tail connects to node 1.'}],
+      constraints:['0≤n≤10⁴','-10⁵≤Node.val≤10⁵'],
+      starterCode:{python:'def hasCycle(head):\n    pass\n',java:'public class Solution {\n    public boolean hasCycle(ListNode head) { return false; }\n}\n',cpp:'class Solution {\npublic:\n    bool hasCycle(ListNode *head) { return false; }\n};\n'}},
+    {id:'tp9',title:'Remove Nth Node From End of List',topic:'TwoPointers',difficulty:'Medium',diffClass:'medium',tags:['Linked List','Two Pointers'],
+      statement:'<p>Given the head of a linked list, remove the nth node from the end of the list and return its head. Do it in one pass.</p>',
+      examples:[{input:'head=[1,2,3,4,5], n=2',output:'[1,2,3,5]',explanation:null}],
+      constraints:['1≤n≤sz≤30'],
+      starterCode:{python:'def removeNthFromEnd(head, n):\n    pass\n',java:'class Solution {\n    public ListNode removeNthFromEnd(ListNode head, int n) { return null; }\n}\n',cpp:'class Solution {\npublic:\n    ListNode* removeNthFromEnd(ListNode* head, int n) { return nullptr; }\n};\n'}},
+    {id:'tp10',title:'Boats to Save People',topic:'TwoPointers',difficulty:'Medium',diffClass:'medium',tags:['Array','Two Pointers','Greedy','Sorting'],
+      statement:'<p>Each boat carries at most 2 people with total weight ≤ limit. Given <code>people</code> weights, return the minimum number of boats to carry everyone.</p>',
+      examples:[{input:'people=[3,2,2,1], limit=3',output:'3',explanation:null}],
+      constraints:['1≤people.length≤5×10⁴','1≤people[i]≤limit≤3×10⁴'],
+      starterCode:{python:'def numRescueBoats(people, limit):\n    pass\n',java:'class Solution {\n    public int numRescueBoats(int[] people, int limit) { return 0; }\n}\n',cpp:'class Solution {\npublic:\n    int numRescueBoats(vector<int>& people, int limit) { return 0; }\n};\n'}},
+    {id:'tp11',title:'Middle of the Linked List',topic:'TwoPointers',difficulty:'Easy',diffClass:'easy',tags:['Linked List','Two Pointers','Fast & Slow'],
+      statement:'<p>Given the head of a singly linked list, return the middle node. If two middles exist, return the second one.</p>',
+      examples:[{input:'head=[1,2,3,4,5]',output:'[3,4,5]',explanation:'Middle node is 3.'}],
+      constraints:['1≤n≤100'],
+      starterCode:{python:'def middleNode(head):\n    pass\n',java:'class Solution {\n    public ListNode middleNode(ListNode head) { return null; }\n}\n',cpp:'class Solution {\npublic:\n    ListNode* middleNode(ListNode* head) { return nullptr; }\n};\n'}},
+    {id:'tp12',title:'Reverse String',topic:'TwoPointers',difficulty:'Easy',diffClass:'easy',tags:['String','Two Pointers'],
+      statement:'<p>Write a function that reverses a character array <code>s</code> in-place. Use O(1) extra memory.</p>',
+      examples:[{input:'s=["h","e","l","l","o"]',output:'["o","l","l","e","h"]',explanation:null}],
+      constraints:['1≤s.length≤10⁵'],
+      starterCode:{python:'def reverseString(s):\n    pass\n',java:'class Solution {\n    public void reverseString(char[] s) {}\n}\n',cpp:'class Solution {\npublic:\n    void reverseString(vector<char>& s) {}\n};\n'}},
+  ],
+
+  SlidingWindow: [
+    {id:'sw1',title:'Longest Substring Without Repeating Characters',topic:'SlidingWindow',difficulty:'Medium',diffClass:'medium',tags:['String','Sliding Window','Hash Map'],
+      statement:'<p>Given a string <code>s</code>, find the length of the longest substring without repeating characters.</p>',
+      examples:[{input:'s="abcabcbb"',output:'3',explanation:'"abc".'},{input:'s="bbbbb"',output:'1',explanation:null}],
+      constraints:['0≤s.length≤5×10⁴'],
+      starterCode:{python:'def lengthOfLongestSubstring(s):\n    pass\n',java:'class Solution {\n    public int lengthOfLongestSubstring(String s) { return 0; }\n}\n',cpp:'class Solution {\npublic:\n    int lengthOfLongestSubstring(string s) { return 0; }\n};\n'}},
+    {id:'sw2',title:'Minimum Window Substring',topic:'SlidingWindow',difficulty:'Hard',diffClass:'hard',tags:['String','Sliding Window','Hash Map'],
+      statement:'<p>Given strings <code>s</code> and <code>t</code>, return the minimum window substring of <code>s</code> such that every character in <code>t</code> is included. Return "" if impossible.</p>',
+      examples:[{input:'s="ADOBECODEBANC", t="ABC"',output:'"BANC"',explanation:null}],
+      constraints:['1≤s.length,t.length≤10⁵'],
+      starterCode:{python:'def minWindow(s, t):\n    pass\n',java:'class Solution {\n    public String minWindow(String s, String t) { return ""; }\n}\n',cpp:'class Solution {\npublic:\n    string minWindow(string s, string t) { return ""; }\n};\n'}},
+    {id:'sw3',title:'Permutation in String',topic:'SlidingWindow',difficulty:'Medium',diffClass:'medium',tags:['String','Sliding Window','Hash Map'],
+      statement:'<p>Given strings <code>s1</code> and <code>s2</code>, return true if <code>s2</code> contains a permutation of <code>s1</code>.</p>',
+      examples:[{input:'s1="ab", s2="eidbaooo"',output:'true',explanation:'"ba" is in s2.'}],
+      constraints:['1≤s1.length,s2.length≤10⁴'],
+      starterCode:{python:'def checkInclusion(s1, s2):\n    pass\n',java:'class Solution {\n    public boolean checkInclusion(String s1, String s2) { return false; }\n}\n',cpp:'class Solution {\npublic:\n    bool checkInclusion(string s1, string s2) { return false; }\n};\n'}},
+    {id:'sw4',title:'Find All Anagrams in a String',topic:'SlidingWindow',difficulty:'Medium',diffClass:'medium',tags:['String','Sliding Window','Hash Map'],
+      statement:'<p>Given strings <code>s</code> and <code>p</code>, return an array of all start indices of <code>p</code>\'s anagrams in <code>s</code>.</p>',
+      examples:[{input:'s="cbaebabacd", p="abc"',output:'[0,6]',explanation:null}],
+      constraints:['1≤s.length,p.length≤3×10⁴'],
+      starterCode:{python:'def findAnagrams(s, p):\n    pass\n',java:'class Solution {\n    public List<Integer> findAnagrams(String s, String p) { return new ArrayList<>(); }\n}\n',cpp:'class Solution {\npublic:\n    vector<int> findAnagrams(string s, string p) { return {}; }\n};\n'}},
+    {id:'sw5',title:'Longest Repeating Character Replacement',topic:'SlidingWindow',difficulty:'Medium',diffClass:'medium',tags:['String','Sliding Window'],
+      statement:'<p>Given string <code>s</code> and integer <code>k</code>, you can replace any k characters. Return the length of the longest substring with the same letter after replacements.</p>',
+      examples:[{input:'s="ABAB", k=2',output:'4',explanation:'Replace A or B to get "AAAA" or "BBBB".'}],
+      constraints:['1≤s.length≤10⁵','0≤k≤s.length'],
+      starterCode:{python:'def characterReplacement(s, k):\n    pass\n',java:'class Solution {\n    public int characterReplacement(String s, int k) { return 0; }\n}\n',cpp:'class Solution {\npublic:\n    int characterReplacement(string s, int k) { return 0; }\n};\n'}},
+    {id:'sw6',title:'Maximum Average Subarray I',topic:'SlidingWindow',difficulty:'Easy',diffClass:'easy',tags:['Array','Sliding Window'],
+      statement:'<p>Given array <code>nums</code> and integer <code>k</code>, return the maximum average of any contiguous subarray of length exactly k.</p>',
+      examples:[{input:'nums=[1,12,-5,-6,50,3], k=4',output:'12.75000',explanation:'Max avg of [12,-5,-6,50]/4=12.75.'}],
+      constraints:['n==nums.length','1≤k≤n≤10⁵'],
+      starterCode:{python:'def findMaxAverage(nums, k):\n    pass\n',java:'class Solution {\n    public double findMaxAverage(int[] nums, int k) { return 0.0; }\n}\n',cpp:'class Solution {\npublic:\n    double findMaxAverage(vector<int>& nums, int k) { return 0.0; }\n};\n'}},
+    {id:'sw7',title:'Fruit Into Baskets',topic:'SlidingWindow',difficulty:'Medium',diffClass:'medium',tags:['Array','Sliding Window','Hash Map'],
+      statement:'<p>Given <code>fruits</code> array where fruits[i] is fruit type at position i, pick fruits from any contiguous subarray using at most 2 baskets (one type each). Return maximum fruits you can pick.</p>',
+      examples:[{input:'fruits=[1,2,1]',output:'3',explanation:'All fruits, types 1 and 2.'}],
+      constraints:['1≤fruits.length≤10⁵','0≤fruits[i]<fruits.length'],
+      starterCode:{python:'def totalFruit(fruits):\n    pass\n',java:'class Solution {\n    public int totalFruit(int[] fruits) { return 0; }\n}\n',cpp:'class Solution {\npublic:\n    int totalFruit(vector<int>& fruits) { return 0; }\n};\n'}},
+    {id:'sw8',title:'Minimum Size Subarray Sum',topic:'SlidingWindow',difficulty:'Medium',diffClass:'medium',tags:['Array','Sliding Window','Binary Search'],
+      statement:'<p>Given array of positive integers and a positive integer <code>target</code>, return the minimal length of a contiguous subarray whose sum ≥ target. Return 0 if no such subarray.</p>',
+      examples:[{input:'target=7, nums=[2,3,1,2,4,3]',output:'2',explanation:'[4,3] has sum 7.'}],
+      constraints:['1≤target≤10⁹','1≤nums.length≤10⁵'],
+      starterCode:{python:'def minSubArrayLen(target, nums):\n    pass\n',java:'class Solution {\n    public int minSubArrayLen(int target, int[] nums) { return 0; }\n}\n',cpp:'class Solution {\npublic:\n    int minSubArrayLen(int target, vector<int>& nums) { return 0; }\n};\n'}},
+    {id:'sw9',title:'Max Consecutive Ones III',topic:'SlidingWindow',difficulty:'Medium',diffClass:'medium',tags:['Array','Sliding Window'],
+      statement:'<p>Given binary array <code>nums</code> and integer <code>k</code>, return the maximum consecutive 1s if you can flip at most k 0s.</p>',
+      examples:[{input:'nums=[1,1,1,0,0,0,1,1,1,1,0], k=2',output:'6',explanation:'[1,1,1,0,0,1,1,1,1,1].'}],
+      constraints:['1≤nums.length≤10⁵','nums[i] is 0 or 1','0≤k≤nums.length'],
+      starterCode:{python:'def longestOnes(nums, k):\n    pass\n',java:'class Solution {\n    public int longestOnes(int[] nums, int k) { return 0; }\n}\n',cpp:'class Solution {\npublic:\n    int longestOnes(vector<int>& nums, int k) { return 0; }\n};\n'}},
+    {id:'sw10',title:'Subarrays with K Different Integers',topic:'SlidingWindow',difficulty:'Hard',diffClass:'hard',tags:['Array','Sliding Window','Hash Map'],
+      statement:'<p>Given integer array <code>nums</code> and integer <code>k</code>, return the number of good subarrays (subarrays with exactly k different integers). Hint: exact k = at most k − at most (k-1).</p>',
+      examples:[{input:'nums=[1,2,1,2,3], k=2',output:'7',explanation:null}],
+      constraints:['1≤nums.length≤2×10⁴','1≤nums[i]≤nums.length','1≤k≤nums.length'],
+      starterCode:{python:'def subarraysWithKDistinct(nums, k):\n    pass\n',java:'class Solution {\n    public int subarraysWithKDistinct(int[] nums, int k) { return 0; }\n}\n',cpp:'class Solution {\npublic:\n    int subarraysWithKDistinct(vector<int>& nums, int k) { return 0; }\n};\n'}},
+    {id:'sw11',title:'Binary Subarrays With Sum',topic:'SlidingWindow',difficulty:'Medium',diffClass:'medium',tags:['Array','Sliding Window','Hash Map','Prefix Sum'],
+      statement:'<p>Given binary array <code>nums</code> and integer <code>goal</code>, return the number of non-empty subarrays with sum equal to goal.</p>',
+      examples:[{input:'nums=[1,0,1,0,1], goal=2',output:'4',explanation:null}],
+      constraints:['1≤nums.length≤3×10⁴','nums[i] is 0 or 1','0≤goal≤nums.length'],
+      starterCode:{python:'def numSubarraysWithSum(nums, goal):\n    pass\n',java:'class Solution {\n    public int numSubarraysWithSum(int[] nums, int goal) { return 0; }\n}\n',cpp:'class Solution {\npublic:\n    int numSubarraysWithSum(vector<int>& nums, int goal) { return 0; }\n};\n'}},
+    {id:'sw12',title:'Sliding Window Maximum',topic:'SlidingWindow',difficulty:'Hard',diffClass:'hard',tags:['Array','Sliding Window','Deque','Monotonic Queue'],
+      statement:'<p>Given array <code>nums</code> and integer <code>k</code>, return the max sliding window (an array of maximums of every window of size k as it slides from left to right).</p>',
+      examples:[{input:'nums=[1,3,-1,-3,5,3,6,7], k=3',output:'[3,3,5,5,6,7]',explanation:null}],
+      constraints:['1≤nums.length≤10⁵','-10⁴≤nums[i]≤10⁴','1≤k≤nums.length'],
+      starterCode:{python:'from collections import deque\ndef maxSlidingWindow(nums, k):\n    pass\n',java:'class Solution {\n    public int[] maxSlidingWindow(int[] nums, int k) { return new int[]{}; }\n}\n',cpp:'class Solution {\npublic:\n    vector<int> maxSlidingWindow(vector<int>& nums, int k) { return {}; }\n};\n'}},
+    {id:'sw13',title:'Count Number of Nice Subarrays',topic:'SlidingWindow',difficulty:'Medium',diffClass:'medium',tags:['Array','Sliding Window','Hash Map'],
+      statement:'<p>Given array <code>nums</code> and integer <code>k</code>, return the number of nice subarrays (subarrays with exactly k odd numbers).</p>',
+      examples:[{input:'nums=[1,1,2,1,1], k=3',output:'2',explanation:'[1,1,2,1] and [1,2,1,1].'}],
+      constraints:['1≤nums.length≤5×10⁴','1≤nums[i]≤10⁵','1≤k≤nums.length'],
+      starterCode:{python:'def numberOfSubarrays(nums, k):\n    pass\n',java:'class Solution {\n    public int numberOfSubarrays(int[] nums, int k) { return 0; }\n}\n',cpp:'class Solution {\npublic:\n    int numberOfSubarrays(vector<int>& nums, int k) { return 0; }\n};\n'}},
+    {id:'sw14',title:'Longest Continuous Subarray With Abs Diff ≤ Limit',topic:'SlidingWindow',difficulty:'Medium',diffClass:'medium',tags:['Array','Sliding Window','Deque'],
+      statement:'<p>Given array <code>nums</code> and integer <code>limit</code>, return the size of the longest non-empty subarray where the absolute difference between any two elements is at most <code>limit</code>.</p>',
+      examples:[{input:'nums=[8,2,4,7], limit=4',output:'2',explanation:'[2,4] or [4,7].'}],
+      constraints:['1≤nums.length≤10⁵','1≤limit≤10⁹'],
+      starterCode:{python:'def longestSubarray(nums, limit):\n    pass\n',java:'class Solution {\n    public int longestSubarray(int[] nums, int limit) { return 0; }\n}\n',cpp:'class Solution {\npublic:\n    int longestSubarray(vector<int>& nums, int limit) { return 0; }\n};\n'}},
+  ],
+
+  PrefixSum: [
+    {id:'ps1',title:'Range Sum Query - Immutable',topic:'PrefixSum',difficulty:'Easy',diffClass:'easy',tags:['Array','Prefix Sum','Design'],
+      statement:'<p>Given integer array <code>nums</code>, implement <code>NumArray</code> with a <code>sumRange(left, right)</code> method that returns the sum of elements between indices left and right inclusive in O(1).</p>',
+      examples:[{input:'sumRange(0,2) on [-2,0,3,-5,2,-1]',output:'1',explanation:null}],
+      constraints:['1≤nums.length≤10⁴','At most 10⁴ calls to sumRange.'],
+      starterCode:{python:'class NumArray:\n    def __init__(self, nums):\n        pass\n    def sumRange(self, left, right):\n        pass\n',java:'class NumArray {\n    public NumArray(int[] nums) {}\n    public int sumRange(int left, int right) { return 0; }\n}\n',cpp:'class NumArray {\npublic:\n    NumArray(vector<int>& nums) {}\n    int sumRange(int left, int right) { return 0; }\n};\n'}},
+    {id:'ps2',title:'Contiguous Array',topic:'PrefixSum',difficulty:'Medium',diffClass:'medium',tags:['Array','Prefix Sum','Hash Map'],
+      statement:'<p>Given binary array <code>nums</code>, return the maximum length of a contiguous subarray with an equal number of 0s and 1s.</p>',
+      examples:[{input:'nums=[0,1]',output:'2',explanation:null},{input:'nums=[0,1,0]',output:'2',explanation:null}],
+      constraints:['1≤nums.length≤10⁵','nums[i] is 0 or 1.'],
+      starterCode:{python:'def findMaxLength(nums):\n    pass\n',java:'class Solution {\n    public int findMaxLength(int[] nums) { return 0; }\n}\n',cpp:'class Solution {\npublic:\n    int findMaxLength(vector<int>& nums) { return 0; }\n};\n'}},
+    {id:'ps3',title:'Subarray Sums Divisible by K',topic:'PrefixSum',difficulty:'Medium',diffClass:'medium',tags:['Array','Prefix Sum','Hash Map'],
+      statement:'<p>Given an integer array <code>nums</code> and an integer <code>k</code>, return the number of non-empty subarrays that have a sum divisible by <code>k</code>.</p>',
+      examples:[{input:'nums=[4,5,0,-2,-3,1], k=5',output:'7',explanation:null}],
+      constraints:['1≤nums.length≤3×10⁴','2≤k≤10⁴'],
+      starterCode:{python:'def subarraysDivByK(nums, k):\n    pass\n',java:'class Solution {\n    public int subarraysDivByK(int[] nums, int k) { return 0; }\n}\n',cpp:'class Solution {\npublic:\n    int subarraysDivByK(vector<int>& nums, int k) { return 0; }\n};\n'}},
+    {id:'ps4',title:'Continuous Subarray Sum',topic:'PrefixSum',difficulty:'Medium',diffClass:'medium',tags:['Array','Prefix Sum','Hash Map'],
+      statement:'<p>Given array <code>nums</code> and integer <code>k</code>, return true if there is a good subarray — a subarray of length ≥ 2 whose sum is a multiple of k.</p>',
+      examples:[{input:'nums=[23,2,4,6,7], k=6',output:'true',explanation:'[2,4] sums to 6.'}],
+      constraints:['1≤nums.length≤10⁵','0≤nums[i]≤10⁹','0≤k≤2³¹-1'],
+      starterCode:{python:'def checkSubarraySum(nums, k):\n    pass\n',java:'class Solution {\n    public boolean checkSubarraySum(int[] nums, int k) { return false; }\n}\n',cpp:'class Solution {\npublic:\n    bool checkSubarraySum(vector<int>& nums, int k) { return false; }\n};\n'}},
+    {id:'ps5',title:'Number of Submatrices That Sum to Target',topic:'PrefixSum',difficulty:'Hard',diffClass:'hard',tags:['Array','Matrix','Prefix Sum','Hash Map'],
+      statement:'<p>Given a matrix and a target, return the number of non-empty submatrices that sum to target.</p>',
+      examples:[{input:'matrix=[[0,1,0],[1,1,1],[0,1,0]], target=0',output:'4',explanation:null}],
+      constraints:['1≤m,n≤100','-1000≤matrix[i][j]≤1000','-10⁸≤target≤10⁸'],
+      starterCode:{python:'def numSubmatrixSumTarget(matrix, target):\n    pass\n',java:'class Solution {\n    public int numSubmatrixSumTarget(int[][] matrix, int target) { return 0; }\n}\n',cpp:'class Solution {\npublic:\n    int numSubmatrixSumTarget(vector<vector<int>>& matrix, int target) { return 0; }\n};\n'}},
+    {id:'ps6',title:'Car Pooling',topic:'PrefixSum',difficulty:'Medium',diffClass:'medium',tags:['Array','Difference Array','Sorting'],
+      statement:'<p>A car has <code>capacity</code> seats. <code>trips[i]=[num,from,to]</code> means num passengers travel from from to to. Return true if it is possible to pick up and drop off all passengers.</p>',
+      examples:[{input:'trips=[[2,1,5],[3,3,7]], capacity=4',output:'false',explanation:null}],
+      constraints:['1≤trips.length≤1000','1≤capacity≤10⁵'],
+      starterCode:{python:'def carPooling(trips, capacity):\n    pass\n',java:'class Solution {\n    public boolean carPooling(int[][] trips, int capacity) { return false; }\n}\n',cpp:'class Solution {\npublic:\n    bool carPooling(vector<vector<int>>& trips, int capacity) { return false; }\n};\n'}},
+    {id:'ps7',title:'Maximum Size Subarray Sum Equals K',topic:'PrefixSum',difficulty:'Medium',diffClass:'medium',tags:['Array','Prefix Sum','Hash Map'],
+      statement:'<p>Given array <code>nums</code> and integer <code>k</code>, return the maximum length of a subarray that sums to <code>k</code>. Return 0 if none exists.</p>',
+      examples:[{input:'nums=[1,-1,5,-2,3], k=3',output:'4',explanation:'[1,-1,5,-2] sums to 3.'}],
+      constraints:['1≤nums.length≤2×10⁵','-10⁴≤nums[i]≤10⁴'],
+      starterCode:{python:'def maxSubArrayLen(nums, k):\n    pass\n',java:'class Solution {\n    public int maxSubArrayLen(int[] nums, int k) { return 0; }\n}\n',cpp:'class Solution {\npublic:\n    int maxSubArrayLen(vector<int>& nums, int k) { return 0; }\n};\n'}},
+    {id:'ps8',title:'Product of Array Except Self (Prefix)',topic:'PrefixSum',difficulty:'Medium',diffClass:'medium',tags:['Array','Prefix Product'],
+      statement:'<p>Given array <code>nums</code>, return answer where answer[i] = product of all elements except nums[i]. O(n) time, no division. Use a left-pass then right-pass approach.</p>',
+      examples:[{input:'nums=[1,2,3,4]',output:'[24,12,8,6]',explanation:null}],
+      constraints:['2≤nums.length≤10⁵','-30≤nums[i]≤30'],
+      starterCode:{python:'def productExceptSelf(nums):\n    n=len(nums); res=[1]*n\n    # left pass, then right pass\n    return res\n',java:'class Solution {\n    public int[] productExceptSelf(int[] nums) { return new int[]{}; }\n}\n',cpp:'class Solution {\npublic:\n    vector<int> productExceptSelf(vector<int>& nums) { return {}; }\n};\n'}},
+  ],
+
+  HashMap: [
+    {id:'hm1',title:'Two Sum',topic:'HashMap',difficulty:'Easy',diffClass:'easy',tags:['Array','Hash Map'],
+      statement:'<p>Given array <code>nums</code> and integer <code>target</code>, return indices of two numbers that add up to target. Each input has exactly one solution.</p>',
+      examples:[{input:'nums=[2,7,11,15], target=9',output:'[0,1]',explanation:null}],
+      constraints:['2≤nums.length≤10⁴','-10⁹≤nums[i]≤10⁹'],
+      starterCode:{python:'def twoSum(nums, target):\n    pass\n',java:'class Solution {\n    public int[] twoSum(int[] nums, int target) { return new int[]{}; }\n}\n',cpp:'class Solution {\npublic:\n    vector<int> twoSum(vector<int>& nums, int target) { return {}; }\n};\n'}},
+    {id:'hm2',title:'4Sum II',topic:'HashMap',difficulty:'Medium',diffClass:'medium',tags:['Array','Hash Map'],
+      statement:'<p>Given four integer arrays each of length n, return the number of tuples (i,j,k,l) such that nums1[i]+nums2[j]+nums3[k]+nums4[l]==0.</p>',
+      examples:[{input:'nums1=[1,2],nums2=[-2,-1],nums3=[-1,2],nums4=[0,2]',output:'2',explanation:null}],
+      constraints:['n==nums1.length==nums2.length==nums3.length==nums4.length','1≤n≤200'],
+      starterCode:{python:'def fourSumCount(nums1, nums2, nums3, nums4):\n    pass\n',java:'class Solution {\n    public int fourSumCount(int[] n1,int[] n2,int[] n3,int[] n4) { return 0; }\n}\n',cpp:'class Solution {\npublic:\n    int fourSumCount(vector<int>& n1,vector<int>& n2,vector<int>& n3,vector<int>& n4) { return 0; }\n};\n'}},
+    {id:'hm3',title:'Majority Element',topic:'HashMap',difficulty:'Easy',diffClass:'easy',tags:['Array','Hash Map','Boyer-Moore'],
+      statement:'<p>Given array <code>nums</code> of size n, return the element that appears more than n/2 times. The majority element always exists.</p>',
+      examples:[{input:'nums=[3,2,3]',output:'3',explanation:null},{input:'nums=[2,2,1,1,1,2,2]',output:'2',explanation:null}],
+      constraints:['n==nums.length','1≤n≤5×10⁴'],
+      starterCode:{python:'def majorityElement(nums):\n    pass\n',java:'class Solution {\n    public int majorityElement(int[] nums) { return 0; }\n}\n',cpp:'class Solution {\npublic:\n    int majorityElement(vector<int>& nums) { return 0; }\n};\n'}},
+    {id:'hm4',title:'Top K Frequent Elements',topic:'HashMap',difficulty:'Medium',diffClass:'medium',tags:['Array','Hash Map','Heap','Bucket Sort'],
+      statement:'<p>Given integer array <code>nums</code> and integer <code>k</code>, return the k most frequent elements in any order.</p>',
+      examples:[{input:'nums=[1,1,1,2,2,3], k=2',output:'[1,2]',explanation:null}],
+      constraints:['1≤nums.length≤10⁵','k is in range [1, unique element count].'],
+      starterCode:{python:'def topKFrequent(nums, k):\n    pass\n',java:'class Solution {\n    public int[] topKFrequent(int[] nums, int k) { return new int[]{}; }\n}\n',cpp:'class Solution {\npublic:\n    vector<int> topKFrequent(vector<int>& nums, int k) { return {}; }\n};\n'}},
+    {id:'hm5',title:'Longest Consecutive Sequence',topic:'HashMap',difficulty:'Medium',diffClass:'medium',tags:['Array','Hash Set'],
+      statement:'<p>Given unsorted array <code>nums</code>, return the length of the longest consecutive elements sequence. Must run in O(n).</p>',
+      examples:[{input:'nums=[100,4,200,1,3,2]',output:'4',explanation:'Sequence [1,2,3,4].'}],
+      constraints:['0≤nums.length≤10⁵','-10⁹≤nums[i]≤10⁹'],
+      starterCode:{python:'def longestConsecutive(nums):\n    pass\n',java:'class Solution {\n    public int longestConsecutive(int[] nums) { return 0; }\n}\n',cpp:'class Solution {\npublic:\n    int longestConsecutive(vector<int>& nums) { return 0; }\n};\n'}},
+    {id:'hm6',title:'Contains Duplicate',topic:'HashMap',difficulty:'Easy',diffClass:'easy',tags:['Array','Hash Set'],
+      statement:'<p>Given integer array <code>nums</code>, return true if any value appears at least twice, false if all elements are distinct.</p>',
+      examples:[{input:'nums=[1,2,3,1]',output:'true',explanation:null}],
+      constraints:['1≤nums.length≤10⁵','-10⁹≤nums[i]≤10⁹'],
+      starterCode:{python:'def containsDuplicate(nums):\n    pass\n',java:'class Solution {\n    public boolean containsDuplicate(int[] nums) { return false; }\n}\n',cpp:'class Solution {\npublic:\n    bool containsDuplicate(vector<int>& nums) { return false; }\n};\n'}},
+    {id:'hm7',title:'Contains Duplicate II',topic:'HashMap',difficulty:'Easy',diffClass:'easy',tags:['Array','Hash Map','Sliding Window'],
+      statement:'<p>Given array <code>nums</code> and integer <code>k</code>, return true if there are two distinct indices i and j such that nums[i]==nums[j] and |i-j|≤k.</p>',
+      examples:[{input:'nums=[1,2,3,1], k=3',output:'true',explanation:null}],
+      constraints:['1≤nums.length≤10⁵','0≤k≤10⁵'],
+      starterCode:{python:'def containsNearbyDuplicate(nums, k):\n    pass\n',java:'class Solution {\n    public boolean containsNearbyDuplicate(int[] nums, int k) { return false; }\n}\n',cpp:'class Solution {\npublic:\n    bool containsNearbyDuplicate(vector<int>& nums, int k) { return false; }\n};\n'}},
+    {id:'hm8',title:'Happy Number',topic:'HashMap',difficulty:'Easy',diffClass:'easy',tags:['Math','Hash Set'],
+      statement:'<p>A happy number: repeatedly replace the number with the sum of squares of its digits until it reaches 1 (happy) or loops endlessly (not happy). Return true if happy.</p>',
+      examples:[{input:'n=19',output:'true',explanation:'1²+9²=82, 8²+2²=68, ... →1.'}],
+      constraints:['1≤n≤2³¹-1'],
+      starterCode:{python:'def isHappy(n):\n    pass\n',java:'class Solution {\n    public boolean isHappy(int n) { return false; }\n}\n',cpp:'class Solution {\npublic:\n    bool isHappy(int n) { return false; }\n};\n'}},
+    {id:'hm9',title:'LRU Cache',topic:'HashMap',difficulty:'Medium',diffClass:'medium',tags:['Design','Hash Map','Doubly Linked List'],
+      statement:'<p>Design a data structure that follows the Least Recently Used cache eviction policy. Implement <code>get(key)</code> and <code>put(key, value)</code> in O(1).</p>',
+      examples:[{input:'capacity=2; put(1,1); put(2,2); get(1)→1; put(3,3); get(2)→-1',output:'shown above',explanation:null}],
+      constraints:['1≤capacity≤3000','0≤key,value≤10⁴','At most 3×10⁴ calls.'],
+      starterCode:{python:'class LRUCache:\n    def __init__(self, capacity):\n        pass\n    def get(self, key):\n        pass\n    def put(self, key, value):\n        pass\n',java:'class LRUCache {\n    public LRUCache(int capacity) {}\n    public int get(int key) { return -1; }\n    public void put(int key, int value) {}\n}\n',cpp:'class LRUCache {\npublic:\n    LRUCache(int capacity) {}\n    int get(int key) { return -1; }\n    void put(int key, int value) {}\n};\n'}},
+    {id:'hm10',title:'Insert Delete GetRandom O(1)',topic:'HashMap',difficulty:'Medium',diffClass:'medium',tags:['Array','Hash Map','Design'],
+      statement:'<p>Implement <code>RandomizedSet</code> with insert, remove, and getRandom — each in O(1) average time. getRandom returns a random element uniformly.</p>',
+      examples:[{input:'insert(1)→T; insert(2)→T; getRandom()→1or2; remove(1)→T; getRandom()→2',output:'shown',explanation:null}],
+      constraints:['At most 2×10⁵ calls.','All values in [-2³¹,2³¹-1].'],
+      starterCode:{python:'import random\nclass RandomizedSet:\n    def __init__(self): pass\n    def insert(self, val): pass\n    def remove(self, val): pass\n    def getRandom(self): pass\n',java:'class RandomizedSet {\n    public RandomizedSet() {}\n    public boolean insert(int val) { return false; }\n    public boolean remove(int val) { return false; }\n    public int getRandom() { return 0; }\n}\n',cpp:'class RandomizedSet {\npublic:\n    RandomizedSet() {}\n    bool insert(int val) { return false; }\n    bool remove(int val) { return false; }\n    int getRandom() { return 0; }\n};\n'}},
+    {id:'hm11',title:'Time Based Key-Value Store',topic:'HashMap',difficulty:'Medium',diffClass:'medium',tags:['Hash Map','Binary Search','Design'],
+      statement:'<p>Design a time-based key-value store. <code>set(key,value,timestamp)</code> stores the value. <code>get(key,timestamp)</code> returns the value with the largest timestamp ≤ given timestamp, or "" if none.</p>',
+      examples:[{input:'set("foo","bar",1); get("foo",1)→"bar"; get("foo",3)→"bar"',output:'shown',explanation:null}],
+      constraints:['1≤key.length,value.length≤100','At most 2×10⁵ calls.'],
+      starterCode:{python:'class TimeMap:\n    def __init__(self): pass\n    def set(self, key, value, timestamp): pass\n    def get(self, key, timestamp): pass\n',java:'class TimeMap {\n    public TimeMap() {}\n    public void set(String key, String value, int timestamp) {}\n    public String get(String key, int timestamp) { return ""; }\n}\n',cpp:'class TimeMap {\npublic:\n    TimeMap() {}\n    void set(string key, string value, int timestamp) {}\n    string get(string key, int timestamp) { return ""; }\n};\n'}},
+    {id:'hm12',title:'Find Duplicate File in System',topic:'HashMap',difficulty:'Medium',diffClass:'medium',tags:['Hash Map','String'],
+      statement:'<p>Given list of directory paths with file contents, find all duplicate files (same content). Return list of groups of duplicate file paths.</p>',
+      examples:[{input:'paths=["root/a 1.txt(abcd) 2.txt(efgh)","root/c 3.txt(abcd)","root/c/d 4.txt(efgh)"]',output:'[["root/a/1.txt","root/c/3.txt"],["root/a/2.txt","root/c/d/4.txt"]]',explanation:null}],
+      constraints:['1≤paths.length≤2×10⁴'],
+      starterCode:{python:'def findDuplicate(paths):\n    pass\n',java:'class Solution {\n    public List<List<String>> findDuplicate(String[] paths) { return new ArrayList<>(); }\n}\n',cpp:'class Solution {\npublic:\n    vector<vector<string>> findDuplicate(vector<string>& paths) { return {}; }\n};\n'}},
+    {id:'hm13',title:'Valid Sudoku',topic:'HashMap',difficulty:'Medium',diffClass:'medium',tags:['Array','Hash Set','Matrix'],
+      statement:'<p>Determine if a 9×9 Sudoku board is valid. Only the filled cells need to be validated. Each row, column, and 3×3 box must contain digits 1-9 without repetition.</p>',
+      examples:[{input:'board (partially filled 9×9)',output:'true',explanation:null}],
+      constraints:['board[i][j] is a digit 1-9 or ".".'],
+      starterCode:{python:'def isValidSudoku(board):\n    pass\n',java:'class Solution {\n    public boolean isValidSudoku(char[][] board) { return false; }\n}\n',cpp:'class Solution {\npublic:\n    bool isValidSudoku(vector<vector<char>>& board) { return false; }\n};\n'}},
+    {id:'hm14',title:'Sort Characters By Frequency',topic:'HashMap',difficulty:'Medium',diffClass:'medium',tags:['String','Hash Map','Sorting','Bucket Sort'],
+      statement:'<p>Given a string <code>s</code>, sort it in decreasing order based on the frequency of characters. Return any valid answer.</p>',
+      examples:[{input:'s="tree"',output:'"eert"',explanation:'"e" appears twice.'}],
+      constraints:['1≤s.length≤5×10⁵'],
+      starterCode:{python:'def frequencySort(s):\n    pass\n',java:'class Solution {\n    public String frequencySort(String s) { return ""; }\n}\n',cpp:'class Solution {\npublic:\n    string frequencySort(string s) { return ""; }\n};\n'}},
+    {id:'hm15',title:'Intersection of Two Arrays II',topic:'HashMap',difficulty:'Easy',diffClass:'easy',tags:['Array','Hash Map','Two Pointers','Sorting'],
+      statement:'<p>Given two integer arrays <code>nums1</code> and <code>nums2</code>, return an array of their intersection (each element appears as many times as it appears in both arrays).</p>',
+      examples:[{input:'nums1=[1,2,2,1], nums2=[2,2]',output:'[2,2]',explanation:null}],
+      constraints:['1≤nums1.length,nums2.length≤1000'],
+      starterCode:{python:'def intersect(nums1, nums2):\n    pass\n',java:'class Solution {\n    public int[] intersect(int[] nums1, int[] nums2) { return new int[]{}; }\n}\n',cpp:'class Solution {\npublic:\n    vector<int> intersect(vector<int>& nums1, vector<int>& nums2) { return {}; }\n};\n'}},
+    {id:'hm16',title:'Group Shifted Strings',topic:'HashMap',difficulty:'Medium',diffClass:'medium',tags:['Array','Hash Map','String'],
+      statement:'<p>We can shift a string by incrementing each character. Given an array of strings, group all strings that belong to the same shifting sequence.</p>',
+      examples:[{input:'strings=["abc","bcd","acef","xyz","az","ba","a","z"]',output:'[["acef"],["a","z"],["abc","bcd","xyz"],["az","ba"]]',explanation:null}],
+      constraints:['1≤strings.length≤200','1≤strings[i].length≤50'],
+      starterCode:{python:'def groupStrings(strings):\n    pass\n',java:'class Solution {\n    public List<List<String>> groupStrings(String[] strings) { return new ArrayList<>(); }\n}\n',cpp:'class Solution {\npublic:\n    vector<vector<string>> groupStrings(vector<string>& strings) { return {}; }\n};\n'}},
+    {id:'hm17',title:'Design Underground System',topic:'HashMap',difficulty:'Medium',diffClass:'medium',tags:['Hash Map','Design','String'],
+      statement:'<p>Implement an underground system that tracks check-in/out events and calculates average travel times between stations. Implement <code>checkIn</code>, <code>checkOut</code>, and <code>getAverageTime</code>.</p>',
+      examples:[{input:'checkIn(45,"Leyton",3); checkOut(45,"Waterloo",15); getAverageTime("Leyton","Waterloo")→12.0',output:'12.0',explanation:null}],
+      constraints:['1≤id≤1000','All station names have length ≤10.'],
+      starterCode:{python:'class UndergroundSystem:\n    def __init__(self): pass\n    def checkIn(self,id,stationName,t): pass\n    def checkOut(self,id,stationName,t): pass\n    def getAverageTime(self,startStation,endStation): pass\n',java:'class UndergroundSystem {\n    public UndergroundSystem() {}\n    public void checkIn(int id,String s,int t) {}\n    public void checkOut(int id,String s,int t) {}\n    public double getAverageTime(String s,String e) { return 0; }\n}\n',cpp:'class UndergroundSystem {\npublic:\n    UndergroundSystem(){}\n    void checkIn(int id,string s,int t){}\n    void checkOut(int id,string s,int t){}\n    double getAverageTime(string s,string e){ return 0; }\n};\n'}},
+    {id:'hm18',title:'Hand of Straights',topic:'HashMap',difficulty:'Medium',diffClass:'medium',tags:['Array','Hash Map','Greedy','Sorting'],
+      statement:'<p>Alice has <code>hand</code> of cards. Return true if she can rearrange the cards into groups of size <code>groupSize</code> where each group is consecutive.</p>',
+      examples:[{input:'hand=[1,2,3,6,2,3,4,7,8], groupSize=3',output:'true',explanation:'[1,2,3],[2,3,4],[6,7,8].'}],
+      constraints:['1≤hand.length≤10⁴','0≤hand[i]≤10⁹','1≤groupSize≤hand.length'],
+      starterCode:{python:'def isNStraightHand(hand, groupSize):\n    pass\n',java:'class Solution {\n    public boolean isNStraightHand(int[] hand, int groupSize) { return false; }\n}\n',cpp:'class Solution {\npublic:\n    bool isNStraightHand(vector<int>& hand, int groupSize) { return false; }\n};\n'}},
+    {id:'hm19',title:'Find All Duplicates in an Array',topic:'HashMap',difficulty:'Medium',diffClass:'medium',tags:['Array','Hash Map'],
+      statement:'<p>Given integer array <code>nums</code> where 1≤nums[i]≤n and each integer appears once or twice, return all integers that appear twice. O(n) time and O(1) extra space.</p>',
+      examples:[{input:'nums=[4,3,2,7,8,2,3,1]',output:'[2,3]',explanation:null}],
+      constraints:['n==nums.length','1≤n≤10⁵','1≤nums[i]≤n'],
+      starterCode:{python:'def findDuplicates(nums):\n    pass\n',java:'class Solution {\n    public List<Integer> findDuplicates(int[] nums) { return new ArrayList<>(); }\n}\n',cpp:'class Solution {\npublic:\n    vector<int> findDuplicates(vector<int>& nums) { return {}; }\n};\n'}},
+    {id:'hm20',title:'Ransom Note',topic:'HashMap',difficulty:'Easy',diffClass:'easy',tags:['Hash Map','String','Counting'],
+      statement:'<p>Given strings <code>ransomNote</code> and <code>magazine</code>, return true if you can construct ransomNote using letters from magazine (each letter may only be used once).</p>',
+      examples:[{input:'ransomNote="aa", magazine="aab"',output:'true',explanation:null}],
+      constraints:['1≤ransomNote.length,magazine.length≤10⁵'],
+      starterCode:{python:'def canConstruct(ransomNote, magazine):\n    pass\n',java:'class Solution {\n    public boolean canConstruct(String ransomNote, String magazine) { return false; }\n}\n',cpp:'class Solution {\npublic:\n    bool canConstruct(string ransomNote, string magazine) { return false; }\n};\n'}},
+    {id:'hm21',title:'First Unique Character in a String',topic:'HashMap',difficulty:'Easy',diffClass:'easy',tags:['String','Hash Map','Queue'],
+      statement:'<p>Given a string <code>s</code>, find the first non-repeating character and return its index. Return -1 if none exists.</p>',
+      examples:[{input:'s="leetcode"',output:'0',explanation:'"l" is first unique.'}],
+      constraints:['1≤s.length≤10⁵'],
+      starterCode:{python:'def firstUniqChar(s):\n    pass\n',java:'class Solution {\n    public int firstUniqChar(String s) { return -1; }\n}\n',cpp:'class Solution {\npublic:\n    int firstUniqChar(string s) { return -1; }\n};\n'}},
+    {id:'hm22',title:'My Calendar I',topic:'HashMap',difficulty:'Medium',diffClass:'medium',tags:['Binary Search','Design','Ordered Set'],
+      statement:'<p>Implement a calendar that cannot have double bookings. <code>book(start, end)</code> books a half-open interval [start,end) and returns true if there is no overlap, false otherwise.</p>',
+      examples:[{input:'book(10,20)→T; book(15,25)→F; book(20,30)→T',output:'shown',explanation:null}],
+      constraints:['0≤start<end≤10⁹','At most 1000 calls to book.'],
+      starterCode:{python:'class MyCalendar:\n    def __init__(self): pass\n    def book(self, start, end): pass\n',java:'class MyCalendar {\n    public MyCalendar() {}\n    public boolean book(int start, int end) { return false; }\n}\n',cpp:'class MyCalendar {\npublic:\n    MyCalendar() {}\n    bool book(int start, int end) { return false; }\n};\n'}},
+    {id:'hm23',title:'Encode and Decode TinyURL',topic:'HashMap',difficulty:'Medium',diffClass:'medium',tags:['Hash Map','Design','String'],
+      statement:'<p>Design a URL shortener. Implement <code>encode(longUrl)</code> which converts a long URL to a short URL, and <code>decode(shortUrl)</code> which converts it back.</p>',
+      examples:[{input:'encode("https://leetcode.com/problems/design-tinyurl")',output:'"http://tinyurl.com/4e9iAk"',explanation:null}],
+      constraints:['The encoded string should be as short as possible.'],
+      starterCode:{python:'class Codec:\n    def encode(self, longUrl): pass\n    def decode(self, shortUrl): pass\n',java:'public class Codec {\n    public String encode(String longUrl) { return ""; }\n    public String decode(String shortUrl) { return ""; }\n}\n',cpp:'class Solution {\npublic:\n    string encode(string longUrl) { return ""; }\n    string decode(string shortUrl) { return ""; }\n};\n'}},
+    {id:'hm24',title:'Snapshot Array',topic:'HashMap',difficulty:'Medium',diffClass:'medium',tags:['Array','Hash Map','Binary Search','Design'],
+      statement:'<p>Implement a SnapshotArray with <code>set(index,val)</code>, <code>snap()</code> returning snap_id, and <code>get(index,snap_id)</code> returning value at index at given snap.</p>',
+      examples:[{input:'SnapshotArray(3); set(0,5); snap()→0; set(0,6); get(0,0)→5',output:'5',explanation:null}],
+      constraints:['1≤length≤5×10⁴','At most 5×10⁴ calls.'],
+      starterCode:{python:'class SnapshotArray:\n    def __init__(self,length): pass\n    def set(self,index,val): pass\n    def snap(self): pass\n    def get(self,index,snap_id): pass\n',java:'class SnapshotArray {\n    public SnapshotArray(int length) {}\n    public void set(int index, int val) {}\n    public int snap() { return 0; }\n    public int get(int index, int snap_id) { return 0; }\n}\n',cpp:'class SnapshotArray {\npublic:\n    SnapshotArray(int l){}\n    void set(int i,int v){}\n    int snap(){ return 0; }\n    int get(int i,int s){ return 0; }\n};\n'}},
+  ],
+
+  Stack: [
+    {id:'stk1',title:'Daily Temperatures',topic:'Stack',difficulty:'Medium',diffClass:'medium',tags:['Array','Stack','Monotonic Stack'],
+      statement:'<p>Given array <code>temperatures</code>, return array where answer[i] is the number of days you wait after day i to get a warmer temperature. 0 if no such day exists.</p>',
+      examples:[{input:'temperatures=[73,74,75,71,69,72,76,73]',output:'[1,1,4,2,1,1,0,0]',explanation:null}],
+      constraints:['1≤temperatures.length≤10⁵','30≤temperatures[i]≤100'],
+      starterCode:{python:'def dailyTemperatures(temperatures):\n    pass\n',java:'class Solution {\n    public int[] dailyTemperatures(int[] temperatures) { return new int[]{}; }\n}\n',cpp:'class Solution {\npublic:\n    vector<int> dailyTemperatures(vector<int>& temperatures) { return {}; }\n};\n'}},
+    {id:'stk2',title:'Next Greater Element I',topic:'Stack',difficulty:'Easy',diffClass:'easy',tags:['Array','Stack','Hash Map','Monotonic Stack'],
+      statement:'<p>nums1 is a subset of nums2. For each element in nums1, find the next greater element in nums2. Return -1 if none.</p>',
+      examples:[{input:'nums1=[4,1,2], nums2=[1,3,4,2]',output:'[-1,3,-1]',explanation:null}],
+      constraints:['1≤nums1.length≤nums2.length≤1000'],
+      starterCode:{python:'def nextGreaterElement(nums1, nums2):\n    pass\n',java:'class Solution {\n    public int[] nextGreaterElement(int[] nums1, int[] nums2) { return new int[]{}; }\n}\n',cpp:'class Solution {\npublic:\n    vector<int> nextGreaterElement(vector<int>& nums1, vector<int>& nums2) { return {}; }\n};\n'}},
+    {id:'stk3',title:'Next Greater Element II',topic:'Stack',difficulty:'Medium',diffClass:'medium',tags:['Array','Stack','Monotonic Stack'],
+      statement:'<p>Given circular integer array <code>nums</code>, return next greater number for every element. Search circularly (wrap around).</p>',
+      examples:[{input:'nums=[1,2,1]',output:'[2,-1,2]',explanation:null}],
+      constraints:['1≤nums.length≤10⁴','-10⁹≤nums[i]≤10⁹'],
+      starterCode:{python:'def nextGreaterElements(nums):\n    pass\n',java:'class Solution {\n    public int[] nextGreaterElements(int[] nums) { return new int[]{}; }\n}\n',cpp:'class Solution {\npublic:\n    vector<int> nextGreaterElements(vector<int>& nums) { return {}; }\n};\n'}},
+    {id:'stk4',title:'Online Stock Span',topic:'Stack',difficulty:'Medium',diffClass:'medium',tags:['Stack','Design','Monotonic Stack'],
+      statement:'<p>Design class <code>StockSpanner</code>. <code>next(price)</code> returns the span — the max number of consecutive days (including today) the stock price was ≤ today\'s price.</p>',
+      examples:[{input:'next(100)→1; next(80)→1; next(60)→1; next(70)→2; next(60)→1; next(75)→4; next(85)→6',output:'shown',explanation:null}],
+      constraints:['1≤price≤10⁵','At most 10⁴ calls.'],
+      starterCode:{python:'class StockSpanner:\n    def __init__(self): pass\n    def next(self, price): pass\n',java:'class StockSpanner {\n    public StockSpanner() {}\n    public int next(int price) { return 0; }\n}\n',cpp:'class StockSpanner {\npublic:\n    StockSpanner(){}\n    int next(int price){ return 0; }\n};\n'}},
+    {id:'stk5',title:'Sum of Subarray Minimums',topic:'Stack',difficulty:'Medium',diffClass:'medium',tags:['Array','Stack','Monotonic Stack','DP'],
+      statement:'<p>Given array of integers <code>arr</code>, find the sum of min(b) over every non-empty subarray b of arr. Return mod 10⁹+7.</p>',
+      examples:[{input:'arr=[3,1,2,4]',output:'17',explanation:'Mins: 3,1,1,1,2,1,2,4 → sum=17... actually sum of all subarray mins.'}],
+      constraints:['1≤arr.length≤3×10⁴','1≤arr[i]≤3×10⁴'],
+      starterCode:{python:'def sumSubarrayMins(arr):\n    pass\n',java:'class Solution {\n    public int sumSubarrayMins(int[] arr) { return 0; }\n}\n',cpp:'class Solution {\npublic:\n    int sumSubarrayMins(vector<int>& arr) { return 0; }\n};\n'}},
+    {id:'stk6',title:'Largest Rectangle in Histogram',topic:'Stack',difficulty:'Hard',diffClass:'hard',tags:['Array','Stack','Monotonic Stack'],
+      statement:'<p>Given array of integers <code>heights</code> representing histogram bar heights (width 1 each), return the area of the largest rectangle in the histogram.</p>',
+      examples:[{input:'heights=[2,1,5,6,2,3]',output:'10',explanation:'Rectangle spanning bars 5 and 6.'}],
+      constraints:['1≤heights.length≤10⁵','0≤heights[i]≤10⁴'],
+      starterCode:{python:'def largestRectangleArea(heights):\n    pass\n',java:'class Solution {\n    public int largestRectangleArea(int[] heights) { return 0; }\n}\n',cpp:'class Solution {\npublic:\n    int largestRectangleArea(vector<int>& heights) { return 0; }\n};\n'}},
+    {id:'stk7',title:'Maximal Rectangle',topic:'Stack',difficulty:'Hard',diffClass:'hard',tags:['Array','Stack','Matrix','DP'],
+      statement:'<p>Given a binary matrix of 0s and 1s, find the largest rectangle containing only 1s and return its area.</p>',
+      examples:[{input:'matrix=[["1","0","1","0","0"],["1","0","1","1","1"],["1","1","1","1","1"],["1","0","0","1","0"]]',output:'6',explanation:null}],
+      constraints:['m==matrix.length','n==matrix[0].length','1≤m,n≤200'],
+      starterCode:{python:'def maximalRectangle(matrix):\n    pass\n',java:'class Solution {\n    public int maximalRectangle(char[][] matrix) { return 0; }\n}\n',cpp:'class Solution {\npublic:\n    int maximalRectangle(vector<vector<char>>& matrix) { return 0; }\n};\n'}},
+    {id:'stk8',title:'Remove K Digits',topic:'Stack',difficulty:'Medium',diffClass:'medium',tags:['String','Stack','Greedy','Monotonic Stack'],
+      statement:'<p>Given string <code>num</code> and integer <code>k</code>, remove k digits to make the resulting number the smallest possible. Return the result as a string (no leading zeros).</p>',
+      examples:[{input:'num="1432219", k=3',output:'"1219"',explanation:null}],
+      constraints:['1≤k≤num.length≤10⁵'],
+      starterCode:{python:'def removeKdigits(num, k):\n    pass\n',java:'class Solution {\n    public String removeKdigits(String num, int k) { return ""; }\n}\n',cpp:'class Solution {\npublic:\n    string removeKdigits(string num, int k) { return ""; }\n};\n'}},
+    {id:'stk9',title:'132 Pattern',topic:'Stack',difficulty:'Medium',diffClass:'medium',tags:['Array','Stack','Monotonic Stack','Binary Search'],
+      statement:'<p>Given array of n integers, check if there is a 132 pattern — indices i<j<k such that nums[i]<nums[k]<nums[j].</p>',
+      examples:[{input:'nums=[3,1,4,2]',output:'true',explanation:'1<2<4: indices 1,3,2.'}],
+      constraints:['n==nums.length','1≤n≤2×10⁵'],
+      starterCode:{python:'def find132pattern(nums):\n    pass\n',java:'class Solution {\n    public boolean find132pattern(int[] nums) { return false; }\n}\n',cpp:'class Solution {\npublic:\n    bool find132pattern(vector<int>& nums) { return false; }\n};\n'}},
+    {id:'stk10',title:'Score of Parentheses',topic:'Stack',difficulty:'Medium',diffClass:'medium',tags:['String','Stack'],
+      statement:'<p>Given balanced parentheses string: () has score 1, AB has score A+B, (A) has score 2*A. Return the score.</p>',
+      examples:[{input:'s="(())"',output:'2',explanation:null},{input:'s="()()"',output:'2',explanation:null}],
+      constraints:['2≤s.length≤50'],
+      starterCode:{python:'def scoreOfParentheses(s):\n    pass\n',java:'class Solution {\n    public int scoreOfParentheses(String s) { return 0; }\n}\n',cpp:'class Solution {\npublic:\n    int scoreOfParentheses(string s) { return 0; }\n};\n'}},
+    {id:'stk11',title:'Basic Calculator',topic:'Stack',difficulty:'Hard',diffClass:'hard',tags:['Math','String','Stack','Recursion'],
+      statement:'<p>Implement a calculator to evaluate the string expression <code>s</code> which may contain +, -, (, ), and spaces. No multiplication or division.</p>',
+      examples:[{input:'s="(1+(4+5+2)-3)+(6+8)"',output:'23',explanation:null}],
+      constraints:['1≤s.length≤3×10⁶'],
+      starterCode:{python:'def calculate(s):\n    pass\n',java:'class Solution {\n    public int calculate(String s) { return 0; }\n}\n',cpp:'class Solution {\npublic:\n    int calculate(string s) { return 0; }\n};\n'}},
+    {id:'stk12',title:'Basic Calculator II',topic:'Stack',difficulty:'Medium',diffClass:'medium',tags:['Math','String','Stack'],
+      statement:'<p>Implement a calculator to evaluate string <code>s</code> with +, -, *, / (integer division toward zero), and spaces. No parentheses.</p>',
+      examples:[{input:'s="3+2*2"',output:'7',explanation:null},{input:'s=" 3/2 "',output:'1',explanation:null}],
+      constraints:['1≤s.length≤3×10⁵'],
+      starterCode:{python:'def calculate(s):\n    pass\n',java:'class Solution {\n    public int calculate(String s) { return 0; }\n}\n',cpp:'class Solution {\npublic:\n    int calculate(string s) { return 0; }\n};\n'}},
+    {id:'stk13',title:'Evaluate Reverse Polish Notation',topic:'Stack',difficulty:'Medium',diffClass:'medium',tags:['Array','Math','Stack'],
+      statement:'<p>Evaluate the value of an arithmetic expression in Reverse Polish Notation (postfix). Valid operators are +, -, *, /. Integer division truncates toward zero.</p>',
+      examples:[{input:'tokens=["2","1","+","3","*"]',output:'9',explanation:'((2+1)*3)=9.'}],
+      constraints:['1≤tokens.length≤10⁴'],
+      starterCode:{python:'def evalRPN(tokens):\n    pass\n',java:'class Solution {\n    public int evalRPN(String[] tokens) { return 0; }\n}\n',cpp:'class Solution {\npublic:\n    int evalRPN(vector<string>& tokens) { return 0; }\n};\n'}},
+    {id:'stk14',title:'Min Stack',topic:'Stack',difficulty:'Medium',diffClass:'medium',tags:['Stack','Design'],
+      statement:'<p>Design a stack that supports push, pop, top, and retrieving the minimum element — all in O(1) time.</p>',
+      examples:[{input:'push(-2);push(0);push(-3);getMin()→-3;pop();top()→0;getMin()→-2',output:'shown',explanation:null}],
+      constraints:['At most 3×10⁴ calls.','pop,top,getMin called on non-empty stack.'],
+      starterCode:{python:'class MinStack:\n    def __init__(self): pass\n    def push(self,val): pass\n    def pop(self): pass\n    def top(self): pass\n    def getMin(self): pass\n',java:'class MinStack {\n    public MinStack(){}\n    public void push(int val){}\n    public void pop(){}\n    public int top(){ return 0; }\n    public int getMin(){ return 0; }\n}\n',cpp:'class MinStack {\npublic:\n    MinStack(){}\n    void push(int val){}\n    void pop(){}\n    int top(){ return 0; }\n    int getMin(){ return 0; }\n};\n'}},
+    {id:'stk15',title:'Implement Queue using Stacks',topic:'Stack',difficulty:'Easy',diffClass:'easy',tags:['Stack','Design','Queue'],
+      statement:'<p>Implement a FIFO queue using only two stacks. The push, pop, peek, and empty operations should behave exactly as in a regular queue.</p>',
+      examples:[{input:'push(1);push(2);peek()→1;pop()→1;empty()→false',output:'shown',explanation:null}],
+      constraints:['1≤x≤9','At most 100 calls.'],
+      starterCode:{python:'class MyQueue:\n    def __init__(self): pass\n    def push(self,x): pass\n    def pop(self): pass\n    def peek(self): pass\n    def empty(self): pass\n',java:'class MyQueue {\n    public MyQueue(){}\n    public void push(int x){}\n    public int pop(){ return 0; }\n    public int peek(){ return 0; }\n    public boolean empty(){ return false; }\n}\n',cpp:'class MyQueue {\npublic:\n    MyQueue(){}\n    void push(int x){}\n    int pop(){ return 0; }\n    int peek(){ return 0; }\n    bool empty(){ return false; }\n};\n'}},
+    {id:'stk16',title:'Decode String',topic:'Stack',difficulty:'Medium',diffClass:'medium',tags:['String','Stack','Recursion'],
+      statement:'<p>Given encoded string <code>k[encoded_string]</code>, return its decoded version. Nesting is guaranteed valid. e.g. <code>2[abc]3[cd]ef</code> → <code>abcabccdcdcdef</code>.</p>',
+      examples:[{input:'s="3[a2[c]]"',output:'"accaccacc"',explanation:null}],
+      constraints:['1≤s.length≤30'],
+      starterCode:{python:'def decodeString(s):\n    pass\n',java:'class Solution {\n    public String decodeString(String s) { return ""; }\n}\n',cpp:'class Solution {\npublic:\n    string decodeString(string s) { return ""; }\n};\n'}},
+    {id:'stk17',title:'Number of Visible People in a Queue',topic:'Stack',difficulty:'Hard',diffClass:'hard',tags:['Array','Stack','Monotonic Stack'],
+      statement:'<p>There are n people standing in a queue with heights. Person i can see person j (i<j) if everyone between them is shorter than both heights[i] and heights[j]. Return how many people each person can see.</p>',
+      examples:[{input:'heights=[10,6,8,5,11,9]',output:'[3,1,2,1,1,0]',explanation:null}],
+      constraints:['n==heights.length','1≤n≤10⁵','1≤heights[i]≤10⁵','All heights distinct.'],
+      starterCode:{python:'def canSeePersonsCount(heights):\n    pass\n',java:'class Solution {\n    public int[] canSeePersonsCount(int[] heights) { return new int[]{}; }\n}\n',cpp:'class Solution {\npublic:\n    vector<int> canSeePersonsCount(vector<int>& heights) { return {}; }\n};\n'}},
+    {id:'stk18',title:'Sum of Subarray Ranges',topic:'Stack',difficulty:'Medium',diffClass:'medium',tags:['Array','Stack','Monotonic Stack'],
+      statement:'<p>The range of a subarray is max-min. Given integer array <code>nums</code>, return the sum of all subarray ranges.</p>',
+      examples:[{input:'nums=[1,2,3]',output:'4',explanation:'Ranges: 0,1,2,0,1,2 → but subarray ranges sum to 4.'}],
+      constraints:['1≤nums.length≤1000','-10⁹≤nums[i]≤10⁹'],
+      starterCode:{python:'def subArrayRanges(nums):\n    pass\n',java:'class Solution {\n    public long subArrayRanges(int[] nums) { return 0; }\n}\n',cpp:'class Solution {\npublic:\n    long long subArrayRanges(vector<int>& nums) { return 0; }\n};\n'}},
+    {id:'stk19',title:'Maximum Width Ramp',topic:'Stack',difficulty:'Medium',diffClass:'medium',tags:['Array','Stack','Two Pointers'],
+      statement:'<p>Given array <code>nums</code>, a ramp is (i,j) where i<j and nums[i]≤nums[j]. Return the maximum width j-i of such a ramp. Return 0 if none.</p>',
+      examples:[{input:'nums=[6,0,8,2,1,5]',output:'4',explanation:'Ramp (1,5): nums[1]=0 ≤ nums[5]=5.'}],
+      constraints:['2≤nums.length≤5×10⁴','0≤nums[i]≤5×10⁴'],
+      starterCode:{python:'def maxWidthRamp(nums):\n    pass\n',java:'class Solution {\n    public int maxWidthRamp(int[] nums) { return 0; }\n}\n',cpp:'class Solution {\npublic:\n    int maxWidthRamp(vector<int>& nums) { return 0; }\n};\n'}},
+    {id:'stk20',title:'Flatten Nested List Iterator',topic:'Stack',difficulty:'Medium',diffClass:'medium',tags:['Stack','Design','Iterator','DFS'],
+      statement:'<p>Given nested list of integers, implement an iterator to flatten it. The nested list may contain integers or other nested lists. Implement <code>next()</code> and <code>hasNext()</code>.</p>',
+      examples:[{input:'nestedList=[[1,1],2,[1,1]]',output:'1,1,2,1,1',explanation:null}],
+      constraints:['1≤nestedList.length≤500'],
+      starterCode:{python:'class NestedIterator:\n    def __init__(self, nestedList): pass\n    def next(self): pass\n    def hasNext(self): pass\n',java:'public class NestedIterator implements Iterator<Integer> {\n    public NestedIterator(List<NestedInteger> nestedList) {}\n    public Integer next() { return 0; }\n    public boolean hasNext() { return false; }\n}\n',cpp:'class NestedIterator {\npublic:\n    NestedIterator(vector<NestedInteger>&nl){}\n    int next(){ return 0; }\n    bool hasNext(){ return false; }\n};\n'}},
+    {id:'stk21',title:'Sliding Window Maximum',topic:'Stack',difficulty:'Hard',diffClass:'hard',tags:['Array','Queue','Sliding Window','Monotonic Deque'],
+      statement:'<p>Given array <code>nums</code> and integer <code>k</code>, return max values of all sliding windows of size k.</p>',
+      examples:[{input:'nums=[1,3,-1,-3,5,3,6,7], k=3',output:'[3,3,5,5,6,7]',explanation:null}],
+      constraints:['1≤nums.length≤10⁵','1≤k≤nums.length'],
+      starterCode:{python:'from collections import deque\ndef maxSlidingWindow(nums, k):\n    pass\n',java:'class Solution {\n    public int[] maxSlidingWindow(int[] nums, int k) { return new int[]{}; }\n}\n',cpp:'class Solution {\npublic:\n    vector<int> maxSlidingWindow(vector<int>& nums, int k) { return {}; }\n};\n'}},
+    {id:'stk22',title:'Binary Tree Inorder Traversal (Iterative)',topic:'Stack',difficulty:'Easy',diffClass:'easy',tags:['Tree','Stack','DFS'],
+      statement:'<p>Given the root of a binary tree, return the inorder traversal of its nodes\' values using an iterative approach (no recursion).</p>',
+      examples:[{input:'root=[1,null,2,3]',output:'[1,3,2]',explanation:null}],
+      constraints:['0≤n≤100','-100≤Node.val≤100'],
+      starterCode:{python:'def inorderTraversal(root):\n    pass\n',java:'class Solution {\n    public List<Integer> inorderTraversal(TreeNode root) { return new ArrayList<>(); }\n}\n',cpp:'class Solution {\npublic:\n    vector<int> inorderTraversal(TreeNode* root) { return {}; }\n};\n'}},
+    {id:'stk23',title:'Valid Parenthesis String',topic:'Stack',difficulty:'Medium',diffClass:'medium',tags:['String','Stack','Greedy'],
+      statement:'<p>Given string <code>s</code> with (, ), and * (which can be (, ), or empty string), return true if it can be valid.</p>',
+      examples:[{input:'s="(*)"',output:'true',explanation:null},{input:'s="(*))"',output:'true',explanation:null}],
+      constraints:['1≤s.length≤100'],
+      starterCode:{python:'def checkValidString(s):\n    pass\n',java:'class Solution {\n    public boolean checkValidString(String s) { return false; }\n}\n',cpp:'class Solution {\npublic:\n    bool checkValidString(string s) { return false; }\n};\n'}},
+  ],
+
+  LinkedList: [
+    {id:'ll1',title:'Reverse Linked List',topic:'LinkedList',difficulty:'Easy',diffClass:'easy',tags:['Linked List','Recursion'],
+      statement:'<p>Given the head of a singly linked list, reverse the list and return the reversed list.</p>',
+      examples:[{input:'head=[1,2,3,4,5]',output:'[5,4,3,2,1]',explanation:null}],
+      constraints:['0≤n≤5000','-5000≤Node.val≤5000'],
+      starterCode:{python:'def reverseList(head):\n    pass\n',java:'class Solution {\n    public ListNode reverseList(ListNode head) { return null; }\n}\n',cpp:'class Solution {\npublic:\n    ListNode* reverseList(ListNode* head) { return nullptr; }\n};\n'}},
+    {id:'ll2',title:'Reverse Linked List II',topic:'LinkedList',difficulty:'Medium',diffClass:'medium',tags:['Linked List'],
+      statement:'<p>Given the head and integers left and right (left≤right), reverse the nodes of the list from position left to position right and return the reversed list.</p>',
+      examples:[{input:'head=[1,2,3,4,5], left=2, right=4',output:'[1,4,3,2,5]',explanation:null}],
+      constraints:['1≤n≤500','1≤left≤right≤n'],
+      starterCode:{python:'def reverseBetween(head, left, right):\n    pass\n',java:'class Solution {\n    public ListNode reverseBetween(ListNode head, int left, int right) { return null; }\n}\n',cpp:'class Solution {\npublic:\n    ListNode* reverseBetween(ListNode* head, int left, int right) { return nullptr; }\n};\n'}},
+    {id:'ll3',title:'Reverse Nodes in k-Group',topic:'LinkedList',difficulty:'Hard',diffClass:'hard',tags:['Linked List','Recursion'],
+      statement:'<p>Given head of linked list, reverse the nodes of the list k at a time. If the number of nodes is not a multiple of k, leave the remaining nodes as-is.</p>',
+      examples:[{input:'head=[1,2,3,4,5], k=2',output:'[2,1,4,3,5]',explanation:null}],
+      constraints:['n==length of list','1≤k≤n≤5000'],
+      starterCode:{python:'def reverseKGroup(head, k):\n    pass\n',java:'class Solution {\n    public ListNode reverseKGroup(ListNode head, int k) { return null; }\n}\n',cpp:'class Solution {\npublic:\n    ListNode* reverseKGroup(ListNode* head, int k) { return nullptr; }\n};\n'}},
+    {id:'ll4',title:'Merge Two Sorted Lists',topic:'LinkedList',difficulty:'Easy',diffClass:'easy',tags:['Linked List','Recursion'],
+      statement:'<p>Merge two sorted linked lists and return it as a new sorted list. The list should be made by splicing together the nodes of the two lists.</p>',
+      examples:[{input:'list1=[1,2,4], list2=[1,3,4]',output:'[1,1,2,3,4,4]',explanation:null}],
+      constraints:['0≤n,m≤50','-100≤Node.val≤100'],
+      starterCode:{python:'def mergeTwoLists(list1, list2):\n    pass\n',java:'class Solution {\n    public ListNode mergeTwoLists(ListNode l1, ListNode l2) { return null; }\n}\n',cpp:'class Solution {\npublic:\n    ListNode* mergeTwoLists(ListNode* l1, ListNode* l2) { return nullptr; }\n};\n'}},
+    {id:'ll5',title:'Merge K Sorted Lists',topic:'LinkedList',difficulty:'Hard',diffClass:'hard',tags:['Linked List','Divide & Conquer','Heap'],
+      statement:'<p>Given array of k sorted linked lists, merge all into one sorted linked list and return it.</p>',
+      examples:[{input:'lists=[[1,4,5],[1,3,4],[2,6]]',output:'[1,1,2,3,4,4,5,6]',explanation:null}],
+      constraints:['k==lists.length','0≤k≤10⁴','0≤lists[i].length≤500'],
+      starterCode:{python:'import heapq\ndef mergeKLists(lists):\n    pass\n',java:'class Solution {\n    public ListNode mergeKLists(ListNode[] lists) { return null; }\n}\n',cpp:'class Solution {\npublic:\n    ListNode* mergeKLists(vector<ListNode*>& lists) { return nullptr; }\n};\n'}},
+    {id:'ll6',title:'Linked List Cycle II',topic:'LinkedList',difficulty:'Medium',diffClass:'medium',tags:['Linked List','Two Pointers','Floyd\'s'],
+      statement:'<p>Given head of linked list, return the node where the cycle begins. Return null if no cycle. Use O(1) memory.</p>',
+      examples:[{input:'head=[3,2,0,-4], pos=1',output:'node at index 1',explanation:'Tail connects to node 1.'}],
+      constraints:['0≤n≤10⁴','-10⁵≤Node.val≤10⁵'],
+      starterCode:{python:'def detectCycle(head):\n    pass\n',java:'public class Solution {\n    public ListNode detectCycle(ListNode head) { return null; }\n}\n',cpp:'class Solution {\npublic:\n    ListNode *detectCycle(ListNode *head) { return nullptr; }\n};\n'}},
+    {id:'ll7',title:'Sort List',topic:'LinkedList',difficulty:'Medium',diffClass:'medium',tags:['Linked List','Divide & Conquer','Merge Sort'],
+      statement:'<p>Given the head of a linked list, sort the list in ascending order and return the sorted list. Use O(n log n) time and O(1) extra space (bottom-up merge sort).</p>',
+      examples:[{input:'head=[4,2,1,3]',output:'[1,2,3,4]',explanation:null}],
+      constraints:['0≤n≤5×10⁴','-10⁵≤Node.val≤10⁵'],
+      starterCode:{python:'def sortList(head):\n    pass\n',java:'class Solution {\n    public ListNode sortList(ListNode head) { return null; }\n}\n',cpp:'class Solution {\npublic:\n    ListNode* sortList(ListNode* head) { return nullptr; }\n};\n'}},
+    {id:'ll8',title:'Reorder List',topic:'LinkedList',difficulty:'Medium',diffClass:'medium',tags:['Linked List','Two Pointers','Stack'],
+      statement:'<p>Given head of list L0→L1→…→Ln, reorder it to L0→Ln→L1→Ln-1→L2→Ln-2→… in-place.</p>',
+      examples:[{input:'head=[1,2,3,4,5]',output:'[1,5,2,4,3]',explanation:null}],
+      constraints:['1≤n≤5×10⁴','1≤Node.val≤1000'],
+      starterCode:{python:'def reorderList(head):\n    pass\n',java:'class Solution {\n    public void reorderList(ListNode head) {}\n}\n',cpp:'class Solution {\npublic:\n    void reorderList(ListNode* head) {}\n};\n'}},
+    {id:'ll9',title:'Copy List with Random Pointer',topic:'LinkedList',difficulty:'Medium',diffClass:'medium',tags:['Linked List','Hash Map'],
+      statement:'<p>Given linked list where each node has a next and random pointer (or null), construct a deep copy. Return the head of the copied list.</p>',
+      examples:[{input:'head=[[7,null],[13,0],[11,4],[10,2],[1,0]]',output:'[[7,null],[13,0],[11,4],[10,2],[1,0]]',explanation:null}],
+      constraints:['0≤n≤1000','-10⁴≤Node.val≤10⁴'],
+      starterCode:{python:'def copyRandomList(head):\n    pass\n',java:'class Solution {\n    public Node copyRandomList(Node head) { return null; }\n}\n',cpp:'class Solution {\npublic:\n    Node* copyRandomList(Node* head) { return nullptr; }\n};\n'}},
+    {id:'ll10',title:'Add Two Numbers',topic:'LinkedList',difficulty:'Medium',diffClass:'medium',tags:['Linked List','Math','Recursion'],
+      statement:'<p>Two non-empty linked lists represent two non-negative integers stored in reverse order. Add the two numbers and return the sum as a linked list.</p>',
+      examples:[{input:'l1=[2,4,3], l2=[5,6,4]',output:'[7,0,8]',explanation:'342+465=807.'}],
+      constraints:['1≤n,m≤100','0≤Node.val≤9'],
+      starterCode:{python:'def addTwoNumbers(l1, l2):\n    pass\n',java:'class Solution {\n    public ListNode addTwoNumbers(ListNode l1, ListNode l2) { return null; }\n}\n',cpp:'class Solution {\npublic:\n    ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) { return nullptr; }\n};\n'}},
+    {id:'ll11',title:'Partition List',topic:'LinkedList',difficulty:'Medium',diffClass:'medium',tags:['Linked List','Two Pointers'],
+      statement:'<p>Given head and value x, partition the linked list so all nodes less than x come before nodes ≥ x. Preserve the original relative order.</p>',
+      examples:[{input:'head=[1,4,3,2,5,2], x=3',output:'[1,2,2,4,3,5]',explanation:null}],
+      constraints:['0≤n≤200','-100≤Node.val≤100'],
+      starterCode:{python:'def partition(head, x):\n    pass\n',java:'class Solution {\n    public ListNode partition(ListNode head, int x) { return null; }\n}\n',cpp:'class Solution {\npublic:\n    ListNode* partition(ListNode* head, int x) { return nullptr; }\n};\n'}},
+    {id:'ll12',title:'Odd Even Linked List',topic:'LinkedList',difficulty:'Medium',diffClass:'medium',tags:['Linked List'],
+      statement:'<p>Given a singly linked list, group all odd-indexed nodes together followed by all even-indexed nodes (1-indexed). Do it in O(1) extra space and O(n) time.</p>',
+      examples:[{input:'head=[1,2,3,4,5]',output:'[1,3,5,2,4]',explanation:null}],
+      constraints:['0≤n≤10⁴','-10⁶≤Node.val≤10⁶'],
+      starterCode:{python:'def oddEvenList(head):\n    pass\n',java:'class Solution {\n    public ListNode oddEvenList(ListNode head) { return null; }\n}\n',cpp:'class Solution {\npublic:\n    ListNode* oddEvenList(ListNode* head) { return nullptr; }\n};\n'}},
+    {id:'ll13',title:'Swap Nodes in Pairs',topic:'LinkedList',difficulty:'Medium',diffClass:'medium',tags:['Linked List','Recursion'],
+      statement:'<p>Given linked list, swap every two adjacent nodes and return its head. You may not modify values in nodes, only change links.</p>',
+      examples:[{input:'head=[1,2,3,4]',output:'[2,1,4,3]',explanation:null}],
+      constraints:['0≤n≤100','0≤Node.val≤100'],
+      starterCode:{python:'def swapPairs(head):\n    pass\n',java:'class Solution {\n    public ListNode swapPairs(ListNode head) { return null; }\n}\n',cpp:'class Solution {\npublic:\n    ListNode* swapPairs(ListNode* head) { return nullptr; }\n};\n'}},
+    {id:'ll14',title:'Rotate List',topic:'LinkedList',difficulty:'Medium',diffClass:'medium',tags:['Linked List','Two Pointers'],
+      statement:'<p>Given head of linked list, rotate the list to the right by k places.</p>',
+      examples:[{input:'head=[1,2,3,4,5], k=2',output:'[4,5,1,2,3]',explanation:null}],
+      constraints:['0≤n≤500','-100≤Node.val≤100','0≤k≤2×10⁹'],
+      starterCode:{python:'def rotateRight(head, k):\n    pass\n',java:'class Solution {\n    public ListNode rotateRight(ListNode head, int k) { return null; }\n}\n',cpp:'class Solution {\npublic:\n    ListNode* rotateRight(ListNode* head, int k) { return nullptr; }\n};\n'}},
+    {id:'ll15',title:'Flatten a Multilevel Doubly Linked List',topic:'LinkedList',difficulty:'Medium',diffClass:'medium',tags:['Linked List','DFS','Doubly Linked List'],
+      statement:'<p>Given doubly linked list that may have child pointers to separate sublists, flatten the list so all nodes appear in a single-level doubly linked list.</p>',
+      examples:[{input:'head=[1,2,3,4,5,6,null,null,null,7,8,9,10,...]',output:'[1,2,3,7,8,11,12,9,10,4,5,6]',explanation:null}],
+      constraints:['0≤n≤1000'],
+      starterCode:{python:'def flatten(head):\n    pass\n',java:'class Solution {\n    public Node flatten(Node head) { return null; }\n}\n',cpp:'class Solution {\npublic:\n    Node* flatten(Node* head) { return nullptr; }\n};\n'}},
+    {id:'ll16',title:'Remove Duplicates from Sorted List II',topic:'LinkedList',difficulty:'Medium',diffClass:'medium',tags:['Linked List','Two Pointers'],
+      statement:'<p>Given the head of a sorted linked list, delete all nodes that have duplicate numbers (not just the duplicate — delete all occurrences). Return only distinct numbers.</p>',
+      examples:[{input:'head=[1,2,3,3,4,4,5]',output:'[1,2,5]',explanation:null}],
+      constraints:['0≤n≤300','-100≤Node.val≤100'],
+      starterCode:{python:'def deleteDuplicates(head):\n    pass\n',java:'class Solution {\n    public ListNode deleteDuplicates(ListNode head) { return null; }\n}\n',cpp:'class Solution {\npublic:\n    ListNode* deleteDuplicates(ListNode* head) { return nullptr; }\n};\n'}},
+  ],
+
+  DP: [
+    {id:'dp1',title:'Climbing Stairs',topic:'DP',difficulty:'Easy',diffClass:'easy',tags:['Math','DP','Memoization'],
+      statement:'<p>You are climbing a staircase with <code>n</code> steps. Each time you can climb 1 or 2 steps. Return the number of distinct ways to reach the top.</p>',
+      examples:[{input:'n=3',output:'3',explanation:'1+1+1, 1+2, 2+1.'}],
+      constraints:['1≤n≤45'],
+      starterCode:{python:'def climbStairs(n):\n    pass\n',java:'class Solution {\n    public int climbStairs(int n) { return 0; }\n}\n',cpp:'class Solution {\npublic:\n    int climbStairs(int n) { return 0; }\n};\n'}},
+    {id:'dp2',title:'Coin Change',topic:'DP',difficulty:'Medium',diffClass:'medium',tags:['Array','DP','BFS'],
+      statement:'<p>Given coins of different denominations and an amount, return the fewest number of coins that make up that amount. Return -1 if it cannot be done.</p>',
+      examples:[{input:'coins=[1,5,11], amount=15',output:'3',explanation:'5+5+5=15.'}],
+      constraints:['1≤coins.length≤12','1≤coins[i]≤2³¹-1','0≤amount≤10⁴'],
+      starterCode:{python:'def coinChange(coins, amount):\n    pass\n',java:'class Solution {\n    public int coinChange(int[] coins, int amount) { return -1; }\n}\n',cpp:'class Solution {\npublic:\n    int coinChange(vector<int>& coins, int amount) { return -1; }\n};\n'}},
+    {id:'dp3',title:'Longest Increasing Subsequence',topic:'DP',difficulty:'Medium',diffClass:'medium',tags:['Array','Binary Search','DP'],
+      statement:'<p>Given integer array <code>nums</code>, return the length of the longest strictly increasing subsequence.</p>',
+      examples:[{input:'nums=[10,9,2,5,3,7,101,18]',output:'4',explanation:'[2,3,7,101].'}],
+      constraints:['1≤nums.length≤2500','-10⁴≤nums[i]≤10⁴'],
+      starterCode:{python:'def lengthOfLIS(nums):\n    pass\n',java:'class Solution {\n    public int lengthOfLIS(int[] nums) { return 0; }\n}\n',cpp:'class Solution {\npublic:\n    int lengthOfLIS(vector<int>& nums) { return 0; }\n};\n'}},
+    {id:'dp4',title:'Longest Common Subsequence',topic:'DP',difficulty:'Medium',diffClass:'medium',tags:['String','DP'],
+      statement:'<p>Given two strings, return the length of their longest common subsequence. Return 0 if none.</p>',
+      examples:[{input:'text1="abcde", text2="ace"',output:'3',explanation:'LCS is "ace".'}],
+      constraints:['1≤text1.length,text2.length≤1000'],
+      starterCode:{python:'def longestCommonSubsequence(text1, text2):\n    pass\n',java:'class Solution {\n    public int longestCommonSubsequence(String t1, String t2) { return 0; }\n}\n',cpp:'class Solution {\npublic:\n    int longestCommonSubsequence(string t1, string t2) { return 0; }\n};\n'}},
+    {id:'dp5',title:'Word Break',topic:'DP',difficulty:'Medium',diffClass:'medium',tags:['String','DP','Trie','Memoization'],
+      statement:'<p>Given string <code>s</code> and dictionary <code>wordDict</code>, return true if s can be segmented into a space-separated sequence of one or more dictionary words.</p>',
+      examples:[{input:'s="leetcode", wordDict=["leet","code"]',output:'true',explanation:'"leet"+"code".'}],
+      constraints:['1≤s.length≤300','1≤wordDict.length≤1000'],
+      starterCode:{python:'def wordBreak(s, wordDict):\n    pass\n',java:'class Solution {\n    public boolean wordBreak(String s, List<String> wordDict) { return false; }\n}\n',cpp:'class Solution {\npublic:\n    bool wordBreak(string s, vector<string>& wordDict) { return false; }\n};\n'}},
+    {id:'dp6',title:'Combination Sum IV',topic:'DP',difficulty:'Medium',diffClass:'medium',tags:['Array','DP'],
+      statement:'<p>Given array <code>nums</code> of distinct integers and integer <code>target</code>, return the number of possible ordered combinations that add up to target.</p>',
+      examples:[{input:'nums=[1,2,3], target=4',output:'7',explanation:'[1,1,1,1],[1,1,2],[1,2,1],[1,3],[2,1,1],[2,2],[3,1].'}],
+      constraints:['1≤nums.length≤200','1≤nums[i]≤1000','1≤target≤1000'],
+      starterCode:{python:'def combinationSum4(nums, target):\n    pass\n',java:'class Solution {\n    public int combinationSum4(int[] nums, int target) { return 0; }\n}\n',cpp:'class Solution {\npublic:\n    int combinationSum4(vector<int>& nums, int target) { return 0; }\n};\n'}},
+    {id:'dp7',title:'House Robber',topic:'DP',difficulty:'Medium',diffClass:'medium',tags:['Array','DP'],
+      statement:'<p>You cannot rob two adjacent houses. Given array of money at each house, return the maximum you can rob without alerting police.</p>',
+      examples:[{input:'nums=[2,7,9,3,1]',output:'12',explanation:'Rob 2+9+1=12.'}],
+      constraints:['1≤nums.length≤100','0≤nums[i]≤400'],
+      starterCode:{python:'def rob(nums):\n    pass\n',java:'class Solution {\n    public int rob(int[] nums) { return 0; }\n}\n',cpp:'class Solution {\npublic:\n    int rob(vector<int>& nums) { return 0; }\n};\n'}},
+    {id:'dp8',title:'House Robber II',topic:'DP',difficulty:'Medium',diffClass:'medium',tags:['Array','DP'],
+      statement:'<p>All houses arranged in a circle. Cannot rob two adjacent houses. Return maximum money you can rob.</p>',
+      examples:[{input:'nums=[2,3,2]',output:'3',explanation:'Cannot rob both house 0 and 2.'}],
+      constraints:['1≤nums.length≤100','0≤nums[i]≤1000'],
+      starterCode:{python:'def rob(nums):\n    pass\n',java:'class Solution {\n    public int rob(int[] nums) { return 0; }\n}\n',cpp:'class Solution {\npublic:\n    int rob(vector<int>& nums) { return 0; }\n};\n'}},
+    {id:'dp9',title:'Decode Ways',topic:'DP',difficulty:'Medium',diffClass:'medium',tags:['String','DP'],
+      statement:'<p>A message encoded as "A"→1, "B"→2, ..."Z"→26. Given string of digits, return the number of ways to decode it.</p>',
+      examples:[{input:'s="226"',output:'3',explanation:'"226"="BBF","VF","BZ".'}],
+      constraints:['1≤s.length≤100'],
+      starterCode:{python:'def numDecodings(s):\n    pass\n',java:'class Solution {\n    public int numDecodings(String s) { return 0; }\n}\n',cpp:'class Solution {\npublic:\n    int numDecodings(string s) { return 0; }\n};\n'}},
+    {id:'dp10',title:'Unique Paths',topic:'DP',difficulty:'Medium',diffClass:'medium',tags:['Math','DP','Combinatorics'],
+      statement:'<p>A robot on m×n grid can only move right or down. How many unique paths are there to reach the bottom-right corner from top-left?</p>',
+      examples:[{input:'m=3, n=7',output:'28',explanation:null}],
+      constraints:['1≤m,n≤100'],
+      starterCode:{python:'def uniquePaths(m, n):\n    pass\n',java:'class Solution {\n    public int uniquePaths(int m, int n) { return 0; }\n}\n',cpp:'class Solution {\npublic:\n    int uniquePaths(int m, int n) { return 0; }\n};\n'}},
+    {id:'dp11',title:'Partition Equal Subset Sum',topic:'DP',difficulty:'Medium',diffClass:'medium',tags:['Array','DP'],
+      statement:'<p>Given integer array <code>nums</code>, return true if you can partition it into two subsets with equal sums.</p>',
+      examples:[{input:'nums=[1,5,11,5]',output:'true',explanation:'[1,5,5] and [11].'}],
+      constraints:['1≤nums.length≤200','1≤nums[i]≤100'],
+      starterCode:{python:'def canPartition(nums):\n    pass\n',java:'class Solution {\n    public boolean canPartition(int[] nums) { return false; }\n}\n',cpp:'class Solution {\npublic:\n    bool canPartition(vector<int>& nums) { return false; }\n};\n'}},
+    {id:'dp12',title:'Coin Change II',topic:'DP',difficulty:'Medium',diffClass:'medium',tags:['Array','DP'],
+      statement:'<p>Given coins and amount, return the number of combinations (order does not matter) that make up that amount. If impossible, return 0.</p>',
+      examples:[{input:'amount=5, coins=[1,2,5]',output:'4',explanation:'5; 2+2+1; 2+1+1+1; 1×5.'}],
+      constraints:['1≤coins.length≤300','0≤amount≤5000'],
+      starterCode:{python:'def change(amount, coins):\n    pass\n',java:'class Solution {\n    public int change(int amount, int[] coins) { return 0; }\n}\n',cpp:'class Solution {\npublic:\n    int change(int amount, vector<int>& coins) { return 0; }\n};\n'}},
+    {id:'dp13',title:'Target Sum',topic:'DP',difficulty:'Medium',diffClass:'medium',tags:['Array','DP','DFS'],
+      statement:'<p>Given array <code>nums</code> and integer <code>target</code>, assign + or - to each number. Return the number of ways to make the expression equal to target.</p>',
+      examples:[{input:'nums=[1,1,1,1,1], target=3',output:'5',explanation:'5 combinations of +/- give 3.'}],
+      constraints:['1≤nums.length≤20','0≤nums[i]≤1000'],
+      starterCode:{python:'def findTargetSumWays(nums, target):\n    pass\n',java:'class Solution {\n    public int findTargetSumWays(int[] nums, int target) { return 0; }\n}\n',cpp:'class Solution {\npublic:\n    int findTargetSumWays(vector<int>& nums, int target) { return 0; }\n};\n'}},
+    {id:'dp14',title:'Edit Distance',topic:'DP',difficulty:'Medium',diffClass:'medium',tags:['String','DP'],
+      statement:'<p>Given two strings word1 and word2, return the minimum number of operations (insert, delete, replace) to convert word1 to word2.</p>',
+      examples:[{input:'word1="horse", word2="ros"',output:'3',explanation:'horse→rorse→rose→ros.'}],
+      constraints:['0≤word1.length,word2.length≤500'],
+      starterCode:{python:'def minDistance(word1, word2):\n    pass\n',java:'class Solution {\n    public int minDistance(String w1, String w2) { return 0; }\n}\n',cpp:'class Solution {\npublic:\n    int minDistance(string w1, string w2) { return 0; }\n};\n'}},
+    {id:'dp15',title:'Burst Balloons',topic:'DP',difficulty:'Hard',diffClass:'hard',tags:['Array','DP'],
+      statement:'<p>Given <code>n</code> balloons. Bursting balloon i gives coins = nums[left]*nums[i]*nums[right]. Return max coins collectible by bursting all balloons optimally.</p>',
+      examples:[{input:'nums=[3,1,5,8]',output:'167',explanation:'3×1×5 + 3×5×8 + 1×3×8 + 1×8×1 = 167.'}],
+      constraints:['n==nums.length','1≤n≤300','0≤nums[i]≤100'],
+      starterCode:{python:'def maxCoins(nums):\n    pass\n',java:'class Solution {\n    public int maxCoins(int[] nums) { return 0; }\n}\n',cpp:'class Solution {\npublic:\n    int maxCoins(vector<int>& nums) { return 0; }\n};\n'}},
+    {id:'dp16',title:'Wildcard Matching',topic:'DP',difficulty:'Hard',diffClass:'hard',tags:['String','DP','Greedy','Recursion'],
+      statement:'<p>Given string s and pattern p with \'?\' (any single char) and \'*\' (any sequence including empty). Return true if p matches s entirely.</p>',
+      examples:[{input:'s="adceb", p="*a*b"',output:'true',explanation:null}],
+      constraints:['0≤s.length≤2000','0≤p.length≤2000'],
+      starterCode:{python:'def isMatch(s, p):\n    pass\n',java:'class Solution {\n    public boolean isMatch(String s, String p) { return false; }\n}\n',cpp:'class Solution {\npublic:\n    bool isMatch(string s, string p) { return false; }\n};\n'}},
+    {id:'dp17',title:'Interleaving String',topic:'DP',difficulty:'Medium',diffClass:'medium',tags:['String','DP'],
+      statement:'<p>Given s1, s2, s3, return true if s3 is formed by interleaving s1 and s2 while preserving relative order of each.</p>',
+      examples:[{input:'s1="aabcc", s2="dbbca", s3="aadbbcbcac"',output:'true',explanation:null}],
+      constraints:['0≤s1.length,s2.length≤100','s3.length==s1.length+s2.length'],
+      starterCode:{python:'def isInterleave(s1, s2, s3):\n    pass\n',java:'class Solution {\n    public boolean isInterleave(String s1, String s2, String s3) { return false; }\n}\n',cpp:'class Solution {\npublic:\n    bool isInterleave(string s1, string s2, string s3) { return false; }\n};\n'}},
+    {id:'dp18',title:'Stone Game',topic:'DP',difficulty:'Medium',diffClass:'medium',tags:['Array','Math','DP','Game Theory'],
+      statement:'<p>Alex and Lee pick from either end of an array of piles. Alex goes first. Both play optimally. Return true if Alex wins.</p>',
+      examples:[{input:'piles=[5,3,4,5]',output:'true',explanation:'Alex always wins with even piles.'}],
+      constraints:['2≤piles.length≤500','piles.length is even.'],
+      starterCode:{python:'def stoneGame(piles):\n    pass\n',java:'class Solution {\n    public boolean stoneGame(int[] piles) { return false; }\n}\n',cpp:'class Solution {\npublic:\n    bool stoneGame(vector<int>& piles) { return false; }\n};\n'}},
+  ],
+
+  Graph: [
+    {id:'gr1',title:'Number of Islands',topic:'Graph',difficulty:'Medium',diffClass:'medium',tags:['Array','DFS','BFS','Matrix','Union Find'],
+      statement:'<p>Given 2D binary grid of \'1\'s (land) and \'0\'s (water), count the number of islands. An island is formed by connecting adjacent lands horizontally or vertically.</p>',
+      examples:[{input:'grid=[["1","1","0"],["1","1","0"],["0","0","1"]]',output:'2',explanation:null}],
+      constraints:['1≤m,n≤300'],
+      starterCode:{python:'def numIslands(grid):\n    pass\n',java:'class Solution {\n    public int numIslands(char[][] grid) { return 0; }\n}\n',cpp:'class Solution {\npublic:\n    int numIslands(vector<vector<char>>& grid) { return 0; }\n};\n'}},
+    {id:'gr2',title:'Course Schedule',topic:'Graph',difficulty:'Medium',diffClass:'medium',tags:['DFS','BFS','Topological Sort','Graph'],
+      statement:'<p>Given numCourses and prerequisite pairs, return true if you can finish all courses (no cycle exists).</p>',
+      examples:[{input:'numCourses=2, prerequisites=[[1,0]]',output:'true',explanation:'Take course 0 then 1.'}],
+      constraints:['1≤numCourses≤2000','0≤prerequisites.length≤5000'],
+      starterCode:{python:'def canFinish(numCourses, prerequisites):\n    pass\n',java:'class Solution {\n    public boolean canFinish(int n, int[][] prerequisites) { return false; }\n}\n',cpp:'class Solution {\npublic:\n    bool canFinish(int n, vector<vector<int>>& prerequisites) { return false; }\n};\n'}},
+    {id:'gr3',title:'Course Schedule II',topic:'Graph',difficulty:'Medium',diffClass:'medium',tags:['DFS','BFS','Topological Sort','Graph'],
+      statement:'<p>Return the ordering of courses to finish all numCourses (topological sort). Return empty array if impossible.</p>',
+      examples:[{input:'numCourses=4, prerequisites=[[1,0],[2,0],[3,1],[3,2]]',output:'[0,2,1,3]',explanation:null}],
+      constraints:['1≤numCourses≤2000'],
+      starterCode:{python:'def findOrder(numCourses, prerequisites):\n    pass\n',java:'class Solution {\n    public int[] findOrder(int n, int[][] prerequisites) { return new int[]{}; }\n}\n',cpp:'class Solution {\npublic:\n    vector<int> findOrder(int n, vector<vector<int>>& prerequisites) { return {}; }\n};\n'}},
+    {id:'gr4',title:'Clone Graph',topic:'Graph',difficulty:'Medium',diffClass:'medium',tags:['Hash Map','DFS','BFS','Graph'],
+      statement:'<p>Given a node in a connected undirected graph, return a deep copy (clone) of the graph.</p>',
+      examples:[{input:'adjList=[[2,4],[1,3],[2,4],[1,3]]',output:'[[2,4],[1,3],[2,4],[1,3]]',explanation:null}],
+      constraints:['0≤n≤100','1≤Node.val≤100'],
+      starterCode:{python:'def cloneGraph(node):\n    pass\n',java:'class Solution {\n    public Node cloneGraph(Node node) { return null; }\n}\n',cpp:'class Solution {\npublic:\n    Node* cloneGraph(Node* node) { return nullptr; }\n};\n'}},
+    {id:'gr5',title:'Pacific Atlantic Water Flow',topic:'Graph',difficulty:'Medium',diffClass:'medium',tags:['Array','DFS','BFS','Matrix'],
+      statement:'<p>Given m×n matrix heights, return coordinates where rainwater can flow to both the Pacific (top/left) and Atlantic (bottom/right) oceans. Water flows to equal or lower adjacent cells.</p>',
+      examples:[{input:'heights=[[1,2,2,3,5],[3,2,3,4,4],[2,4,5,3,1],[6,7,1,4,5],[5,1,1,2,4]]',output:'[[0,4],[1,3],[1,4],[2,2],[3,0],[3,1],[4,0]]',explanation:null}],
+      constraints:['1≤m,n≤200'],
+      starterCode:{python:'def pacificAtlantic(heights):\n    pass\n',java:'class Solution {\n    public List<List<Integer>> pacificAtlantic(int[][] heights) { return new ArrayList<>(); }\n}\n',cpp:'class Solution {\npublic:\n    vector<vector<int>> pacificAtlantic(vector<vector<int>>& heights) { return {}; }\n};\n'}},
+    {id:'gr6',title:'Rotting Oranges',topic:'Graph',difficulty:'Medium',diffClass:'medium',tags:['Array','BFS','Matrix'],
+      statement:'<p>Cells are 0 (empty), 1 (fresh), 2 (rotten). Each minute adjacent fresh oranges become rotten. Return min minutes until no fresh orange remains, or -1 if impossible.</p>',
+      examples:[{input:'grid=[[2,1,1],[1,1,0],[0,1,1]]',output:'4',explanation:null}],
+      constraints:['1≤m,n≤10'],
+      starterCode:{python:'def orangesRotting(grid):\n    pass\n',java:'class Solution {\n    public int orangesRotting(int[][] grid) { return -1; }\n}\n',cpp:'class Solution {\npublic:\n    int orangesRotting(vector<vector<int>>& grid) { return -1; }\n};\n'}},
+    {id:'gr7',title:'Word Ladder',topic:'Graph',difficulty:'Hard',diffClass:'hard',tags:['Hash Set','BFS','String'],
+      statement:'<p>Given beginWord, endWord, and wordList, return the number of words in the shortest transformation sequence (each step changes exactly one letter to a word in wordList).</p>',
+      examples:[{input:'beginWord="hit", endWord="cog", wordList=["hot","dot","dog","lot","log","cog"]',output:'5',explanation:'"hit"→"hot"→"dot"→"dog"→"cog".'}],
+      constraints:['1≤wordList.length≤5000'],
+      starterCode:{python:'def ladderLength(beginWord, endWord, wordList):\n    pass\n',java:'class Solution {\n    public int ladderLength(String b, String e, List<String> wordList) { return 0; }\n}\n',cpp:'class Solution {\npublic:\n    int ladderLength(string b, string e, vector<string>& wordList) { return 0; }\n};\n'}},
+    {id:'gr8',title:'Number of Connected Components',topic:'Graph',difficulty:'Medium',diffClass:'medium',tags:['DFS','BFS','Union Find','Graph'],
+      statement:'<p>Given n nodes (0 to n-1) and an edges list, return the number of connected components in the undirected graph.</p>',
+      examples:[{input:'n=5, edges=[[0,1],[1,2],[3,4]]',output:'2',explanation:null}],
+      constraints:['1≤n≤2000','1≤edges.length≤5000'],
+      starterCode:{python:'def countComponents(n, edges):\n    pass\n',java:'class Solution {\n    public int countComponents(int n, int[][] edges) { return 0; }\n}\n',cpp:'class Solution {\npublic:\n    int countComponents(int n, vector<vector<int>>& edges) { return 0; }\n};\n'}},
+    {id:'gr9',title:'Network Delay Time',topic:'Graph',difficulty:'Medium',diffClass:'medium',tags:['DFS','BFS','Graph','Heap','Shortest Path'],
+      statement:'<p>Given n nodes, directed edges times[i]=[u,v,w], and source k, return the min time for all n nodes to receive a signal (Dijkstra). Return -1 if not all reachable.</p>',
+      examples:[{input:'times=[[2,1,1],[2,3,1],[3,4,1]], n=4, k=2',output:'2',explanation:null}],
+      constraints:['1≤k≤n≤100','1≤times.length≤6000'],
+      starterCode:{python:'import heapq\ndef networkDelayTime(times, n, k):\n    pass\n',java:'class Solution {\n    public int networkDelayTime(int[][] times, int n, int k) { return -1; }\n}\n',cpp:'class Solution {\npublic:\n    int networkDelayTime(vector<vector<int>>& times, int n, int k) { return -1; }\n};\n'}},
+    {id:'gr10',title:'Cheapest Flights Within K Stops',topic:'Graph',difficulty:'Medium',diffClass:'medium',tags:['DFS','BFS','Graph','DP','Shortest Path'],
+      statement:'<p>n cities, flights[i]=[from,to,price]. Find cheapest price from src to dst with at most k stops. Return -1 if no route.</p>',
+      examples:[{input:'n=4, flights=[[0,1,100],[1,2,100],[2,3,100],[1,3,600]], src=0, dst=3, k=1',output:'700',explanation:'0→1→3.'}],
+      constraints:['1≤n≤100','0≤k<n'],
+      starterCode:{python:'def findCheapestPrice(n, flights, src, dst, k):\n    pass\n',java:'class Solution {\n    public int findCheapestPrice(int n, int[][] flights, int src, int dst, int k) { return -1; }\n}\n',cpp:'class Solution {\npublic:\n    int findCheapestPrice(int n, vector<vector<int>>& flights, int src, int dst, int k) { return -1; }\n};\n'}},
+    {id:'gr11',title:'Min Cost to Connect All Points',topic:'Graph',difficulty:'Medium',diffClass:'medium',tags:['Union Find','Graph','Greedy','MST'],
+      statement:'<p>Given n points on a 2D plane, connect all points with minimum total cost where cost(i,j) = |xi-xj|+|yi-yj| (Manhattan). Return the minimum cost.</p>',
+      examples:[{input:'points=[[0,0],[2,2],[3,10],[5,2],[7,0]]',output:'20',explanation:'MST with Manhattan distances.'}],
+      constraints:['1≤points.length≤1000'],
+      starterCode:{python:'def minCostConnectPoints(points):\n    pass\n',java:'class Solution {\n    public int minCostConnectPoints(int[][] points) { return 0; }\n}\n',cpp:'class Solution {\npublic:\n    int minCostConnectPoints(vector<vector<int>>& points) { return 0; }\n};\n'}},
+    {id:'gr12',title:'Is Graph Bipartite?',topic:'Graph',difficulty:'Medium',diffClass:'medium',tags:['DFS','BFS','Graph','Union Find'],
+      statement:'<p>Given undirected graph, return true if it is bipartite — nodes can be split into two sets such that every edge connects nodes from different sets.</p>',
+      examples:[{input:'graph=[[1,3],[0,2],[1,3],[0,2]]',output:'true',explanation:'Sets {0,2} and {1,3}.'}],
+      constraints:['1≤graph.length≤100'],
+      starterCode:{python:'def isBipartite(graph):\n    pass\n',java:'class Solution {\n    public boolean isBipartite(int[][] graph) { return false; }\n}\n',cpp:'class Solution {\npublic:\n    bool isBipartite(vector<vector<int>>& graph) { return false; }\n};\n'}},
+    {id:'gr13',title:'Surrounded Regions',topic:'Graph',difficulty:'Medium',diffClass:'medium',tags:['Array','DFS','BFS','Matrix','Union Find'],
+      statement:'<p>Given m×n matrix of \'X\' and \'O\', capture all regions surrounded by \'X\' (flip \'O\'→\'X\'). \'O\'s connected to the border are NOT captured.</p>',
+      examples:[{input:'board=[["X","X","X"],["X","O","X"],["X","X","X"]]',output:'[["X","X","X"],["X","X","X"],["X","X","X"]]',explanation:null}],
+      constraints:['1≤m,n≤200'],
+      starterCode:{python:'def solve(board):\n    pass\n',java:'class Solution {\n    public void solve(char[][] board) {}\n}\n',cpp:'class Solution {\npublic:\n    void solve(vector<vector<char>>& board) {}\n};\n'}},
+    {id:'gr14',title:'Alien Dictionary',topic:'Graph',difficulty:'Hard',diffClass:'hard',tags:['Array','String','DFS','Topological Sort','Graph'],
+      statement:'<p>Given sorted list of words from an alien language, determine the character ordering. Return any valid ordering, or "" if impossible.</p>',
+      examples:[{input:'words=["wrt","wrf","er","ett","rftt"]',output:'"wertf"',explanation:null}],
+      constraints:['1≤words.length≤100'],
+      starterCode:{python:'def alienOrder(words):\n    pass\n',java:'class Solution {\n    public String alienOrder(String[] words) { return ""; }\n}\n',cpp:'class Solution {\npublic:\n    string alienOrder(vector<string>& words) { return ""; }\n};\n'}},
+    {id:'gr15',title:'Shortest Path in Binary Matrix',topic:'Graph',difficulty:'Medium',diffClass:'medium',tags:['Array','BFS','Matrix'],
+      statement:'<p>Given n×n binary matrix, return the length of the shortest clear path (only 0-cells, 8-directional movement) from (0,0) to (n-1,n-1). Return -1 if none.</p>',
+      examples:[{input:'grid=[[0,1],[1,0]]',output:'2',explanation:null}],
+      constraints:['n==grid.length==grid[0].length','1≤n≤100'],
+      starterCode:{python:'def shortestPathBinaryMatrix(grid):\n    pass\n',java:'class Solution {\n    public int shortestPathBinaryMatrix(int[][] grid) { return -1; }\n}\n',cpp:'class Solution {\npublic:\n    int shortestPathBinaryMatrix(vector<vector<int>>& grid) { return -1; }\n};\n'}},
+  ],
+
+  Trees: [
+    {id:'tr1',title:'Binary Tree Level Order Traversal',topic:'Trees',difficulty:'Medium',diffClass:'medium',tags:['Tree','BFS'],
+      statement:'<p>Given root of binary tree, return the level-order traversal of its nodes\' values as a list of lists (left to right, level by level).</p>',
+      examples:[{input:'root=[3,9,20,null,null,15,7]',output:'[[3],[9,20],[15,7]]',explanation:null}],
+      constraints:['0≤n≤2000','-1000≤Node.val≤1000'],
+      starterCode:{python:'from collections import deque\ndef levelOrder(root):\n    pass\n',java:'class Solution {\n    public List<List<Integer>> levelOrder(TreeNode root) { return new ArrayList<>(); }\n}\n',cpp:'class Solution {\npublic:\n    vector<vector<int>> levelOrder(TreeNode* root) { return {}; }\n};\n'}},
+    {id:'tr2',title:'Lowest Common Ancestor of a BST',topic:'Trees',difficulty:'Medium',diffClass:'medium',tags:['Tree','DFS','BST'],
+      statement:'<p>Given a BST and two nodes p and q, find their Lowest Common Ancestor (LCA). All node values are unique.</p>',
+      examples:[{input:'root=[6,2,8,0,4,7,9], p=2, q=8',output:'6',explanation:'LCA of 2 and 8 is 6.'}],
+      constraints:['2≤n≤10⁵'],
+      starterCode:{python:'def lowestCommonAncestor(root, p, q):\n    pass\n',java:'class Solution {\n    public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) { return null; }\n}\n',cpp:'class Solution {\npublic:\n    TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) { return nullptr; }\n};\n'}},
+    {id:'tr3',title:'Lowest Common Ancestor of a Binary Tree',topic:'Trees',difficulty:'Medium',diffClass:'medium',tags:['Tree','DFS','Hash Map'],
+      statement:'<p>Given a binary tree and two nodes p and q, find their LCA. The LCA is the lowest node that has both p and q as descendants.</p>',
+      examples:[{input:'root=[3,5,1,6,2,0,8], p=5, q=4',output:'5',explanation:'5 is an ancestor of 4.'}],
+      constraints:['2≤n≤10⁵','All values unique.'],
+      starterCode:{python:'def lowestCommonAncestor(root, p, q):\n    pass\n',java:'class Solution {\n    public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) { return null; }\n}\n',cpp:'class Solution {\npublic:\n    TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) { return nullptr; }\n};\n'}},
+    {id:'tr4',title:'Binary Tree Maximum Path Sum',topic:'Trees',difficulty:'Hard',diffClass:'hard',tags:['Tree','DFS','DP'],
+      statement:'<p>Given root of binary tree, return the maximum path sum. A path is any sequence of nodes connected by edges, not needing to pass through the root.</p>',
+      examples:[{input:'root=[-10,9,20,null,null,15,7]',output:'42',explanation:'Path 15→20→7=42.'}],
+      constraints:['1≤n≤3×10⁴','-1000≤Node.val≤1000'],
+      starterCode:{python:'def maxPathSum(root):\n    pass\n',java:'class Solution {\n    public int maxPathSum(TreeNode root) { return 0; }\n}\n',cpp:'class Solution {\npublic:\n    int maxPathSum(TreeNode* root) { return 0; }\n};\n'}},
+    {id:'tr5',title:'Serialize and Deserialize Binary Tree',topic:'Trees',difficulty:'Hard',diffClass:'hard',tags:['String','Tree','DFS','BFS','Design'],
+      statement:'<p>Design an algorithm to serialize a binary tree to a string and deserialize it back. Your encoding scheme is up to you.</p>',
+      examples:[{input:'root=[1,2,3,null,null,4,5]',output:'[1,2,3,null,null,4,5]',explanation:'After serialize and deserialize.'}],
+      constraints:['0≤n≤10⁴','-1000≤Node.val≤1000'],
+      starterCode:{python:'class Codec:\n    def serialize(self, root): pass\n    def deserialize(self, data): pass\n',java:'public class Codec {\n    public String serialize(TreeNode root) { return ""; }\n    public TreeNode deserialize(String data) { return null; }\n}\n',cpp:'class Codec {\npublic:\n    string serialize(TreeNode* root) { return ""; }\n    TreeNode* deserialize(string data) { return nullptr; }\n};\n'}},
+    {id:'tr6',title:'Validate Binary Search Tree',topic:'Trees',difficulty:'Medium',diffClass:'medium',tags:['Tree','DFS','BST'],
+      statement:'<p>Given root of binary tree, determine if it is a valid BST. A valid BST: left subtree < node < right subtree, both subtrees are also valid BSTs.</p>',
+      examples:[{input:'root=[5,1,4,null,null,3,6]',output:'false',explanation:'Root\'s right child 4 < 5.'}],
+      constraints:['1≤n≤10⁴'],
+      starterCode:{python:'def isValidBST(root):\n    pass\n',java:'class Solution {\n    public boolean isValidBST(TreeNode root) { return false; }\n}\n',cpp:'class Solution {\npublic:\n    bool isValidBST(TreeNode* root) { return false; }\n};\n'}},
+    {id:'tr7',title:'Kth Smallest Element in a BST',topic:'Trees',difficulty:'Medium',diffClass:'medium',tags:['Tree','DFS','BST'],
+      statement:'<p>Given root of BST and integer k, return the kth smallest value (1-indexed).</p>',
+      examples:[{input:'root=[3,1,4,null,2], k=1',output:'1',explanation:null}],
+      constraints:['1≤k≤n≤10⁴'],
+      starterCode:{python:'def kthSmallest(root, k):\n    pass\n',java:'class Solution {\n    public int kthSmallest(TreeNode root, int k) { return 0; }\n}\n',cpp:'class Solution {\npublic:\n    int kthSmallest(TreeNode* root, int k) { return 0; }\n};\n'}},
+    {id:'tr8',title:'Construct Binary Tree from Preorder and Inorder',topic:'Trees',difficulty:'Medium',diffClass:'medium',tags:['Array','Hash Map','Divide & Conquer','Tree','DFS'],
+      statement:'<p>Given preorder and inorder traversal arrays, construct and return the binary tree.</p>',
+      examples:[{input:'preorder=[3,9,20,15,7], inorder=[9,3,15,20,7]',output:'[3,9,20,null,null,15,7]',explanation:null}],
+      constraints:['1≤n≤3000','All values unique.'],
+      starterCode:{python:'def buildTree(preorder, inorder):\n    pass\n',java:'class Solution {\n    public TreeNode buildTree(int[] preorder, int[] inorder) { return null; }\n}\n',cpp:'class Solution {\npublic:\n    TreeNode* buildTree(vector<int>& preorder, vector<int>& inorder) { return nullptr; }\n};\n'}},
+    {id:'tr9',title:'Diameter of Binary Tree',topic:'Trees',difficulty:'Easy',diffClass:'easy',tags:['Tree','DFS'],
+      statement:'<p>Given root, return the length of the longest path between any two nodes (number of edges). The path may not pass through the root.</p>',
+      examples:[{input:'root=[1,2,3,4,5]',output:'3',explanation:'Path [4,2,1,3].'}],
+      constraints:['1≤n≤10⁴','-100≤Node.val≤100'],
+      starterCode:{python:'def diameterOfBinaryTree(root):\n    pass\n',java:'class Solution {\n    public int diameterOfBinaryTree(TreeNode root) { return 0; }\n}\n',cpp:'class Solution {\npublic:\n    int diameterOfBinaryTree(TreeNode* root) { return 0; }\n};\n'}},
+    {id:'tr10',title:'Binary Tree Right Side View',topic:'Trees',difficulty:'Medium',diffClass:'medium',tags:['Tree','DFS','BFS'],
+      statement:'<p>Given root, return the values of the nodes visible from the right side (rightmost node at each level).</p>',
+      examples:[{input:'root=[1,2,3,null,5,null,4]',output:'[1,3,4]',explanation:null}],
+      constraints:['0≤n≤100','-100≤Node.val≤100'],
+      starterCode:{python:'def rightSideView(root):\n    pass\n',java:'class Solution {\n    public List<Integer> rightSideView(TreeNode root) { return new ArrayList<>(); }\n}\n',cpp:'class Solution {\npublic:\n    vector<int> rightSideView(TreeNode* root) { return {}; }\n};\n'}},
+    {id:'tr11',title:'Path Sum III',topic:'Trees',difficulty:'Medium',diffClass:'medium',tags:['Tree','DFS','Prefix Sum'],
+      statement:'<p>Given root and targetSum, return the number of paths where values sum to targetSum. Paths go downward but need not start/end at root/leaf.</p>',
+      examples:[{input:'root=[10,5,-3,3,2,null,11,3,-2,null,1], targetSum=8',output:'3',explanation:'Paths: 5→3, 5→2→1, -3→11.'}],
+      constraints:['0≤n≤1000','-10⁹≤Node.val≤10⁹'],
+      starterCode:{python:'def pathSum(root, targetSum):\n    pass\n',java:'class Solution {\n    public int pathSum(TreeNode root, int targetSum) { return 0; }\n}\n',cpp:'class Solution {\npublic:\n    int pathSum(TreeNode* root, int targetSum) { return 0; }\n};\n'}},
+    {id:'tr12',title:'Flatten Binary Tree to Linked List',topic:'Trees',difficulty:'Medium',diffClass:'medium',tags:['Linked List','Tree','Stack','DFS'],
+      statement:'<p>Given root of binary tree, flatten it in-place into a linked list following preorder traversal (right pointers only, all left pointers null).</p>',
+      examples:[{input:'root=[1,2,5,3,4,null,6]',output:'[1,null,2,null,3,null,4,null,5,null,6]',explanation:null}],
+      constraints:['0≤n≤2000'],
+      starterCode:{python:'def flatten(root):\n    pass\n',java:'class Solution {\n    public void flatten(TreeNode root) {}\n}\n',cpp:'class Solution {\npublic:\n    void flatten(TreeNode* root) {}\n};\n'}},
+    {id:'tr13',title:'Count Good Nodes in Binary Tree',topic:'Trees',difficulty:'Medium',diffClass:'medium',tags:['Tree','DFS','BFS'],
+      statement:'<p>A node X is good if in the path from root to X, no node has a value greater than X.val. Return the number of good nodes.</p>',
+      examples:[{input:'root=[3,1,4,3,null,1,5]',output:'4',explanation:'Nodes 3,3,4,5 are good.'}],
+      constraints:['1≤n≤10⁵','-10⁴≤Node.val≤10⁴'],
+      starterCode:{python:'def goodNodes(root):\n    pass\n',java:'class Solution {\n    public int goodNodes(TreeNode root) { return 0; }\n}\n',cpp:'class Solution {\npublic:\n    int goodNodes(TreeNode* root) { return 0; }\n};\n'}},
+    {id:'tr14',title:'Binary Search Tree Iterator',topic:'Trees',difficulty:'Medium',diffClass:'medium',tags:['Stack','Tree','Design','Iterator','BST'],
+      statement:'<p>Implement <code>BSTIterator</code> over the in-order traversal of a BST. <code>next()</code> returns next smallest, <code>hasNext()</code> returns bool. O(h) memory.</p>',
+      examples:[{input:'BSTIterator([7,3,15,null,null,9,20]); next()→3; next()→7; hasNext()→T',output:'shown',explanation:null}],
+      constraints:['1≤n≤10⁵','0≤Node.val≤10⁶'],
+      starterCode:{python:'class BSTIterator:\n    def __init__(self, root): pass\n    def next(self): pass\n    def hasNext(self): pass\n',java:'class BSTIterator {\n    public BSTIterator(TreeNode root) {}\n    public int next() { return 0; }\n    public boolean hasNext() { return false; }\n}\n',cpp:'class BSTIterator {\npublic:\n    BSTIterator(TreeNode* root){}\n    int next(){ return 0; }\n    bool hasNext(){ return false; }\n};\n'}},
+    {id:'tr15',title:'Binary Tree Zigzag Level Order Traversal',topic:'Trees',difficulty:'Medium',diffClass:'medium',tags:['Tree','BFS','Stack'],
+      statement:'<p>Given root, return the zigzag level order traversal: level 1 left-to-right, level 2 right-to-left, alternating.</p>',
+      examples:[{input:'root=[3,9,20,null,null,15,7]',output:'[[3],[20,9],[15,7]]',explanation:null}],
+      constraints:['0≤n≤2000','-100≤Node.val≤100'],
+      starterCode:{python:'def zigzagLevelOrder(root):\n    pass\n',java:'class Solution {\n    public List<List<Integer>> zigzagLevelOrder(TreeNode root) { return new ArrayList<>(); }\n}\n',cpp:'class Solution {\npublic:\n    vector<vector<int>> zigzagLevelOrder(TreeNode* root) { return {}; }\n};\n'}},
+  ],
+
+  Heap: [
+    {id:'hp1',title:'Kth Largest Element in an Array',topic:'Heap',difficulty:'Medium',diffClass:'medium',tags:['Array','Divide & Conquer','Heap','Quickselect'],
+      statement:'<p>Given integer array <code>nums</code> and integer <code>k</code>, return the kth largest element in the array. Not the kth distinct element — the kth largest in sorted order.</p>',
+      examples:[{input:'nums=[3,2,1,5,6,4], k=2',output:'5',explanation:null}],
+      constraints:['1≤k≤nums.length≤10⁵','-10⁴≤nums[i]≤10⁴'],
+      starterCode:{python:'import heapq\ndef findKthLargest(nums, k):\n    pass\n',java:'class Solution {\n    public int findKthLargest(int[] nums, int k) { return 0; }\n}\n',cpp:'class Solution {\npublic:\n    int findKthLargest(vector<int>& nums, int k) { return 0; }\n};\n'}},
+    {id:'hp2',title:'Find Median from Data Stream',topic:'Heap',difficulty:'Hard',diffClass:'hard',tags:['Two Pointers','Design','Sorting','Heap','Data Stream'],
+      statement:'<p>Implement <code>MedianFinder</code> with <code>addNum(num)</code> and <code>findMedian()</code> methods. findMedian returns the median of all integers inserted so far.</p>',
+      examples:[{input:'addNum(1); addNum(2); findMedian()→1.5; addNum(3); findMedian()→2.0',output:'shown',explanation:null}],
+      constraints:['At most 5×10⁴ calls.'],
+      starterCode:{python:'import heapq\nclass MedianFinder:\n    def __init__(self): pass\n    def addNum(self, num): pass\n    def findMedian(self): pass\n',java:'class MedianFinder {\n    public MedianFinder() {}\n    public void addNum(int num) {}\n    public double findMedian() { return 0; }\n}\n',cpp:'class MedianFinder {\npublic:\n    MedianFinder(){}\n    void addNum(int num){}\n    double findMedian(){ return 0; }\n};\n'}},
+    {id:'hp3',title:'Task Scheduler',topic:'Heap',difficulty:'Medium',diffClass:'medium',tags:['Array','Hash Map','Greedy','Heap'],
+      statement:'<p>Given tasks (each takes 1 unit of time) and cooldown n (same task must wait n intervals), return the least number of units of time to finish all tasks (idle time allowed).</p>',
+      examples:[{input:'tasks=["A","A","A","B","B","B"], n=2',output:'8',explanation:'A→B→idle→A→B→idle→A→B.'}],
+      constraints:['1≤tasks.length≤10⁴','0≤n≤100'],
+      starterCode:{python:'def leastInterval(tasks, n):\n    pass\n',java:'class Solution {\n    public int leastInterval(char[] tasks, int n) { return 0; }\n}\n',cpp:'class Solution {\npublic:\n    int leastInterval(vector<char>& tasks, int n) { return 0; }\n};\n'}},
+    {id:'hp4',title:'Merge K Sorted Lists (Heap)',topic:'Heap',difficulty:'Hard',diffClass:'hard',tags:['Linked List','Divide & Conquer','Heap','Merge Sort'],
+      statement:'<p>Given an array of k sorted linked lists, merge all of them into one sorted linked list using a min-heap.</p>',
+      examples:[{input:'lists=[[1,4,5],[1,3,4],[2,6]]',output:'[1,1,2,3,4,4,5,6]',explanation:null}],
+      constraints:['k==lists.length','0≤k≤10⁴','0≤lists[i].length≤500'],
+      starterCode:{python:'import heapq\ndef mergeKLists(lists):\n    pass\n',java:'class Solution {\n    public ListNode mergeKLists(ListNode[] lists) { return null; }\n}\n',cpp:'class Solution {\npublic:\n    ListNode* mergeKLists(vector<ListNode*>& lists) { return nullptr; }\n};\n'}},
+    {id:'hp5',title:'Kth Smallest Element in a Sorted Matrix',topic:'Heap',difficulty:'Medium',diffClass:'medium',tags:['Array','Binary Search','Heap','Matrix'],
+      statement:'<p>Given n×n matrix where each row and column are sorted in ascending order, return the kth smallest element.</p>',
+      examples:[{input:'matrix=[[1,5,9],[10,11,13],[12,13,15]], k=8',output:'13',explanation:null}],
+      constraints:['n==matrix.length==matrix[0].length','1≤n≤300','1≤k≤n²'],
+      starterCode:{python:'def kthSmallest(matrix, k):\n    pass\n',java:'class Solution {\n    public int kthSmallest(int[][] matrix, int k) { return 0; }\n}\n',cpp:'class Solution {\npublic:\n    int kthSmallest(vector<vector<int>>& matrix, int k) { return 0; }\n};\n'}},
+    {id:'hp6',title:'Top K Frequent Words',topic:'Heap',difficulty:'Medium',diffClass:'medium',tags:['Hash Map','String','Trie','Sorting','Heap','Bucket Sort'],
+      statement:'<p>Given array of strings <code>words</code> and integer <code>k</code>, return the k most frequent words. Sort by frequency (desc), then alphabetically for ties.</p>',
+      examples:[{input:'words=["i","love","leetcode","i","love","coding"], k=2',output:'["i","love"]',explanation:null}],
+      constraints:['1≤words.length≤500','1≤k≤unique count'],
+      starterCode:{python:'def topKFrequent(words, k):\n    pass\n',java:'class Solution {\n    public List<String> topKFrequent(String[] words, int k) { return new ArrayList<>(); }\n}\n',cpp:'class Solution {\npublic:\n    vector<string> topKFrequent(vector<string>& words, int k) { return {}; }\n};\n'}},
+    {id:'hp7',title:'Reorganize String',topic:'Heap',difficulty:'Medium',diffClass:'medium',tags:['Hash Map','String','Greedy','Sorting','Heap','Counting'],
+      statement:'<p>Given string <code>s</code>, rearrange characters so no two adjacent characters are the same. Return any valid rearrangement, or "" if impossible.</p>',
+      examples:[{input:'s="aab"',output:'"aba"',explanation:null}],
+      constraints:['1≤s.length≤500'],
+      starterCode:{python:'def reorganizeString(s):\n    pass\n',java:'class Solution {\n    public String reorganizeString(String s) { return ""; }\n}\n',cpp:'class Solution {\npublic:\n    string reorganizeString(string s) { return ""; }\n};\n'}},
+    {id:'hp8',title:'K Closest Points to Origin',topic:'Heap',difficulty:'Medium',diffClass:'medium',tags:['Array','Math','Divide & Conquer','Heap','Quickselect'],
+      statement:'<p>Given array of points and integer k, return the k closest points to the origin (0,0). Distance is Euclidean. Return in any order.</p>',
+      examples:[{input:'points=[[1,3],[-2,2]], k=1',output:'[[-2,2]]',explanation:'√5 < √10.'}],
+      constraints:['1≤k≤points.length≤10⁴','-10⁴≤xi,yi≤10⁴'],
+      starterCode:{python:'def kClosest(points, k):\n    pass\n',java:'class Solution {\n    public int[][] kClosest(int[][] points, int k) { return new int[][]{}; }\n}\n',cpp:'class Solution {\npublic:\n    vector<vector<int>> kClosest(vector<vector<int>>& points, int k) { return {}; }\n};\n'}},
+    {id:'hp9',title:'Minimum Cost to Hire K Workers',topic:'Heap',difficulty:'Hard',diffClass:'hard',tags:['Array','Greedy','Sorting','Heap'],
+      statement:'<p>Given quality and wage arrays for n workers, hire exactly k workers. Every group must be paid in proportion to quality. Return minimum total cost.</p>',
+      examples:[{input:'quality=[10,20,5], wage=[70,50,30], k=2',output:'105.0',explanation:null}],
+      constraints:['1≤k≤n≤10⁴','1≤quality[i],wage[i]≤10⁴'],
+      starterCode:{python:'import heapq\ndef mincostToHireWorkers(quality, wage, k):\n    pass\n',java:'class Solution {\n    public double mincostToHireWorkers(int[] q, int[] w, int k) { return 0; }\n}\n',cpp:'class Solution {\npublic:\n    double mincostToHireWorkers(vector<int>& q, vector<int>& w, int k) { return 0; }\n};\n'}},
+    {id:'hp10',title:'Smallest Range Covering Elements from K Lists',topic:'Heap',difficulty:'Hard',diffClass:'hard',tags:['Array','Hash Map','Greedy','Sliding Window','Sorting','Heap'],
+      statement:'<p>Given k sorted integer lists, find the smallest range [a,b] such that there is at least one number in the range from each of the k lists.</p>',
+      examples:[{input:'nums=[[4,10,15,24,26],[0,9,12,20],[5,18,22,30]]',output:'[20,24]',explanation:null}],
+      constraints:['nums.length==k','1≤k≤3500'],
+      starterCode:{python:'import heapq\ndef smallestRange(nums):\n    pass\n',java:'class Solution {\n    public int[] smallestRange(List<List<Integer>> nums) { return new int[]{}; }\n}\n',cpp:'class Solution {\npublic:\n    vector<int> smallestRange(vector<vector<int>>& nums) { return {}; }\n};\n'}},
+  ],
+
+  BinarySearch: [
+    {id:'bs1',title:'Binary Search',topic:'BinarySearch',difficulty:'Easy',diffClass:'easy',tags:['Array','Binary Search'],
+      statement:'<p>Given sorted array <code>nums</code> in ascending order and integer <code>target</code>, return index of target or -1 if not found. Must use O(log n).</p>',
+      examples:[{input:'nums=[-1,0,3,5,9,12], target=9',output:'4',explanation:null}],
+      constraints:['1≤nums.length≤10⁴','-10⁴<nums[i],target<10⁴'],
+      starterCode:{python:'def search(nums, target):\n    pass\n',java:'class Solution {\n    public int search(int[] nums, int target) { return -1; }\n}\n',cpp:'class Solution {\npublic:\n    int search(vector<int>& nums, int target) { return -1; }\n};\n'}},
+    {id:'bs2',title:'Search in Rotated Sorted Array',topic:'BinarySearch',difficulty:'Medium',diffClass:'medium',tags:['Array','Binary Search'],
+      statement:'<p>Given sorted array rotated at an unknown pivot and integer target, return its index or -1 in O(log n).</p>',
+      examples:[{input:'nums=[4,5,6,7,0,1,2], target=0',output:'4',explanation:null}],
+      constraints:['1≤nums.length≤5000','All values unique.'],
+      starterCode:{python:'def search(nums, target):\n    pass\n',java:'class Solution {\n    public int search(int[] nums, int target) { return -1; }\n}\n',cpp:'class Solution {\npublic:\n    int search(vector<int>& nums, int target) { return -1; }\n};\n'}},
+    {id:'bs3',title:'Find Minimum in Rotated Sorted Array',topic:'BinarySearch',difficulty:'Medium',diffClass:'medium',tags:['Array','Binary Search'],
+      statement:'<p>Given sorted array rotated 1 to n times, find the minimum element in O(log n).</p>',
+      examples:[{input:'nums=[3,4,5,1,2]',output:'1',explanation:null}],
+      constraints:['n==nums.length','1≤n≤5000','All values unique.'],
+      starterCode:{python:'def findMin(nums):\n    pass\n',java:'class Solution {\n    public int findMin(int[] nums) { return 0; }\n}\n',cpp:'class Solution {\npublic:\n    int findMin(vector<int>& nums) { return 0; }\n};\n'}},
+    {id:'bs4',title:'Median of Two Sorted Arrays',topic:'BinarySearch',difficulty:'Hard',diffClass:'hard',tags:['Array','Binary Search','Divide & Conquer'],
+      statement:'<p>Given two sorted arrays nums1 and nums2, return the median of the two sorted arrays. Must achieve O(log(m+n)) time.</p>',
+      examples:[{input:'nums1=[1,3], nums2=[2]',output:'2.00000',explanation:'Merged: [1,2,3]. Median=2.'}],
+      constraints:['0≤m,n≤1000','0≤m+n≤2000'],
+      starterCode:{python:'def findMedianSortedArrays(nums1, nums2):\n    pass\n',java:'class Solution {\n    public double findMedianSortedArrays(int[] nums1, int[] nums2) { return 0; }\n}\n',cpp:'class Solution {\npublic:\n    double findMedianSortedArrays(vector<int>& nums1, vector<int>& nums2) { return 0; }\n};\n'}},
+    {id:'bs5',title:'Koko Eating Bananas',topic:'BinarySearch',difficulty:'Medium',diffClass:'medium',tags:['Array','Binary Search'],
+      statement:'<p>Koko eats at speed k bananas per hour. Given piles and h hours, return the minimum speed k such that she can eat all bananas within h hours.</p>',
+      examples:[{input:'piles=[3,6,7,11], h=8',output:'4',explanation:null}],
+      constraints:['1≤piles.length≤10⁴','piles.length≤h≤10⁹'],
+      starterCode:{python:'def minEatingSpeed(piles, h):\n    pass\n',java:'class Solution {\n    public int minEatingSpeed(int[] piles, int h) { return 0; }\n}\n',cpp:'class Solution {\npublic:\n    int minEatingSpeed(vector<int>& piles, int h) { return 0; }\n};\n'}},
+    {id:'bs6',title:'Find Peak Element',topic:'BinarySearch',difficulty:'Medium',diffClass:'medium',tags:['Array','Binary Search'],
+      statement:'<p>A peak element is one that is strictly greater than its neighbors. Given array nums, return index of any peak in O(log n). nums[-1]=nums[n]=-∞.</p>',
+      examples:[{input:'nums=[1,2,3,1]',output:'2',explanation:'3 is a peak.'}],
+      constraints:['1≤nums.length≤1000','nums[i]≠nums[i+1] for all valid i.'],
+      starterCode:{python:'def findPeakElement(nums):\n    pass\n',java:'class Solution {\n    public int findPeakElement(int[] nums) { return 0; }\n}\n',cpp:'class Solution {\npublic:\n    int findPeakElement(vector<int>& nums) { return 0; }\n};\n'}},
+    {id:'bs7',title:'Search a 2D Matrix',topic:'BinarySearch',difficulty:'Medium',diffClass:'medium',tags:['Array','Binary Search','Matrix'],
+      statement:'<p>Given m×n matrix where rows are sorted and the first integer of each row is greater than the last of the previous row. Return true if target is in the matrix. O(log(m×n)).</p>',
+      examples:[{input:'matrix=[[1,3,5,7],[10,11,16,20],[23,30,34,60]], target=3',output:'true',explanation:null}],
+      constraints:['1≤m,n≤100','-10⁴≤matrix[i][j],target≤10⁴'],
+      starterCode:{python:'def searchMatrix(matrix, target):\n    pass\n',java:'class Solution {\n    public boolean searchMatrix(int[][] matrix, int target) { return false; }\n}\n',cpp:'class Solution {\npublic:\n    bool searchMatrix(vector<vector<int>>& matrix, int target) { return false; }\n};\n'}},
+    {id:'bs8',title:'Time-Based Key-Value Store (Binary Search)',topic:'BinarySearch',difficulty:'Medium',diffClass:'medium',tags:['Hash Map','String','Binary Search','Design'],
+      statement:'<p>Implement time-based key-value store. <code>set(key,value,timestamp)</code> stores value. <code>get(key,timestamp)</code> returns value with largest timestamp ≤ given.</p>',
+      examples:[{input:'set("foo","bar",1); get("foo",1)→"bar"; get("foo",3)→"bar"',output:'shown',explanation:null}],
+      constraints:['At most 2×10⁵ calls.'],
+      starterCode:{python:'class TimeMap:\n    def __init__(self): pass\n    def set(self, key, value, timestamp): pass\n    def get(self, key, timestamp): pass\n',java:'class TimeMap {\n    public TimeMap() {}\n    public void set(String key, String value, int timestamp) {}\n    public String get(String key, int timestamp) { return ""; }\n}\n',cpp:'class TimeMap {\npublic:\n    TimeMap() {}\n    void set(string k, string v, int t) {}\n    string get(string k, int t) { return ""; }\n};\n'}},
+    {id:'bs9',title:'Capacity to Ship Packages Within D Days',topic:'BinarySearch',difficulty:'Medium',diffClass:'medium',tags:['Array','Binary Search'],
+      statement:'<p>Given weights and days D, find the minimum weight capacity of a ship so that all packages can be shipped in D days (in order, no reordering).</p>',
+      examples:[{input:'weights=[1,2,3,4,5,6,7,8,9,10], days=5',output:'15',explanation:null}],
+      constraints:['1≤days≤weights.length≤500','1≤weights[i]≤500'],
+      starterCode:{python:'def shipWithinDays(weights, days):\n    pass\n',java:'class Solution {\n    public int shipWithinDays(int[] weights, int days) { return 0; }\n}\n',cpp:'class Solution {\npublic:\n    int shipWithinDays(vector<int>& weights, int days) { return 0; }\n};\n'}},
+    {id:'bs10',title:'Split Array Largest Sum',topic:'BinarySearch',difficulty:'Hard',diffClass:'hard',tags:['Array','Binary Search','DP','Greedy'],
+      statement:'<p>Given array nums and integer k, split nums into k non-empty continuous subarrays. Minimize the largest sum among the k subarrays.</p>',
+      examples:[{input:'nums=[7,2,5,10,8], k=2',output:'18',explanation:'Split at [7,2,5] and [10,8] → max=18.'}],
+      constraints:['1≤nums.length≤1000','0≤nums[i]≤10⁶','1≤k≤min(50,nums.length)'],
+      starterCode:{python:'def splitArray(nums, k):\n    pass\n',java:'class Solution {\n    public int splitArray(int[] nums, int k) { return 0; }\n}\n',cpp:'class Solution {\npublic:\n    int splitArray(vector<int>& nums, int k) { return 0; }\n};\n'}},
+    {id:'bs11',title:'Find K Closest Elements',topic:'BinarySearch',difficulty:'Medium',diffClass:'medium',tags:['Array','Two Pointers','Binary Search','Sorting'],
+      statement:'<p>Given sorted integer array <code>arr</code>, integer <code>k</code>, and integer <code>x</code>, return the k closest integers to x sorted in ascending order. Resolve ties by preferring smaller values.</p>',
+      examples:[{input:'arr=[1,2,3,4,5], k=4, x=3',output:'[1,2,3,4]',explanation:null}],
+      constraints:['1≤k≤arr.length≤10⁴'],
+      starterCode:{python:'def findClosestElements(arr, k, x):\n    pass\n',java:'class Solution {\n    public List<Integer> findClosestElements(int[] arr, int k, int x) { return new ArrayList<>(); }\n}\n',cpp:'class Solution {\npublic:\n    vector<int> findClosestElements(vector<int>& arr, int k, int x) { return {}; }\n};\n'}},
+  ],
+
+  Greedy: [
+    {id:'gy1',title:'Jump Game',topic:'Greedy',difficulty:'Medium',diffClass:'medium',tags:['Array','Greedy','DP'],
+      statement:'<p>Given array <code>nums</code> where nums[i] is max jump length at position i, return true if you can reach the last index from index 0.</p>',
+      examples:[{input:'nums=[2,3,1,1,4]',output:'true',explanation:'Jump 1+3 or 2+2.'}],
+      constraints:['1≤nums.length≤10⁴','0≤nums[i]≤10⁵'],
+      starterCode:{python:'def canJump(nums):\n    pass\n',java:'class Solution {\n    public boolean canJump(int[] nums) { return false; }\n}\n',cpp:'class Solution {\npublic:\n    bool canJump(vector<int>& nums) { return false; }\n};\n'}},
+    {id:'gy2',title:'Jump Game II',topic:'Greedy',difficulty:'Medium',diffClass:'medium',tags:['Array','Greedy','DP'],
+      statement:'<p>Given array nums, return the minimum number of jumps to reach the last index (guaranteed reachable).</p>',
+      examples:[{input:'nums=[2,3,1,1,4]',output:'2',explanation:'Jump to index 1 (val=3) then to last.'}],
+      constraints:['1≤nums.length≤10⁴','0≤nums[i]≤1000'],
+      starterCode:{python:'def jump(nums):\n    pass\n',java:'class Solution {\n    public int jump(int[] nums) { return 0; }\n}\n',cpp:'class Solution {\npublic:\n    int jump(vector<int>& nums) { return 0; }\n};\n'}},
+    {id:'gy3',title:'Gas Station',topic:'Greedy',difficulty:'Medium',diffClass:'medium',tags:['Array','Greedy'],
+      statement:'<p>There are n gas stations in a circle. gas[i] and cost[i] are the gas and cost to travel to the next station. Find the starting station index to complete the circuit, or -1 if impossible.</p>',
+      examples:[{input:'gas=[1,2,3,4,5], cost=[3,4,5,1,2]',output:'3',explanation:'Start at station 3.'}],
+      constraints:['n==gas.length==cost.length','1≤n≤10⁵','0≤gas[i],cost[i]≤10⁴'],
+      starterCode:{python:'def canCompleteCircuit(gas, cost):\n    pass\n',java:'class Solution {\n    public int canCompleteCircuit(int[] gas, int[] cost) { return -1; }\n}\n',cpp:'class Solution {\npublic:\n    int canCompleteCircuit(vector<int>& gas, vector<int>& cost) { return -1; }\n};\n'}},
+    {id:'gy4',title:'Merge Intervals',topic:'Greedy',difficulty:'Medium',diffClass:'medium',tags:['Array','Sorting'],
+      statement:'<p>Given array of intervals, merge all overlapping intervals and return an array of non-overlapping intervals.</p>',
+      examples:[{input:'intervals=[[1,3],[2,6],[8,10],[15,18]]',output:'[[1,6],[8,10],[15,18]]',explanation:'[1,3] and [2,6] overlap.'}],
+      constraints:['1≤intervals.length≤10⁴','intervals[i].length==2'],
+      starterCode:{python:'def merge(intervals):\n    pass\n',java:'class Solution {\n    public int[][] merge(int[][] intervals) { return new int[][]{}; }\n}\n',cpp:'class Solution {\npublic:\n    vector<vector<int>> merge(vector<vector<int>>& intervals) { return {}; }\n};\n'}},
+    {id:'gy5',title:'Non-overlapping Intervals',topic:'Greedy',difficulty:'Medium',diffClass:'medium',tags:['Array','Greedy','Sorting','DP'],
+      statement:'<p>Given array of intervals, return the minimum number of intervals you need to remove to make the rest non-overlapping.</p>',
+      examples:[{input:'intervals=[[1,2],[2,3],[3,4],[1,3]]',output:'1',explanation:'Remove [1,3].'}],
+      constraints:['1≤intervals.length≤2×10⁵'],
+      starterCode:{python:'def eraseOverlapIntervals(intervals):\n    pass\n',java:'class Solution {\n    public int eraseOverlapIntervals(int[][] intervals) { return 0; }\n}\n',cpp:'class Solution {\npublic:\n    int eraseOverlapIntervals(vector<vector<int>>& intervals) { return 0; }\n};\n'}},
+    {id:'gy6',title:'Meeting Rooms II',topic:'Greedy',difficulty:'Medium',diffClass:'medium',tags:['Array','Two Pointers','Greedy','Sorting','Heap'],
+      statement:'<p>Given meeting time intervals [start,end], find the minimum number of conference rooms required.</p>',
+      examples:[{input:'intervals=[[0,30],[5,10],[15,20]]',output:'2',explanation:'Meeting [0,30] overlaps with [5,10].'}],
+      constraints:['0≤intervals.length≤10⁴'],
+      starterCode:{python:'def minMeetingRooms(intervals):\n    pass\n',java:'class Solution {\n    public int minMeetingRooms(int[][] intervals) { return 0; }\n}\n',cpp:'class Solution {\npublic:\n    int minMeetingRooms(vector<vector<int>>& intervals) { return 0; }\n};\n'}},
+    {id:'gy7',title:'Candy',topic:'Greedy',difficulty:'Hard',diffClass:'hard',tags:['Array','Greedy'],
+      statement:'<p>n children in a row, each with a rating. Give each child at least 1 candy. Children with higher rating than neighbors get more candies. Return minimum total candies.</p>',
+      examples:[{input:'ratings=[1,0,2]',output:'5',explanation:'Candies: [2,1,2].'}],
+      constraints:['n==ratings.length','1≤n≤2×10⁴','0≤ratings[i]≤2×10⁴'],
+      starterCode:{python:'def candy(ratings):\n    pass\n',java:'class Solution {\n    public int candy(int[] ratings) { return 0; }\n}\n',cpp:'class Solution {\npublic:\n    int candy(vector<int>& ratings) { return 0; }\n};\n'}},
+    {id:'gy8',title:'Partition Labels',topic:'Greedy',difficulty:'Medium',diffClass:'medium',tags:['Hash Map','Two Pointers','String','Greedy'],
+      statement:'<p>Given string <code>s</code>, partition it so that each letter appears in at most one part. Return a list of sizes of these parts.</p>',
+      examples:[{input:'s="ababcbacadefegdehijhklij"',output:'[9,7,8]',explanation:'Parts: "ababcbaca","defegde","hijhklij".'}],
+      constraints:['1≤s.length≤500'],
+      starterCode:{python:'def partitionLabels(s):\n    pass\n',java:'class Solution {\n    public List<Integer> partitionLabels(String s) { return new ArrayList<>(); }\n}\n',cpp:'class Solution {\npublic:\n    vector<int> partitionLabels(string s) { return {}; }\n};\n'}},
+    {id:'gy9',title:'Minimum Number of Arrows to Burst Balloons',topic:'Greedy',difficulty:'Medium',diffClass:'medium',tags:['Array','Greedy','Sorting'],
+      statement:'<p>Balloons on a flat wall at [x_start,x_end]. Arrows shot vertically burst all balloons in their range. Return minimum arrows to burst all balloons.</p>',
+      examples:[{input:'points=[[10,16],[2,8],[1,6],[7,12]]',output:'2',explanation:'Shoot at 6 and 11.'}],
+      constraints:['1≤points.length≤10⁵'],
+      starterCode:{python:'def findMinArrowShots(points):\n    pass\n',java:'class Solution {\n    public int findMinArrowShots(int[][] points) { return 0; }\n}\n',cpp:'class Solution {\npublic:\n    int findMinArrowShots(vector<vector<int>>& points) { return 0; }\n};\n'}},
+    {id:'gy10',title:'Queue Reconstruction by Height',topic:'Greedy',difficulty:'Medium',diffClass:'medium',tags:['Array','Greedy','BIT','Segment Tree','Sorting'],
+      statement:'<p>Given people[i]=[hi,ki] (height and number of people in front with ≥ height), reconstruct the queue. Return the queue as a valid arrangement.</p>',
+      examples:[{input:'people=[[7,0],[4,4],[7,1],[5,0],[6,1],[5,2]]',output:'[[5,0],[7,0],[5,2],[6,1],[4,4],[7,1]]',explanation:null}],
+      constraints:['1≤people.length≤2000','0≤hi≤10⁶','0≤ki<people.length'],
+      starterCode:{python:'def reconstructQueue(people):\n    pass\n',java:'class Solution {\n    public int[][] reconstructQueue(int[][] people) { return new int[][]{}; }\n}\n',cpp:'class Solution {\npublic:\n    vector<vector<int>> reconstructQueue(vector<vector<int>>& people) { return {}; }\n};\n'}},
+    {id:'gy11',title:'Hand of Straights',topic:'Greedy',difficulty:'Medium',diffClass:'medium',tags:['Array','Hash Map','Greedy','Sorting'],
+      statement:'<p>Given hand of cards and groupSize, return true if you can rearrange cards into groups of groupSize with consecutive values.</p>',
+      examples:[{input:'hand=[1,2,3,6,2,3,4,7,8], groupSize=3',output:'true',explanation:'[1,2,3],[2,3,4],[6,7,8].'}],
+      constraints:['1≤hand.length≤10⁴','0≤hand[i]≤10⁹','1≤groupSize≤hand.length'],
+      starterCode:{python:'def isNStraightHand(hand, groupSize):\n    pass\n',java:'class Solution {\n    public boolean isNStraightHand(int[] hand, int groupSize) { return false; }\n}\n',cpp:'class Solution {\npublic:\n    bool isNStraightHand(vector<int>& hand, int groupSize) { return false; }\n};\n'}},
+    {id:'gy12',title:'Best Time to Buy and Sell Stock II',topic:'Greedy',difficulty:'Medium',diffClass:'medium',tags:['Array','Greedy','DP'],
+      statement:'<p>Given prices array, you can buy and sell multiple times (but must sell before buying again). Return maximum profit.</p>',
+      examples:[{input:'prices=[7,1,5,3,6,4]',output:'7',explanation:'Buy at 1, sell at 5 (+4); buy at 3, sell at 6 (+3).'}],
+      constraints:['1≤prices.length≤3×10⁴','0≤prices[i]≤10⁴'],
+      starterCode:{python:'def maxProfit(prices):\n    pass\n',java:'class Solution {\n    public int maxProfit(int[] prices) { return 0; }\n}\n',cpp:'class Solution {\npublic:\n    int maxProfit(vector<int>& prices) { return 0; }\n};\n'}},
+  ],
+
+  Backtracking: [
+    {id:'bt1',title:'Subsets',topic:'Backtracking',difficulty:'Medium',diffClass:'medium',tags:['Array','Backtracking','Bit Manipulation'],
+      statement:'<p>Given integer array <code>nums</code> of unique elements, return all possible subsets (the power set). The solution set must not contain duplicate subsets. Return in any order.</p>',
+      examples:[{input:'nums=[1,2,3]',output:'[[],[1],[2],[1,2],[3],[1,3],[2,3],[1,2,3]]',explanation:null}],
+      constraints:['1≤nums.length≤10','All elements unique.','-10≤nums[i]≤10'],
+      starterCode:{python:'def subsets(nums):\n    pass\n',java:'class Solution {\n    public List<List<Integer>> subsets(int[] nums) { return new ArrayList<>(); }\n}\n',cpp:'class Solution {\npublic:\n    vector<vector<int>> subsets(vector<int>& nums) { return {}; }\n};\n'}},
+    {id:'bt2',title:'Subsets II',topic:'Backtracking',difficulty:'Medium',diffClass:'medium',tags:['Array','Backtracking','Bit Manipulation'],
+      statement:'<p>Given integer array <code>nums</code> that may contain duplicates, return all possible subsets. The solution set must not contain duplicate subsets.</p>',
+      examples:[{input:'nums=[1,2,2]',output:'[[],[1],[1,2],[1,2,2],[2],[2,2]]',explanation:null}],
+      constraints:['1≤nums.length≤10','-10≤nums[i]≤10'],
+      starterCode:{python:'def subsetsWithDup(nums):\n    pass\n',java:'class Solution {\n    public List<List<Integer>> subsetsWithDup(int[] nums) { return new ArrayList<>(); }\n}\n',cpp:'class Solution {\npublic:\n    vector<vector<int>> subsetsWithDup(vector<int>& nums) { return {}; }\n};\n'}},
+    {id:'bt3',title:'Combination Sum',topic:'Backtracking',difficulty:'Medium',diffClass:'medium',tags:['Array','Backtracking'],
+      statement:'<p>Given array of distinct candidates and target, return all unique combinations where the chosen numbers sum to target. Numbers may be reused.</p>',
+      examples:[{input:'candidates=[2,3,6,7], target=7',output:'[[2,2,3],[7]]',explanation:null}],
+      constraints:['1≤candidates.length≤30','1≤candidates[i]≤200','1≤target≤500'],
+      starterCode:{python:'def combinationSum(candidates, target):\n    pass\n',java:'class Solution {\n    public List<List<Integer>> combinationSum(int[] candidates, int target) { return new ArrayList<>(); }\n}\n',cpp:'class Solution {\npublic:\n    vector<vector<int>> combinationSum(vector<int>& candidates, int target) { return {}; }\n};\n'}},
+    {id:'bt4',title:'Combination Sum II',topic:'Backtracking',difficulty:'Medium',diffClass:'medium',tags:['Array','Backtracking'],
+      statement:'<p>Given collection of candidates (may have duplicates) and target, find all unique combinations that sum to target. Each number can only be used once.</p>',
+      examples:[{input:'candidates=[10,1,2,7,6,1,5], target=8',output:'[[1,1,6],[1,2,5],[1,7],[2,6]]',explanation:null}],
+      constraints:['1≤candidates.length≤100','1≤candidates[i]≤50','1≤target≤30'],
+      starterCode:{python:'def combinationSum2(candidates, target):\n    pass\n',java:'class Solution {\n    public List<List<Integer>> combinationSum2(int[] candidates, int target) { return new ArrayList<>(); }\n}\n',cpp:'class Solution {\npublic:\n    vector<vector<int>> combinationSum2(vector<int>& candidates, int target) { return {}; }\n};\n'}},
+    {id:'bt5',title:'Permutations',topic:'Backtracking',difficulty:'Medium',diffClass:'medium',tags:['Array','Backtracking'],
+      statement:'<p>Given array <code>nums</code> of distinct integers, return all possible permutations in any order.</p>',
+      examples:[{input:'nums=[1,2,3]',output:'[[1,2,3],[1,3,2],[2,1,3],[2,3,1],[3,1,2],[3,2,1]]',explanation:null}],
+      constraints:['1≤nums.length≤6','-10≤nums[i]≤10'],
+      starterCode:{python:'def permute(nums):\n    pass\n',java:'class Solution {\n    public List<List<Integer>> permute(int[] nums) { return new ArrayList<>(); }\n}\n',cpp:'class Solution {\npublic:\n    vector<vector<int>> permute(vector<int>& nums) { return {}; }\n};\n'}},
+    {id:'bt6',title:'Permutations II',topic:'Backtracking',difficulty:'Medium',diffClass:'medium',tags:['Array','Backtracking'],
+      statement:'<p>Given collection <code>nums</code> that might contain duplicates, return all unique permutations.</p>',
+      examples:[{input:'nums=[1,1,2]',output:'[[1,1,2],[1,2,1],[2,1,1]]',explanation:null}],
+      constraints:['1≤nums.length≤8','-10≤nums[i]≤10'],
+      starterCode:{python:'def permuteUnique(nums):\n    pass\n',java:'class Solution {\n    public List<List<Integer>> permuteUnique(int[] nums) { return new ArrayList<>(); }\n}\n',cpp:'class Solution {\npublic:\n    vector<vector<int>> permuteUnique(vector<int>& nums) { return {}; }\n};\n'}},
+    {id:'bt7',title:'N-Queens',topic:'Backtracking',difficulty:'Hard',diffClass:'hard',tags:['Array','Backtracking'],
+      statement:'<p>Place n queens on an n×n chessboard so that no two queens attack each other. Return all distinct solutions (each is a list of strings where \'Q\' and \'.\' indicate queen and empty cell).</p>',
+      examples:[{input:'n=4',output:'[[".Q..","...Q","Q...","..Q."],["..Q.","Q...","...Q",".Q.."]]',explanation:null}],
+      constraints:['1≤n≤9'],
+      starterCode:{python:'def solveNQueens(n):\n    pass\n',java:'class Solution {\n    public List<List<String>> solveNQueens(int n) { return new ArrayList<>(); }\n}\n',cpp:'class Solution {\npublic:\n    vector<vector<string>> solveNQueens(int n) { return {}; }\n};\n'}},
+    {id:'bt8',title:'Word Search',topic:'Backtracking',difficulty:'Medium',diffClass:'medium',tags:['Array','Matrix','Backtracking','DFS'],
+      statement:'<p>Given m×n board and string word, return true if the word exists in the grid (adjacent horizontal/vertical cells, each cell used at most once).</p>',
+      examples:[{input:'board=[["A","B","C","E"],["S","F","C","S"],["A","D","E","E"]], word="ABCCED"',output:'true',explanation:null}],
+      constraints:['1≤m,n≤6','1≤word.length≤15'],
+      starterCode:{python:'def exist(board, word):\n    pass\n',java:'class Solution {\n    public boolean exist(char[][] board, String word) { return false; }\n}\n',cpp:'class Solution {\npublic:\n    bool exist(vector<vector<char>>& board, string word) { return false; }\n};\n'}},
+    {id:'bt9',title:'Letter Combinations of a Phone Number',topic:'Backtracking',difficulty:'Medium',diffClass:'medium',tags:['Hash Map','String','Backtracking'],
+      statement:'<p>Given a string of digits 2-9, return all possible letter combinations that the number could represent (like on a phone keypad). Return in any order.</p>',
+      examples:[{input:'digits="23"',output:'["ad","ae","af","bd","be","bf","cd","ce","cf"]',explanation:null}],
+      constraints:['0≤digits.length≤4','digits[i] is a digit 2-9.'],
+      starterCode:{python:'def letterCombinations(digits):\n    pass\n',java:'class Solution {\n    public List<String> letterCombinations(String digits) { return new ArrayList<>(); }\n}\n',cpp:'class Solution {\npublic:\n    vector<string> letterCombinations(string digits) { return {}; }\n};\n'}},
+    {id:'bt10',title:'Palindrome Partitioning',topic:'Backtracking',difficulty:'Medium',diffClass:'medium',tags:['String','DP','Backtracking'],
+      statement:'<p>Given string <code>s</code>, partition s such that every substring of the partition is a palindrome. Return all possible palindrome partitioning.</p>',
+      examples:[{input:'s="aab"',output:'[["a","a","b"],["aa","b"]]',explanation:null}],
+      constraints:['1≤s.length≤16'],
+      starterCode:{python:'def partition(s):\n    pass\n',java:'class Solution {\n    public List<List<String>> partition(String s) { return new ArrayList<>(); }\n}\n',cpp:'class Solution {\npublic:\n    vector<vector<string>> partition(string s) { return {}; }\n};\n'}},
+    {id:'bt11',title:'Word Search II',topic:'Backtracking',difficulty:'Hard',diffClass:'hard',tags:['Array','String','Matrix','Backtracking','Trie'],
+      statement:'<p>Given m×n board and list of words, return all words that can be found in the board (horizontal/vertical adjacent cells, each cell used at most once in each word).</p>',
+      examples:[{input:'board=[["o","a","a","n"],["e","t","a","e"],["i","h","k","r"],["i","f","l","v"]], words=["oath","pea","eat","rain"]',output:'["eat","oath"]',explanation:null}],
+      constraints:['1≤m,n≤12','1≤words.length≤3×10⁴'],
+      starterCode:{python:'def findWords(board, words):\n    pass\n',java:'class Solution {\n    public List<String> findWords(char[][] board, String[] words) { return new ArrayList<>(); }\n}\n',cpp:'class Solution {\npublic:\n    vector<string> findWords(vector<vector<char>>& board, vector<string>& words) { return {}; }\n};\n'}},
+  ],
+
+  Trie: [
+    {id:'ti1',title:'Implement Trie (Prefix Tree)',topic:'Trie',difficulty:'Medium',diffClass:'medium',tags:['Hash Map','String','Design','Trie'],
+      statement:'<p>Implement a trie with <code>insert(word)</code>, <code>search(word)</code>, and <code>startsWith(prefix)</code> methods.</p>',
+      examples:[{input:'insert("apple"); search("apple")→T; search("app")→F; startsWith("app")→T; insert("app"); search("app")→T',output:'shown',explanation:null}],
+      constraints:['1≤word.length≤2000','All characters are lowercase English letters.','At most 3×10⁴ calls.'],
+      starterCode:{python:'class Trie:\n    def __init__(self): pass\n    def insert(self, word): pass\n    def search(self, word): pass\n    def startsWith(self, prefix): pass\n',java:'class Trie {\n    public Trie() {}\n    public void insert(String word) {}\n    public boolean search(String word) { return false; }\n    public boolean startsWith(String prefix) { return false; }\n}\n',cpp:'class Trie {\npublic:\n    Trie(){}\n    void insert(string word){}\n    bool search(string word){ return false; }\n    bool startsWith(string prefix){ return false; }\n};\n'}},
+    {id:'ti2',title:'Design Add and Search Words Data Structure',topic:'Trie',difficulty:'Medium',diffClass:'medium',tags:['String','DFS','Design','Trie'],
+      statement:'<p>Design a data structure with <code>addWord(word)</code> and <code>search(word)</code>. search may contain dots \'.\' which can match any letter.</p>',
+      examples:[{input:'addWord("bad"); addWord("dad"); addWord("mad"); search("pad")→F; search("bad")→T; search(".ad")→T; search("b..")→T',output:'shown',explanation:null}],
+      constraints:['1≤word.length≤25','At most 10⁴ calls total.'],
+      starterCode:{python:'class WordDictionary:\n    def __init__(self): pass\n    def addWord(self, word): pass\n    def search(self, word): pass\n',java:'class WordDictionary {\n    public WordDictionary() {}\n    public void addWord(String word) {}\n    public boolean search(String word) { return false; }\n}\n',cpp:'class WordDictionary {\npublic:\n    WordDictionary(){}\n    void addWord(string word){}\n    bool search(string word){ return false; }\n};\n'}},
+    {id:'ti3',title:'Word Search II',topic:'Trie',difficulty:'Hard',diffClass:'hard',tags:['Array','String','Matrix','Backtracking','Trie'],
+      statement:'<p>Given m×n board and list of words, return all words found on the board. Use a Trie to optimize the search.</p>',
+      examples:[{input:'board=[["o","a","a","n"],["e","t","a","e"],["i","h","k","r"],["i","f","l","v"]], words=["oath","pea","eat","rain"]',output:'["eat","oath"]',explanation:null}],
+      constraints:['1≤m,n≤12','1≤words.length≤3×10⁴'],
+      starterCode:{python:'def findWords(board, words):\n    pass\n',java:'class Solution {\n    public List<String> findWords(char[][] board, String[] words) { return new ArrayList<>(); }\n}\n',cpp:'class Solution {\npublic:\n    vector<string> findWords(vector<vector<char>>& board, vector<string>& words) { return {}; }\n};\n'}},
+    {id:'ti4',title:'Replace Words',topic:'Trie',difficulty:'Medium',diffClass:'medium',tags:['Array','Hash Table','String','Trie'],
+      statement:'<p>Given a list of roots and sentence, replace every word in the sentence with the shortest root that is a prefix of it. If no root, leave the word unchanged.</p>',
+      examples:[{input:'dictionary=["cat","bat","rat"], sentence="the cattle was rattled by the battery"',output:'"the cat was rat by the bat"',explanation:null}],
+      constraints:['1≤dictionary.length≤1000'],
+      starterCode:{python:'def replaceWords(dictionary, sentence):\n    pass\n',java:'class Solution {\n    public String replaceWords(List<String> dictionary, String sentence) { return ""; }\n}\n',cpp:'class Solution {\npublic:\n    string replaceWords(vector<string>& dictionary, string sentence) { return ""; }\n};\n'}},
+    {id:'ti5',title:'Maximum XOR of Two Numbers in an Array',topic:'Trie',difficulty:'Medium',diffClass:'medium',tags:['Array','Hash Table','Bit Manipulation','Trie'],
+      statement:'<p>Given integer array <code>nums</code>, return the maximum result of nums[i] XOR nums[j] where 0 ≤ i ≤ j < n.</p>',
+      examples:[{input:'nums=[3,10,5,25,2,8]',output:'28',explanation:'5 XOR 25=28.'}],
+      constraints:['1≤nums.length≤2×10⁵','0≤nums[i]≤2³¹-1'],
+      starterCode:{python:'def findMaximumXOR(nums):\n    pass\n',java:'class Solution {\n    public int findMaximumXOR(int[] nums) { return 0; }\n}\n',cpp:'class Solution {\npublic:\n    int findMaximumXOR(vector<int>& nums) { return 0; }\n};\n'}},
+    {id:'ti6',title:'Longest Word in Dictionary',topic:'Trie',difficulty:'Medium',diffClass:'medium',tags:['Array','Hash Table','String','Trie','Sorting'],
+      statement:'<p>Given list of strings <code>words</code>, return the longest word that can be built one character at a time by other words in words. If multiple valid, return the lexicographically smallest.</p>',
+      examples:[{input:'words=["w","wo","wor","worl","world"]',output:'"world"',explanation:'Built letter by letter.'}],
+      constraints:['1≤words.length≤1000','1≤words[i].length≤30'],
+      starterCode:{python:'def longestWord(words):\n    pass\n',java:'class Solution {\n    public String longestWord(String[] words) { return ""; }\n}\n',cpp:'class Solution {\npublic:\n    string longestWord(vector<string>& words) { return ""; }\n};\n'}},
+    {id:'ti7',title:'Implement Magic Dictionary',topic:'Trie',difficulty:'Medium',diffClass:'medium',tags:['Hash Table','String','Design','Trie'],
+      statement:'<p>Design a data structure with <code>buildDict(dictionary)</code> and <code>search(searchWord)</code> where search returns true if you can change exactly one character of searchWord to match any dictionary word.</p>',
+      examples:[{input:'buildDict(["hello","leetcode"]); search("hello")→F; search("hhllo")→T; search("hell")→F; search("leetcoded")→F',output:'shown',explanation:null}],
+      constraints:['1≤dictionary.length≤100','1≤dictionary[i].length≤100'],
+      starterCode:{python:'class MagicDictionary:\n    def __init__(self): pass\n    def buildDict(self, dictionary): pass\n    def search(self, searchWord): pass\n',java:'class MagicDictionary {\n    public MagicDictionary(){}\n    public void buildDict(String[] dictionary){}\n    public boolean search(String searchWord){ return false; }\n}\n',cpp:'class MagicDictionary {\npublic:\n    MagicDictionary(){}\n    void buildDict(vector<string> dict){}\n    bool search(string s){ return false; }\n};\n'}},
+    {id:'ti8',title:'Map Sum Pairs',topic:'Trie',difficulty:'Medium',diffClass:'medium',tags:['Hash Table','String','Design','Trie'],
+      statement:'<p>Design a map with <code>insert(key, val)</code> and <code>sum(prefix)</code> where sum returns the sum of values of all keys starting with the given prefix.</p>',
+      examples:[{input:'insert("apple",3); sum("ap")→3; insert("app",2); sum("ap")→5',output:'shown',explanation:null}],
+      constraints:['1≤key.length≤50','All key characters are lowercase English letters.'],
+      starterCode:{python:'class MapSum:\n    def __init__(self): pass\n    def insert(self, key, val): pass\n    def sum(self, prefix): pass\n',java:'class MapSum {\n    public MapSum(){}\n    public void insert(String key, int val){}\n    public int sum(String prefix){ return 0; }\n}\n',cpp:'class MapSum {\npublic:\n    MapSum(){}\n    void insert(string key, int val){}\n    int sum(string prefix){ return 0; }\n};\n'}},
+  ],
+
+  BitManipulation: [
+    {id:'bm1',title:'Single Number',topic:'BitManipulation',difficulty:'Easy',diffClass:'easy',tags:['Array','Bit Manipulation'],
+      statement:'<p>Given non-empty array where every element appears twice except one. Find that single one. O(n) time, O(1) extra space using XOR.</p>',
+      examples:[{input:'nums=[4,1,2,1,2]',output:'4',explanation:null}],
+      constraints:['1≤nums.length≤3×10⁴','-3×10⁴≤nums[i]≤3×10⁴'],
+      starterCode:{python:'def singleNumber(nums):\n    pass\n',java:'class Solution {\n    public int singleNumber(int[] nums) { return 0; }\n}\n',cpp:'class Solution {\npublic:\n    int singleNumber(vector<int>& nums) { return 0; }\n};\n'}},
+    {id:'bm2',title:'Single Number II',topic:'BitManipulation',difficulty:'Medium',diffClass:'medium',tags:['Array','Bit Manipulation'],
+      statement:'<p>Given integer array where every element appears three times except one which appears exactly once. Find that single one. O(n) time, O(1) extra space.</p>',
+      examples:[{input:'nums=[2,2,3,2]',output:'3',explanation:null}],
+      constraints:['1≤nums.length≤3×10⁴','-2³¹≤nums[i]≤2³¹-1'],
+      starterCode:{python:'def singleNumber(nums):\n    pass\n',java:'class Solution {\n    public int singleNumber(int[] nums) { return 0; }\n}\n',cpp:'class Solution {\npublic:\n    int singleNumber(vector<int>& nums) { return 0; }\n};\n'}},
+    {id:'bm3',title:'Missing Number',topic:'BitManipulation',difficulty:'Easy',diffClass:'easy',tags:['Array','Hash Table','Math','Binary Search','Bit Manipulation'],
+      statement:'<p>Given array nums containing n distinct numbers in range [0, n], return the only number in the range that is missing from the array.</p>',
+      examples:[{input:'nums=[3,0,1]',output:'2',explanation:null}],
+      constraints:['n==nums.length','1≤n≤10⁴'],
+      starterCode:{python:'def missingNumber(nums):\n    pass\n',java:'class Solution {\n    public int missingNumber(int[] nums) { return 0; }\n}\n',cpp:'class Solution {\npublic:\n    int missingNumber(vector<int>& nums) { return 0; }\n};\n'}},
+    {id:'bm4',title:'Number of 1 Bits',topic:'BitManipulation',difficulty:'Easy',diffClass:'easy',tags:['Divide & Conquer','Bit Manipulation'],
+      statement:'<p>Write a function that takes an unsigned integer and returns the number of 1 bits it has (also known as Hamming weight).</p>',
+      examples:[{input:'n=00000000000000000000000010110101 (binary)',output:'5',explanation:'5 bits are set.'}],
+      constraints:['0≤n≤2³¹-1'],
+      starterCode:{python:'def hammingWeight(n):\n    pass\n',java:'class Solution {\n    public int hammingWeight(int n) { return 0; }\n}\n',cpp:'class Solution {\npublic:\n    int hammingWeight(uint32_t n) { return 0; }\n};\n'}},
+    {id:'bm5',title:'Counting Bits',topic:'BitManipulation',difficulty:'Easy',diffClass:'easy',tags:['DP','Bit Manipulation'],
+      statement:'<p>Given integer n, return array ans of length n+1 such that for each i (0≤i≤n), ans[i] is the number of 1\'s in the binary representation of i.</p>',
+      examples:[{input:'n=5',output:'[0,1,1,2,1,2]',explanation:null}],
+      constraints:['0≤n≤10⁵'],
+      starterCode:{python:'def countBits(n):\n    pass\n',java:'class Solution {\n    public int[] countBits(int n) { return new int[]{}; }\n}\n',cpp:'class Solution {\npublic:\n    vector<int> countBits(int n) { return {}; }\n};\n'}},
+    {id:'bm6',title:'Reverse Bits',topic:'BitManipulation',difficulty:'Easy',diffClass:'easy',tags:['Divide & Conquer','Bit Manipulation'],
+      statement:'<p>Reverse bits of a given 32-bit unsigned integer.</p>',
+      examples:[{input:'n=00000010100101000001111010011100 (binary)',output:'964176192 (00111001011110000010100101000000)',explanation:null}],
+      constraints:['The input must be a binary string of length 32.'],
+      starterCode:{python:'def reverseBits(n):\n    pass\n',java:'public class Solution {\n    public int reverseBits(int n) { return 0; }\n}\n',cpp:'class Solution {\npublic:\n    uint32_t reverseBits(uint32_t n) { return 0; }\n};\n'}},
+    {id:'bm7',title:'Sum of Two Integers (No Arithmetic Ops)',topic:'BitManipulation',difficulty:'Medium',diffClass:'medium',tags:['Math','Bit Manipulation'],
+      statement:'<p>Given two integers a and b, return the sum without using + or - operators. Use bit manipulation instead.</p>',
+      examples:[{input:'a=1, b=2',output:'3',explanation:null}],
+      constraints:['-1000≤a,b≤1000'],
+      starterCode:{python:'def getSum(a, b):\n    pass\n',java:'class Solution {\n    public int getSum(int a, int b) { return 0; }\n}\n',cpp:'class Solution {\npublic:\n    int getSum(int a, int b) { return 0; }\n};\n'}},
+    {id:'bm8',title:'Power of Two',topic:'BitManipulation',difficulty:'Easy',diffClass:'easy',tags:['Math','Bit Manipulation','Recursion'],
+      statement:'<p>Given an integer n, return true if it is a power of two. n is a power of two if there exists integer x such that n == 2^x.</p>',
+      examples:[{input:'n=16',output:'true',explanation:'2⁴=16.'}],
+      constraints:['-2³¹≤n≤2³¹-1'],
+      starterCode:{python:'def isPowerOfTwo(n):\n    pass\n',java:'class Solution {\n    public boolean isPowerOfTwo(int n) { return false; }\n}\n',cpp:'class Solution {\npublic:\n    bool isPowerOfTwo(int n) { return false; }\n};\n'}},
+    {id:'bm9',title:'Find the Duplicate Number (Bit)',topic:'BitManipulation',difficulty:'Medium',diffClass:'medium',tags:['Array','Two Pointers','Binary Search','Bit Manipulation'],
+      statement:'<p>Given array nums of n+1 integers where each integer is in [1,n], find the repeated number. O(n) time, O(1) space, no modification of array.</p>',
+      examples:[{input:'nums=[3,1,3,4,2]',output:'3',explanation:null}],
+      constraints:['1≤n≤10⁵','nums contains only one repeated number.'],
+      starterCode:{python:'def findDuplicate(nums):\n    pass\n',java:'class Solution {\n    public int findDuplicate(int[] nums) { return 0; }\n}\n',cpp:'class Solution {\npublic:\n    int findDuplicate(vector<int>& nums) { return 0; }\n};\n'}},
+    {id:'bm10',title:'XOR Queries of a Subarray',topic:'BitManipulation',difficulty:'Medium',diffClass:'medium',tags:['Array','Bit Manipulation','Prefix Sum'],
+      statement:'<p>Given array arr and queries[i]=[left,right], return array answer where answer[i] = XOR of all elements in arr[left...right].</p>',
+      examples:[{input:'arr=[1,3,4,8], queries=[[0,1],[1,2],[0,3],[3,3]]',output:'[2,7,14,8]',explanation:null}],
+      constraints:['1≤arr.length,queries.length≤3×10⁴'],
+      starterCode:{python:'def xorQueries(arr, queries):\n    pass\n',java:'class Solution {\n    public int[] xorQueries(int[] arr, int[][] queries) { return new int[]{}; }\n}\n',cpp:'class Solution {\npublic:\n    vector<int> xorQueries(vector<int>& arr, vector<vector<int>>& queries) { return {}; }\n};\n'}},
+    {id:'bm11',title:'Bitwise AND of Numbers Range',topic:'BitManipulation',difficulty:'Medium',diffClass:'medium',tags:['Bit Manipulation'],
+      statement:'<p>Given two integers left and right representing the range [left, right], return the bitwise AND of all numbers in this range.</p>',
+      examples:[{input:'left=5, right=7',output:'4',explanation:'5&6&7=4.'}],
+      constraints:['0≤left≤right≤2³¹-1'],
+      starterCode:{python:'def rangeBitwiseAnd(left, right):\n    pass\n',java:'class Solution {\n    public int rangeBitwiseAnd(int left, int right) { return 0; }\n}\n',cpp:'class Solution {\npublic:\n    int rangeBitwiseAnd(int left, int right) { return 0; }\n};\n'}},
+    {id:'bm12',title:'Minimum Flips to Make a OR b Equal to c',topic:'BitManipulation',difficulty:'Medium',diffClass:'medium',tags:['Bit Manipulation'],
+      statement:'<p>Given positive integers a, b, c. Return the minimum number of flips required in some bits of a and b to make (a OR b == c).</p>',
+      examples:[{input:'a=2, b=6, c=5',output:'3',explanation:null}],
+      constraints:['1≤a,b,c≤10⁹'],
+      starterCode:{python:'def minFlips(a, b, c):\n    pass\n',java:'class Solution {\n    public int minFlips(int a, int b, int c) { return 0; }\n}\n',cpp:'class Solution {\npublic:\n    int minFlips(int a, int b, int c) { return 0; }\n};\n'}},
+  ],
+};
+
+const EASY_TOPICS  = ['Arrays','String','TwoPointers','SlidingWindow','HashMap','Stack','PrefixSum','LinkedList'];
+const HARD_TOPICS  = ['DP','Graph','Trees','Heap','BinarySearch','Greedy','Backtracking','Trie','BitManipulation'];

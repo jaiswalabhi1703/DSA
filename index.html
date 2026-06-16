@@ -157,6 +157,57 @@ body{
 .card .go{font-family:var(--font-d);font-size:12px;font-weight:600;color:var(--text);display:flex;align-items:center;gap:5px;opacity:.55;transition:opacity .25s,gap .25s;}
 .card:hover .go{opacity:1;gap:9px;}
 
+/* ---- mock interview section ---- */
+.mock-hero{
+  display:grid;grid-template-columns:1fr auto;align-items:center;gap:24px;
+  background:linear-gradient(135deg,rgba(154,140,255,.12),rgba(91,210,255,.07),rgba(255,137,201,.06));
+  border:1px solid rgba(154,140,255,.25);border-radius:22px;padding:32px 36px;margin-bottom:22px;
+}
+@media(max-width:640px){.mock-hero{grid-template-columns:1fr;gap:18px;padding:22px 20px;}}
+.mock-hero-eyebrow{font-family:var(--font-m);font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--cyan);margin-bottom:10px;}
+.mock-hero h2{font-family:var(--font-d);font-size:clamp(24px,5vw,38px);font-weight:700;letter-spacing:-1px;line-height:1.1;margin-bottom:10px;background:linear-gradient(120deg,#fff 0%,var(--violet) 50%,var(--cyan));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
+.mock-hero p{font-size:13px;color:var(--dim);line-height:1.6;max-width:480px;}
+.mock-start-btn{
+  display:inline-flex;align-items:center;gap:10px;font-family:var(--font-d);font-size:15px;font-weight:700;
+  padding:16px 34px;border-radius:14px;text-decoration:none;color:#0a0a14;
+  background:linear-gradient(135deg,var(--violet),var(--cyan));
+  box-shadow:0 12px 40px -12px rgba(154,140,255,.6);
+  transition:transform .2s,box-shadow .2s;white-space:nowrap;
+}
+.mock-start-btn:hover{transform:translateY(-3px);box-shadow:0 20px 50px -12px rgba(154,140,255,.7);}
+.mock-start-btn .arr{font-size:18px;transition:transform .2s;}
+.mock-start-btn:hover .arr{transform:translateX(4px);}
+
+.mock-stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:22px;}
+@media(max-width:640px){.mock-stats-row{grid-template-columns:repeat(2,1fr);}}
+.mock-stat{background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:14px;padding:16px 18px;text-align:center;}
+.mock-stat .msn{font-family:var(--font-d);font-size:26px;font-weight:700;background:linear-gradient(120deg,var(--violet),var(--cyan));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
+.mock-stat .msl{font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--faint);margin-top:3px;}
+
+.mock-columns{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+@media(max-width:760px){.mock-columns{grid-template-columns:1fr;}}
+
+.mock-panel{background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:16px;padding:20px 22px;}
+.mock-panel-title{font-family:var(--font-d);font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-faint);margin-bottom:16px;display:flex;align-items:center;gap:8px;}
+.mock-panel-title::after{content:'';flex:1;height:1px;background:rgba(255,255,255,.07);}
+
+.topic-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;}
+.topic-chip{display:flex;align-items:center;justify-content:space-between;padding:8px 12px;border-radius:10px;border:1px solid rgba(255,255,255,.07);background:rgba(255,255,255,.03);transition:background .15s;}
+.topic-chip:hover{background:rgba(255,255,255,.06);}
+.topic-chip .tc-name{font-size:11.5px;font-weight:500;color:var(--text);}
+.topic-chip .tc-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;margin-right:7px;}
+.topic-chip .tc-badge{font-family:var(--font-m);font-size:9.5px;color:var(--faint);background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.09);padding:2px 8px;border-radius:6px;}
+.tc-left{display:flex;align-items:center;}
+
+.steps-list{display:flex;flex-direction:column;gap:12px;}
+.step-row{display:flex;align-items:flex-start;gap:14px;}
+.step-num{flex-shrink:0;width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--font-m);font-size:11px;font-weight:700;color:#0a0a14;background:linear-gradient(135deg,var(--violet),var(--cyan));}
+.step-text{padding-top:4px;}
+.step-text strong{font-family:var(--font-d);font-size:13px;font-weight:600;color:var(--text);display:block;margin-bottom:2px;}
+.step-text span{font-size:11.5px;color:var(--dim);line-height:1.5;}
+
+.mock-tip{margin-top:14px;font-size:11px;color:var(--faint);background:rgba(255,255,255,.025);border:1px solid rgba(255,255,255,.07);border-radius:10px;padding:11px 14px;line-height:1.6;}
+
 /* accent assignments */
 .c-tree{--accent:var(--mint);}
 .c-graph{--accent:var(--cyan);}
@@ -281,6 +332,7 @@ table.qtab a.qt:hover{color:var(--cyan);text-decoration:underline;}
   <div class="tabs">
     <button class="tab-btn active" data-tab="dsa">DSA Roadmap</button>
     <button class="tab-btn" data-tab="companies">Company-Wise</button>
+    <button class="tab-btn" data-tab="mock">Mock Interview</button>
   </div>
 
   <!-- ===== DSA SECTION ===== -->
@@ -395,15 +447,112 @@ table.qtab a.qt:hover{color:var(--cyan);text-decoration:underline;}
       </a>
 
 
-      <a class="card c-mock" href="mock_round.html" style="--d:15">
-        <span class="glow"></span>
-        <div class="top"><div class="icon">🎯</div><div class="idx">★</div></div>
-        <h3>Mock DSA Round</h3><p>2 real FAANG-level problems · verbal Q&amp;A · code execution · AI-judged debrief.</p>
-        <div class="meta"><div class="pills"><span class="pill">25 min × 2</span><span class="pill-q">Claude AI</span></div><span class="go">Start →</span></div>
-      </a>
-
     </div>
   </div><!-- /tab-dsa -->
+
+  <!-- ===== MOCK INTERVIEW SECTION ===== -->
+  <div id="tab-mock" class="tab-pane">
+
+    <!-- Hero -->
+    <div class="mock-hero">
+      <div>
+        <div class="mock-hero-eyebrow">FAANG Interview Simulator</div>
+        <h2>Mock DSA Round</h2>
+        <p>2 problems picked from different topic areas · 3 verbal Q&amp;A questions · timed code editor · generate a complete interview doc to paste into any AI for a detailed debrief.</p>
+      </div>
+      <a class="mock-start-btn" href="mock_round.html">Start Round <span class="arr">→</span></a>
+    </div>
+
+    <!-- Stats row -->
+    <div class="mock-stats-row">
+      <div class="mock-stat"><div class="msn">244</div><div class="msl">Problems</div></div>
+      <div class="mock-stat"><div class="msn">17</div><div class="msl">Topics</div></div>
+      <div class="mock-stat"><div class="msn">25<span style="font-size:14px;-webkit-text-fill-color:var(--faint)"> min</span></div><div class="msl">Per Problem</div></div>
+      <div class="mock-stat"><div class="msn">3</div><div class="msl">Languages</div></div>
+    </div>
+
+    <!-- Main columns -->
+    <div class="mock-columns">
+
+      <!-- Topic coverage -->
+      <div class="mock-panel">
+        <div class="mock-panel-title">Topic Coverage</div>
+        <div class="topic-grid">
+          <div class="topic-chip"><div class="tc-left"><span class="tc-dot" style="background:#a6e3a1;box-shadow:0 0 6px #a6e3a188;"></span><span class="tc-name">Arrays</span></div><span class="tc-badge">5 Qs</span></div>
+          <div class="topic-chip"><div class="tc-left"><span class="tc-dot" style="background:#cba6f7;box-shadow:0 0 6px #cba6f788;"></span><span class="tc-name">String</span></div><span class="tc-badge">5 Qs</span></div>
+          <div class="topic-chip"><div class="tc-left"><span class="tc-dot" style="background:#5BD2FF;box-shadow:0 0 6px #5BD2FF88;"></span><span class="tc-name">Two Pointers</span></div><span class="tc-badge">4 Qs</span></div>
+          <div class="topic-chip"><div class="tc-left"><span class="tc-dot" style="background:#5BD2FF;box-shadow:0 0 6px #5BD2FF88;"></span><span class="tc-name">Sliding Window</span></div><span class="tc-badge">4 Qs</span></div>
+          <div class="topic-chip"><div class="tc-left"><span class="tc-dot" style="background:#B6E86A;box-shadow:0 0 6px #B6E86A88;"></span><span class="tc-name">Hash Map</span></div><span class="tc-badge">4 Qs</span></div>
+          <div class="topic-chip"><div class="tc-left"><span class="tc-dot" style="background:#FFCB73;box-shadow:0 0 6px #FFCB7388;"></span><span class="tc-name">Stack</span></div><span class="tc-badge">4 Qs</span></div>
+          <div class="topic-chip"><div class="tc-left"><span class="tc-dot" style="background:#FF7B7B;box-shadow:0 0 6px #FF7B7B88;"></span><span class="tc-name">Linked List</span></div><span class="tc-badge">4 Qs</span></div>
+          <div class="topic-chip"><div class="tc-left"><span class="tc-dot" style="background:#4FE6B4;box-shadow:0 0 6px #4FE6B488;"></span><span class="tc-name">Prefix Sum</span></div><span class="tc-badge">3 Qs</span></div>
+          <div class="topic-chip"><div class="tc-left"><span class="tc-dot" style="background:#FF89C9;box-shadow:0 0 6px #FF89C988;"></span><span class="tc-name">DP</span></div><span class="tc-badge">6 Qs</span></div>
+          <div class="topic-chip"><div class="tc-left"><span class="tc-dot" style="background:#5BD2FF;box-shadow:0 0 6px #5BD2FF88;"></span><span class="tc-name">Graph</span></div><span class="tc-badge">4 Qs</span></div>
+          <div class="topic-chip"><div class="tc-left"><span class="tc-dot" style="background:#4FE6B4;box-shadow:0 0 6px #4FE6B488;"></span><span class="tc-name">Trees</span></div><span class="tc-badge">4 Qs</span></div>
+          <div class="topic-chip"><div class="tc-left"><span class="tc-dot" style="background:#FFCB73;box-shadow:0 0 6px #FFCB7388;"></span><span class="tc-name">Heap</span></div><span class="tc-badge">3 Qs</span></div>
+          <div class="topic-chip"><div class="tc-left"><span class="tc-dot" style="background:#4FE6B4;box-shadow:0 0 6px #4FE6B488;"></span><span class="tc-name">Binary Search</span></div><span class="tc-badge">4 Qs</span></div>
+          <div class="topic-chip"><div class="tc-left"><span class="tc-dot" style="background:#FF89C9;box-shadow:0 0 6px #FF89C988;"></span><span class="tc-name">Greedy</span></div><span class="tc-badge">4 Qs</span></div>
+        </div>
+        <div class="mock-tip">Problem 1 is always drawn from an easier topic (Arrays, String, Two Pointers, Sliding Window, HashMap, Stack, Prefix Sum, Linked List). Problem 2 is always from a harder topic (DP, Graph, Trees, Heap, Binary Search, Greedy). No two rounds repeat the same topic pair.</div>
+      </div>
+
+      <!-- How it works -->
+      <div class="mock-panel">
+        <div class="mock-panel-title">How It Works</div>
+        <div class="steps-list">
+          <div class="step-row">
+            <div class="step-num">1</div>
+            <div class="step-text">
+              <strong>Read the Problem</strong>
+              <span>25-minute timer starts. Read the problem statement, examples, and constraints carefully.</span>
+            </div>
+          </div>
+          <div class="step-row">
+            <div class="step-num">2</div>
+            <div class="step-text">
+              <strong>Verbal Q&amp;A (3 questions)</strong>
+              <span>The interviewer asks: What is this problem? What is your approach? What data structure will you use and why?</span>
+            </div>
+          </div>
+          <div class="step-row">
+            <div class="step-num">3</div>
+            <div class="step-text">
+              <strong>Write Your Code</strong>
+              <span>Implement your solution in Python, Java, or C++ in the built-in code editor. Tab key inserts 4 spaces.</span>
+            </div>
+          </div>
+          <div class="step-row">
+            <div class="step-num">4</div>
+            <div class="step-text">
+              <strong>Complexity Analysis</strong>
+              <span>State your time and space complexity and justify your reasoning — just like a real interviewer expects.</span>
+            </div>
+          </div>
+          <div class="step-row">
+            <div class="step-num">5</div>
+            <div class="step-text">
+              <strong>Repeat for Problem 2</strong>
+              <span>Same flow, different topic. Problem 2 is always from a harder topic category.</span>
+            </div>
+          </div>
+          <div class="step-row">
+            <div class="step-num">6</div>
+            <div class="step-text">
+              <strong>Get Your Debrief</strong>
+              <span>A complete interview transcript is compiled. Copy or download it and paste into ChatGPT, Claude, or Gemini to get scores, verdict, and actionable feedback.</span>
+            </div>
+          </div>
+        </div>
+        <div class="mock-tip">The generated doc includes a pre-written judge prompt — the AI will give verbal scores (1–10), code scores, complexity scores, a hiring verdict (Strong Hire / Hire / Borderline / No Hire), and top 2 improvements per problem.</div>
+      </div>
+
+    </div><!-- /mock-columns -->
+
+    <div style="text-align:center;margin-top:30px;">
+      <a class="mock-start-btn" href="mock_round.html">Begin Mock Interview <span class="arr">→</span></a>
+    </div>
+
+  </div><!-- /tab-mock -->
 
   <!-- ===== COMPANY-WISE SECTION ===== -->
   <div id="tab-companies" class="tab-pane">
