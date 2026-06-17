@@ -1,2 +1,9 @@
 .claude/worktrees/
 screenshot_*.png
+
+# wrangler files
+.wrangler
+.dev.vars*
+!.dev.vars.example
+.env*
+!.env.example
